@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Global Logic Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+    <script src="firebase-init.js"></script>
+
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #ffffff;
+            --text-muted: #888888;
+            --primary: #4ade80;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        .header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: white;
+        }
+        
+        .hero {
+            padding: 10rem 5% 6rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-bg-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin: 0 0 1.5rem;
+            background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            line-height: 1.6;
+        }
+        .container {
+            padding: 2rem 5% 8rem;
+            flex-grow: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 90%;
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2.5rem;
+        }
+        .blog-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            opacity: 0; /* For GSAP */
+            transform: translateY(30px);
+            transition: border-color 0.4s, background 0.4s;
+        }
+        .blog-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .blog-card:hover .blog-image img {
+            transform: scale(1.05);
+        }
+        .blog-image {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .blog-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        .blog-category {
+            color: var(--primary);
+        }
+        .blog-title {
+            font-size: 1.25rem;
+            margin: 0 0 1rem;
+            line-height: 1.4;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .blog-excerpt {
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin: 0 0 1.5rem;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+        .read-more {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .read-more::after {
+            content: '→';
+            margin-left: 0.5rem;
+            transition: transform 0.3s;
+        }
+        .blog-card:hover .read-more::after {
+            transform: translateX(5px);
+        }
+        .loading {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 4rem 0;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="./" class="logo">GLM.</a>
+        <nav class="nav-links">
+            <a href="./">Home</a>
+            <a href="./#services">Services</a>
+            <a href="./#work">Work</a>
+            <a href="./blog.html" style="color: white;">Blog</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg-glow"></div>
+        <h1 class="hero-title">Insights & Updates</h1>
+        <p class="hero-subtitle">Discover our latest thoughts on design, technology, and growing your digital presence in the modern landscape.</p>
+    </section>
+
+    <main class="container">
+        <div id="blogGrid" class="blog-grid">
+            <div class="loading">Fetching latest articles...</div>
+        </div>
+    </main>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Initial Hero Animation
+        gsap.to(".hero-title", {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out",
+            delay: 0.2
+        });
+        gsap.to(".hero-subtitle", {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out",
+            delay: 0.4
+        });
+
+        const defaultBlogs = [
+            { 
+              title: "10 Reasons Why You Need a Premium Website", 
+              excerpt: "A website is no longer just a digital business card. Learn how premium design converts visitors into high-paying clients automatically.", 
+              category: "Marketing", date: "Aug 12, 2026", 
+              image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+            },
+            { 
+              title: "The Future of SEO: AI Search & Ranking Factors", 
+              excerpt: "Search engines are evolving faster than ever. Learn how to adapt your content strategy to rank higher in an AI-driven search landscape.", 
+              category: "SEO", date: "Aug 05, 2026", 
+              image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+            },
+            { 
+              title: "Why First Impressions Matter: Web Design Basics", 
+              excerpt: "Your website is your digital storefront. We explore the psychological impact of clean UI/UX and fast loading speeds on customer conversion rates.", 
+              category: "Design", date: "Jul 28, 2026", 
+              image: "https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+            }
+        ];
+
+        async function fetchAndRenderBlogs() {
+            let allBlogs = [...defaultBlogs];
+            const blogGrid = document.getElementById('blogGrid');
+            
+            try {
+                if (window.firebaseDB) {
+                    const snapshot = await window.firebaseDB.ref("blogs").orderByChild("createdAt").once('value');
+                    if (snapshot.exists()) {
+                        let dbBlogs = [];
+                        snapshot.forEach(child => dbBlogs.push(child.val()));
+                        dbBlogs.reverse();
+                        allBlogs = [...dbBlogs, ...defaultBlogs];
+                    }
+                } else {
+                    let storedBlogs = JSON.parse(localStorage.getItem('glb_blogs')) || [];
+                    allBlogs = [...storedBlogs, ...defaultBlogs];
+                }
+            } catch (e) {
+                console.error("Error fetching blogs:", e);
+            }
+
+            let html = '';
+            allBlogs.forEach(blog => {
+                html += `
+                    <article class="blog-card">
+                        <div class="blog-image">
+                            <img src="${blog.image}" alt="${blog.title}">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">${blog.category}</span>
+                                <span>${blog.date}</span>
+                            </div>
+                            <h2 class="blog-title">${blog.title}</h2>
+                            <p class="blog-excerpt">${blog.excerpt}</p>
+                            <a href="#" class="read-more">Read Article</a>
+                        </div>
+                    </article>
+                `;
+            });
+            blogGrid.innerHTML = html;
+
+            // Animate cards in after render
+            ScrollTrigger.batch(".blog-card", {
+                interval: 0.15,
+                batchMax: 3,
+                onEnter: batch => gsap.to(batch, {opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: "power3.out"}),
+                start: "top 85%"
+            });
+        }
+
+        if (window.firebaseReady) {
+            fetchAndRenderBlogs();
+        } else {
+            window.addEventListener('firebase-ready', fetchAndRenderBlogs);
+            setTimeout(() => {
+                if(document.getElementById('blogGrid').innerHTML.includes('Fetching')) fetchAndRenderBlogs();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

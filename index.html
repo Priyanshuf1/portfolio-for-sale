@@ -683,7 +683,7 @@ html { scroll-behavior: smooth; }
 
     // 4.5 Update sub-text paragraph
     document.querySelectorAll('p').forEach(function(p) {
-      if (p.textContent.includes('Elevate your brand') || p.textContent.includes('Showcase your story') || p.textContent.includes('Digital Marketing Agency')) {
+      if (p.textContent.includes('Elevate your brand') || p.textContent.includes('Showcase your story')) {
         var newP = 'Known as the best Digital Marketing Agency in Lucknow, we offer a diverse range of 360-degree digital marketing solutions. We empower businesses of all sizes to enhance online traffic, generate leads, and increase revenue through growth-focused marketing strategies.';
         if (p.textContent !== newP) p.textContent = newP;
       }
@@ -717,7 +717,7 @@ html { scroll-behavior: smooth; }
         links[2].closest('a').href = '#services';
         
         links[3].textContent = 'Blog';
-        links[3].closest('a').href = '#blog';
+        links[3].closest('a').href = './blog.html';
         
         // Clone for Contact us
         var lastContainer = links[3].closest('div[class*="-container"]');
@@ -853,5 +853,14 @@ html { scroll-behavior: smooth; }
   });
 </script>
 
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="./firebase-init.js"></script>
+<script src="./about-us-modal.js"></script>
+<script src="./custom-footer.js"></script>
+<script src="./book-a-call-modal.js"></script>
+<script src="./add-review-modal.js"></script>
+<script src="./native-sections.js"></script>
+<script src="./admin-panel.js"></script>
 </body>
 </html>
