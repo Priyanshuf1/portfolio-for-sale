@@ -364,8 +364,28 @@
       const framerTarget = document.querySelector('.framer-1pmfitp');
       if (framerTarget) {
           framerTarget.innerHTML = html;
+          framerTarget.style.overflow = 'hidden';
+          framerTarget.style.display = 'block';
       } else {
-          console.error("Could not find the original reviews container (.framer-1pmfitp)");
+          // Framer hydrates async — keep trying for up to 10 seconds
+          let tries = 0;
+          const retry = setInterval(() => {
+              tries++;
+              const t = document.querySelector('.framer-1pmfitp');
+              if (t) {
+                  t.innerHTML = html;
+                  t.style.overflow = 'hidden';
+                  t.style.display = 'block';
+                  clearInterval(retry);
+              } else if (tries > 33) { // ~10 seconds
+                  clearInterval(retry);
+                  console.warn('GLM: Review container .framer-1pmfitp not found after 10s, appending to body.');
+                  const wrapper = document.createElement('div');
+                  wrapper.innerHTML = html;
+                  wrapper.style.cssText = 'width:100%;overflow:hidden;padding:40px 0;background:#0a0a0a;';
+                  document.body.appendChild(wrapper);
+              }
+          }, 300);
       }
   }
 
@@ -376,7 +396,7 @@
           window.addEventListener('firebaseLoaded', loadDataAndRender);
           // Fallback if event never fires
           setTimeout(() => {
-              if (!document.querySelector('.glb-marquee-wrapper')) loadDataAndRender();
+              loadDataAndRender();
           }, 2000);
       }
   }

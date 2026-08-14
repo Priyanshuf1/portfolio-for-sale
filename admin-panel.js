@@ -1,366 +1,477 @@
 (function() {
+  // === SECURITY CONFIG ===
+  const ADMIN_PASSWORD = 'GLM@Admin2025'; // Change this to your preferred password
+
   const styles = `
-    .glb-admin-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 9998;
-      background: #4ade80;
-      color: #111;
-      border: none;
-      padding: 12px 20px;
-      font-size: 14px;
-      font-weight: 700;
-      border-radius: 8px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    /* Admin Nav Link */
+    .glb-admin-nav-btn {
+      display: inline-block;
+      padding: 8px 16px;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: inherit;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
+      transition: all 0.2s;
+      margin-left: 16px;
+      white-space: nowrap;
     }
-    
-    .glb-admin-btn:hover {
-      background: #3ac06a;
-      transform: translateY(-2px);
+    .glb-admin-nav-btn:hover {
+      color: white;
+      border-color: rgba(255,255,255,0.4);
     }
-    
+
+    /* Password Gate */
     .glb-admin-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       z-index: 9999;
       display: flex;
       justify-content: center;
       align-items: center;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-
     .glb-admin-overlay.active {
       opacity: 1;
       visibility: visible;
     }
-
     .glb-admin-content {
       background: #111;
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 20px;
       width: 90%;
       max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
       padding: 40px;
-      color: #fff;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-      transform: translateY(20px);
-      transition: transform 0.4s ease;
       position: relative;
+      color: white;
+      font-family: 'Inter', system-ui, sans-serif;
     }
-    
-    .glb-admin-overlay.active .glb-admin-content {
-      transform: translateY(0);
-    }
-    
     .glb-admin-close {
       position: absolute;
       top: 20px;
       right: 20px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #aaa;
       width: 32px;
       height: 32px;
-      border-radius: 50%;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
       display: flex;
       justify-content: center;
       align-items: center;
       cursor: pointer;
       font-size: 16px;
-      transition: all 0.2s ease;
+      color: #888;
+      border: none;
+      transition: 0.2s;
     }
-    
-    .glb-admin-close:hover {
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-    }
+    .glb-admin-close:hover { background: rgba(255,255,255,0.15); color: white; }
 
-    .glb-admin-title {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 20px;
+    /* Password Screen */
+    .glb-password-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      color: white;
+      gap: 20px;
     }
-    
-    .glb-admin-tabs {
+    .glb-password-screen h3 {
+      font-size: 1.8rem;
+      margin: 0;
+      background: linear-gradient(180deg, #fff 0%, #888 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .glb-password-screen p {
+      color: #888;
+      margin: 0;
+    }
+    .glb-password-input-wrap {
+      width: 100%;
       display: flex;
       gap: 10px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding-bottom: 10px;
     }
-    
+    .glb-password-input-wrap input {
+      flex: 1;
+      padding: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .glb-password-input-wrap input:focus { border-color: #4ade80; }
+    .glb-password-submit {
+      padding: 14px 20px;
+      background: #4ade80;
+      color: #111;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 15px;
+      transition: background 0.2s;
+    }
+    .glb-password-submit:hover { background: #3ac06a; }
+    .glb-password-error {
+      color: #f87171;
+      font-size: 14px;
+      display: none;
+    }
+
+    /* Admin Dashboard */
+    .glb-admin-dashboard { display: none; }
+    .glb-admin-dashboard.visible { display: block; }
+
+    .glb-admin-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 24px;
+      color: white;
+    }
+    .glb-admin-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 24px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 10px;
+      padding: 4px;
+    }
     .glb-admin-tab {
       flex: 1;
       text-align: center;
-      padding: 8px;
-      color: #a0a0a0;
+      padding: 10px;
+      color: #888;
       cursor: pointer;
       font-weight: 500;
+      border-radius: 8px;
+      font-size: 14px;
       transition: 0.2s;
     }
-    
     .glb-admin-tab.active {
       color: white;
-      border-bottom: 2px solid #4ade80;
+      background: rgba(255,255,255,0.08);
     }
-    
-    .glb-tab-content {
-      display: none;
-    }
-    
-    .glb-tab-content.active {
-      display: block;
-    }
-    
-    .glb-pending-review {
-      background: rgba(255,255,255,0.05);
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    
-    .glb-pending-review p { margin: 5px 0; font-size: 14px; }
-    
-    .glb-approve-btn {
-      background: #4ade80; color: #111; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600; margin-top: 10px;
-    }
+    .glb-tab-content { display: none; }
+    .glb-tab-content.active { display: block; }
 
-    .glb-form-group {
-      margin-bottom: 20px;
+    /* Pending Reviews */
+    .glb-pending-review {
+      background: rgba(255,255,255,0.04);
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
     }
-    
+    .glb-pending-review strong { color: #4ade80; }
+    .glb-pending-review p { margin: 5px 0; font-size: 14px; color: #ccc; }
+    .glb-approve-btn {
+      background: #4ade80; color: #111; border: none;
+      padding: 7px 14px; border-radius: 6px; cursor: pointer;
+      font-size: 13px; font-weight: 700; margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .glb-approve-btn:hover { background: #3ac06a; }
+
+    /* Blog Form */
+    .glb-form-group { margin-bottom: 18px; }
     .glb-form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 13px;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      display: block; margin-bottom: 7px; font-size: 12px;
+      color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
     }
-    
     .glb-form-group input, .glb-form-group textarea, .glb-form-group select {
-      width: 100%;
-      padding: 14px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      color: #fff;
-      font-family: inherit;
-      font-size: 15px;
-      outline: none;
-      box-sizing: border-box;
+      width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;
+      font-size: 15px; font-family: inherit; outline: none; box-sizing: border-box;
+      transition: border-color 0.2s;
     }
-    
-    .glb-form-group input:focus, .glb-form-group textarea:focus {
+    .glb-form-group input:focus, .glb-form-group textarea:focus, .glb-form-group select:focus {
       border-color: #4ade80;
     }
-    
+    .glb-form-group select option { background: #1a1a1a; }
     .glb-admin-submit {
-      width: 100%;
-      background: #4ade80;
-      color: #000;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 16px;
-      cursor: pointer;
-      transition: transform 0.2s ease;
+      width: 100%; padding: 14px; background: #4ade80; color: #111;
+      border: none; border-radius: 8px; cursor: pointer; font-weight: 700;
+      font-size: 16px; transition: background 0.2s;
     }
-    
-    .glb-admin-submit:hover {
-      transform: translateY(-2px);
-    }
+    .glb-admin-submit:hover { background: #3ac06a; }
+    .glb-admin-submit:disabled { opacity: 0.6; cursor: not-allowed; }
   `;
 
-  const styleEl = document.createElement('style');
-  styleEl.textContent = styles;
-  document.head.appendChild(styleEl);
-
   const html = `
-    <!-- Floating Admin Trigger -->
-    <div class="glb-admin-btn" id="glbTriggerAdmin">
-      Admin
-    </div>
-
-    <!-- Admin Overlay -->
     <div class="glb-admin-overlay" id="glbOverlayAdmin">
       <div class="glb-admin-content">
-        <div class="glb-admin-close" id="glbCloseAdmin">✕</div>
-        <div class="glb-admin-title">Admin Dashboard</div>
-        
-        <div class="glb-admin-tabs">
-          <div class="glb-admin-tab active" data-tab="blog">Publish Blog</div>
-          <div class="glb-admin-tab" data-tab="reviews">Approve Reviews</div>
+        <button class="glb-admin-close" id="glbCloseAdmin">✕</button>
+
+        <!-- Password Gate -->
+        <div class="glb-password-screen" id="glbPasswordScreen">
+          <div style="font-size:40px;">🔐</div>
+          <h3>Admin Access</h3>
+          <p>Enter your admin password to continue.</p>
+          <div class="glb-password-input-wrap">
+            <input type="password" id="glbPasswordInput" placeholder="Enter password..." autocomplete="current-password">
+            <button class="glb-password-submit" id="glbPasswordSubmit">Unlock</button>
+          </div>
+          <span class="glb-password-error" id="glbPasswordError">Incorrect password. Try again.</span>
         </div>
 
-        <div class="glb-tab-content active" id="tab-blog">
-          <form id="glbAdminForm">
-            <div class="glb-form-group">
-              <label>Blog Title</label>
-              <input type="text" id="adminBlogTitle" required placeholder="Enter title...">
-            </div>
-            <div class="glb-form-group">
-              <label>Category</label>
-              <select id="adminBlogCategory">
-                <option value="Marketing">Marketing</option>
-                <option value="SEO">SEO</option>
-                <option value="Design">Design</option>
-                <option value="Development">Development</option>
-              </select>
-            </div>
-            <div class="glb-form-group">
-              <label>Cover Image URL</label>
-              <input type="url" id="adminBlogImage" required placeholder="https://unsplash.com/...">
-            </div>
-            <div class="glb-form-group">
-              <label>Excerpt / Content</label>
-              <textarea id="adminBlogExcerpt" rows="4" required placeholder="Write your blog content here..."></textarea>
-            </div>
-            <button type="submit" class="glb-admin-submit">Publish to Website</button>
-          </form>
-        </div>
+        <!-- Admin Dashboard (shown after auth) -->
+        <div class="glb-admin-dashboard" id="glbAdminDashboard">
+          <div class="glb-admin-title">Admin Dashboard</div>
 
-        <div class="glb-tab-content" id="tab-reviews">
-          <div id="glbPendingReviewsList">
-            <p style="color:#a0a0a0; text-align:center;">Loading pending reviews...</p>
+          <div class="glb-admin-tabs">
+            <div class="glb-admin-tab active" data-tab="blog">📝 Publish Blog</div>
+            <div class="glb-admin-tab" data-tab="reviews">✅ Approve Reviews</div>
+          </div>
+
+          <div class="glb-tab-content active" id="tab-blog">
+            <form id="glbAdminForm">
+              <div class="glb-form-group">
+                <label>Blog Title</label>
+                <input type="text" id="adminBlogTitle" required placeholder="Enter title...">
+              </div>
+              <div class="glb-form-group">
+                <label>Category</label>
+                <select id="adminBlogCategory">
+                  <option value="Marketing">Marketing</option>
+                  <option value="SEO">SEO</option>
+                  <option value="Design">Design</option>
+                  <option value="Development">Development</option>
+                </select>
+              </div>
+              <div class="glb-form-group">
+                <label>Cover Image URL</label>
+                <input type="url" id="adminBlogImage" required placeholder="https://images.unsplash.com/...">
+              </div>
+              <div class="glb-form-group">
+                <label>Excerpt / Content</label>
+                <textarea id="adminBlogExcerpt" rows="4" required placeholder="Write your blog content here..."></textarea>
+              </div>
+              <button type="submit" class="glb-admin-submit">Publish to Website</button>
+            </form>
+          </div>
+
+          <div class="glb-tab-content" id="tab-reviews">
+            <div id="glbPendingReviewsList">
+              <p style="color:#888; text-align:center; padding:20px 0;">Loading pending reviews...</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   `;
 
+  // Inject styles
+  const styleEl = document.createElement('style');
+  styleEl.innerHTML = styles;
+  document.head.appendChild(styleEl);
+
+  // Inject HTML
   const wrapper = document.createElement('div');
   wrapper.innerHTML = html;
   document.body.appendChild(wrapper);
 
-  const trigger = document.getElementById('glbTriggerAdmin');
   const overlay = document.getElementById('glbOverlayAdmin');
   const closeBtn = document.getElementById('glbCloseAdmin');
-  const form = document.getElementById('glbAdminForm');
+  const passwordScreen = document.getElementById('glbPasswordScreen');
+  const dashboard = document.getElementById('glbAdminDashboard');
+  const passwordInput = document.getElementById('glbPasswordInput');
+  const passwordSubmit = document.getElementById('glbPasswordSubmit');
+  const passwordError = document.getElementById('glbPasswordError');
 
-  trigger.addEventListener('click', () => overlay.classList.add('active'));
+  // --- Add Admin button next to "Contact Us" in navbar ---
+  function addAdminNavButton() {
+    // Look for the Contact Us nav link
+    let contactLink = null;
+    document.querySelectorAll('nav a, [data-framer-name="nav links"] a').forEach(a => {
+      if (a.textContent.trim().toLowerCase().includes('contact')) contactLink = a;
+    });
+    
+    if (!contactLink) {
+      // Retry - Framer may not have hydrated yet
+      setTimeout(addAdminNavButton, 800);
+      return;
+    }
+
+    // Find or create nav container
+    const navContainer = contactLink.closest('nav') || contactLink.closest('[data-framer-name="nav links"]') || contactLink.parentElement;
+    
+    const adminBtn = document.createElement('button');
+    adminBtn.className = 'glb-admin-nav-btn';
+    adminBtn.id = 'glbTriggerAdmin';
+    adminBtn.textContent = '⚙ Admin';
+    adminBtn.title = 'Admin Panel - Password Protected';
+    
+    // Try to insert after the contact link's parent container
+    const contactContainer = contactLink.closest('li') || contactLink.parentElement;
+    if (contactContainer && contactContainer.parentNode) {
+      contactContainer.parentNode.insertBefore(adminBtn, contactContainer.nextSibling);
+    } else {
+      navContainer.appendChild(adminBtn);
+    }
+
+    adminBtn.addEventListener('click', openAdminPanel);
+  }
+
+  function openAdminPanel() {
+    overlay.classList.add('active');
+    // Check if already authenticated this session
+    if (sessionStorage.getItem('glm_admin_auth') === '1') {
+      showDashboard();
+    } else {
+      passwordScreen.style.display = 'flex';
+      dashboard.classList.remove('visible');
+      passwordInput.value = '';
+      passwordError.style.display = 'none';
+      setTimeout(() => passwordInput.focus(), 300);
+    }
+  }
+
+  function showDashboard() {
+    passwordScreen.style.display = 'none';
+    dashboard.classList.add('visible');
+  }
+
+  // Close button
   closeBtn.addEventListener('click', () => overlay.classList.remove('active'));
-  
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.remove('active'); });
+
+  // Password submit
+  function tryPassword() {
+    if (passwordInput.value === ADMIN_PASSWORD) {
+      sessionStorage.setItem('glm_admin_auth', '1');
+      passwordError.style.display = 'none';
+      showDashboard();
+    } else {
+      passwordError.style.display = 'block';
+      passwordInput.value = '';
+      passwordInput.focus();
+    }
+  }
+  passwordSubmit.addEventListener('click', tryPassword);
+  passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryPassword(); });
+
+  // --- Tabs ---
   const tabs = document.querySelectorAll('.glb-admin-tab');
   const contents = document.querySelectorAll('.glb-tab-content');
-
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
       contents.forEach(c => c.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-      
-      if(tab.dataset.tab === 'reviews') {
-        fetchPendingReviews();
-      }
+      if (tab.dataset.tab === 'reviews') fetchPendingReviews();
     });
   });
 
+  // --- Fetch Pending Reviews ---
   async function fetchPendingReviews() {
     const list = document.getElementById('glbPendingReviewsList');
-    if(!window.firebaseDB) {
-      list.innerHTML = '<p style="color:red;">Firebase not connected.</p>';
+    if (!window.firebaseDB) {
+      list.innerHTML = '<p style="color:#f87171; text-align:center;">Firebase not connected.</p>';
       return;
     }
-    
     try {
       const snapshot = await window.firebaseDB.ref("reviews").once('value');
       let html = '';
       if (snapshot.exists()) {
-          snapshot.forEach(childSnapshot => {
-              const rev = childSnapshot.val();
-              const key = childSnapshot.key;
-              if (rev.status === 'pending') {
-                  html += `
-                    <div class="glb-pending-review" id="review-${key}">
-                      <p><strong>${rev.author}</strong> (${rev.rating} stars)</p>
-                      <p>"${rev.text}"</p>
-                      <button class="glb-approve-btn" onclick="window.approveReview('${key}')">Approve Review</button>
-                    </div>
-                  `;
-              }
-          });
+        snapshot.forEach(childSnapshot => {
+          const rev = childSnapshot.val();
+          const key = childSnapshot.key;
+          if (rev.status === 'pending') {
+            html += `
+              <div class="glb-pending-review" id="review-${key}">
+                <p><strong>${rev.author}</strong> &nbsp;•&nbsp; ${'★'.repeat(rev.rating || 5)} (${rev.rating || 5}/5)</p>
+                <p>"${rev.text}"</p>
+                <button class="glb-approve-btn" onclick="window.approveReview('${key}')">✓ Approve & Make Live</button>
+              </div>
+            `;
+          }
+        });
       }
-      if(html === '') html = '<p style="color:#a0a0a0; text-align:center;">No pending reviews.</p>';
+      if (!html) html = '<p style="color:#888; text-align:center; padding:20px 0;">No pending reviews. All clear!</p>';
       list.innerHTML = html;
-    } catch(e) {
-      list.innerHTML = '<p style="color:red;">Error fetching reviews.</p>';
+    } catch (e) {
+      list.innerHTML = `<p style="color:#f87171; text-align:center;">Error: ${e.message}</p>`;
     }
   }
 
   window.approveReview = async function(key) {
-    if(!window.firebaseDB) return;
+    if (!window.firebaseDB) return;
     const btn = document.querySelector(`#review-${key} .glb-approve-btn`);
-    btn.innerText = 'Approving...';
+    if (btn) { btn.innerText = 'Approving...'; btn.disabled = true; }
     try {
       await window.firebaseDB.ref("reviews/" + key).update({ status: 'approved' });
-      document.getElementById(`review-${key}`).style.display = 'none';
-      alert("Review approved and is now live!");
-    } catch(e) {
-      alert("Error approving: " + e.message);
-      btn.innerText = 'Approve Review';
+      const card = document.getElementById(`review-${key}`);
+      if (card) {
+        card.style.opacity = '0';
+        card.style.transition = 'opacity 0.3s';
+        setTimeout(() => card.remove(), 300);
+      }
+      alert('✅ Review approved and is now live on the website!');
+    } catch (e) {
+      alert('Error: ' + e.message);
+      if (btn) { btn.innerText = '✓ Approve & Make Live'; btn.disabled = false; }
     }
   };
 
+  // --- Blog Form Submit ---
+  const form = document.getElementById('glbAdminForm');
   form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Publishing...';
-      submitBtn.disabled = true;
+    e.preventDefault();
+    const title = document.getElementById('adminBlogTitle').value.trim();
+    const category = document.getElementById('adminBlogCategory').value;
+    const image = document.getElementById('adminBlogImage').value.trim();
+    const excerpt = document.getElementById('adminBlogExcerpt').value.trim();
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.innerText = 'Publishing...';
+    submitBtn.disabled = true;
 
-      try {
-        const newBlog = {
-            title: document.getElementById('adminBlogTitle').value,
-            category: document.getElementById('adminBlogCategory').value,
-            image: document.getElementById('adminBlogImage').value,
-            excerpt: document.getElementById('adminBlogExcerpt').value,
-            date: new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }),
-            createdAt: firebase.database.ServerValue.TIMESTAMP
-        };
-        
-        if (window.firebaseDB) {
-          const addPromise = window.firebaseDB.ref("blogs").push(newBlog);
-          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout: Database connection failed. Please ensure you clicked 'Create Database' in Firebase Realtime Database.")), 8000));
-          await Promise.race([addPromise, timeoutPromise]);
-        } else {
-          // Fallback
-          let storedBlogs = JSON.parse(localStorage.getItem('glb_blogs')) || [];
-          storedBlogs.unshift(newBlog);
-          localStorage.setItem('glb_blogs', JSON.stringify(storedBlogs));
-        }
-        
-        overlay.classList.remove('active');
-        form.reset();
-        
-        // Reload to show the new blog in the native section
-        setTimeout(() => {
-            window.location.reload();
-        }, 500);
-      } catch (error) {
-        console.error("Error adding document: ", error);
-        alert("Database Error: " + error.message);
-      } finally {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
+    const newBlog = {
+      title, category, image, excerpt,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      createdAt: firebase.database.ServerValue.TIMESTAMP
+    };
+
+    try {
+      if (window.firebaseDB) {
+        await Promise.race([
+          window.firebaseDB.ref("blogs").push(newBlog),
+          new Promise((_, rej) => setTimeout(() => rej(new Error("Timeout after 8s")), 8000))
+        ]);
+      } else {
+        let stored = JSON.parse(localStorage.getItem('glb_blogs')) || [];
+        stored.unshift({...newBlog, createdAt: Date.now()});
+        localStorage.setItem('glb_blogs', JSON.stringify(stored));
       }
+      alert('✅ Blog published successfully! Refresh to see it on the site.');
+      form.reset();
+      overlay.classList.remove('active');
+    } catch (err) {
+      alert('Error: ' + err.message);
+    } finally {
+      submitBtn.innerText = 'Publish to Website';
+      submitBtn.disabled = false;
+    }
   });
+
+  // Start trying to add the nav button
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addAdminNavButton);
+  } else {
+    addAdminNavButton();
+  }
 })();
