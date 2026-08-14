@@ -729,6 +729,28 @@ html { scroll-behavior: smooth; }
           newLink.target = '_self';
           newLink.removeAttribute('rel');
           navLinksContainer.appendChild(newContainer);
+
+          // Clone for Admin button beside Contact us
+          var adminContainer = lastContainer.cloneNode(true);
+          var adminP = adminContainer.querySelector('p');
+          if (adminP) adminP.textContent = 'Admin';
+          var adminLink = adminContainer.querySelector('a');
+          if (adminLink) {
+            adminLink.href = 'javascript:void(0)';
+            adminLink.id = 'glbTriggerAdminNav';
+            adminLink.target = '_self';
+            adminLink.removeAttribute('rel');
+            adminLink.onclick = function(e) {
+              e.preventDefault();
+              if (typeof window.openAdminPanel === 'function') {
+                window.openAdminPanel();
+              } else {
+                var overlay = document.getElementById('glbOverlayAdmin');
+                if (overlay) overlay.classList.add('active');
+              }
+            };
+          }
+          navLinksContainer.appendChild(adminContainer);
         }
       }
     }

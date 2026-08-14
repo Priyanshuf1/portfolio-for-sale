@@ -6,13 +6,13 @@
       padding: 60px 20px 40px;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       border-top: 1px solid rgba(255,255,255,0.1);
-      position: absolute;
+      position: relative;
       left: 0;
       width: 100%;
       z-index: 9997;
       box-sizing: border-box;
-      opacity: 0;
-      transition: opacity 0.5s ease;
+      opacity: 1;
+      margin-top: 60px;
     }
     
     .glb-footer-container {
@@ -194,33 +194,8 @@
   footer.className = 'glb-footer';
   footer.innerHTML = footerHTML;
 
-  function positionFooter() {
-    let root = document.getElementById('main');
-    if (!root) return;
-    
-    // We attach the footer to the bottom of #main's bounding rect
-    // since #main usually has the full height of the framer canvas
-    const rect = root.getBoundingClientRect();
-    const scrollY = window.scrollY || window.pageYOffset;
-    const trueBottom = rect.bottom + scrollY;
-    
-    if (trueBottom > 0) {
-      footer.style.top = trueBottom + 'px';
-      footer.style.opacity = '1';
-    }
-  }
-
   function appendFooter() {
      document.body.appendChild(footer);
-     
-     if (typeof ResizeObserver !== 'undefined') {
-        const ro = new ResizeObserver(() => positionFooter());
-        const root = document.getElementById('main') || document.body;
-        ro.observe(root);
-     }
-     
-     setInterval(positionFooter, 1000);
-     positionFooter();
   }
 
   if (document.readyState === 'loading') {

@@ -340,6 +340,8 @@
     }
   }
 
+  window.openAdminPanel = openAdminPanel;
+
   function showDashboard() {
     passwordScreen.style.display = 'none';
     dashboard.classList.add('visible');
