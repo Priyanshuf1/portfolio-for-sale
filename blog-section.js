@@ -1,235 +1,194 @@
 (function() {
   const styles = `
-    .glb-blog-trigger {
-      position: fixed;
-      top: 30px;
-      right: 30px;
-      z-index: 9998;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      color: #eaeaea;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .glb-home-blogs {
+      padding: 60px 5%;
+      background: var(--bg, #0a0a0a);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      z-index: 10;
     }
-    
-    .glb-blog-trigger:hover {
-      background: rgba(255, 255, 255, 0.15);
-      color: #fff;
-    }
-
-    /* Drawer Overlay */
-    .glb-blog-drawer-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      z-index: 9999;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-    }
-
-    .glb-blog-drawer-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* Drawer Content */
-    .glb-blog-drawer {
-      position: absolute;
-      top: 0;
-      right: -100%;
-      width: 100%;
-      max-width: 600px;
-      height: 100vh;
-      background: #0a0a0a;
-      border-left: 1px solid rgba(255,255,255,0.1);
-      padding: 40px;
-      box-sizing: border-box;
-      overflow-y: auto;
-      transition: right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      color: #fff;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
-    
-    .glb-blog-drawer-overlay.active .glb-blog-drawer {
-      right: 0;
-    }
-
-    .glb-blog-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .glb-home-blogs-header {
+      text-align: center;
       margin-bottom: 40px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    
-    .glb-blog-title {
-      font-size: 24px;
-      font-weight: 700;
-      background: linear-gradient(90deg, #fff, #aaa);
+    .glb-home-blogs-header h2 {
+      font-size: 2.5rem;
+      margin: 0;
+      background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      letter-spacing: -1px;
     }
-    
-    .glb-blog-close {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #aaa;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      font-size: 16px;
-      transition: all 0.2s ease;
+    .glb-home-blogs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    
-    .glb-blog-close:hover {
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-    }
-    
-    .glb-blog-card {
-      background: linear-gradient(180deg, rgba(30,30,30,0.4) 0%, rgba(15,15,15,0.8) 100%);
-      border: 1px solid rgba(255,255,255,0.05);
+    .glb-home-blog-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 20px;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    
-    .glb-blog-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255,255,255,0.2);
-    }
-    
-    .glb-blog-card-meta {
-      font-size: 12px;
-      color: #888;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-    
-    .glb-blog-card-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-    
-    .glb-blog-card-excerpt {
-      font-size: 15px;
-      color: #aaa;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    
-    .glb-blog-card-btn {
-      display: inline-block;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
       text-decoration: none;
-      border-bottom: 1px solid #fff;
-      padding-bottom: 2px;
+      color: white;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .glb-home-blog-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .glb-home-blog-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .glb-home-blog-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .glb-home-blog-meta {
+      display: flex;
+      justify-content: space-between;
+      color: #888;
+      font-size: 13px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .glb-home-blog-title {
+      font-size: 1.2rem;
+      margin: 0 0 10px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+    .glb-home-blog-excerpt {
+      color: #888;
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+      flex-grow: 1;
+    }
+    .glb-home-blogs-btn-wrapper {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .glb-home-blogs-btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    .glb-home-blogs-btn:hover {
+      background: rgba(255,255,255,0.1);
     }
   `;
 
-  const styleEl = document.createElement('style');
-  styleEl.textContent = styles;
-  document.head.appendChild(styleEl);
+  const defaultBlogs = [
+      { 
+        title: "10 Reasons Why You Need a Premium Website", 
+        excerpt: "A website is no longer just a digital business card. Learn how premium design converts visitors into high-paying clients automatically.", 
+        category: "Marketing", date: "Aug 12, 2026", 
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+      },
+      { 
+        title: "The Future of SEO: AI Search & Ranking Factors", 
+        excerpt: "Search engines are evolving faster than ever. Learn how to adapt your content strategy to rank higher in an AI-driven search landscape.", 
+        category: "SEO", date: "Aug 05, 2026", 
+        image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+      },
+      { 
+        title: "Why First Impressions Matter: Web Design Basics", 
+        excerpt: "Your website is your digital storefront. We explore the psychological impact of clean UI/UX and fast loading speeds on customer conversion rates.", 
+        category: "Design", date: "Jul 28, 2026", 
+        image: "https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+      }
+  ];
 
-  const blogHTML = `
-    <!-- Top Nav Button -->
-    <div class="glb-blog-trigger" id="glbTriggerBlog">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-      </svg>
-      Our Blog
-    </div>
+  async function loadHomeBlogs() {
+      let allBlogs = [...defaultBlogs];
+      
+      try {
+          if (window.firebaseDB) {
+              const snapshot = await window.firebaseDB.ref("blogs").orderByChild("createdAt").limitToLast(3).once('value');
+              if (snapshot.exists()) {
+                  let dbBlogs = [];
+                  snapshot.forEach(child => dbBlogs.push(child.val()));
+                  dbBlogs.reverse();
+                  allBlogs = [...dbBlogs, ...defaultBlogs];
+              }
+          } else {
+              let storedBlogs = JSON.parse(localStorage.getItem('glb_blogs')) || [];
+              allBlogs = [...storedBlogs, ...defaultBlogs];
+          }
+      } catch (e) {
+          console.error("Error fetching blogs for home:", e);
+      }
 
-    <!-- Drawer Overlay -->
-    <div class="glb-blog-drawer-overlay" id="glbOverlayBlog">
-      <div class="glb-blog-drawer">
-        <div class="glb-blog-header">
-          <div class="glb-blog-title">Latest Insights</div>
-          <div class="glb-blog-close" id="glbCloseBlog">✕</div>
-        </div>
-        
-        <!-- Blog List -->
-        <div class="glb-blog-list">
-          
-          <div class="glb-blog-card">
-            <div class="glb-blog-card-meta">Marketing • Aug 12, 2026</div>
-            <div class="glb-blog-card-title">How to Leverage Meta Ads for Local Businesses</div>
-            <div class="glb-blog-card-excerpt">Discover the exact strategies we use at Global Logic Media to generate high-quality leads using Facebook and Instagram ads for local brick-and-mortar stores.</div>
-            <a href="#" class="glb-blog-card-btn">Read Article</a>
+      // Take only the top 3
+      const top3 = allBlogs.slice(0, 3);
+
+      let cardsHtml = top3.map(blog => `
+          <a href="./blog.html" class="glb-home-blog-card">
+              <img src="\${blog.image}" class="glb-home-blog-img" alt="\${blog.title}">
+              <div class="glb-home-blog-content">
+                  <div class="glb-home-blog-meta">
+                      <span style="color:#4ade80">\${blog.category}</span>
+                      <span>\${blog.date}</span>
+                  </div>
+                  <h3 class="glb-home-blog-title">\${blog.title}</h3>
+                  <p class="glb-home-blog-excerpt">\${blog.excerpt}</p>
+              </div>
+          </a>
+      `).join('');
+
+      const html = `
+        <div class="glb-home-blogs">
+          <div class="glb-home-blogs-header">
+            <h2>Latest Insights</h2>
           </div>
-          
-          <div class="glb-blog-card">
-            <div class="glb-blog-card-meta">SEO • Aug 05, 2026</div>
-            <div class="glb-blog-card-title">The Future of SEO: AI Search & Ranking Factors</div>
-            <div class="glb-blog-card-excerpt">Search engines are evolving faster than ever. Learn how to adapt your content strategy to rank higher in an AI-driven search landscape.</div>
-            <a href="#" class="glb-blog-card-btn">Read Article</a>
+          <div class="glb-home-blogs-grid">
+            \${cardsHtml}
           </div>
-          
-          <div class="glb-blog-card">
-            <div class="glb-blog-card-meta">Design • Jul 28, 2026</div>
-            <div class="glb-blog-card-title">Why First Impressions Matter: Web Design Basics</div>
-            <div class="glb-blog-card-excerpt">Your website is your digital storefront. We explore the psychological impact of clean UI/UX and fast loading speeds on customer conversion rates.</div>
-            <a href="#" class="glb-blog-card-btn">Read Article</a>
+          <div class="glb-home-blogs-btn-wrapper">
+            <a href="./blog.html" class="glb-home-blogs-btn">View All Articles</a>
           </div>
-
         </div>
-        
-        <div style="text-align:center; margin-top: 40px; color: #666; font-size: 13px;">
-          Note: To add more blogs, connect your CMS database.
-        </div>
-      </div>
-    </div>
-  `;
+      `;
 
-  const wrapper = document.createElement('div');
-  wrapper.innerHTML = blogHTML;
-  document.body.appendChild(wrapper);
+      const styleEl = document.createElement('style');
+      styleEl.innerHTML = styles;
+      document.head.appendChild(styleEl);
 
-  const trigger = document.getElementById('glbTriggerBlog');
-  const overlay = document.getElementById('glbOverlayBlog');
-  const closeBtn = document.getElementById('glbCloseBlog');
-  const drawer = overlay.querySelector('.glb-blog-drawer');
+      const container = document.createElement('section');
+      container.innerHTML = html;
 
-  function openBlog() {
-    overlay.classList.add('active');
+      // Insert right above the custom footer
+      let footer = document.querySelector('footer.glb-footer');
+      let mainRoot = document.getElementById('main') || document.body;
+      if (footer && footer.parentNode) {
+          footer.parentNode.insertBefore(container, footer);
+      } else {
+          mainRoot.appendChild(container);
+      }
   }
 
-  function closeBlog() {
-    overlay.classList.remove('active');
+  if (window.firebaseReady) {
+      loadHomeBlogs();
+  } else {
+      window.addEventListener('firebase-ready', loadHomeBlogs);
+      setTimeout(loadHomeBlogs, 3000);
   }
 
-  trigger.addEventListener('click', openBlog);
-  closeBtn.addEventListener('click', closeBlog);
-  overlay.addEventListener('click', (e) => {
-    // Only close if clicking the dark overlay, not the drawer itself
-    if (e.target === overlay) closeBlog();
-  });
 })();

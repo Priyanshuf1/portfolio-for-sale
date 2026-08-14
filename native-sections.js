@@ -261,15 +261,23 @@
 
       const customCSS = `
         .glb-premium-reviews-container {
+          width: 100%;
+          overflow: hidden;
+          padding: 20px 0;
+          background: transparent;
+        }
+        .glb-marquee-track {
           display: flex;
           gap: 24px;
-          padding: 20px 0;
-          overflow-x: auto;
-          scrollbar-width: none;
-          -ms-overflow-style: none;
+          width: max-content;
+          animation: marquee 30s linear infinite;
         }
-        .glb-premium-reviews-container::-webkit-scrollbar {
-          display: none;
+        .glb-marquee-track:hover {
+          animation-play-state: paused;
+        }
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
         }
         .glb-review-card-premium {
           flex: 0 0 350px;
@@ -346,7 +354,10 @@
 
       const html = `
         <div class="glb-premium-reviews-container">
-          ${trackContent}
+          <div class="glb-marquee-track">
+            ${trackContent}
+            ${trackContent}
+          </div>
         </div>
       `;
 
