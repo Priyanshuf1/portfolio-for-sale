@@ -690,17 +690,22 @@ html { scroll-behavior: smooth; }
       }
     });
 
-    // 5. Style all CTA buttons with Liquid Platinum Silver gradient & 3D shadow
+    // 5. Style all CTA buttons with Liquid Platinum Silver gradient & dark obsidian visible text
     document.querySelectorAll(
       'a[data-framer-name="Primary"], a[class*="framer-1z0enj7"], a[class*="framer-1dk6y11"]'
     ).forEach(function(btn) {
       if (btn.href && btn.href.includes('framer.link')) { btn.remove(); return; }
       btn.style.background = 'linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 40%, #94A3B8 100%)';
-      btn.style.color = '#050507';
+      btn.style.color = '#0A0E27';
       btn.style.fontWeight = '700';
       btn.style.border = 'none';
-      btn.style.boxShadow = '0 0 25px rgba(255, 255, 255, 0.25)';
+      btn.style.boxShadow = '0 0 25px rgba(255, 255, 255, 0.35)';
       btn.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+      btn.querySelectorAll('p, span, div, h1, h2, h3').forEach(function(child) {
+        child.style.color = '#0A0E27';
+        child.style.webkitTextFillColor = '#0A0E27';
+        child.style.fontWeight = '700';
+      });
     });
 
     // 6. Update Navbar Links

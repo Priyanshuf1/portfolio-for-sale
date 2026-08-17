@@ -56,6 +56,24 @@ const customCSS = `
     box-shadow: 0 0 28px rgba(255, 255, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
+
+  /* ⚡ Force Text Inside Silver CTA Buttons to Crystal Clear Dark Obsidian (#0A0E27) ⚡ */
+  a[class*="framer-"][class*="1dk6y11"] *,
+  a[class*="framer-"][class*="1z0enj7"] *,
+  a[class*="framer-1z0enj7"] *,
+  a[class*="framer-1dk6y11"] *,
+  a[data-framer-name="Primary"] *,
+  a[class*="framer-1z0enj7"] p,
+  a[class*="framer-1dk6y11"] p,
+  a[data-framer-name="Primary"] p,
+  a[class*="framer-1z0enj7"] span,
+  a[class*="framer-1dk6y11"] span,
+  a[data-framer-name="Primary"] span {
+    color: #0A0E27 !important;
+    -webkit-text-fill-color: #0A0E27 !important;
+    font-weight: 700 !important;
+  }
+
   a[class*="framer-"][class*="1dk6y11"]:hover,
   a[class*="framer-"][class*="1z0enj7"]:hover,
   a[data-framer-name="Primary"]:hover {
@@ -120,7 +138,7 @@ function processFile(filePath) {
             content = content.replace('</head>', customCSS + '\n</head>');
         }
         fs.writeFileSync(filePath, content);
-        console.log('✅ Updated index.html with Gold Theme & Liquid Silver Buttons');
+        console.log('✅ Updated index.html with Gold Theme & Liquid Silver Buttons (Dark Text)');
     }
 }
 
