@@ -21,7 +21,7 @@
   const particleCount = Math.min(35, Math.floor(width / 40));
 
   const colors = [
-    'rgba(6, 182, 212, ',   // Cyan (#06B6D4)
+    'rgba(212, 175, 55, ',   // Cyan (#D4AF37)
     'rgba(139, 92, 246, ',  // Violet (#8B5CF6)
     'rgba(16, 185, 129, '   // Emerald (#10B981)
   ];

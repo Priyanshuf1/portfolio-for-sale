@@ -7,9 +7,9 @@
       --rabto-bg: #070709;
       --rabto-card-bg: rgba(18, 18, 26, 0.7);
       --rabto-border: rgba(255, 255, 255, 0.08);
-      --rabto-accent-gold: #06B6D4;
+      --rabto-accent-gold: #D4AF37;
       --rabto-accent-purple: #8B5CF6;
-      --rabto-accent-cyan: #06B6D4;
+      --rabto-accent-cyan: #D4AF37;
       --rabto-glow-shadow: 0 10px 40px -10px rgba(139, 92, 246, 0.3);
     }
 
@@ -59,7 +59,7 @@
 
     /* Glowing Text Gradient Mask */
     .rabto-gradient-heading {
-      background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 40%, #8B5CF6 80%, #06B6D4 100%);
+      background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 40%, #8B5CF6 80%, #D4AF37 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }

@@ -12,7 +12,7 @@
       background-color: #0A0E27 !important;
       background-image: 
         radial-gradient(at 15% 10%, rgba(212, 175, 55, 0.18) 0px, transparent 50%),
-        radial-gradient(at 85% 15%, rgba(79, 70, 229, 0.25) 0px, transparent 50%),
+        radial-gradient(at 85% 15%, rgba(139, 92, 246, 0.25) 0px, transparent 50%),
         radial-gradient(at 50% 50%, rgba(212, 175, 55, 0.15) 0px, transparent 55%),
         radial-gradient(at 85% 85%, rgba(139, 92, 246, 0.2) 0px, transparent 50%),
         radial-gradient(at 15% 85%, rgba(16, 185, 129, 0.15) 0px, transparent 50%) !important;
