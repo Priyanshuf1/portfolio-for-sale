@@ -4,6 +4,9 @@ let html = fs.readFileSync('index.html', 'utf8');
 // Remove the old blog drawer if it exists
 html = html.replace('<script src="./blog-section.js"></script>\n', '');
 
+// Strip Framer hardcoded black body background style
+html = html.replace(/<style data-framer-html-style>[^<]+<\/style>/g, '<style data-framer-html-style>html body { background: #0A111E !important; }</style>');
+
 // Inject Firebase init before other custom scripts
 if (!html.includes('firebase-init.js')) {
     const firebaseScripts = `
