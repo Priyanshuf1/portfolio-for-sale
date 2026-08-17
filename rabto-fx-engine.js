@@ -1,12 +1,12 @@
 (function() {
-  // Rabto FX Engine: Ultra-Smooth 3D Card Tilt, Spotlight Glare, Radar Pulse, and Kinetic Scroll Animations
+  // Rabto FX Engine: Ultra-Fast Hardware-Accelerated 3D Card Tilt & Spotlight Glare (Zero Lag)
   
   const styles = `
     /* ── 3D Tilt & Mouse Spotlight Base ── */
     .rabto-tilt-card {
       transform-style: preserve-3d;
       perspective: 1000px;
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.12s cubic-bezier(0.1, 1, 0.2, 1), border-color 0.25s ease, box-shadow 0.25s ease;
       position: relative;
       overflow: hidden;
       will-change: transform;
@@ -22,7 +22,7 @@
       border-radius: inherit;
       z-index: 3;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.25s ease;
     }
 
     .rabto-tilt-card:hover .rabto-spotlight-glare {
@@ -32,18 +32,6 @@
     .rabto-tilt-card:hover {
       border-color: rgba(255, 199, 44, 0.5) !important;
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 199, 44, 0.25) !important;
-    }
-
-    /* ── Kinetic Scroll-Triggered Text Reveal ── */
-    .rabto-text-reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .rabto-text-reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     /* ── Live Pulsing Radar Beacon Rings ── */
@@ -137,7 +125,7 @@
 
   const _tiltedCards = new WeakSet();
 
-  // 1. Apply 3D Magnetic Tilt & Mouse Spotlight to Cards
+  // Fast per-card 3D Tilt without global document scanning (Zero Lag)
   function applyCardTiltFX() {
     const cards = document.querySelectorAll(
       '.glb-skill-card, .glb-home-blog-card, .glb-review-card-premium, .glb-contact-card, .glb-map-container-box, .glb-map-tilt-wrapper'
@@ -154,66 +142,29 @@
         glare.className = 'rabto-spotlight-glare';
         card.appendChild(glare);
       }
-    });
-  }
 
-  // Smooth mouse tilt handler across document
-  let ticking = false;
-  document.addEventListener('mousemove', (e) => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      ticking = false;
-      const cards = document.querySelectorAll('.rabto-tilt-card');
-      cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
-        const padding = 15; // smooth threshold
-        if (
-          e.clientX >= rect.left - padding &&
-          e.clientX <= rect.right + padding &&
-          e.clientY >= rect.top - padding &&
-          e.clientY <= rect.bottom + padding
-        ) {
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          
-          const rotateX = Math.max(-8, Math.min(8, ((y - centerY) / centerY) * -7));
-          const rotateY = Math.max(-8, Math.min(8, ((x - centerX) / centerX) * 7));
-          
-          card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.025, 1.025, 1.025)`;
-          card.style.setProperty('--mouse-x', `${x}px`);
-          card.style.setProperty('--mouse-y', `${y}px`);
-        } else {
-          if (card.style.transform && card.style.transform !== 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)') {
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-          }
-        }
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = Math.max(-8, Math.min(8, ((y - centerY) / centerY) * -7));
+        const rotateY = Math.max(-8, Math.min(8, ((x - centerX) / centerX) * 7));
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
       });
     });
-  });
-
-  // 2. Kinetic Scroll-Triggered Text & Card Reveals
-  function applyScrollReveals() {
-    const elements = document.querySelectorAll('.glb-skills-header, .glb-home-blogs-header, .glb-reviews-header, .glb-location-header, .glb-skill-card, .glb-home-blog-card, .glb-review-card-premium');
-    
-    elements.forEach(el => {
-      el.classList.add('rabto-text-reveal');
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    elements.forEach(el => observer.observe(el));
   }
 
-  // 3. Audio SFX Helper for Button Clicks
+  // 2. Audio SFX Helper for Button Clicks
   window.rabtoPlayClickSFX = function(freq = 600, type = 'sine', duration = 0.06) {
     try {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -240,15 +191,14 @@
 
   function initFXEngine() {
     applyCardTiltFX();
-    applyScrollReveals();
   }
 
   window.rabtoApplyTilt = applyCardTiltFX;
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(initFXEngine, 400));
+    document.addEventListener('DOMContentLoaded', () => setTimeout(initFXEngine, 200));
   } else {
-    setTimeout(initFXEngine, 400);
+    setTimeout(initFXEngine, 200);
   }
 
   setInterval(applyCardTiltFX, 1500);
