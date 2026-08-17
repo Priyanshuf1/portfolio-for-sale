@@ -30,6 +30,7 @@ if (!html.includes('svg-decorations.js')) html = html.replace('</body>', '<scrip
 if (!html.includes('rabto-fx-engine.js')) html = html.replace('</body>', '<script src="./rabto-fx-engine.js"></script>\n</body>');
 if (!html.includes('bg-enhancer.js')) html = html.replace('</body>', '<script src="./bg-enhancer.js"></script>\n</body>');
 if (!html.includes('skills-section.js')) html = html.replace('</body>', '<script src="./skills-section.js"></script>\n</body>');
+if (!html.includes('three-bg.js')) html = html.replace('</body>', '<script src="./three-bg.js"></script>\n</body>');
 
 fs.writeFileSync('index.html', html);
 console.log('Appended firebase-init and native sections to index.html');
