@@ -24,6 +24,7 @@ if (!html.includes('admin-panel.js')) html = html.replace('</body>', '<script sr
 if (!html.includes('ambient-particles.js')) html = html.replace('</body>', '<script src="./ambient-particles.js"></script>\n</body>');
 if (!html.includes('audio-system.js')) html = html.replace('</body>', '<script src="./audio-system.js"></script>\n</body>');
 if (!html.includes('svg-decorations.js')) html = html.replace('</body>', '<script src="./svg-decorations.js"></script>\n</body>');
+if (!html.includes('rabto-fx-engine.js')) html = html.replace('</body>', '<script src="./rabto-fx-engine.js"></script>\n</body>');
 
 fs.writeFileSync('index.html', html);
 console.log('Appended firebase-init and native sections to index.html');
