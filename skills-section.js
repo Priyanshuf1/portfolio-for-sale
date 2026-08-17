@@ -1,15 +1,15 @@
 (function() {
-  // Skills & Capabilities Showcase - Blackish Silver & Platinum Titanium Theme
+  // Skills & Capabilities Showcase - Gold Theme with Liquid Platinum Silver Buttons
   
   const styles = `
     .glb-skills-section {
       padding: 80px 5%;
-      background: #050507;
+      background: #0A0E27;
       color: white;
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       position: relative;
       z-index: 10;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(212, 175, 55, 0.15);
     }
     .glb-skills-inner {
       max-width: 1200px;
@@ -22,9 +22,9 @@
     .glb-skills-badge {
       display: inline-block;
       padding: 5px 14px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #FFFFFF;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      color: #D4AF37;
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 1px;
@@ -35,14 +35,14 @@
     .glb-skills-header h2 {
       font-size: clamp(2rem, 4vw, 3rem);
       margin: 0 0 10px;
-      background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 50%, #64748B 100%);
+      background: linear-gradient(135deg, #D4AF37 0%, #F0D060 50%, #D4AF37 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;
       font-weight: 700;
     }
     .glb-skills-header p {
-      color: #94A3B8;
+      color: #888888;
       font-size: 1.05rem;
       max-width: 600px;
       margin: 0 auto;
@@ -59,8 +59,8 @@
     .glb-skills-tab {
       padding: 9px 20px;
       background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #94A3B8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #888888;
       border-radius: 24px;
       font-size: 13px;
       font-weight: 600;
@@ -69,13 +69,13 @@
     }
     .glb-skills-tab:hover {
       color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.25);
     }
     .glb-skills-tab.active {
-      background: linear-gradient(135deg, #FFFFFF, #CBD5E1);
-      color: #050507;
+      background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 45%, #94A3B8 100%);
+      color: #0A0E27;
       border-color: #ffffff;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
     }
 
     .glb-skills-grid {
@@ -84,22 +84,22 @@
       gap: 22px;
     }
     .glb-skill-card {
-      background: rgba(18, 18, 24, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(20, 20, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 24px;
       display: flex;
       flex-direction: column;
       gap: 14px;
       position: relative;
-      box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.12), 0 10px 25px rgba(0, 0, 0, 0.6);
+      box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.08), 0 10px 25px rgba(0, 0, 0, 0.4);
       transition: all 0.3s ease;
     }
     .glb-skill-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(255, 255, 255, 0.3);
-      background: rgba(24, 24, 32, 0.9);
-      box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.25), 0 15px 30px rgba(0, 0, 0, 0.8);
+      border-color: rgba(212, 175, 55, 0.4);
+      background: rgba(26, 26, 26, 0.9);
+      box-shadow: inset 0px 1px 0px 0px rgba(212, 175, 55, 0.2), 0 15px 30px rgba(0, 0, 0, 0.6);
     }
     .glb-skill-top {
       display: flex;
@@ -110,8 +110,8 @@
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.25);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -120,11 +120,11 @@
     .glb-skill-badge-tag {
       font-size: 11px;
       font-weight: 600;
-      color: #E2E8F0;
-      background: rgba(255, 255, 255, 0.08);
+      color: #D4AF37;
+      background: rgba(212, 175, 55, 0.1);
       padding: 3px 9px;
       border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(212, 175, 55, 0.25);
     }
     .glb-skill-title {
       font-size: 1.15rem;
@@ -134,7 +134,7 @@
     }
     .glb-skill-desc {
       font-size: 13.5px;
-      color: #94A3B8;
+      color: #888888;
       line-height: 1.5;
       margin: 0;
       flex-grow: 1;
@@ -151,18 +151,18 @@
       justify-content: space-between;
       font-size: 11.5px;
       font-weight: 600;
-      color: #94A3B8;
+      color: #888888;
     }
     .glb-skill-progress-bar {
       width: 100%;
       height: 5px;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.06);
       border-radius: 8px;
       overflow: hidden;
     }
     .glb-skill-progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #FFFFFF, #94A3B8);
+      background: linear-gradient(90deg, #D4AF37, #F0D060);
       border-radius: 8px;
       width: 0%;
       transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
