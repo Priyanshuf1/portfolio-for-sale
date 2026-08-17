@@ -70,12 +70,11 @@
       justify-content: space-between;
       align-items: center;
       gap: 16px;
-      transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
     .glb-contact-card:hover {
       background: rgba(255,255,255,0.06);
       border-color: rgba(255,199,44,0.5);
-      transform: translateX(4px);
     }
     .glb-contact-card-left { display: flex; align-items: center; gap: 16px; }
     .glb-contact-card-icon {
@@ -105,16 +104,16 @@
       color: #0A0E27; border-color: transparent; font-weight: 700;
     }
 
-    /* Map Box — engine handles all tilt via .glb-map-tilt-wrapper */
-    .glb-map-tilt-wrapper {
+    /* Map Box Container */
+    .glb-map-container-box {
       position: relative;
       min-height: 460px;
       border-radius: 20px;
       border: 1px solid rgba(255,199,44,0.35);
       box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 35px rgba(255,199,44,0.2);
       overflow: hidden;
+      background: #0D111A;
     }
-
 
     .glb-map-floating-badge {
       position: absolute; top: 16px; left: 16px; z-index: 5;
@@ -138,11 +137,12 @@
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255,199,44,0); }
     }
 
-    /* The actual iframe fills the whole box */
+    /* Live Google Maps Iframe with dark filter */
     .glb-map-iframe-element {
       width: 100%; height: 100%; min-height: 460px;
       border: 0; display: block;
       position: relative; z-index: 1;
+      filter: invert(90%) hue-rotate(180deg) grayscale(70%) contrast(110%);
     }
 
     .glb-map-direct-btn {
@@ -157,8 +157,8 @@
     .glb-map-direct-btn:hover { background: #FFC72C; color: #0A0E27; box-shadow: 0 0 25px rgba(255,199,44,0.6); }
   `;
 
-  // Use OpenStreetMap (never blocked, no API key needed, free forever)
-  const osmSrc = 'https://www.openstreetmap.org/export/embed.html?bbox=80.9182%2C26.8148%2C81.0182%2C26.8748&layer=mapnik&marker=26.8448%2C80.9683';
+  // Official Live Google Maps Embed URL pointing exactly to Gomti Nagar, Lucknow UP
+  const mapSrc = 'https://maps.google.com/maps?q=26.8448,80.9683&z=15&output=embed';
 
   const html = `
     <div class="glb-location-section">
@@ -212,17 +212,16 @@
             </div>
           </div>
 
-          <div class="glb-map-tilt-wrapper" id="glbMapTilt">
+          <div class="glb-map-container-box" id="glbMapBox">
             <div class="glb-map-floating-badge">
               <span class="glb-map-dot"></span>
               <span>Gomti Nagar, Lucknow — Live HQ</span>
             </div>
             <iframe
               class="glb-map-iframe-element"
-              src="${osmSrc}"
+              src="${mapSrc}"
               allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
+              loading="lazy">
             </iframe>
             <a href="https://maps.google.com/?q=26.8448,80.9683" target="_blank" class="glb-map-direct-btn" rel="noopener noreferrer">
               Open in Google Maps ↗
@@ -242,13 +241,7 @@
   container.className = 'glb-location-section-wrapper';
   container.innerHTML = html;
 
-  function init3DTilt() {
-    // Tilt is handled by rabto-fx-engine.js via .glb-map-tilt-wrapper selector
-    // Nothing to do here — engine will pick it up after section is in DOM
-  }
-
   function insertLocation() {
-    // Remove old instance if any
     const old = document.getElementById('glb-location');
     if (old) old.remove();
 
@@ -263,10 +256,9 @@
       document.body.appendChild(container);
     }
 
-    // Let the engine pick up .glb-map-tilt-wrapper immediately
     setTimeout(() => {
       if (typeof window.rabtoApplyTilt === 'function') window.rabtoApplyTilt();
-    }, 350);
+    }, 200);
   }
 
   if (document.readyState === 'loading') {

@@ -1,14 +1,15 @@
 (function() {
-  // Rabto FX Engine: 3D Card Tilt, Mouse Spotlight Glare, Radar Pulse, and Kinetic Scroll Animations
+  // Rabto FX Engine: Ultra-Smooth 3D Card Tilt, Spotlight Glare, Radar Pulse, and Kinetic Scroll Animations
   
   const styles = `
     /* ── 3D Tilt & Mouse Spotlight Base ── */
     .rabto-tilt-card {
       transform-style: preserve-3d;
       perspective: 1000px;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
       position: relative;
       overflow: hidden;
+      will-change: transform;
     }
 
     /* Mouse Spotlight Beam Glare */
@@ -17,9 +18,9 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       pointer-events: none;
-      background: radial-gradient(500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(212, 175, 55, 0.15), transparent 45%);
+      background: radial-gradient(550px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 199, 44, 0.18), transparent 45%);
       border-radius: inherit;
-      z-index: 2;
+      z-index: 3;
       opacity: 0;
       transition: opacity 0.3s ease;
     }
@@ -29,8 +30,8 @@
     }
 
     .rabto-tilt-card:hover {
-      border-color: rgba(212, 175, 55, 0.45) !important;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(212, 175, 55, 0.25) !important;
+      border-color: rgba(255, 199, 44, 0.5) !important;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 199, 44, 0.25) !important;
     }
 
     /* ── Kinetic Scroll-Triggered Text Reveal ── */
@@ -60,7 +61,7 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background: rgba(212, 175, 55, 0.4);
+      background: rgba(255, 199, 44, 0.4);
       animation: rabtoRadarPulse 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
       pointer-events: none;
     }
@@ -117,7 +118,7 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 2px;
-      background: linear-gradient(90deg, transparent, #D4AF37, #F0D060, #FFFFFF, transparent);
+      background: linear-gradient(90deg, transparent, #FFC72C, #FFE066, #FFFFFF, transparent);
       background-size: 200% 100%;
       animation: rabtoHeaderGlow 6s linear infinite;
       pointer-events: none;
@@ -134,17 +135,16 @@
   styleEl.innerHTML = styles;
   document.head.appendChild(styleEl);
 
-  // Track processed cards so we never add duplicate listeners
   const _tiltedCards = new WeakSet();
 
   // 1. Apply 3D Magnetic Tilt & Mouse Spotlight to Cards
   function applyCardTiltFX() {
     const cards = document.querySelectorAll(
-      '.glb-skill-card, .glb-home-blog-card, .glb-review-card-premium, .glb-contact-card, .glb-map-tilt-wrapper'
+      '.glb-skill-card, .glb-home-blog-card, .glb-review-card-premium, .glb-contact-card, .glb-map-container-box, .glb-map-tilt-wrapper'
     );
     
     cards.forEach(card => {
-      if (_tiltedCards.has(card)) return; // already wired up — skip
+      if (_tiltedCards.has(card)) return;
       _tiltedCards.add(card);
 
       card.classList.add('rabto-tilt-card');
@@ -154,28 +154,45 @@
         glare.className = 'rabto-spotlight-glare';
         card.appendChild(glare);
       }
-
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = ((y - centerY) / centerY) * -6; // Max 6deg tilt
-        const rotateY = ((x - centerX) / centerX) * 6;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-      });
-
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-      });
     });
   }
+
+  // Smooth mouse tilt handler across document
+  let ticking = false;
+  document.addEventListener('mousemove', (e) => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      ticking = false;
+      const cards = document.querySelectorAll('.rabto-tilt-card');
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const padding = 15; // smooth threshold
+        if (
+          e.clientX >= rect.left - padding &&
+          e.clientX <= rect.right + padding &&
+          e.clientY >= rect.top - padding &&
+          e.clientY <= rect.bottom + padding
+        ) {
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          
+          const rotateX = Math.max(-8, Math.min(8, ((y - centerY) / centerY) * -7));
+          const rotateY = Math.max(-8, Math.min(8, ((x - centerX) / centerX) * 7));
+          
+          card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.025, 1.025, 1.025)`;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        } else {
+          if (card.style.transform && card.style.transform !== 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)') {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+          }
+        }
+      });
+    });
+  });
 
   // 2. Kinetic Scroll-Triggered Text & Card Reveals
   function applyScrollReveals() {
@@ -226,7 +243,6 @@
     applyScrollReveals();
   }
 
-  // Expose globally so location-section.js can call it after late injection
   window.rabtoApplyTilt = applyCardTiltFX;
 
   if (document.readyState === 'loading') {
@@ -235,6 +251,5 @@
     setTimeout(initFXEngine, 400);
   }
 
-  // Re-scan every 1.5s for late-injected sections (location, blog, etc.)
   setInterval(applyCardTiltFX, 1500);
 })();

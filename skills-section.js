@@ -96,7 +96,6 @@
       transition: all 0.3s ease;
     }
     .glb-skill-card:hover {
-      transform: translateY(-4px);
       border-color: rgba(255, 199, 44, 0.4);
       background: rgba(26, 26, 26, 0.9);
       box-shadow: inset 0px 1px 0px 0px rgba(255, 199, 44, 0.2), 0 15px 30px rgba(0, 0, 0, 0.6);

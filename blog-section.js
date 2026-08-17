@@ -59,9 +59,8 @@
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glb-home-blog-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(74, 222, 128, 0.3);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(74, 222, 128, 0.1);
+      border-color: rgba(255, 199, 44, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 199, 44, 0.15);
     }
     .glb-home-blog-img-wrap {
       width: 100%;
