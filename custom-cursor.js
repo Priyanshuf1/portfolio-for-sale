@@ -16,7 +16,7 @@
       z-index: 99999;
       transform: translate(-50%, -50%);
       box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
-      transition: transform 0.15s ease-out, background-color 0.3s ease;
+      transition: transform 0.15s ease-out, background-color 0.3s ease, opacity 0.2s ease;
     }
 
     #rabto-cursor-ring {
@@ -28,7 +28,7 @@
       pointer-events: none;
       z-index: 99998;
       transform: translate(-50%, -50%);
-      transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+      transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, opacity 0.2s ease;
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
     }
 
@@ -47,6 +47,11 @@
 
     body.rabto-clicking #rabto-cursor-ring {
       transform: translate(-50%, -50%) scale(0.75);
+    }
+
+    body.rabto-over-iframe #rabto-cursor-dot,
+    body.rabto-over-iframe #rabto-cursor-ring {
+      opacity: 0 !important;
     }
   `;
 
@@ -69,6 +74,13 @@
     mouseX = e.clientX; mouseY = e.clientY;
     dot.style.left = `${mouseX}px`;
     dot.style.top = `${mouseY}px`;
+
+    const el = document.elementFromPoint(mouseX, mouseY);
+    if (el && (el.tagName === 'IFRAME' || el.closest('.glb-map-container-box'))) {
+      document.body.classList.add('rabto-over-iframe');
+    } else {
+      document.body.classList.remove('rabto-over-iframe');
+    }
   });
 
   function animateRing() {

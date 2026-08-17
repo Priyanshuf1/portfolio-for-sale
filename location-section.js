@@ -142,9 +142,10 @@
       min-height: 460px;
       border-radius: 20px;
       overflow: hidden;
-      border: 1px solid rgba(255, 199, 44, 0.3);
+      border: 1px solid rgba(255, 199, 44, 0.35);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 199, 44, 0.2);
       background: #0D1117;
+      cursor: auto !important;
     }
 
     .glb-map-floating-badge {
@@ -189,7 +190,8 @@
       min-height: 460px;
       border: 0;
       display: block;
-      filter: invert(90%) hue-rotate(180deg) contrast(110%);
+      pointer-events: auto !important;
+      cursor: auto !important;
     }
 
     .glb-map-direct-btn {

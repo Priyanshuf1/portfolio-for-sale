@@ -136,7 +136,7 @@
 
   // 1. Apply 3D Magnetic Tilt & Mouse Spotlight to Cards
   function applyCardTiltFX() {
-    const cards = document.querySelectorAll('.glb-skill-card, .glb-home-blog-card, .glb-review-card-premium, .glb-contact-card, .glb-map-container-box');
+    const cards = document.querySelectorAll('.glb-skill-card, .glb-home-blog-card, .glb-review-card-premium, .glb-contact-card');
     
     cards.forEach(card => {
       card.classList.add('rabto-tilt-card');
