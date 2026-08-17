@@ -1,54 +1,85 @@
 (function() {
   const styles = `
     .glb-home-blogs {
-      padding: 60px 5%;
-      background: var(--bg, #0a0a0a);
+      padding: 80px 5%;
+      background: #0a0a0a;
       color: white;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       position: relative;
       z-index: 10;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
     .glb-home-blogs-header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
+    }
+    .glb-home-blogs-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid rgba(74, 222, 128, 0.25);
+      color: #4ade80;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-radius: 20px;
+      margin-bottom: 12px;
     }
     .glb-home-blogs-header h2 {
-      font-size: 2.5rem;
-      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 0 0 10px;
       background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;
+      font-weight: 700;
+    }
+    .glb-home-blogs-header p {
+      color: #888;
+      font-size: 1.1rem;
+      margin: 0;
     }
     .glb-home-blogs-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
+      gap: 28px;
       max-width: 1200px;
       margin: 0 auto;
     }
     .glb-home-blog-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
+      border-radius: 18px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       text-decoration: none;
       color: white;
-      transition: transform 0.3s, border-color 0.3s;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glb-home-blog-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-8px);
+      border-color: rgba(74, 222, 128, 0.3);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(74, 222, 128, 0.1);
+    }
+    .glb-home-blog-img-wrap {
+      width: 100%;
+      height: 210px;
+      overflow: hidden;
+      position: relative;
     }
     .glb-home-blog-img {
       width: 100%;
-      height: 200px;
+      height: 100%;
       object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glb-home-blog-card:hover .glb-home-blog-img {
+      transform: scale(1.06);
     }
     .glb-home-blog-content {
-      padding: 20px;
+      padding: 24px;
       flex-grow: 1;
       display: flex;
       flex-direction: column;
@@ -56,42 +87,70 @@
     .glb-home-blog-meta {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       color: #888;
-      font-size: 13px;
+      font-size: 12px;
       text-transform: uppercase;
       font-weight: 600;
-      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .glb-home-blog-category {
+      color: #4ade80;
+      background: rgba(74, 222, 128, 0.1);
+      padding: 3px 10px;
+      border-radius: 12px;
     }
     .glb-home-blog-title {
-      font-size: 1.2rem;
-      margin: 0 0 10px;
+      font-size: 1.25rem;
+      margin: 0 0 12px;
       line-height: 1.4;
       font-weight: 600;
+      color: #fff;
     }
     .glb-home-blog-excerpt {
-      color: #888;
+      color: #999;
       font-size: 14px;
       line-height: 1.6;
-      margin: 0;
+      margin: 0 0 20px;
       flex-grow: 1;
+    }
+    .glb-home-blog-read {
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .glb-home-blog-card:hover .glb-home-blog-read {
+      color: #4ade80;
     }
     .glb-home-blogs-btn-wrapper {
       text-align: center;
-      margin-top: 40px;
+      margin-top: 50px;
     }
     .glb-home-blogs-btn {
-      display: inline-block;
-      padding: 12px 24px;
-      background: transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: rgba(255,255,255,0.05);
       color: white;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
       text-decoration: none;
-      font-weight: 500;
-      transition: background 0.3s;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.3s ease;
     }
     .glb-home-blogs-btn:hover {
-      background: rgba(255,255,255,0.1);
+      background: #4ade80;
+      color: #111;
+      border-color: #4ade80;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(74, 222, 128, 0.25);
     }
   `;
 
@@ -136,19 +195,22 @@
           console.error("Error fetching blogs for home:", e);
       }
 
-      // Take only the top 3
+      // Take top 3 unique blogs
       const top3 = allBlogs.slice(0, 3);
 
       let cardsHtml = top3.map(blog => `
           <a href="./blog.html" class="glb-home-blog-card">
-              <img src="\${blog.image}" class="glb-home-blog-img" alt="\${blog.title}">
+              <div class="glb-home-blog-img-wrap">
+                  <img src="${blog.image}" class="glb-home-blog-img" alt="${blog.title}">
+              </div>
               <div class="glb-home-blog-content">
                   <div class="glb-home-blog-meta">
-                      <span style="color:#4ade80">\${blog.category}</span>
-                      <span>\${blog.date}</span>
+                      <span class="glb-home-blog-category">${blog.category}</span>
+                      <span>${blog.date}</span>
                   </div>
-                  <h3 class="glb-home-blog-title">\${blog.title}</h3>
-                  <p class="glb-home-blog-excerpt">\${blog.excerpt}</p>
+                  <h3 class="glb-home-blog-title">${blog.title}</h3>
+                  <p class="glb-home-blog-excerpt">${blog.excerpt}</p>
+                  <span class="glb-home-blog-read">Read Article →</span>
               </div>
           </a>
       `).join('');
@@ -156,13 +218,15 @@
       const html = `
         <div class="glb-home-blogs">
           <div class="glb-home-blogs-header">
-            <h2>Latest Insights</h2>
+            <span class="glb-home-blogs-badge">OUR JOURNAL</span>
+            <h2>Latest Insights & Strategy</h2>
+            <p>Industry trends, growth tactics, and digital marketing insights from our team</p>
           </div>
           <div class="glb-home-blogs-grid">
-            \${cardsHtml}
+            ${cardsHtml}
           </div>
           <div class="glb-home-blogs-btn-wrapper">
-            <a href="./blog.html" class="glb-home-blogs-btn">View All Articles</a>
+            <a href="./blog.html" class="glb-home-blogs-btn">View All Articles &rarr;</a>
           </div>
         </div>
       `;
@@ -172,12 +236,17 @@
       document.head.appendChild(styleEl);
 
       const container = document.createElement('section');
+      container.className = 'glb-home-blogs-section-wrapper';
       container.innerHTML = html;
 
-      // Insert right above the custom footer
+      // Insert right above location section or custom footer
+      let locationSec = document.getElementById('glb-location');
       let footer = document.querySelector('footer.glb-footer');
-      let mainRoot = document.getElementById('main') || document.body;
-      if (footer && footer.parentNode) {
+      let mainRoot = document.body;
+
+      if (locationSec && locationSec.parentNode) {
+          locationSec.parentNode.insertBefore(container, locationSec);
+      } else if (footer && footer.parentNode) {
           footer.parentNode.insertBefore(container, footer);
       } else {
           mainRoot.appendChild(container);
@@ -187,8 +256,8 @@
   if (window.firebaseReady) {
       loadHomeBlogs();
   } else {
-      window.addEventListener('firebase-ready', loadHomeBlogs);
-      setTimeout(loadHomeBlogs, 3000);
+      window.addEventListener('firebaseLoaded', loadHomeBlogs);
+      setTimeout(loadHomeBlogs, 1500);
   }
 
 })();

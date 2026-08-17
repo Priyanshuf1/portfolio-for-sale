@@ -1,6 +1,6 @@
 (function() {
   // === SECURITY CONFIG ===
-  const ADMIN_PASSWORD = 'GLM@Admin2025'; // Change this to your preferred password
+  const ADMIN_PASSWORD = 'GLM@Admin2025'; // Default admin password
 
   const styles = `
     /* Admin Nav Link */
@@ -50,10 +50,10 @@
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 20px;
       width: 90%;
-      max-width: 600px;
+      max-width: 650px;
       max-height: 90vh;
       overflow-y: auto;
-      padding: 40px;
+      padding: 35px;
       position: relative;
       color: white;
       font-family: 'Inter', system-ui, sans-serif;
@@ -168,7 +168,17 @@
     .glb-tab-content { display: none; }
     .glb-tab-content.active { display: block; }
 
-    /* Pending Reviews */
+    /* Reviews Management Cards */
+    .glb-review-section-header {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #4ade80;
+      margin: 20px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
     .glb-pending-review {
       background: rgba(255,255,255,0.04);
       padding: 16px;
@@ -176,15 +186,32 @@
       margin-bottom: 14px;
       border: 1px solid rgba(255,255,255,0.08);
     }
-    .glb-pending-review strong { color: #4ade80; }
+    .glb-pending-review strong { color: #fff; }
     .glb-pending-review p { margin: 5px 0; font-size: 14px; color: #ccc; }
+    .glb-review-action-btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
     .glb-approve-btn {
       background: #4ade80; color: #111; border: none;
       padding: 7px 14px; border-radius: 6px; cursor: pointer;
-      font-size: 13px; font-weight: 700; margin-top: 10px;
+      font-size: 13px; font-weight: 700;
       transition: background 0.2s;
     }
     .glb-approve-btn:hover { background: #3ac06a; }
+    .glb-delete-btn {
+      background: rgba(248, 113, 113, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      padding: 7px 14px; border-radius: 6px; cursor: pointer;
+      font-size: 13px; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .glb-delete-btn:hover {
+      background: #f87171;
+      color: #fff;
+    }
 
     /* Blog Form */
     .glb-form-group { margin-bottom: 18px; }
@@ -234,7 +261,7 @@
 
           <div class="glb-admin-tabs">
             <div class="glb-admin-tab active" data-tab="blog">📝 Publish Blog</div>
-            <div class="glb-admin-tab" data-tab="reviews">✅ Approve Reviews</div>
+            <div class="glb-admin-tab" data-tab="reviews">⭐ Manage Reviews</div>
           </div>
 
           <div class="glb-tab-content active" id="tab-blog">
@@ -266,7 +293,7 @@
 
           <div class="glb-tab-content" id="tab-reviews">
             <div id="glbPendingReviewsList">
-              <p style="color:#888; text-align:center; padding:20px 0;">Loading pending reviews...</p>
+              <p style="color:#888; text-align:center; padding:20px 0;">Loading reviews...</p>
             </div>
           </div>
         </div>
@@ -294,28 +321,26 @@
 
   // --- Add Admin button next to "Contact Us" in navbar ---
   function addAdminNavButton() {
-    // Look for the Contact Us nav link
     let contactLink = null;
     document.querySelectorAll('nav a, [data-framer-name="nav links"] a').forEach(a => {
       if (a.textContent.trim().toLowerCase().includes('contact')) contactLink = a;
     });
     
     if (!contactLink) {
-      // Retry - Framer may not have hydrated yet
       setTimeout(addAdminNavButton, 800);
       return;
     }
 
-    // Find or create nav container
     const navContainer = contactLink.closest('nav') || contactLink.closest('[data-framer-name="nav links"]') || contactLink.parentElement;
     
+    if (document.getElementById('glbTriggerAdmin')) return;
+
     const adminBtn = document.createElement('button');
     adminBtn.className = 'glb-admin-nav-btn';
     adminBtn.id = 'glbTriggerAdmin';
     adminBtn.textContent = '⚙ Admin';
     adminBtn.title = 'Admin Panel - Password Protected';
     
-    // Try to insert after the contact link's parent container
     const contactContainer = contactLink.closest('li') || contactLink.parentElement;
     if (contactContainer && contactContainer.parentNode) {
       contactContainer.parentNode.insertBefore(adminBtn, contactContainer.nextSibling);
@@ -328,7 +353,6 @@
 
   function openAdminPanel() {
     overlay.classList.add('active');
-    // Check if already authenticated this session
     if (sessionStorage.getItem('glm_admin_auth') === '1') {
       showDashboard();
     } else {
@@ -375,58 +399,109 @@
       contents.forEach(c => c.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-      if (tab.dataset.tab === 'reviews') fetchPendingReviews();
+      if (tab.dataset.tab === 'reviews') fetchAllReviewsForAdmin();
     });
   });
 
-  // --- Fetch Pending Reviews ---
-  async function fetchPendingReviews() {
+  // --- Fetch All Reviews (Pending & Approved with Delete options) ---
+  async function fetchAllReviewsForAdmin() {
     const list = document.getElementById('glbPendingReviewsList');
     if (!window.firebaseDB) {
-      list.innerHTML = '<p style="color:#f87171; text-align:center;">Firebase not connected.</p>';
+      list.innerHTML = '<p style="color:#f87171; text-align:center;">Firebase Realtime Database not connected.</p>';
       return;
     }
     try {
       const snapshot = await window.firebaseDB.ref("reviews").once('value');
-      let html = '';
+      let pendingHtml = '';
+      let approvedHtml = '';
+
       if (snapshot.exists()) {
         snapshot.forEach(childSnapshot => {
           const rev = childSnapshot.val();
           const key = childSnapshot.key;
+          const stars = '★'.repeat(rev.rating || 5);
+          
           if (rev.status === 'pending') {
-            html += `
+            pendingHtml += `
               <div class="glb-pending-review" id="review-${key}">
-                <p><strong>${rev.author}</strong> &nbsp;•&nbsp; ${'★'.repeat(rev.rating || 5)} (${rev.rating || 5}/5)</p>
+                <p><strong>${rev.author || 'Anonymous'}</strong> &nbsp;•&nbsp; <span style="color:#ffd700">${stars}</span> (${rev.rating || 5}/5)</p>
                 <p>"${rev.text}"</p>
-                <button class="glb-approve-btn" onclick="window.approveReview('${key}')">✓ Approve & Make Live</button>
+                <div class="glb-review-action-btns">
+                  <button class="glb-approve-btn" onclick="window.approveReview('${key}')">✓ Approve & Make Live</button>
+                  <button class="glb-delete-btn" onclick="window.deleteReview('${key}')">🗑 Delete</button>
+                </div>
+              </div>
+            `;
+          } else {
+            approvedHtml += `
+              <div class="glb-pending-review" id="review-${key}">
+                <p><strong>${rev.author || 'Anonymous'}</strong> &nbsp;•&nbsp; <span style="color:#ffd700">${stars}</span> (Live)</p>
+                <p>"${rev.text}"</p>
+                <div class="glb-review-action-btns">
+                  <button class="glb-delete-btn" onclick="window.deleteReview('${key}')">🗑 Delete Review</button>
+                </div>
               </div>
             `;
           }
         });
       }
-      if (!html) html = '<p style="color:#888; text-align:center; padding:20px 0;">No pending reviews. All clear!</p>';
-      list.innerHTML = html;
+
+      let finalHtml = '';
+      
+      finalHtml += `<div class="glb-review-section-header">⏳ Pending Approval</div>`;
+      finalHtml += pendingHtml || `<p style="color:#888; font-size:14px; font-style:italic;">No pending reviews.</p>`;
+      
+      finalHtml += `<div class="glb-review-section-header" style="margin-top:30px;">✅ Approved & Live Reviews</div>`;
+      finalHtml += approvedHtml || `<p style="color:#888; font-size:14px; font-style:italic;">No live reviews found in database.</p>`;
+
+      list.innerHTML = finalHtml;
     } catch (e) {
-      list.innerHTML = `<p style="color:#f87171; text-align:center;">Error: ${e.message}</p>`;
+      list.innerHTML = `<p style="color:#f87171; text-align:center;">Error loading reviews: ${e.message}</p>`;
     }
   }
 
+  // --- Approve Review ---
   window.approveReview = async function(key) {
     if (!window.firebaseDB) return;
     const btn = document.querySelector(`#review-${key} .glb-approve-btn`);
     if (btn) { btn.innerText = 'Approving...'; btn.disabled = true; }
     try {
       await window.firebaseDB.ref("reviews/" + key).update({ status: 'approved' });
-      const card = document.getElementById(`review-${key}`);
+      alert('✅ Review approved and is now live!');
+      fetchAllReviewsForAdmin();
+    } catch (e) {
+      alert('Error approving review: ' + e.message);
+      if (btn) { btn.innerText = '✓ Approve & Make Live'; btn.disabled = false; }
+    }
+  };
+
+  // --- Delete Review ---
+  window.deleteReview = async function(key) {
+    if (!window.firebaseDB) return;
+    if (!confirm("Are you sure you want to delete this review permanently from the database?")) {
+      return;
+    }
+    
+    const card = document.getElementById(`review-${key}`);
+    if (card) {
+      card.style.opacity = '0.5';
+      card.style.pointerEvents = 'none';
+    }
+
+    try {
+      await window.firebaseDB.ref("reviews/" + key).remove();
       if (card) {
         card.style.opacity = '0';
         card.style.transition = 'opacity 0.3s';
         setTimeout(() => card.remove(), 300);
       }
-      alert('✅ Review approved and is now live on the website!');
+      alert('🗑️ Review permanently deleted!');
     } catch (e) {
-      alert('Error: ' + e.message);
-      if (btn) { btn.innerText = '✓ Approve & Make Live'; btn.disabled = false; }
+      alert('Error deleting review: ' + e.message);
+      if (card) {
+        card.style.opacity = '1';
+        card.style.pointerEvents = 'auto';
+      }
     }
   };
 
@@ -459,7 +534,7 @@
         stored.unshift({...newBlog, createdAt: Date.now()});
         localStorage.setItem('glb_blogs', JSON.stringify(stored));
       }
-      alert('✅ Blog published successfully! Refresh to see it on the site.');
+      alert('✅ Blog published successfully!');
       form.reset();
       overlay.classList.remove('active');
     } catch (err) {
@@ -470,7 +545,6 @@
     }
   });
 
-  // Start trying to add the nav button
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', addAdminNavButton);
   } else {

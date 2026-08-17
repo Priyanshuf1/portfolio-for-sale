@@ -1,24 +1,37 @@
 (function() {
   const styles = `
     .glb-location-section {
-      padding: 80px 5%;
+      padding: 90px 5%;
       background: #0a0a0a;
       color: white;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       position: relative;
       z-index: 10;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
     .glb-location-inner {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
     }
     .glb-location-header {
       text-align: center;
-      margin-bottom: 50px;
+      margin-bottom: 60px;
+    }
+    .glb-location-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid rgba(74, 222, 128, 0.25);
+      color: #4ade80;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border-radius: 20px;
+      margin-bottom: 12px;
     }
     .glb-location-header h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(2.2rem, 4.5vw, 3.2rem);
       margin: 0 0 12px;
       background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
       -webkit-background-clip: text;
@@ -29,73 +42,147 @@
     .glb-location-header p {
       color: #888;
       font-size: 1.1rem;
-      margin: 0;
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
     }
     .glb-location-grid {
       display: grid;
-      grid-template-columns: 1fr 1.8fr;
-      gap: 40px;
-      align-items: start;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 36px;
+      align-items: stretch;
     }
-    @media (max-width: 768px) {
-      .glb-location-grid { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .glb-location-grid {
+        grid-template-columns: 1fr;
+      }
     }
-    .glb-contact-details h3 {
-      font-size: 1.3rem;
-      margin: 0 0 24px;
-      color: white;
-      font-weight: 600;
-    }
-    .glb-contact-item {
+    .glb-contact-cards-wrap {
       display: flex;
-      align-items: flex-start;
-      gap: 15px;
-      margin-bottom: 20px;
-      padding: 16px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px;
+      flex-direction: column;
+      gap: 16px;
     }
-    .glb-contact-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      background: rgba(74,222,128,0.1);
-      border: 1px solid rgba(74,222,128,0.2);
+    .glb-contact-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glb-contact-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(74, 222, 128, 0.3);
+      transform: translateX(4px);
+    }
+    .glb-contact-card-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .glb-contact-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(74, 222, 128, 0.12);
+      border: 1px solid rgba(74, 222, 128, 0.25);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 18px;
+      font-size: 20px;
       flex-shrink: 0;
     }
-    .glb-contact-item-text {
+    .glb-contact-card-info {
       display: flex;
       flex-direction: column;
       gap: 3px;
     }
-    .glb-contact-item-label {
-      font-size: 12px;
+    .glb-contact-card-label {
+      font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: #4ade80;
-      font-weight: 600;
+      font-weight: 700;
     }
-    .glb-contact-item-value {
-      color: rgba(255,255,255,0.85);
+    .glb-contact-card-val {
+      color: #ffffff;
       font-size: 0.95rem;
+      font-weight: 500;
       line-height: 1.4;
     }
-    .glb-map-wrapper {
-      height: 420px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    .glb-contact-card-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s;
     }
-    .glb-map-wrapper iframe {
+    .glb-contact-card:hover .glb-contact-card-action {
+      background: #4ade80;
+      color: #111;
+      border-color: #4ade80;
+    }
+
+    /* Map Box */
+    .glb-map-container-box {
+      position: relative;
+      min-height: 440px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(74, 222, 128, 0.08);
+      background: #111;
+    }
+    .glb-map-floating-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 5;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .glb-map-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 10px #4ade80;
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(74, 222, 128, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+    }
+    .glb-map-iframe-element {
       width: 100%;
       height: 100%;
+      min-height: 440px;
       border: 0;
+      display: block;
+      filter: invert(90%) hue-rotate(180deg) grayscale(75%) contrast(110%);
     }
   `;
 
@@ -103,42 +190,74 @@
     <div class="glb-location-section">
       <div class="glb-location-inner">
         <div class="glb-location-header">
-          <h2>Find Us Here</h2>
-          <p>We're based in the heart of Lucknow, always ready to help you grow.</p>
+          <span class="glb-location-badge">OUR HEADQUARTERS</span>
+          <h2>Visit Our Lucknow Office</h2>
+          <p>Have a project in mind or want to discuss growth strategies? Stop by our office or reach out directly.</p>
         </div>
+
         <div class="glb-location-grid">
-          <div class="glb-contact-details">
-            <h3>Get In Touch</h3>
-            <div class="glb-contact-item">
-              <div class="glb-contact-icon">📍</div>
-              <div class="glb-contact-item-text">
-                <span class="glb-contact-item-label">Address</span>
-                <span class="glb-contact-item-value">Gomti Nagar, Lucknow, Uttar Pradesh, India</span>
+          <div class="glb-contact-cards-wrap">
+            
+            <div class="glb-contact-card">
+              <div class="glb-contact-card-left">
+                <div class="glb-contact-card-icon">📍</div>
+                <div class="glb-contact-card-info">
+                  <span class="glb-contact-card-label">Office Address</span>
+                  <span class="glb-contact-card-val">Gomti Nagar, Lucknow, UP 226010, India</span>
+                </div>
               </div>
+              <a href="https://maps.google.com/?q=Gomti+Nagar+Lucknow" target="_blank" class="glb-contact-card-action">Directions ↗</a>
             </div>
-            <div class="glb-contact-item">
-              <div class="glb-contact-icon">✉️</div>
-              <div class="glb-contact-item-text">
-                <span class="glb-contact-item-label">Email</span>
-                <span class="glb-contact-item-value">hello@globallogicmedia.com</span>
+
+            <div class="glb-contact-card">
+              <div class="glb-contact-card-left">
+                <div class="glb-contact-card-icon">📞</div>
+                <div class="glb-contact-card-info">
+                  <span class="glb-contact-card-label">Direct Phone</span>
+                  <span class="glb-contact-card-val">+91-7570060896 / +91-9208111603</span>
+                </div>
               </div>
+              <a href="tel:+917570060896" class="glb-contact-card-action">Call Us 📞</a>
             </div>
-            <div class="glb-contact-item">
-              <div class="glb-contact-icon">📞</div>
-              <div class="glb-contact-item-text">
-                <span class="glb-contact-item-label">Phone</span>
-                <span class="glb-contact-item-value">+91-7570060896</span>
+
+            <div class="glb-contact-card">
+              <div class="glb-contact-card-left">
+                <div class="glb-contact-card-icon">✉️</div>
+                <div class="glb-contact-card-info">
+                  <span class="glb-contact-card-label">Email Inquiries</span>
+                  <span class="glb-contact-card-val">hello@globallogicmedia.com</span>
+                </div>
               </div>
+              <a href="mailto:hello@globallogicmedia.com" class="glb-contact-card-action">Email Us ✉️</a>
             </div>
+
+            <div class="glb-contact-card">
+              <div class="glb-contact-card-left">
+                <div class="glb-contact-card-icon">🕒</div>
+                <div class="glb-contact-card-info">
+                  <span class="glb-contact-card-label">Working Hours</span>
+                  <span class="glb-contact-card-val">Mon – Sat: 9:00 AM – 7:00 PM IST</span>
+                </div>
+              </div>
+              <span style="font-size:12px; color:#4ade80; font-weight:600;">Open Today</span>
+            </div>
+
           </div>
-          <div class="glb-map-wrapper">
+
+          <div class="glb-map-container-box">
+            <div class="glb-map-floating-badge">
+              <span class="glb-map-dot"></span>
+              <span>Gomti Nagar, Lucknow</span>
+            </div>
             <iframe 
+              class="glb-map-iframe-element"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56957.53322471745!2d80.96827834872362!3d26.844855564452423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd49fc60a843%3A0x92fc72e19b623f6a!2sGomti%20Nagar%2C%20Lucknow%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1782382173315!5m2!1sen!2sin"
               allowfullscreen=""
               loading="lazy"
               referrerpolicy="strict-origin-when-cross-origin">
             </iframe>
           </div>
+
         </div>
       </div>
     </div>
@@ -150,24 +269,26 @@
 
   const container = document.createElement('section');
   container.id = 'glb-location';
+  container.className = 'glb-location-section-wrapper';
   container.innerHTML = html;
 
-  // Insert at VERY BOTTOM, right before the footer or as last child
   function insertLocation() {
     let footer = document.querySelector('footer.glb-footer');
-    let blogSection = document.querySelector('.glb-home-blogs');
+    let blogSection = document.querySelector('.glb-home-blogs-section-wrapper');
     let body = document.body;
-    
+
     if (footer && footer.parentNode) {
       footer.parentNode.insertBefore(container, footer);
     } else if (blogSection && blogSection.parentNode) {
-      // insert after blog section
       blogSection.parentNode.insertBefore(container, blogSection.nextSibling);
     } else {
       body.appendChild(container);
     }
   }
-  
-  // Wait for footer and blog section to be injected first
-  setTimeout(insertLocation, 500);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(insertLocation, 300));
+  } else {
+    setTimeout(insertLocation, 300);
+  }
 })();
