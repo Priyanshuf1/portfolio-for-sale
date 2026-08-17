@@ -11,9 +11,9 @@
     html, body, html body {
       background-color: #0A0E27 !important;
       background-image: 
-        radial-gradient(at 15% 10%, rgba(212, 175, 55, 0.18) 0px, transparent 50%),
+        radial-gradient(at 15% 10%, rgba(255, 199, 44, 0.18) 0px, transparent 50%),
         radial-gradient(at 85% 15%, rgba(139, 92, 246, 0.25) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(212, 175, 55, 0.15) 0px, transparent 55%),
+        radial-gradient(at 50% 50%, rgba(255, 199, 44, 0.15) 0px, transparent 55%),
         radial-gradient(at 85% 85%, rgba(139, 92, 246, 0.2) 0px, transparent 50%),
         radial-gradient(at 15% 85%, rgba(16, 185, 129, 0.15) 0px, transparent 50%) !important;
       background-attachment: fixed !important;
@@ -43,7 +43,7 @@
       background: rgba(10, 14, 39, 0.8) !important;
       backdrop-filter: blur(16px) !important;
       -webkit-backdrop-filter: blur(16px) !important;
-      border-top: 1px solid rgba(212, 175, 55, 0.15) !important;
+      border-top: 1px solid rgba(255, 199, 44, 0.15) !important;
     }
 
     .framer-1l7inir,
@@ -53,8 +53,8 @@
     .glb-skill-card {
       background: rgba(19, 24, 60, 0.8) !important;
       backdrop-filter: blur(14px) !important;
-      border: 1px solid rgba(212, 175, 55, 0.18) !important;
-      box-shadow: inset 0px 1px 0px 0px rgba(212, 175, 55, 0.15), 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+      border: 1px solid rgba(255, 199, 44, 0.18) !important;
+      box-shadow: inset 0px 1px 0px 0px rgba(255, 199, 44, 0.15), 0 10px 30px rgba(0, 0, 0, 0.6) !important;
     }
   `;
 

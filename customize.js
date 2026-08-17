@@ -5,8 +5,8 @@ const customCSS = `
 <style id="priyanshu-custom-theme">
   /* ── Luxury Midnight Blue + Gold Theme with Liquid Platinum Silver Buttons ── */
   :root {
-    --gold: #D4AF37;
-    --gold-light: #F0D060;
+    --gold: #FFC72C;
+    --gold-light: #FFE066;
     --midnight: #0A0E27;
     --midnight-mid: #131840;
     --midnight-card: #1A2255;
@@ -18,12 +18,13 @@ const customCSS = `
     background-color: var(--midnight) !important;
   }
 
-  /* Gold text for headings */
+  /* Razor-Sharp Rich Gold text for headings */
   h1, h2 {
-    background: linear-gradient(135deg, #D4AF37 0%, #F0D060 50%, #D4AF37 100%) !important;
+    background: linear-gradient(180deg, #FFF2A3 0%, #FFC72C 50%, #D48806 100%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     background-clip: text !important;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8)) !important;
   }
 
   /* Scrollbar */
@@ -32,7 +33,7 @@ const customCSS = `
   ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
 
   /* Gold selection highlight */
-  ::selection { background: rgba(212,175,55,0.35); color: #fff; }
+  ::selection { background: rgba(255, 199, 44, 0.35); color: #fff; }
 
   /* Nav bar luxury glass */
   header, nav, [data-framer-name="Navbar"],
@@ -40,7 +41,7 @@ const customCSS = `
     background: rgba(10, 14, 39, 0.85) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+    border-bottom: 1px solid rgba(255, 199, 44, 0.25) !important;
   }
 
   /* ⚡ ONLY CTA Primary Buttons → Liquid Platinum Silver Gradient ⚡ */
@@ -81,25 +82,25 @@ const customCSS = `
     transform: translateY(-2px) scale(1.03) !important;
   }
 
-  /* Cards hover glow → Gold */
+  /* Cards hover glow → Sharp Gold */
   [class*="framer-"]:hover > [class*="framer-s7w4jd"] {
-    box-shadow: 0 0 40px rgba(212, 175, 55, 0.25) !important;
+    box-shadow: 0 0 30px rgba(255, 199, 44, 0.35) !important;
   }
 
   /* Project card overlay border → gold tint */
   [data-framer-name="View Project"],
   [data-framer-name="View Casestudy"] {
-    border-color: rgba(212, 175, 55, 0.4) !important;
+    border-color: rgba(255, 199, 44, 0.5) !important;
     background-color: rgba(10, 14, 39, 0.75) !important;
   }
 
   /* Gold divider lines */
   [data-framer-name="separation"] {
-    background-color: rgba(212, 175, 55, 0.35) !important;
+    background-color: rgba(255, 199, 44, 0.4) !important;
     opacity: 1 !important;
   }
 
-  /* Cursor dot → gold */
+  /* Cursor dot → sharp gold */
   [class*="cursor"], [data-framer-cursor] {
     background: var(--gold) !important;
     mix-blend-mode: normal !important;
@@ -108,20 +109,20 @@ const customCSS = `
   /* Footer bg */
   footer, [data-framer-name="Footer"] {
     background: var(--midnight) !important;
-    border-top: 1px solid rgba(212, 175, 55, 0.15) !important;
+    border-top: 1px solid rgba(255, 199, 44, 0.2) !important;
   }
 
-  /* "Available / Open to projects" badge → Gold */
+  /* "Available / Open to projects" badge → Sharp Gold */
   [class*="framer-"][class*="jral3p"] {
-    border: 1px solid rgba(212,175,55,0.5) !important;
-    background: rgba(212,175,55,0.1) !important;
+    border: 1px solid rgba(255, 199, 44, 0.6) !important;
+    background: rgba(255, 199, 44, 0.12) !important;
     color: var(--gold) !important;
   }
 
   /* Social icon hover → gold */
   a[class*="framer-ir3zuj"]:hover svg,
   a[class*="framer-ir3zuj"]:hover use {
-    --21h8s6: #D4AF37 !important;
+    --21h8s6: #FFC72C !important;
   }
 
   html { scroll-behavior: smooth; }
@@ -138,7 +139,7 @@ function processFile(filePath) {
             content = content.replace('</head>', customCSS + '\n</head>');
         }
         fs.writeFileSync(filePath, content);
-        console.log('✅ Updated index.html with Gold Theme & Liquid Silver Buttons (Dark Text)');
+        console.log('✅ Updated index.html with Sharp Gold Theme & Liquid Silver Buttons');
     }
 }
 

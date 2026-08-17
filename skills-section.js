@@ -9,7 +9,7 @@
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       position: relative;
       z-index: 10;
-      border-top: 1px solid rgba(212, 175, 55, 0.15);
+      border-top: 1px solid rgba(255, 199, 44, 0.15);
     }
     .glb-skills-inner {
       max-width: 1200px;
@@ -22,9 +22,9 @@
     .glb-skills-badge {
       display: inline-block;
       padding: 5px 14px;
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.35);
-      color: #D4AF37;
+      background: rgba(255, 199, 44, 0.1);
+      border: 1px solid rgba(255, 199, 44, 0.35);
+      color: #FFC72C;
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 1px;
@@ -35,7 +35,7 @@
     .glb-skills-header h2 {
       font-size: clamp(2rem, 4vw, 3rem);
       margin: 0 0 10px;
-      background: linear-gradient(135deg, #D4AF37 0%, #F0D060 50%, #D4AF37 100%);
+      background: linear-gradient(180deg, #FFF2A3 0%, #FFC72C 50%, #D48806 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;
@@ -97,9 +97,9 @@
     }
     .glb-skill-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(212, 175, 55, 0.4);
+      border-color: rgba(255, 199, 44, 0.4);
       background: rgba(26, 26, 26, 0.9);
-      box-shadow: inset 0px 1px 0px 0px rgba(212, 175, 55, 0.2), 0 15px 30px rgba(0, 0, 0, 0.6);
+      box-shadow: inset 0px 1px 0px 0px rgba(255, 199, 44, 0.2), 0 15px 30px rgba(0, 0, 0, 0.6);
     }
     .glb-skill-top {
       display: flex;
@@ -110,8 +110,8 @@
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.25);
+      background: rgba(255, 199, 44, 0.1);
+      border: 1px solid rgba(255, 199, 44, 0.25);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -120,11 +120,11 @@
     .glb-skill-badge-tag {
       font-size: 11px;
       font-weight: 600;
-      color: #D4AF37;
-      background: rgba(212, 175, 55, 0.1);
+      color: #FFC72C;
+      background: rgba(255, 199, 44, 0.1);
       padding: 3px 9px;
       border-radius: 10px;
-      border: 1px solid rgba(212, 175, 55, 0.25);
+      border: 1px solid rgba(255, 199, 44, 0.25);
     }
     .glb-skill-title {
       font-size: 1.15rem;
@@ -162,7 +162,7 @@
     }
     .glb-skill-progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #D4AF37, #F0D060);
+      background: linear-gradient(90deg, #FFC72C, #FFE066);
       border-radius: 8px;
       width: 0%;
       transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
