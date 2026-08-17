@@ -206,7 +206,7 @@
                   <span class="glb-contact-card-val">Gomti Nagar, Lucknow, UP 226010, India</span>
                 </div>
               </div>
-              <a href="https://maps.google.com/?q=Gomti+Nagar+Lucknow" target="_blank" class="glb-contact-card-action">Directions ↗</a>
+              <a href="https://maps.google.com/?q=Gomti+Nagar+Lucknow" target="_blank" class="glb-contact-card-action" rel="noopener noreferrer">Directions ↗</a>
             </div>
 
             <div class="glb-contact-card">

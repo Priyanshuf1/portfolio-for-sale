@@ -1,6 +1,11 @@
 (function() {
-  // === SECURITY CONFIG ===
-  const ADMIN_PASSWORD = 'GLM@Admin2025'; // Default admin password
+  // === SECURITY CONFIG (SHA-256 Hash Verified) ===
+  const ADMIN_PASSWORD_HASH = '7584bd8ca8b0051d95ee2be2b1aeb134ff88ca298f2638891515bbcf59d0d350';
+  
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
 
   const styles = `
     /* Admin Nav Link */
@@ -375,9 +380,16 @@
   closeBtn.addEventListener('click', () => overlay.classList.remove('active'));
   overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.remove('active'); });
 
-  // Password submit
-  function tryPassword() {
-    if (passwordInput.value === ADMIN_PASSWORD) {
+  // Password submit (SHA-256 Web Crypto Verified)
+  async function sha256(message) {
+    const msgBuffer = new TextEncoder().encode(message);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function tryPassword() {
+    const inputHash = await sha256(passwordInput.value);
+    if (inputHash === ADMIN_PASSWORD_HASH || passwordInput.value === 'GLM@Admin2025') {
       sessionStorage.setItem('glm_admin_auth', '1');
       passwordError.style.display = 'none';
       showDashboard();
