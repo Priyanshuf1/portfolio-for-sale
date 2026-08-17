@@ -4,8 +4,11 @@ let html = fs.readFileSync('index.html', 'utf8');
 // Remove the old blog drawer if it exists
 html = html.replace('<script src="./blog-section.js"></script>\n', '');
 
-// Strip Framer hardcoded black body background style
-html = html.replace(/<style data-framer-html-style>[^<]+<\/style>/g, '<style data-framer-html-style>html body { background: #0A111E !important; }</style>');
+// Hide old Framer Client Reviews section
+if (!html.includes('/* Hide old testimonials section */')) {
+    const hideStyle = `<style>/* Hide old testimonials section */ #testimonials, section[data-framer-name="testimonials"], .framer-izep5p { display: none !important; }</style>\n`;
+    html = html.replace('</head>', hideStyle + '</head>');
+}
 
 // Inject Firebase init before other custom scripts
 if (!html.includes('firebase-init.js')) {
@@ -31,6 +34,7 @@ if (!html.includes('rabto-fx-engine.js')) html = html.replace('</body>', '<scrip
 if (!html.includes('bg-enhancer.js')) html = html.replace('</body>', '<script src="./bg-enhancer.js"></script>\n</body>');
 if (!html.includes('skills-section.js')) html = html.replace('</body>', '<script src="./skills-section.js"></script>\n</body>');
 if (!html.includes('three-bg.js')) html = html.replace('</body>', '<script src="./three-bg.js"></script>\n</body>');
+if (!html.includes('custom-cursor.js')) html = html.replace('</body>', '<script src="./custom-cursor.js"></script>\n</body>');
 
 fs.writeFileSync('index.html', html);
 console.log('Appended firebase-init and native sections to index.html');

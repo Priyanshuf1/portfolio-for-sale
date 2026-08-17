@@ -492,6 +492,7 @@ html { scroll-behavior: smooth; }
   display: block !important;
 }
 </style>
+<style>/* Hide old testimonials section */ #testimonials, section[data-framer-name="testimonials"], .framer-izep5p { display: none !important; }</style>
 </head>
 <body>
 	<script async src="https://events.framer.com/script?v=2" data-fid="07805f66fb3ca011a0801d8d941f438efe3612d49873dc2b9591176e4d006564" data-no-nt></script>
@@ -689,15 +690,17 @@ html { scroll-behavior: smooth; }
       }
     });
 
-    // 5. Style all CTA buttons gold (belt-and-braces, after hydration)
+    // 5. Style all CTA buttons with Electric Cyan-Violet gradient & animation (replacing gold)
     document.querySelectorAll(
       'a[data-framer-name="Primary"], a[class*="framer-1z0enj7"], a[class*="framer-1dk6y11"]'
     ).forEach(function(btn) {
       if (btn.href && btn.href.includes('framer.link')) { btn.remove(); return; }
-      btn.style.background = 'linear-gradient(135deg,#D4AF37,#F0D060)';
-      btn.style.color = '#0A0E27';
+      btn.style.background = 'linear-gradient(135deg, #06B6D4 0%, #3B82F6 50%, #8B5CF6 100%)';
+      btn.style.color = '#FFFFFF';
+      btn.style.fontWeight = '700';
       btn.style.border = 'none';
-      btn.style.boxShadow = '0 0 28px rgba(212,175,55,.45)';
+      btn.style.boxShadow = '0 0 25px rgba(6, 182, 212, 0.45)';
+      btn.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
     });
 
     // 6. Update Navbar Links
@@ -891,7 +894,8 @@ html { scroll-behavior: smooth; }
 <script src="./rabto-fx-engine.js"></script>
 <script src="./bg-enhancer.js"></script>
 <script src="./skills-section.js"></script>
-<script src="./blog-section.js"></script>
 <script src="./three-bg.js"></script>
+<script src="./blog-section.js"></script>
+<script src="./custom-cursor.js"></script>
 </body>
 </html>
