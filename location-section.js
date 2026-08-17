@@ -105,33 +105,16 @@
       color: #0A0E27; border-color: transparent; font-weight: 700;
     }
 
-    /* Map Box — 3D tilt wrapper */
+    /* Map Box — engine handles all tilt via .glb-map-tilt-wrapper */
     .glb-map-tilt-wrapper {
       position: relative;
       min-height: 460px;
       border-radius: 20px;
-      transform-style: preserve-3d;
-      transition: transform 0.15s cubic-bezier(0.2,0,0.2,1), box-shadow 0.3s ease;
       border: 1px solid rgba(255,199,44,0.35);
       box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 35px rgba(255,199,44,0.2);
       overflow: hidden;
     }
-    .glb-map-tilt-wrapper:hover {
-      border-color: rgba(255,199,44,0.7) !important;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.9), 0 0 50px rgba(255,199,44,0.4) !important;
-    }
 
-    /* Spotlight glare overlay — pointer-events none so iframe still gets clicks */
-    .glb-map-spotlight {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(600px circle at var(--mx,50%) var(--my,50%), rgba(255,199,44,0.12), transparent 45%);
-      border-radius: inherit;
-      z-index: 3;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-    .glb-map-tilt-wrapper:hover .glb-map-spotlight { opacity: 1; }
 
     .glb-map-floating-badge {
       position: absolute; top: 16px; left: 16px; z-index: 5;
@@ -230,7 +213,6 @@
           </div>
 
           <div class="glb-map-tilt-wrapper" id="glbMapTilt">
-            <div class="glb-map-spotlight" id="glbMapSpotlight"></div>
             <div class="glb-map-floating-badge">
               <span class="glb-map-dot"></span>
               <span>Gomti Nagar, Lucknow — Live HQ</span>
@@ -261,28 +243,8 @@
   container.innerHTML = html;
 
   function init3DTilt() {
-    const box = document.getElementById('glbMapTilt');
-    const spotlight = document.getElementById('glbMapSpotlight');
-    if (!box) return;
-
-    // 3D tilt on the wrapper — pointer still passes through to iframe inside
-    box.addEventListener('mousemove', (e) => {
-      const r = box.getBoundingClientRect();
-      const x = e.clientX - r.left;
-      const y = e.clientY - r.top;
-      const cx = r.width / 2, cy = r.height / 2;
-      const rx = ((y - cy) / cy) * -6;
-      const ry = ((x - cx) / cx) * 6;
-      box.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.015,1.015,1.015)`;
-      if (spotlight) {
-        spotlight.style.setProperty('--mx', `${x}px`);
-        spotlight.style.setProperty('--my', `${y}px`);
-      }
-    });
-
-    box.addEventListener('mouseleave', () => {
-      box.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
-    });
+    // Tilt is handled by rabto-fx-engine.js via .glb-map-tilt-wrapper selector
+    // Nothing to do here — engine will pick it up after section is in DOM
   }
 
   function insertLocation() {
@@ -301,7 +263,10 @@
       document.body.appendChild(container);
     }
 
-    setTimeout(init3DTilt, 200);
+    // Let the engine pick up .glb-map-tilt-wrapper immediately
+    setTimeout(() => {
+      if (typeof window.rabtoApplyTilt === 'function') window.rabtoApplyTilt();
+    }, 350);
   }
 
   if (document.readyState === 'loading') {

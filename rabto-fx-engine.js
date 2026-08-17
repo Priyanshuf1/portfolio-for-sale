@@ -5,10 +5,13 @@
     /* ── 3D Tilt & Mouse Spotlight Base ── */
     .rabto-tilt-card {
       transform-style: preserve-3d;
-      perspective: 1000px;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
       position: relative;
       overflow: hidden;
+    }
+    .rabto-tilt-card.rabto-tilt-leaving {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     /* Mouse Spotlight Beam Glare */
@@ -134,37 +137,73 @@
   styleEl.innerHTML = styles;
   document.head.appendChild(styleEl);
 
-  // 1. Apply 3D Magnetic Tilt & Mouse Spotlight to Cards
+  const _tiltedCards = new WeakSet();
+
+  // 1. Apply 3D Magnetic Tilt & Mouse Spotlight to Cards (RAF-lerped for buttery smoothness)
   function applyCardTiltFX() {
     const cards = document.querySelectorAll('.glb-skill-card, .glb-home-blog-card, .glb-review-card-premium, .glb-contact-card, .glb-map-tilt-wrapper');
-    
+
     cards.forEach(card => {
+      if (_tiltedCards.has(card)) return; // Skip already-processed cards
+      _tiltedCards.add(card);
       card.classList.add('rabto-tilt-card');
-      
+
       if (!card.querySelector('.rabto-spotlight-glare')) {
         const glare = document.createElement('div');
         glare.className = 'rabto-spotlight-glare';
         card.appendChild(glare);
       }
 
+      // Per-card lerp state
+      let targetRX = 0, targetRY = 0, currentRX = 0, currentRY = 0;
+      let targetScale = 1, currentScale = 1;
+      let rafId = null;
+      let isHovering = false;
+      const LERP = 0.1; // 0.08 = very smooth, 0.15 = snappier
+
+      function tick() {
+        currentRX += (targetRX - currentRX) * LERP;
+        currentRY += (targetRY - currentRY) * LERP;
+        currentScale += (targetScale - currentScale) * LERP;
+
+        card.style.transform = `perspective(1100px) rotateX(${currentRX.toFixed(3)}deg) rotateY(${currentRY.toFixed(3)}deg) scale3d(${currentScale.toFixed(4)},${currentScale.toFixed(4)},${currentScale.toFixed(4)})`;
+
+        // Keep looping while hovering or while still settling
+        const settled = Math.abs(currentRX) < 0.01 && Math.abs(currentRY) < 0.01 && Math.abs(currentScale - targetScale) < 0.0005;
+        if (isHovering || !settled) {
+          rafId = requestAnimationFrame(tick);
+        } else {
+          rafId = null;
+          card.style.transform = '';
+          card.classList.remove('rabto-tilt-leaving');
+        }
+      }
+
+      card.addEventListener('mouseenter', () => {
+        isHovering = true;
+        targetScale = 1.025;
+        card.classList.remove('rabto-tilt-leaving');
+        if (!rafId) rafId = requestAnimationFrame(tick);
+      });
+
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = ((y - centerY) / centerY) * -6; // Max 6deg tilt
-        const rotateY = ((x - centerX) / centerX) * 6;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        const cx = rect.width / 2, cy = rect.height / 2;
+        targetRX = ((y - cy) / cy) * -7;
+        targetRY = ((x - cx) / cx) * 7;
         card.style.setProperty('--mouse-x', `${x}px`);
         card.style.setProperty('--mouse-y', `${y}px`);
       });
 
       card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        isHovering = false;
+        targetRX = 0;
+        targetRY = 0;
+        targetScale = 1;
+        card.classList.add('rabto-tilt-leaving');
+        if (!rafId) rafId = requestAnimationFrame(tick);
       });
     });
   }
@@ -218,11 +257,15 @@
     applyScrollReveals();
   }
 
+  // Expose globally so location-section.js can trigger tilt after injection
+  window.rabtoApplyTilt = applyCardTiltFX;
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => setTimeout(initFXEngine, 400));
   } else {
     setTimeout(initFXEngine, 400);
   }
 
-  setInterval(applyCardTiltFX, 2000);
+  // Re-scan for late-injected sections (location, blog, etc.)
+  setInterval(applyCardTiltFX, 1500);
 })();
