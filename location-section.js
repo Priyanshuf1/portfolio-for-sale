@@ -1,20 +1,4 @@
 (function() {
-  // Inject Leaflet CSS & JS for 100% unblockable interactive dark map rendering
-  if (!document.getElementById('leaflet-css')) {
-    const lcss = document.createElement('link');
-    lcss.id = 'leaflet-css';
-    lcss.rel = 'stylesheet';
-    lcss.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css';
-    document.head.appendChild(lcss);
-  }
-
-  if (!window.L && !document.getElementById('leaflet-js')) {
-    const ljs = document.createElement('script');
-    ljs.id = 'leaflet-js';
-    ljs.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js';
-    document.head.appendChild(ljs);
-  }
-
   const styles = `
     .glb-location-section {
       padding: 90px 5%;
@@ -152,7 +136,7 @@
       font-weight: 700;
     }
 
-    /* Map Box Container */
+    /* Live Google Map Container Box */
     .glb-map-container-box {
       position: relative;
       min-height: 460px;
@@ -160,22 +144,14 @@
       overflow: hidden;
       border: 1px solid rgba(255, 199, 44, 0.3);
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(255, 199, 44, 0.2);
-      background: #090D1F;
-    }
-
-    .glb-leaflet-map {
-      width: 100%;
-      height: 100%;
-      min-height: 460px;
-      background: #090D1F;
-      z-index: 1;
+      background: #0D1117;
     }
 
     .glb-map-floating-badge {
       position: absolute;
       top: 16px;
       left: 16px;
-      z-index: 10;
+      z-index: 5;
       background: rgba(10, 14, 39, 0.92);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
@@ -189,6 +165,7 @@
       align-items: center;
       gap: 8px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      pointer-events: none;
     }
 
     .glb-map-dot {
@@ -206,11 +183,20 @@
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 199, 44, 0); }
     }
 
+    .glb-map-iframe-element {
+      width: 100%;
+      height: 100%;
+      min-height: 460px;
+      border: 0;
+      display: block;
+      filter: invert(90%) hue-rotate(180deg) contrast(110%);
+    }
+
     .glb-map-direct-btn {
       position: absolute;
       bottom: 16px;
       right: 16px;
-      z-index: 10;
+      z-index: 5;
       background: rgba(10, 14, 39, 0.92);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 199, 44, 0.4);
@@ -227,49 +213,6 @@
       background: #FFC72C;
       color: #0A0E27;
       box-shadow: 0 0 25px rgba(255, 199, 44, 0.6);
-    }
-
-    /* Custom Leaflet Pin Styling */
-    .glb-custom-leaflet-pin {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transform: translate(-50%, -100%);
-    }
-    .glb-pin-label {
-      background: #FFC72C;
-      color: #0A0E27;
-      font-weight: 800;
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 10px;
-      white-space: nowrap;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.6);
-      margin-bottom: 2px;
-    }
-    .glb-pin-pulse-ring {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(255, 199, 44, 0.3);
-      border: 2px solid #FFC72C;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: pinRingPulse 2s infinite ease-out;
-      box-shadow: 0 0 20px #FFC72C;
-    }
-    .glb-pin-center-dot {
-      width: 12px;
-      height: 12px;
-      background: #FFFFFF;
-      border-radius: 50%;
-      box-shadow: 0 0 10px #FFC72C;
-    }
-    @keyframes pinRingPulse {
-      0% { transform: scale(0.8); opacity: 1; }
-      100% { transform: scale(2.2); opacity: 0; }
     }
   `;
 
@@ -334,13 +277,19 @@
           <div class="glb-map-container-box">
             <div class="glb-map-floating-badge">
               <span class="glb-map-dot"></span>
-              <span>Gomti Nagar, Lucknow — HQ</span>
+              <span>Gomti Nagar, Lucknow — Live HQ</span>
             </div>
             
-            <div id="glb-leaflet-map-canvas" class="glb-leaflet-map"></div>
+            <iframe 
+              class="glb-map-iframe-element"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56957.53322471745!2d80.96827834872362!3d26.844855564452423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd49fc60a843%3A0x92fc72e19b623f6a!2sGomti%20Nagar%2C%20Lucknow%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1782382173315!5m2!1sen!2sin"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
 
             <a href="https://maps.google.com/?q=Gomti+Nagar+Lucknow+Uttar+Pradesh+226010" target="_blank" class="glb-map-direct-btn" rel="noopener noreferrer">
-              Open Google Maps App ↗
+              Open Full Google Maps ↗
             </a>
           </div>
 
@@ -358,55 +307,6 @@
   container.className = 'glb-location-section-wrapper';
   container.innerHTML = html;
 
-  function initInteractiveMap() {
-    const mapDiv = document.getElementById('glb-leaflet-map-canvas');
-    if (!mapDiv) return;
-
-    if (window.L) {
-      try {
-        const lat = 26.8448555;
-        const lng = 80.9682783;
-
-        const map = L.map('glb-leaflet-map-canvas', {
-          center: [lat, lng],
-          zoom: 14,
-          zoomControl: false,
-          scrollWheelZoom: false
-        });
-
-        // Dark Matter Tile Layer (CartoDB) - 100% unblockable & beautiful dark theme
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; Global Logic Media',
-          maxZoom: 19,
-          subdomains: 'abcd'
-        }).addTo(map);
-
-        // Custom Gold Pulse Pin Icon
-        const goldIcon = L.divIcon({
-          className: 'glb-leaflet-custom-marker',
-          html: `
-            <div class="glb-custom-leaflet-pin">
-              <div class="glb-pin-label">GLOBAL LOGIC MEDIA</div>
-              <div class="glb-pin-pulse-ring">
-                <div class="glb-pin-center-dot"></div>
-              </div>
-            </div>
-          `,
-          iconSize: [120, 60],
-          iconAnchor: [60, 50]
-        });
-
-        const marker = L.marker([lat, lng], { icon: goldIcon }).addTo(map);
-        marker.bindPopup("<strong style='color:#0A0E27;'>GLOBAL LOGIC MEDIA HQ</strong><br>Gomti Nagar, Lucknow").openPopup();
-      } catch (e) {
-        console.warn('Leaflet init error, loading iframe fallback:', e);
-        mapDiv.innerHTML = `<iframe src="https://maps.google.com/maps?q=Gomti%20Nagar%2C%20Lucknow%2C%20Uttar%20Pradesh%20226010&t=m&z=15&output=embed" style="width:100%;height:100%;min-height:460px;border:0;filter:invert(90%) hue-rotate(180deg);"></iframe>`;
-      }
-    } else {
-      setTimeout(initInteractiveMap, 300);
-    }
-  }
-
   function insertLocation() {
     let footer = document.querySelector('footer.glb-footer');
     let blogSection = document.querySelector('.glb-home-blogs-section-wrapper');
@@ -419,8 +319,6 @@
     } else {
       body.appendChild(container);
     }
-
-    setTimeout(initInteractiveMap, 500);
   }
 
   if (document.readyState === 'loading') {
