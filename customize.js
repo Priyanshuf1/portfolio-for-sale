@@ -5,9 +5,9 @@ const path = require('path');
 //  1. COLOUR REPLACEMENTS (Clean Dark + Electric Cyan & Silver Accents)
 // ──────────────────────────────────────────────
 const colorReplacements = [
-    { from: /#D4AF37/gi, to: '#06B6D4' },
-    { from: /#F0D060/gi, to: '#38BDF8' },
-    { from: /#FFD700/gi, to: '#06B6D4' },
+    { from: /#06B6D4/gi, to: '#06B6D4' },
+    { from: /#38BDF8/gi, to: '#38BDF8' },
+    { from: /#06B6D4/gi, to: '#06B6D4' },
     { from: /rgb\(212,\s*175,\s*55\)/g, to: 'rgb(6, 182, 212)' },
     { from: /rgba\(212,\s*175,\s*55/g, to: 'rgba(6, 182, 212' },
 ];

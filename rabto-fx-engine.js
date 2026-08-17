@@ -7,7 +7,7 @@
       --rabto-bg: #070709;
       --rabto-card-bg: rgba(18, 18, 26, 0.7);
       --rabto-border: rgba(255, 255, 255, 0.08);
-      --rabto-accent-gold: #D4AF37;
+      --rabto-accent-gold: #06B6D4;
       --rabto-accent-purple: #8B5CF6;
       --rabto-accent-cyan: #06B6D4;
       --rabto-glow-shadow: 0 10px 40px -10px rgba(139, 92, 246, 0.3);

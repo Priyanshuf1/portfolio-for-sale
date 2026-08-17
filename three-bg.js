@@ -115,7 +115,7 @@
       new THREE.TorisGeometry ? new THREE.TorusGeometry(30, 8, 16, 32) : new THREE.IcosahedronGeometry(30, 0)
     ];
 
-    const shapeColors = [0x8b5cf6, 0x06b6d4, 0x10b981, 0xd4af37];
+    const shapeColors = [0x8b5cf6, 0x06b6d4, 0x10b981, 0x06b6d4];
     const shapes = [];
 
     for (let i = 0; i < 18; i++) {
