@@ -1,105 +1,107 @@
 (function() {
-  // Rabto Skill Engine: modern-startup-design, cinematic-web-typography & svg-motion-graphics
+  // Skills & Capabilities Showcase - Matched to Original Website Aesthetics & Typography
   
   const styles = `
     .glb-skills-section {
-      padding: 90px 5%;
-      background: rgba(10, 10, 18, 0.65);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      padding: 80px 5%;
+      background: #0a0a0a;
       color: white;
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       position: relative;
       z-index: 10;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
     .glb-skills-inner {
-      max-width: 1240px;
+      max-width: 1200px;
       margin: 0 auto;
     }
     .glb-skills-header {
       text-align: center;
-      margin-bottom: 50px;
+      margin-bottom: 45px;
     }
     .glb-skills-badge {
       display: inline-block;
-      padding: 6px 16px;
-      background: rgba(139, 92, 246, 0.12);
-      border: 1px solid rgba(139, 92, 246, 0.3);
-      color: #a78bfa;
+      padding: 5px 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #eaeaea;
       font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
+      font-weight: 600;
+      letter-spacing: 1px;
       text-transform: uppercase;
       border-radius: 20px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
     .glb-skills-header h2 {
-      font-size: clamp(2.2rem, 4.5vw, 3.2rem);
-      margin: 0 0 12px;
-      background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 40%, #8B5CF6 100%);
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 0 0 10px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;
       font-weight: 700;
     }
     .glb-skills-header p {
-      color: #888;
-      font-size: 1.1rem;
-      max-width: 640px;
+      color: #888888;
+      font-size: 1.05rem;
+      max-width: 600px;
       margin: 0 auto;
       line-height: 1.6;
     }
 
-    /* Tabs */
+    /* Tabs Matching Original Site Aesthetics */
     .glb-skills-tabs {
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 45px;
+      margin-bottom: 40px;
       flex-wrap: wrap;
     }
     .glb-skills-tab {
-      padding: 10px 22px;
+      padding: 9px 20px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #aaa;
-      border-radius: 30px;
-      font-size: 14px;
+      color: #888888;
+      border-radius: 24px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
     }
-    .glb-skills-tab:hover, .glb-skills-tab.active {
-      background: #8B5CF6;
-      color: #fff;
-      border-color: #8B5CF6;
-      box-shadow: 0 8px 20px rgba(139, 92, 246, 0.35);
+    .glb-skills-tab:hover {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .glb-skills-tab.active {
+      background: #ffffff;
+      color: #0d0d0d;
+      border-color: #ffffff;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
     }
 
-    /* Grid */
+    /* Cards Matching Original Site Frame & Shadow */
     .glb-skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 22px;
     }
     .glb-skill-card {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(20, 20, 20, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
-      padding: 26px;
+      border-radius: 16px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
       position: relative;
-      overflow: hidden;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.08), 0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
     }
     .glb-skill-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(139, 92, 246, 0.4);
-      background: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(139, 92, 246, 0.15);
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(26, 26, 26, 0.9);
+      box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.15), 0 15px 30px rgba(0, 0, 0, 0.6);
     }
     .glb-skill-top {
       display: flex;
@@ -107,65 +109,66 @@
       align-items: center;
     }
     .glb-skill-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: rgba(139, 92, 246, 0.12);
-      border: 1px solid rgba(139, 92, 246, 0.25);
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 22px;
+      font-size: 20px;
     }
     .glb-skill-badge-tag {
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 600;
       color: #4ade80;
-      background: rgba(74, 222, 128, 0.12);
-      padding: 4px 10px;
-      border-radius: 12px;
+      background: rgba(74, 222, 128, 0.1);
+      padding: 3px 9px;
+      border-radius: 10px;
       border: 1px solid rgba(74, 222, 128, 0.2);
     }
     .glb-skill-title {
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 1.15rem;
+      font-weight: 600;
       margin: 0;
-      color: #fff;
+      color: #ffffff;
     }
     .glb-skill-desc {
-      font-size: 14px;
-      color: #999;
+      font-size: 13.5px;
+      color: #888888;
       line-height: 1.5;
       margin: 0;
       flex-grow: 1;
     }
+    
     /* Progress Bar */
     .glb-skill-progress-wrap {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      margin-top: 4px;
+      gap: 5px;
+      margin-top: 2px;
     }
     .glb-skill-progress-label {
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
-      color: #aaa;
+      color: #888888;
     }
     .glb-skill-progress-bar {
       width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
       overflow: hidden;
     }
     .glb-skill-progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #8B5CF6, #4ADE80);
-      border-radius: 10px;
+      background: linear-gradient(90deg, #ffffff, #4ade80);
+      border-radius: 8px;
       width: 0%;
-      transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
   `;
 
@@ -187,7 +190,7 @@
     const filtered = filter === "all" ? skillsData : skillsData.filter(s => s.category === filter);
 
     grid.innerHTML = filtered.map(s => `
-      <div class="glb-skill-card rabto-rainbow-border" data-category="${s.category}">
+      <div class="glb-skill-card" data-category="${s.category}">
         <div class="glb-skill-top">
           <div class="glb-skill-icon">${s.icon}</div>
           <span class="glb-skill-badge-tag">${s.badge}</span>
@@ -214,7 +217,7 @@
       <div class="glb-skills-section" id="glb-skills-section">
         <div class="glb-skills-inner">
           <div class="glb-skills-header">
-            <span class="glb-skills-badge">✨ OUR CAPABILITIES</span>
+            <span class="glb-skills-badge">OUR CAPABILITIES</span>
             <h2>Skills & Digital Expertise</h2>
             <p>High-performance marketing, cutting-edge web engineering, and award-winning design.</p>
           </div>
@@ -238,7 +241,6 @@
     const container = document.createElement('section');
     container.innerHTML = html;
 
-    // Place section above Reviews or Blog section
     let reviewsSec = document.getElementById('glb-reviews-section');
     let blogSec = document.querySelector('.glb-home-blogs-section-wrapper');
     let footer = document.querySelector('footer.glb-footer');
@@ -256,9 +258,8 @@
 
     renderSkills('all');
 
-    // Tab Listeners
     document.querySelectorAll('.glb-skills-tab').forEach(tab => {
-      tab.addEventListener('click', (e) => {
+      tab.addEventListener('click', () => {
         document.querySelectorAll('.glb-skills-tab').forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         renderSkills(tab.dataset.filter);
@@ -268,8 +269,8 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(injectSkillsSection, 350));
+    document.addEventListener('DOMContentLoaded', () => setTimeout(injectSkillsSection, 300));
   } else {
-    setTimeout(injectSkillsSection, 350);
+    setTimeout(injectSkillsSection, 300);
   }
 })();
