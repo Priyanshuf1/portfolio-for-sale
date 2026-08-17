@@ -5,53 +5,38 @@
 
   const styles = `
     body { cursor: default; }
-    
+
     #rabto-cursor-dot {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 6px; height: 6px;
-      background: #FFFFFF;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 99999;
+      background: #FFFFFF; border-radius: 50%;
+      pointer-events: none; z-index: 99999;
       transform: translate(-50%, -50%);
-      box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
-      transition: transform 0.15s ease-out, background-color 0.3s ease, opacity 0.2s ease;
+      box-shadow: 0 0 12px rgba(255,255,255,0.9);
+      transition: transform 0.15s ease-out, opacity 0.2s ease;
     }
-
     #rabto-cursor-ring {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 32px; height: 32px;
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255,255,255,0.4);
       border-radius: 50%;
-      pointer-events: none;
-      z-index: 99998;
+      pointer-events: none; z-index: 99998;
       transform: translate(-50%, -50%);
-      transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, opacity 0.2s ease;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      transition: width 0.3s ease, height 0.3s ease, opacity 0.2s ease, border-color 0.3s ease;
+      box-shadow: 0 0 15px rgba(255,255,255,0.1);
     }
-
     body.rabto-hovering #rabto-cursor-ring {
       width: 52px; height: 52px;
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.85);
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.85);
+      box-shadow: 0 0 25px rgba(255,255,255,0.3);
     }
-
     body.rabto-hovering #rabto-cursor-dot {
-      background: #FFFFFF;
+      transform: translate(-50%,-50%) scale(1.4);
       box-shadow: 0 0 15px #FFFFFF;
-      transform: translate(-50%, -50%) scale(1.4);
     }
-
     body.rabto-clicking #rabto-cursor-ring {
-      transform: translate(-50%, -50%) scale(0.75);
-    }
-
-    body.rabto-over-iframe #rabto-cursor-dot,
-    body.rabto-over-iframe #rabto-cursor-ring {
-      opacity: 0 !important;
+      transform: translate(-50%,-50%) scale(0.75);
     }
   `;
 
@@ -71,16 +56,10 @@
   let ringX = -100, ringY = -100;
 
   window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX; mouseY = e.clientY;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
     dot.style.left = `${mouseX}px`;
     dot.style.top = `${mouseY}px`;
-
-    const el = document.elementFromPoint(mouseX, mouseY);
-    if (el && (el.tagName === 'IFRAME' || el.closest('.glb-map-container-box'))) {
-      document.body.classList.add('rabto-over-iframe');
-    } else {
-      document.body.classList.remove('rabto-over-iframe');
-    }
   });
 
   function animateRing() {
@@ -92,14 +71,29 @@
   }
   animateRing();
 
+  // When mouse enters an iframe, hide cursor (browser loses tracking inside iframes)
   document.addEventListener('mouseover', (e) => {
-    if (e.target.closest('a, button, input, textarea, select, .glb-skill-card, .glb-home-blog-card, .glb-review-card-premium, .glb-contact-card')) {
+    const hoverTarget = e.target;
+    if (hoverTarget.tagName === 'IFRAME') {
+      dot.style.opacity = '0';
+      ring.style.opacity = '0';
+    } else if (hoverTarget.closest('a, button, input, textarea, select, .glb-skill-card, .glb-home-blog-card, .glb-review-card-premium, .glb-contact-card, .glb-map-tilt-wrapper')) {
+      dot.style.opacity = '1';
+      ring.style.opacity = '1';
       document.body.classList.add('rabto-hovering');
+    } else {
+      dot.style.opacity = '1';
+      ring.style.opacity = '1';
     }
   });
 
   document.addEventListener('mouseout', (e) => {
-    if (e.target.closest('a, button, input, textarea, select, .glb-skill-card, .glb-home-blog-card, .glb-review-card-premium, .glb-contact-card')) {
+    const hoverTarget = e.target;
+    if (hoverTarget.tagName === 'IFRAME') {
+      dot.style.opacity = '1';
+      ring.style.opacity = '1';
+    }
+    if (hoverTarget.closest('a, button, input, textarea, select, .glb-skill-card, .glb-home-blog-card, .glb-review-card-premium, .glb-contact-card, .glb-map-tilt-wrapper')) {
       document.body.classList.remove('rabto-hovering');
     }
   });
