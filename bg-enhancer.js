@@ -1,5 +1,5 @@
 (function() {
-  // Rabto Skill Engine: Unified Seamless Background & Complete Card/Section Transparency
+  // Rabto Skill Engine: Unified Seamless Background & Solid Footer Section
   
   const styles = `
     :root {
@@ -22,7 +22,7 @@
       color: #ffffff !important;
     }
 
-    /* ── Make ALL Sections 100% Transparent ── */
+    /* ── Make Main Sections Transparent ── */
     #hero,
     #services,
     #about,
@@ -32,8 +32,6 @@
     .glb-home-blogs, 
     .glb-location-section, 
     .glb-skills-section,
-    .glb-footer,
-    footer,
     header,
     nav,
     section,
@@ -50,13 +48,23 @@
     .glb-reviews-native-wrapper, 
     .glb-home-blogs, 
     .glb-location-section, 
-    .glb-skills-section,
-    .glb-footer {
+    .glb-skills-section {
       border-top: none !important;
     }
 
-    /* ── Remove Card Background Fills Across ALL Sections ── */
-    /* Remove card background boxes, heavy shadows, and blur filters so the background mesh & WebGL 3D canvas show through seamlessly */
+    /* ── RESTORE SOLID FOOTER SECTION ── */
+    .glb-footer,
+    footer,
+    [data-framer-name="Footer"] {
+      background-color: #0A0E27 !important;
+      background: #0A0E27 !important;
+      border-top: 1px solid rgba(255, 199, 44, 0.25) !important;
+      position: relative !important;
+      z-index: 100 !important;
+      opacity: 1 !important;
+    }
+
+    /* ── Card Wireframe Transparency ── */
     .glb-review-card-premium, 
     .glb-home-blog-card, 
     .glb-contact-card,
@@ -84,7 +92,7 @@
       transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
     }
 
-    /* Card Hover State — Sheer Metallic Gold Glow Without Card Background Fills */
+    /* Card Hover State */
     .glb-review-card-premium:hover, 
     .glb-home-blog-card:hover, 
     .glb-contact-card:hover,
@@ -99,7 +107,6 @@
       box-shadow: 0 0 25px rgba(255, 199, 44, 0.2) !important;
     }
 
-    /* Ensure text readability over unified background */
     .glb-review-quote,
     .glb-review-name,
     .glb-home-blog-title,
