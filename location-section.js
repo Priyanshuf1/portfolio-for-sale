@@ -2,7 +2,7 @@
   const styles = `
     .glb-location-section {
       padding: 90px 5%;
-      background: #0A0E27;
+      background: transparent;
       color: white;
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       position: relative;
@@ -62,7 +62,7 @@
       gap: 16px;
     }
     .glb-contact-card {
-      background: rgba(255,255,255,0.03);
+      background: transparent;
       border: 1px solid rgba(255,199,44,0.15);
       border-radius: 16px;
       padding: 20px 24px;

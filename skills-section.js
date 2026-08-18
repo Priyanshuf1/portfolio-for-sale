@@ -4,7 +4,7 @@
   const styles = `
     .glb-skills-section {
       padding: 80px 5%;
-      background: #0A0E27;
+      background: transparent;
       color: white;
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       position: relative;
@@ -84,7 +84,7 @@
       gap: 22px;
     }
     .glb-skill-card {
-      background: rgba(20, 20, 20, 0.85);
+      background: transparent;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 24px;

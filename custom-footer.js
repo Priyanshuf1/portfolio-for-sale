@@ -1,7 +1,7 @@
 (function() {
   const footerStyles = `
     .glb-footer {
-      background: #0a0a0a;
+      background: transparent;
       color: #eaeaea;
       padding: 60px 20px 40px;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;

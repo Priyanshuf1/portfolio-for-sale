@@ -2,7 +2,7 @@
   const styles = `
     .glb-home-blogs {
       padding: 80px 5%;
-      background: #0a0a0a;
+      background: transparent;
       color: white;
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       position: relative;
@@ -48,7 +48,7 @@
       margin: 0 auto;
     }
     .glb-home-blog-card {
-      background: rgba(255, 255, 255, 0.03);
+      background: transparent;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 18px;
       overflow: hidden;

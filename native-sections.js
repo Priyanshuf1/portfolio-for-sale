@@ -2,7 +2,7 @@
   const customCSS = `
     .glb-reviews-native-wrapper {
       width: 100%;
-      background: #0a0a0a;
+      background: transparent;
       padding: 70px 0;
       box-sizing: border-box;
       position: relative;
@@ -51,7 +51,7 @@
     }
     .glb-review-card-premium {
       flex: 0 0 350px;
-      background: linear-gradient(180deg, #111111 0%, rgba(17,17,17,0.4) 100%);
+      background: transparent;
       border-radius: 16px;
       padding: 28px;
       box-sizing: border-box;
