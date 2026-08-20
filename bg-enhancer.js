@@ -1,5 +1,5 @@
 (function() {
-  // Rabto Skill Engine: Shiny Red Background Cloud Aura & Solid Footer Section
+  // Rabto Skill Engine: Shiny Crimson Red Background Cloud Aura & Solid Footer Section
   
   const styles = `
     :root {
@@ -20,6 +20,14 @@
       background-attachment: fixed !important;
       background-size: cover !important;
       color: #ffffff !important;
+    }
+
+    /* ── Transform Hero Background Fluid Cloud into Shiny Crimson Red ── */
+    [data-framer-name="Hero"] [data-framer-background-image-wrapper],
+    [data-framer-name="hero"] [data-framer-background-image-wrapper],
+    .framer-1uy17lu,
+    .framer-1iwpgy7 > div:first-child {
+      filter: sepia(100%) saturate(1200%) hue-rotate(315deg) brightness(1.05) drop-shadow(0 0 60px rgba(255, 23, 68, 0.95)) !important;
     }
 
     /* ── Make Main Sections Transparent ── */
