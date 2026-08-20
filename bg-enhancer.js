@@ -23,9 +23,9 @@
     }
 
     /* ── 🔥 BRAND RED HERO BACKGROUND CLOUD ONLY (Matching Uploaded Image & Logo Red) 🔥 ── */
-    #hero [data-framer-background-image-wrapper],
     [data-framer-name="Hero"] [data-framer-background-image-wrapper],
     [data-framer-name="hero"] [data-framer-background-image-wrapper],
+    #hero [data-framer-background-image-wrapper],
     .framer-1uy17lu {
       filter: sepia(100%) saturate(1500%) hue-rotate(335deg) brightness(1.1) drop-shadow(0 0 60px rgba(229, 9, 20, 0.95)) !important;
     }
@@ -128,4 +128,21 @@
   const styleEl = document.createElement('style');
   styleEl.innerHTML = styles;
   document.head.appendChild(styleEl);
+
+  // Dynamic DOM watcher for Framer hydration
+  function applyHeroRedCloud() {
+    const hero = document.querySelector('[data-framer-name="Hero"]') || document.querySelector('[data-framer-name="hero"]') || document.querySelector('#hero');
+    if (!hero) return;
+    const bgWrappers = hero.querySelectorAll('[data-framer-background-image-wrapper], .framer-1uy17lu');
+    bgWrappers.forEach(el => {
+      el.style.filter = 'sepia(100%) saturate(1500%) hue-rotate(335deg) brightness(1.1) drop-shadow(0 0 60px rgba(229, 9, 20, 0.95))';
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyHeroRedCloud);
+  } else {
+    applyHeroRedCloud();
+  }
+  setInterval(applyHeroRedCloud, 500);
 })();
