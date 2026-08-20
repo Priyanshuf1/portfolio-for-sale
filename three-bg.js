@@ -12,7 +12,7 @@
       width: 100vw; height: 100vh;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.9;
+      opacity: 0.85;
     }
 
     [data-framer-root],
@@ -56,20 +56,20 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // 3D Perspective Shiny Red Wireframe Grid Plane
+    // Restore Original 3D Silver Perspective Grid Plane
     const gridGeo = new THREE.PlaneGeometry(1600, 1600, 40, 40);
     const gridMat = new THREE.MeshBasicMaterial({
-      color: 0xFF1744, // Shiny Crimson Red
+      color: 0x94A3B8,
       wireframe: true,
       transparent: true,
-      opacity: 0.22
+      opacity: 0.15
     });
     const gridMesh = new THREE.Mesh(gridGeo, gridMat);
     gridMesh.rotation.x = -Math.PI / 2;
     gridMesh.position.y = -200;
     scene.add(gridMesh);
 
-    // 3D Floating Geometry (Shiny Red Metallic & Ruby Shapes)
+    // Restore Original 3D Floating Shapes (Platinum & Titanium Silver)
     const shapesGroup = new THREE.Group();
     scene.add(shapesGroup);
 
@@ -79,8 +79,7 @@
       new THREE.TetrahedronGeometry(40, 0)
     ];
 
-    // Shiny Red Color Palette
-    const shapeColors = [0xFF1744, 0xFF5252, 0xD50000, 0xFF8A80];
+    const shapeColors = [0xFFFFFF, 0xE2E8F0, 0x94A3B8, 0xCBD5E1];
     const shapes = [];
 
     for (let i = 0; i < 18; i++) {
@@ -91,7 +90,7 @@
         color: color,
         wireframe: true,
         transparent: true,
-        opacity: 0.35
+        opacity: 0.28
       });
 
       const mesh = new THREE.Mesh(geo, mat);
@@ -113,7 +112,7 @@
       shapes.push(mesh);
     }
 
-    // 3D Shiny Red Starfield / Particles
+    // Restore Original 3D Silver Starfield Particles
     const particleCount = 350;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
@@ -126,10 +125,10 @@
 
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const particleMat = new THREE.PointsMaterial({
-      color: 0xFF5252, // Shiny Red
-      size: 2.2,
+      color: 0xE2E8F0,
+      size: 2,
       transparent: true,
-      opacity: 0.45
+      opacity: 0.35
     });
     const particleSystem = new THREE.Points(particleGeo, particleMat);
     scene.add(particleSystem);
