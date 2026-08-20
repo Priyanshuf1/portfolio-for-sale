@@ -1,5 +1,5 @@
 (function() {
-  // Rabto Skill Engine: Pure Restored Site Layout + Gold Swapped to Brand Red (#FF1744)
+  // Rabto Skill Engine: Pure Restored Site Layout + Gold Swapped to Brand Red (#FFC72C)
   
   const styles = `
     :root {
@@ -12,9 +12,9 @@
     html, body, html body, #main, [data-framer-root] {
       background-color: #0A0E27 !important;
       background-image: 
-        radial-gradient(at 15% 10%, rgba(255, 23, 68, 0.28) 0px, transparent 50%),
+        radial-gradient(at 15% 10%, rgba(255, 199, 44, 0.28) 0px, transparent 50%),
         radial-gradient(at 85% 15%, rgba(139, 92, 246, 0.28) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(255, 23, 68, 0.2) 0px, transparent 55%),
+        radial-gradient(at 50% 50%, rgba(255, 199, 44, 0.2) 0px, transparent 55%),
         radial-gradient(at 85% 85%, rgba(139, 92, 246, 0.22) 0px, transparent 50%),
         radial-gradient(at 15% 85%, rgba(16, 185, 129, 0.18) 0px, transparent 50%) !important;
       background-attachment: fixed !important;
@@ -66,7 +66,7 @@
     [data-framer-name="Footer"] {
       background-color: #0A0E27 !important;
       background: #0A0E27 !important;
-      border-top: 1px solid rgba(255, 23, 68, 0.35) !important;
+      border-top: 1px solid rgba(255, 199, 44, 0.35) !important;
       position: relative !important;
       z-index: 100 !important;
       opacity: 1 !important;
@@ -95,7 +95,7 @@
       box-shadow: none !important;
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
-      border: 1px solid rgba(255, 23, 68, 0.22) !important;
+      border: 1px solid rgba(255, 199, 44, 0.22) !important;
       border-radius: 16px !important;
       transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
     }
@@ -113,9 +113,9 @@
     button:hover,
     .glb-btn:hover,
     a.framer-11j49s1:hover {
-      background: rgba(255, 23, 68, 0.08) !important;
-      border-color: rgba(255, 23, 68, 0.7) !important;
-      box-shadow: 0 0 32px rgba(255, 23, 68, 0.5) !important;
+      background: rgba(255, 199, 44, 0.08) !important;
+      border-color: rgba(255, 199, 44, 0.7) !important;
+      box-shadow: 0 0 32px rgba(255, 199, 44, 0.5) !important;
     }
 
     .glb-review-quote,

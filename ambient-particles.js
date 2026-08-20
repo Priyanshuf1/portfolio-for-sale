@@ -47,9 +47,9 @@
   const particles = [];
   const maxDistance = 160;
 
-  // Brand Red (#FF1744) & Metallic Accents Palette
+  // Brand Red (#FFC72C) & Metallic Accents Palette
   const colors = [
-    { r: 255, g: 23,  b: 68  }, // Brand Red (#FF1744)
+    { r: 255, g: 23,  b: 68  }, // Brand Red (#FFC72C)
     { r: 255, g: 82,  b: 82  }, // Bright Ruby Red (#FF5252)
     { r: 241, g: 239, b: 234 }, // Destinyland Cream (#F1EFEA)
     { r: 139, g: 92,  b: 246 }  // Deep Violet (#8B5CF6)
@@ -159,7 +159,7 @@
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = `rgba(255, 23, 68, ${tetherAlpha})`;
+          ctx.strokeStyle = `rgba(255, 199, 44, ${tetherAlpha})`;
           ctx.lineWidth = 1.1;
           ctx.stroke();
         }
