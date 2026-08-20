@@ -356,7 +356,9 @@ h1.framer-text, h2.framer-text, h1.framer-text span, h2.framer-text span {
 }
 
 @keyframes ambientGlow {
-  0%, 100% { background: radial-gradient(circle, rgba(255, 23, 68, 0.35) 0%, rgba(5, 5, 7, 0) 65%); }
+  0%, 100% { background: radial-gradient(circle, rgba(255, 23, 68, 0.25) 0%, rgba(10, 14, 39, 0) 65%); }
+  50% { background: radial-gradient(circle, rgba(255, 23, 68, 0.45) 0%, rgba(10, 14, 39, 0) 75%); }
+}
   50% { background: radial-gradient(circle, rgba(213, 0, 0, 0.55) 0%, rgba(5, 5, 7, 0) 75%); }
 }
   50% { background: radial-gradient(circle, rgba(255, 199, 44,0.25) 0%, rgba(10,14,39,0) 70%); }
@@ -386,10 +388,10 @@ h1.framer-text, h2.framer-text, h1.framer-text span, h2.framer-text span {
 /* 🌟 scrollbar 🌟 */
 ::-webkit-scrollbar            { width: 5px; }
 ::-webkit-scrollbar-track      { background: var(--midnight); }
-::-webkit-scrollbar-thumb      { background: #FFC72C; border-radius: 3px; }
+::-webkit-scrollbar-thumb      { background: #FF1744; border-radius: 3px; }
 
 /* 🌟 text selection 🌟 */
-::selection { background: rgba(255, 199, 44,.3); color:#fff; }
+::selection { background: rgba(255, 23, 68, .35); color:#fff; }
 
 /* 🌟 navbar luxury glass 🌟 */
 [data-framer-name="Navbar"],

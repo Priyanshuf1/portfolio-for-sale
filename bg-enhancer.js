@@ -1,5 +1,5 @@
 (function() {
-  // Rabto Skill Engine: Restored Background + Syne Bold Typography + Brand Red Text & Red Hover Glow
+  // Rabto Skill Engine: Pure Restored Site Layout + Gold Swapped to Brand Red (#FF1744)
   
   const styles = `
     :root {
@@ -8,13 +8,13 @@
       --token-67527bae-cc15-4839-8636-c9b28351e4d7: transparent !important;
     }
 
-    /* ── Single Unified Website Background (Original Midnight + Ambient Glow) ── */
+    /* ── Single Unified Website Background (Midnight Dark + Brand Red & Violet Glow) ── */
     html, body, html body, #main, [data-framer-root] {
       background-color: #0A0E27 !important;
       background-image: 
-        radial-gradient(at 15% 10%, rgba(255, 199, 44, 0.22) 0px, transparent 50%),
+        radial-gradient(at 15% 10%, rgba(255, 23, 68, 0.28) 0px, transparent 50%),
         radial-gradient(at 85% 15%, rgba(139, 92, 246, 0.28) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(255, 199, 44, 0.18) 0px, transparent 55%),
+        radial-gradient(at 50% 50%, rgba(255, 23, 68, 0.2) 0px, transparent 55%),
         radial-gradient(at 85% 85%, rgba(139, 92, 246, 0.22) 0px, transparent 50%),
         radial-gradient(at 15% 85%, rgba(16, 185, 129, 0.18) 0px, transparent 50%) !important;
       background-attachment: fixed !important;
@@ -28,48 +28,6 @@
     #hero [data-framer-background-image-wrapper],
     .framer-1uy17lu {
       filter: none !important;
-    }
-
-    /* ── 🔤 FIRST PAGE TYPOGRAPHY & BRAND RED ACCENT TEXT (From Screenshot) 🔤 ── */
-    [data-framer-name="Hero"] h1,
-    [data-framer-name="hero"] h1,
-    [data-framer-name="Hero"] .framer-text,
-    [data-framer-name="hero"] .framer-text {
-      font-family: 'Syne', 'Plus Jakarta Sans', system-ui, sans-serif !important;
-      font-weight: 900 !important;
-      letter-spacing: -1.5px !important;
-    }
-
-    /* Main Hero Title Highlight Text in Brand Red */
-    .glb-hero-red-text,
-    [data-framer-name="Hero"] span[style*="color"],
-    [data-framer-name="hero"] span[style*="color"] {
-      color: #FF1744 !important;
-      text-shadow: 0 0 25px rgba(255, 23, 68, 0.7) !important;
-    }
-
-    /* Pill Badges in Hero (Matching Screenshot Style) */
-    .glb-hero-pill-badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 8px 18px;
-      margin: 4px;
-      border-radius: 30px;
-      background: rgba(10, 14, 39, 0.7);
-      border: 1px solid rgba(255, 23, 68, 0.45);
-      color: #ffffff;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.5px;
-      transition: all 0.3s ease;
-    }
-
-    .glb-hero-pill-badge:hover {
-      background: rgba(255, 23, 68, 0.15) !important;
-      border-color: #FF1744 !important;
-      box-shadow: 0 0 20px rgba(255, 23, 68, 0.5) !important;
-      transform: translateY(-2px);
     }
 
     /* ── Make Main Sections Transparent ── */
@@ -102,7 +60,7 @@
       border-top: none !important;
     }
 
-    /* ── RESTORE SOLID FOOTER SECTION ── */
+    /* ── RESTORE SOLID FOOTER SECTION WITH BRAND RED TOP BORDER ── */
     .glb-footer,
     footer,
     [data-framer-name="Footer"] {
@@ -114,7 +72,7 @@
       opacity: 1 !important;
     }
 
-    /* ── Card Wireframe Transparency ── */
+    /* ── Card Wireframe Transparency (Brand Red Border Accent) ── */
     .glb-review-card-premium, 
     .glb-home-blog-card, 
     .glb-contact-card,
@@ -137,7 +95,7 @@
       box-shadow: none !important;
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
-      border: 1px solid rgba(255, 199, 44, 0.18) !important;
+      border: 1px solid rgba(255, 23, 68, 0.22) !important;
       border-radius: 16px !important;
       transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
     }
@@ -155,9 +113,9 @@
     button:hover,
     .glb-btn:hover,
     a.framer-11j49s1:hover {
-      background: rgba(255, 23, 68, 0.06) !important;
-      border-color: rgba(255, 23, 68, 0.65) !important;
-      box-shadow: 0 0 30px rgba(255, 23, 68, 0.45) !important;
+      background: rgba(255, 23, 68, 0.08) !important;
+      border-color: rgba(255, 23, 68, 0.7) !important;
+      box-shadow: 0 0 32px rgba(255, 23, 68, 0.5) !important;
     }
 
     .glb-review-quote,
@@ -174,29 +132,20 @@
   styleEl.innerHTML = styles;
   document.head.appendChild(styleEl);
 
-  // Dynamic Brand Red text highlight watcher for Hero section
-  function applyHeroRedTypography() {
+  // Dynamic watcher to remove filter from cloud background
+  function resetHeroCloudFilter() {
     const hero = document.querySelector('[data-framer-name="Hero"]') || document.querySelector('[data-framer-name="hero"]') || document.querySelector('#hero');
     if (!hero) return;
-
-    // Remove red filter from background cloud
     const bgWrappers = hero.querySelectorAll('[data-framer-background-image-wrapper], .framer-1uy17lu');
     bgWrappers.forEach(el => {
       el.style.filter = 'none';
     });
-
-    // Apply Brand Red gradient/glow to main title accent words
-    const h1s = hero.querySelectorAll('h1, h2, .framer-styles-preset-1x8i0c5, .framer-styles-preset-gc0h9e');
-    h1s.forEach(h => {
-      h.style.fontFamily = "'Syne', 'Plus Jakarta Sans', sans-serif";
-      h.style.fontWeight = '900';
-    });
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyHeroRedTypography);
+    document.addEventListener('DOMContentLoaded', resetHeroCloudFilter);
   } else {
-    applyHeroRedTypography();
+    resetHeroCloudFilter();
   }
-  setInterval(applyHeroRedTypography, 500);
+  setInterval(resetHeroCloudFilter, 500);
 })();

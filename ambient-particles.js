@@ -1,5 +1,5 @@
 (function() {
-  // Destinyland-Style Interactive Constellation & Node-Link Background Animation (Original Theme)
+  // Destinyland-Style Interactive Constellation & Node-Link Background Animation (Brand Red Accents)
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReduced) return;
 
@@ -47,10 +47,10 @@
   const particles = [];
   const maxDistance = 160;
 
-  // Original Gold, Warm Cream, Silver & Deep Violet Palette
+  // Brand Red (#FF1744) & Metallic Accents Palette
   const colors = [
-    { r: 255, g: 199, b: 44 },  // Rich Gold (#FFC72C)
-    { r: 255, g: 224, b: 102 }, // Soft Warm Gold (#FFE066)
+    { r: 255, g: 23,  b: 68  }, // Brand Red (#FF1744)
+    { r: 255, g: 82,  b: 82  }, // Bright Ruby Red (#FF5252)
     { r: 241, g: 239, b: 234 }, // Destinyland Cream (#F1EFEA)
     { r: 139, g: 92,  b: 246 }  // Deep Violet (#8B5CF6)
   ];
@@ -147,7 +147,7 @@
         }
       }
 
-      // Connect nodes to mouse cursor when close (Interactive Mouse Tethering)
+      // Connect nodes to mouse cursor when close (Interactive Mouse Tethering in Brand Red)
       if (mouse.x > 0 && mouse.y > 0) {
         const p = particles[i];
         const dx = mouse.x - p.x;
@@ -159,7 +159,7 @@
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = `rgba(255, 199, 44, ${tetherAlpha})`;
+          ctx.strokeStyle = `rgba(255, 23, 68, ${tetherAlpha})`;
           ctx.lineWidth = 1.1;
           ctx.stroke();
         }
