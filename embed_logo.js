@@ -1,21 +1,22 @@
 const fs = require('fs');
 
 let html = fs.readFileSync('index.html', 'utf8');
-const logoScript = fs.readFileSync('three-logo-interactive.js', 'utf8');
 
-// Ensure Three.js CDN script is in head
-if (!html.includes('three.min.js')) {
-  html = html.replace('</head>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>\n</head>');
+// 1. Remove duplicate scripts from body if any
+html = html.replace(/<script id="glm-3d-interactive-logo">[\s\S]*?<\/script>/g, '');
+html = html.replace(/<script src="\.\/three-logo-interactive\.js"><\/script>/g, '');
+html = html.replace(/<script src="\/three-logo-interactive\.js"><\/script>/g, '');
+
+// 2. Put Three.js and three-logo-interactive.js directly into <head>
+const headTags = `
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+	<script src="./three-logo-interactive.js" defer></script>
+</head>`;
+
+if (html.includes('</head>')) {
+  // Replace the closing head tag with headTags
+  html = html.replace('</head>', headTags);
 }
 
-// Inline the 3D logo script
-const target = '<script src="./three-logo-interactive.js"></script>';
-const inlineScript = `<script id="glm-3d-interactive-logo">\n${logoScript}\n</script>\n<script src="./three-logo-interactive.js"></script>`;
-
-if (html.includes(target)) {
-  html = html.replace(target, inlineScript);
-  fs.writeFileSync('index.html', html);
-  console.log('Successfully embedded 3D logo engine into index.html');
-} else {
-  console.log('Target script tag not found');
-}
+fs.writeFileSync('index.html', html);
+console.log('Successfully moved 3D logo script to <head>');
