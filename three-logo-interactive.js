@@ -19,10 +19,7 @@
     canvas.style.width = '100%';
     canvas.style.height = '100%';
     canvas.style.zIndex = '5';
-    canvas.style.borderRadius = '24px';
-    canvas.style.backgroundColor = '#0a0a0c'; // Matches the page's deep card background
-    canvas.style.border = '1px solid rgba(255, 199, 44, 0.12)'; // Brand gold thin border
-    canvas.style.boxShadow = '0 30px 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05)';
+    canvas.style.borderRadius = 'inherit';
     canvas.style.pointerEvents = 'auto'; // Capture hover/pointer events
     
     // Add canvas to container
@@ -36,53 +33,30 @@
     
     // 2. Camera
     camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.z = 8.5; // Moved back from 6.5 to give breathing room and correct proportions
+    camera.position.z = 6.5; // Restored to 6.5 for the perfect scaling
     
     // 3. Renderer
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
     
-    // 4. Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
-    
-    // Spotlight for dynamic reflection highlights on the card face
-    const spotLight = new THREE.SpotLight(0xffc72c, 8, 15, Math.PI / 4, 0.5, 1);
-    spotLight.position.set(2, 3, 5);
-    scene.add(spotLight);
-    
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.8);
-    dirLight.position.set(-3, 2, 4);
-    scene.add(dirLight);
-    
-    // 5. Load Logo Texture
+    // 4. Load Logo Texture
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load('./logo.png', function(texture) {
       texture.generateMipmaps = true;
       texture.minFilter = THREE.LinearMipmapLinearFilter;
       
-      // 6. Create 3D Logo Token (Metallic Card with glass overlay)
+      // 5. Create 3D Logo Token (Using basic materials to preserve bright original red/white colors)
       const geometry = new THREE.BoxGeometry(3.2, 3.2, 0.08);
       
-      // Materials list: right, left, top, bottom, front, back
-      const frontMaterial = new THREE.MeshPhysicalMaterial({
+      const frontMaterial = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,
-        roughness: 0.12,
-        metalness: 0.85,
-        clearcoat: 1.0,
-        clearcoatRoughness: 0.1,
-        reflectivity: 0.9,
         side: THREE.DoubleSide
       });
       
-      const sideMaterial = new THREE.MeshStandardMaterial({
-        color: 0xffc72c, // Brand Gold edge
-        roughness: 0.2,
-        metalness: 0.9
+      const sideMaterial = new THREE.MeshBasicMaterial({
+        color: 0xffc72c // Brand Gold edge
       });
       
       const materials = [
@@ -97,7 +71,6 @@
       logoCard = new THREE.Mesh(geometry, materials);
       scene.add(logoCard);
       
-      // Subtle float animation
       animate();
     });
     
@@ -143,25 +116,29 @@
     resizeObserver.observe(container);
   }
   
+  let rotateSpeed = 0.015;
   function animate() {
     requestAnimationFrame(animate);
     
     if (logoCard) {
-      // Smoothly interpolate rotations towards target (damping effect)
-      mouse.x += (mouse.targetX - mouse.x) * 0.08;
-      mouse.y += (mouse.targetY - mouse.y) * 0.08;
+      // Continuous rotation around Y axis
+      logoCard.rotation.y += rotateSpeed;
       
-      // Calculate rotation
-      logoCard.rotation.x = mouse.y;
+      // Smoothly interpolate rotations towards target (damping effect)
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
       
       if (isNear) {
-        // Face the cursor
-        logoCard.rotation.y = mouse.x;
+        // Accelerate rotation and tilt slightly towards mouse
+        rotateSpeed = 0.04;
+        logoCard.rotation.x = mouse.y * 0.4;
+        logoCard.rotation.z = -mouse.x * 0.2;
       } else {
-        // Idle floating/rotating animation when mouse is away
-        autoRotateAngle += 0.008;
-        logoCard.rotation.y = Math.sin(autoRotateAngle) * 0.35;
-        logoCard.position.y = Math.sin(autoRotateAngle * 1.5) * 0.15;
+        // Normal rotation speed, gentle wobble, and vertical floating
+        rotateSpeed = 0.012;
+        logoCard.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
+        logoCard.rotation.z = 0;
+        logoCard.position.y = Math.sin(Date.now() * 0.0015) * 0.12;
       }
     }
     
