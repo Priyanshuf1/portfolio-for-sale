@@ -1,6 +1,16 @@
 (function() {
-  // ── 3D Interactive Logo WebGL Component ──
-  
+  // Scoped grayscale bypass strictly for the about me section
+  const styleEl = document.createElement('style');
+  styleEl.innerHTML = `
+    [data-framer-name="about me section"] .framer-vbrsas,
+    [data-framer-name="about me section"] [data-framer-background-image-wrapper="true"],
+    #glb-3d-logo-canvas {
+      filter: none !important;
+      -webkit-filter: none !important;
+    }
+  `;
+  document.head.appendChild(styleEl);
+
   let scene, camera, renderer, logoCard, canvas;
   let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
   let scrollY = window.scrollY;
@@ -42,56 +52,24 @@
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
     
-    // 4. Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
-    
-    // Spotlight for dynamic reflection highlights on the card face
-    const spotLight = new THREE.SpotLight(0xffc72c, 8, 15, Math.PI / 4, 0.5, 1);
-    spotLight.position.set(2, 3, 5);
-    scene.add(spotLight);
-    
-    const dirLight = new THREE.DirectionalLight(0xffffff, 1.8);
-    dirLight.position.set(-3, 2, 4);
-    scene.add(dirLight);
-    
-    // 5. Load Logo Texture
+    // 4. Load Logo Texture
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load('./logo.png', function(texture) {
       texture.generateMipmaps = true;
       texture.minFilter = THREE.LinearMipmapLinearFilter;
+      texture.magFilter = THREE.LinearFilter;
       
-      // 6. Create 3D Logo Token (Metallic Card with glass overlay)
-      const geometry = new THREE.BoxGeometry(3.2, 3.2, 0.08);
+      // Flat plane — no card shape, just the logo itself
+      const geometry = new THREE.PlaneGeometry(3.8, 3.8);
       
-      // Materials list: right, left, top, bottom, front, back
-      const frontMaterial = new THREE.MeshPhysicalMaterial({
+      // MeshBasicMaterial: renders exact PNG colors, bypassing any lighting shading/silver wash
+      const material = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,
-        roughness: 0.12,
-        metalness: 0.85,
-        clearcoat: 1.0,
-        clearcoatRoughness: 0.1,
-        reflectivity: 0.9,
         side: THREE.DoubleSide
       });
       
-      const sideMaterial = new THREE.MeshStandardMaterial({
-        color: 0xffc72c, // Brand Gold edge
-        roughness: 0.2,
-        metalness: 0.9
-      });
-      
-      const materials = [
-        sideMaterial, // right
-        sideMaterial, // left
-        sideMaterial, // top
-        sideMaterial, // bottom
-        frontMaterial, // front
-        frontMaterial  // back
-      ];
-      
-      logoCard = new THREE.Mesh(geometry, materials);
+      logoCard = new THREE.Mesh(geometry, material);
       scene.add(logoCard);
       
       // Subtle float animation
