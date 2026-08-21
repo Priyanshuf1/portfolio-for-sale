@@ -1,7 +1,12 @@
 const fs = require('fs');
 let html = fs.readFileSync('index.html', 'utf8');
 
-// Remove the old blog drawer if it exists
+// Ensure Three.js CDN is in head
+if (!html.includes('three.min.js')) {
+    html = html.replace('</head>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>\n</head>');
+}
+
+// Remove old blog drawer if exists
 html = html.replace('<script src="./blog-section.js"></script>\n', '');
 
 // Hide old Framer Client Reviews section
@@ -40,4 +45,4 @@ if (!html.includes('three-logo-interactive.js')) html = html.replace('</body>', 
 if (!html.includes('custom-cursor.js')) html = html.replace('</body>', '<script src="./custom-cursor.js"></script>\n</body>');
 
 fs.writeFileSync('index.html', html);
-console.log('Appended firebase-init and native sections to index.html');
+console.log('Appended all scripts to index.html including Three.js CDN');

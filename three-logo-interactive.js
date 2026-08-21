@@ -11,6 +11,17 @@
   let scrollY = window.scrollY;
   let initialized = false;
 
+  function ensureThree(callback) {
+    if (window.THREE) {
+      callback();
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    script.onload = callback;
+    document.head.appendChild(script);
+  }
+
   // 1. Generate High-Definition Card Face Texture
   function createFrontTexture() {
     const cvs = document.createElement('canvas');
@@ -18,7 +29,7 @@
     cvs.height = 1024;
     const ctx = cvs.getContext('2d');
 
-    // Deep Obsidian Card Base
+    // Deep Obsidian Card Base with subtle radial lighting
     const bgGrad = ctx.createRadialGradient(512, 512, 50, 512, 512, 600);
     bgGrad.addColorStop(0, '#1c1c28');
     bgGrad.addColorStop(0.5, '#12121b');
@@ -26,27 +37,27 @@
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, 1024, 1024);
 
-    // Subtle Brand Red Backlight Glow
+    // Brand Red Backlight Glow
     const redGlow = ctx.createRadialGradient(380, 512, 0, 380, 512, 350);
-    redGlow.addColorStop(0, 'rgba(255, 23, 68, 0.35)');
-    redGlow.addColorStop(0.5, 'rgba(255, 23, 68, 0.08)');
+    redGlow.addColorStop(0, 'rgba(255, 23, 68, 0.40)');
+    redGlow.addColorStop(0.5, 'rgba(255, 23, 68, 0.10)');
     redGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = redGlow;
     ctx.fillRect(0, 0, 1024, 1024);
 
     // Gold Inner Border Frame
-    ctx.strokeStyle = 'rgba(255, 199, 44, 0.45)';
+    ctx.strokeStyle = 'rgba(255, 199, 44, 0.55)';
     ctx.lineWidth = 4;
     ctx.strokeRect(40, 40, 944, 944);
 
-    ctx.strokeStyle = 'rgba(255, 199, 44, 0.15)';
+    ctx.strokeStyle = 'rgba(255, 199, 44, 0.20)';
     ctx.lineWidth = 1;
     ctx.strokeRect(52, 52, 920, 920);
 
     // Corner Accents (Gold L-brackets)
     ctx.strokeStyle = '#ffc72c';
     ctx.lineWidth = 6;
-    const cl = 40; // corner length
+    const cl = 44;
     // Top-Left
     ctx.beginPath(); ctx.moveTo(40, 40 + cl); ctx.lineTo(40, 40); ctx.lineTo(40 + cl, 40); ctx.stroke();
     // Top-Right
@@ -64,11 +75,9 @@
     ctx.fillText('GLOBAL LOGIC MEDIA', 512, 110);
 
     // Draw the Red Geometric Logo + White Typography
-    // Logo Icon: Red G-frame with play triangle
-    // Left Red Bracket
     ctx.fillStyle = '#FF1744';
     ctx.shadowColor = '#FF1744';
-    ctx.shadowBlur = 25;
+    ctx.shadowBlur = 30;
 
     // Outer Red Triangle/G Icon
     ctx.beginPath();
@@ -94,11 +103,11 @@
     ctx.closePath();
     ctx.fill();
 
-    // Reset Shadow for Text
+    // Reset Shadow for Crisp Text
     ctx.shadowColor = 'rgba(0,0,0,0)';
     ctx.shadowBlur = 0;
 
-    // Brand Name Typography on Right
+    // Brand Name Typography
     ctx.fillStyle = '#ffffff';
     ctx.font = '900 68px "Syne", "Plus Jakarta Sans", sans-serif';
     ctx.textAlign = 'left';
@@ -107,16 +116,15 @@
     ctx.fillText('MEDIA', 485, 620);
 
     // Bottom Badge
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
     ctx.font = '600 20px "Plus Jakarta Sans", sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('EST. 2019  •  LUCKNOW, INDIA', 512, 910);
 
-    // Overlay real logo.png if loaded to ensure 100% vector accuracy
+    // Overlay real logo.png if loaded
     const logoImg = new Image();
     logoImg.crossOrigin = 'anonymous';
     logoImg.onload = function() {
-      // Draw actual logo sharply in the center area
       ctx.drawImage(logoImg, 140, 240, 744, 544);
       if (cardMesh && cardMesh.material && cardMesh.material[4]) {
         cardMesh.material[4].map.needsUpdate = true;
@@ -138,7 +146,6 @@
     cvs.height = 1024;
     const ctx = cvs.getContext('2d');
 
-    // Dark brushed metal background
     const bgGrad = ctx.createLinearGradient(0, 0, 1024, 1024);
     bgGrad.addColorStop(0, '#0e0e16');
     bgGrad.addColorStop(0.5, '#161622');
@@ -146,7 +153,6 @@
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, 1024, 1024);
 
-    // Gold Outer Circle Seal
     ctx.strokeStyle = 'rgba(255, 199, 44, 0.6)';
     ctx.lineWidth = 5;
     ctx.beginPath();
@@ -159,14 +165,12 @@
     ctx.arc(512, 512, 360, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Crimson Glow Behind Monogram
     const redGlow = ctx.createRadialGradient(512, 512, 0, 512, 512, 250);
     redGlow.addColorStop(0, 'rgba(255, 23, 68, 0.4)');
     redGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = redGlow;
     ctx.fillRect(0, 0, 1024, 1024);
 
-    // Gold Monogram "GLM"
     ctx.fillStyle = '#ffc72c';
     ctx.font = '900 130px "Syne", "Plus Jakarta Sans", sans-serif';
     ctx.textAlign = 'center';
@@ -177,7 +181,6 @@
     ctx.shadowColor = 'rgba(0,0,0,0)';
     ctx.shadowBlur = 0;
 
-    // Subtitles
     ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
     ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
     ctx.fillText('DIGITAL MARKETING & PERFORMANCE', 512, 640);
@@ -197,7 +200,6 @@
     if (document.getElementById('glb-3d-logo-canvas')) return;
     initialized = true;
 
-    // Setup Canvas
     canvas = document.createElement('canvas');
     canvas.id = 'glb-3d-logo-canvas';
     canvas.style.position = 'absolute';
@@ -210,29 +212,25 @@
     canvas.style.pointerEvents = 'auto';
     container.appendChild(canvas);
 
-    const width = container.clientWidth || 600;
-    const height = container.clientHeight || 600;
+    const width = container.clientWidth || 550;
+    const height = container.clientHeight || 550;
 
-    // Scene
     scene = new THREE.Scene();
 
-    // Camera
     camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, 0, 6.2);
 
-    // Renderer with HDR tone mapping
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.25;
 
-    // Root Group
     cardGroup = new THREE.Group();
     scene.add(cardGroup);
 
-    // Lighting (Golden Spotlight + Studio White + Red Ambient Rim)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    // Studio Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
     scene.add(ambientLight);
 
     const spotLight = new THREE.SpotLight(0xffc72c, 6, 20, Math.PI / 3, 0.4, 1);
@@ -290,15 +288,12 @@
     cardMesh = new THREE.Mesh(cardGeo, materials);
     cardGroup.add(cardMesh);
 
-    // Beveled Outer Gold Wireframe Frame
-    const frameGeo = new THREE.BoxGeometry(3.68, 3.68, 0.18);
+    // Gold Trim Borders
     const frameMat = new THREE.MeshStandardMaterial({
       color: 0xffc72c,
-      wireframe: false,
       roughness: 0.1,
       metalness: 1.0
     });
-    // Add thin gold trim bars
     const trims = [
       { s: [3.72, 0.05, 0.24], p: [0, 1.84, 0] },
       { s: [3.72, 0.05, 0.24], p: [0, -1.84, 0] },
@@ -311,17 +306,14 @@
       cardGroup.add(bar);
     });
 
-    // 4. Ambient Sparkles / Embers
+    // 4. Ambient Sparkles
     const particleCount = 45;
     const pGeo = new THREE.BufferGeometry();
     const pPos = new Float32Array(particleCount * 3);
-    const pScales = new Float32Array(particleCount);
-
     for (let i = 0; i < particleCount; i++) {
       pPos[i * 3 + 0] = (Math.random() - 0.5) * 6.5;
       pPos[i * 3 + 1] = (Math.random() - 0.5) * 6.5;
       pPos[i * 3 + 2] = (Math.random() - 0.5) * 3.5;
-      pScales[i] = Math.random();
     }
     pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
 
@@ -335,7 +327,7 @@
     particlesMesh = new THREE.Points(pGeo, pMat);
     scene.add(particlesMesh);
 
-    // 5. Event Listeners
+    // 5. Mouse & Scroll Interaction
     container.addEventListener('mousemove', function(e) {
       const rect = container.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -382,19 +374,19 @@
 
     clock += 0.016;
 
-    // Smooth inertia lerp towards mouse target
+    // Inertia damping
     mouse.x += (mouse.targetX - mouse.x) * 0.08;
     mouse.y += (mouse.targetY - mouse.y) * 0.08;
 
     if (isHovered) {
-      // Dynamic mouse tracking: tilts and turns smoothly with cursor
+      // Dynamic tilt following mouse
       const targetRotY = mouse.x * 0.85;
       const targetRotX = mouse.y * 0.65;
       cardGroup.rotation.y += (targetRotY - cardGroup.rotation.y) * 0.08;
       cardGroup.rotation.x += (targetRotX - cardGroup.rotation.x) * 0.08;
       cardGroup.rotation.z = -mouse.x * 0.15;
     } else {
-      // Idle Animation: Elegant floating with gentle breathing wobble
+      // Idle gentle float and tilt
       const idleRotY = Math.sin(clock * 0.8) * 0.28;
       const idleRotX = Math.cos(clock * 0.6) * 0.12;
       cardGroup.rotation.y += (idleRotY - cardGroup.rotation.y) * 0.05;
@@ -402,10 +394,8 @@
       cardGroup.rotation.z = Math.sin(clock * 0.5) * 0.04;
     }
 
-    // Subtle Levitation Float
     cardGroup.position.y = Math.sin(clock * 1.2) * 0.12;
 
-    // Rotate particle field slowly
     if (particlesMesh) {
       particlesMesh.rotation.y = clock * 0.05;
       particlesMesh.rotation.x = clock * 0.03;
@@ -414,11 +404,11 @@
     renderer.render(scene, camera);
   }
 
-  // 7. Injector Loop
+  // 7. Robust Injector Loop
   function checkAndReplace() {
-    if (initialized) return;
+    if (initialized && document.getElementById('glb-3d-logo-canvas')) return;
 
-    // Clean up any rogue canvases outside of the About section
+    // Clean stray canvases outside About section
     document.querySelectorAll('#glb-3d-logo-canvas').forEach(function(c) {
       if (!c.closest('[data-framer-name="about me section"]')) c.remove();
     });
@@ -426,23 +416,33 @@
     const aboutSection = document.querySelector('[data-framer-name="about me section"]');
     if (!aboutSection) return;
 
-    const targetImg = aboutSection.querySelector('img[src*="roWFLkzHAotwSx5UxGPxpxMeA.jpg"]');
-    if (!targetImg) return;
+    let targetImg = aboutSection.querySelector('img[src*="roWFLkzHAotwSx5UxGPxpxMeA.jpg"]');
+    let container = targetImg ? targetImg.parentElement : null;
 
-    const container = targetImg.parentElement;
+    if (!container) {
+      const wrapper = aboutSection.querySelector('.framer-vbrsas, [data-framer-background-image-wrapper="true"]');
+      if (wrapper) {
+        container = wrapper;
+        targetImg = wrapper.querySelector('img');
+      }
+    }
+
     if (!container) return;
 
-    // Hide background image so 3D model takes over
-    targetImg.style.opacity = '0';
-    targetImg.style.pointerEvents = 'none';
+    if (targetImg) {
+      targetImg.style.opacity = '0';
+      targetImg.style.pointerEvents = 'none';
+    }
 
     if (window.getComputedStyle(container).position === 'static') {
       container.style.position = 'relative';
     }
 
-    init3DLogo(container);
+    ensureThree(function() {
+      init3DLogo(container);
+    });
   }
 
-  setInterval(checkAndReplace, 500);
+  setInterval(checkAndReplace, 400);
 
 })();
