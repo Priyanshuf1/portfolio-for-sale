@@ -381,12 +381,16 @@
 
     var imgWrap = aboutSec.querySelector('.framer-vbrsas') ||
                   aboutSec.querySelector('[data-framer-background-image-wrapper="true"]');
+    if (!imgWrap) {
+      var img = aboutSec.querySelector('img[src*="roWFLkzHAotwSx5UxGPxpxMeA.jpg"]');
+      if (img) imgWrap = img.parentElement;
+    }
     if (!imgWrap) return;
 
-    var img = imgWrap.querySelector('img');
-    if (img) {
-      img.style.opacity = '0';
-      img.style.pointerEvents = 'none';
+    var targetImg = imgWrap.querySelector('img');
+    if (targetImg) {
+      targetImg.style.opacity = '0';
+      targetImg.style.pointerEvents = 'none';
     }
 
     imgWrap.style.position = 'relative';

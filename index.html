@@ -3,6 +3,25 @@
 <!-- Published Jul 14, 2026, 4:22 PM UTC -->
 <html lang="en" data-redirect-timezone="1">
 <head>
+	<script>
+	(function() {
+		var origQS = Document.prototype.querySelector;
+		Document.prototype.querySelector = function(sel) {
+			if (!sel || sel === '#' || sel === '.' || sel === ' ') return null;
+			try { return origQS.call(this, sel); } catch(e) { return null; }
+		};
+		var origQSA = Document.prototype.querySelectorAll;
+		Document.prototype.querySelectorAll = function(sel) {
+			if (!sel || sel === '#' || sel === '.' || sel === ' ') return [];
+			try { return origQSA.call(this, sel); } catch(e) { return []; }
+		};
+		var origElemQS = Element.prototype.querySelector;
+		Element.prototype.querySelector = function(sel) {
+			if (!sel || sel === '#' || sel === '.' || sel === ' ') return null;
+			try { return origElemQS.call(this, sel); } catch(e) { return null; }
+		};
+	})();
+	</script>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<meta name="generator" content="Framer 69e7cf7">
