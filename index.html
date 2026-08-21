@@ -3,36 +3,6 @@
 <!-- Published Jul 14, 2026, 4:22 PM UTC -->
 <html lang="en" data-redirect-timezone="1">
 <head>
-	<script>
-	(function() {
-		var origQS = Document.prototype.querySelector;
-		Document.prototype.querySelector = function(sel) {
-			if (!sel || sel === '#' || sel === '.' || sel === ' ') return null;
-			try { return origQS.call(this, sel); } catch(e) { return null; }
-		};
-		var origQSA = Document.prototype.querySelectorAll;
-		Document.prototype.querySelectorAll = function(sel) {
-			if (!sel || sel === '#' || sel === '.' || sel === ' ') return [];
-			try { return origQSA.call(this, sel); } catch(e) { return []; }
-		};
-		var origElemQS = Element.prototype.querySelector;
-		Element.prototype.querySelector = function(sel) {
-			if (!sel || sel === '#' || sel === '.' || sel === ' ') return null;
-			try { return origElemQS.call(this, sel); } catch(e) { return null; }
-		};
-	})();
-	</script>
-	<style>
-	/* Remove Framer grayscale filter from 3D logo and About section media */
-	.framer-vbrsas,
-	.framer-vbrsas *,
-	#glb-3d-logo-canvas,
-	[data-framer-name="about me section"] .framer-vbrsas,
-	[data-framer-name="about me section"] [data-framer-background-image-wrapper="true"] {
-		filter: none !important;
-		-webkit-filter: none !important;
-	}
-	</style>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<meta name="generator" content="Framer 69e7cf7">
@@ -532,13 +502,6 @@ html { scroll-behavior: smooth; }
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
 <meta name="keywords" content="Digital Marketing Agency in Lucknow, SEO Services in Lucknow, Website Design Company in Lucknow, Social Media Marketing Agency, Google Ads Agency Lucknow, Meta Ads Expert Lucknow, Lead Generation Services, Performance Marketing Agency, Branding Agency Lucknow, Online Marketing CompanyWeb Development Services Lucknow">
-
-
-	
-	<script src="./three-logo-interactive.js" defer></script>
-
-<script src="./three-bg.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 	<script async src="https://events.framer.com/script?v=2" data-fid="07805f66fb3ca011a0801d8d941f438efe3612d49873dc2b9591176e4d006564" data-no-nt></script>
@@ -881,7 +844,8 @@ html { scroll-behavior: smooth; }
     'crafting bold visuals that inspire and elevate brands with thought process.': 'At Global Logic Media, we believe in Simplifying Digitally, Amplifying Results. We offer a diverse range of 360-degree digital marketing solutions.',
     'Brand Identity Design': 'Digital Marketing Agency',
     'Start a Conversation': 'Get Started Today',
-    "Have a project in mind? Let's build something remarkable together.": "Ready to grow your business? Let's build something remarkable together."
+    'Helping businesses standout with brand identity packaging that captivates and converts effectively.': 'We empower businesses to enhance online traffic, generate leads, and increase revenue through growth-focused marketing.',
+    'Have a project in mind? Let's build something remarkable together.': 'Ready to grow your business? Let's build something remarkable together.'
   };
 
   function replaceText(node) {
@@ -938,7 +902,7 @@ html { scroll-behavior: smooth; }
 <script src="./rabto-fx-engine.js"></script>
 <script src="./bg-enhancer.js"></script>
 <script src="./skills-section.js"></script>
-
+<script src="./three-bg.js"></script>
 <script src="./custom-cursor.js"></script>
 <script src="./blog-section.js"></script>
 <script src="./global-logic-replacer.js"></script>
@@ -1008,7 +972,6 @@ html { scroll-behavior: smooth; }
 </script>
 
 <script src="./company-details.js"></script>
-
-
+<script src="./three-logo-interactive.js"></script>
 </body>
 </html>
