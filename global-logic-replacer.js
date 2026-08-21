@@ -19,6 +19,35 @@
       if (val.includes('Computer Engineering student at GESCOE')) {
         node.nodeValue = 'Global Logic Media is a leading digital marketing and web development agency based in Gomti Nagar, Lucknow. We empower startups, local businesses, and growing enterprises to enhance online visibility, drive high-intent traffic, and maximize ROI through data-driven digital strategies.';
       }
+
+      // Replace timeline/experience items with official stats
+      if (val === 'Freelance') {
+        node.nodeValue = '7+ Years';
+      } else if (val === 'GreenLeaf Co') {
+        node.nodeValue = 'Marketing & Dev Experience';
+      } else if (val === 'Currently') {
+        node.nodeValue = 'Est. 2019';
+      } else if (val === 'Brand Designer') {
+        node.nodeValue = '100+ Clients';
+      } else if (val === 'UrbanFit Studio') {
+        node.nodeValue = 'Served Globally & Locally';
+      } else if (val === '2023-24') {
+        node.nodeValue = 'Trusted Partner';
+      } else if (val === 'Package Designer') {
+        node.nodeValue = '500+ Projects';
+      } else if (val === 'GreenK Studio') {
+        node.nodeValue = 'High ROI Campaigns';
+      } else if (val === '2020-22') {
+        node.nodeValue = 'Successful Delivery';
+      }
+
+      // Update phone/contact details in header or footer
+      if (val.includes('apriyanshu540@gmail.com')) {
+        node.nodeValue = val.replace(/apriyanshu540@gmail.com/g, 'globallogicmedia06@gmail.com');
+      }
+      if (val.includes('hello@globallogicmedia.com')) {
+        node.nodeValue = val.replace(/hello@globallogicmedia.com/g, 'globallogicmedia06@gmail.com');
+      }
     }
   }
 

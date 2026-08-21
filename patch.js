@@ -35,6 +35,7 @@ if (!html.includes('bg-enhancer.js')) html = html.replace('</body>', '<script sr
 if (!html.includes('skills-section.js')) html = html.replace('</body>', '<script src="./skills-section.js"></script>\n</body>');
 if (!html.includes('three-bg.js')) html = html.replace('</body>', '<script src="./three-bg.js"></script>\n</body>');
 if (!html.includes('global-logic-replacer.js')) html = html.replace('</body>', '<script src="./global-logic-replacer.js"></script>\n</body>');
+if (!html.includes('company-details.js')) html = html.replace('</body>', '<script src="./company-details.js"></script>\n</body>');
 if (!html.includes('custom-cursor.js')) html = html.replace('</body>', '<script src="./custom-cursor.js"></script>\n</body>');
 
 fs.writeFileSync('index.html', html);

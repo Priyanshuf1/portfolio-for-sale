@@ -195,10 +195,10 @@
                 <div class="glb-contact-card-icon">✉️</div>
                 <div class="glb-contact-card-info">
                   <span class="glb-contact-card-label">Email Inquiries</span>
-                  <span class="glb-contact-card-val">hello@globallogicmedia.com</span>
+                  <span class="glb-contact-card-val">globallogicmedia06@gmail.com</span>
                 </div>
               </div>
-              <a href="mailto:hello@globallogicmedia.com" class="glb-contact-card-action">Email Us ✉️</a>
+              <a href="mailto:globallogicmedia06@gmail.com" class="glb-contact-card-action">Email Us ✉️</a>
             </div>
             <div class="glb-contact-card">
               <div class="glb-contact-card-left">
