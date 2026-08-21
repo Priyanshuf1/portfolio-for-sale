@@ -19,7 +19,10 @@
     canvas.style.width = '100%';
     canvas.style.height = '100%';
     canvas.style.zIndex = '5';
-    canvas.style.borderRadius = 'inherit';
+    canvas.style.borderRadius = '24px';
+    canvas.style.backgroundColor = '#0a0a0c'; // Matches the page's deep card background
+    canvas.style.border = '1px solid rgba(255, 199, 44, 0.12)'; // Brand gold thin border
+    canvas.style.boxShadow = '0 30px 60px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05)';
     canvas.style.pointerEvents = 'auto'; // Capture hover/pointer events
     
     // Add canvas to container
@@ -33,7 +36,7 @@
     
     // 2. Camera
     camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.z = 6.5;
+    camera.position.z = 8.5; // Moved back from 6.5 to give breathing room and correct proportions
     
     // 3. Renderer
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
