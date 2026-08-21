@@ -5,152 +5,131 @@
   // GLOBAL LOGIC MEDIA — Premium 3D Interactive Brand Emblem
   // ─────────────────────────────────────────────────────────────
 
-  let scene, camera, renderer, cardGroup, cardMesh, particlesMesh;
-  let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
-  let isHovered = false;
-  let scrollY = window.scrollY;
-  let initialized = false;
+  var scene, camera, renderer, cardGroup, cardMesh, particlesMesh;
+  var mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+  var isHovered = false;
+  var scrollY = window.scrollY;
+  var initialized = false;
 
   function ensureThree(callback) {
     if (window.THREE) {
       callback();
       return;
     }
-    const script = document.createElement('script');
+    var script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
     script.onload = callback;
     document.head.appendChild(script);
   }
 
-  // 1. Generate High-Definition Card Face Texture
+  // 1. High-Definition Front Texture (Deep Obsidian + Crimson + Gold + Crisp Typography)
   function createFrontTexture() {
-    const cvs = document.createElement('canvas');
+    var cvs = document.createElement('canvas');
     cvs.width = 1024;
     cvs.height = 1024;
-    const ctx = cvs.getContext('2d');
+    var ctx = cvs.getContext('2d');
 
-    // Deep Obsidian Card Base with subtle radial lighting
-    const bgGrad = ctx.createRadialGradient(512, 512, 50, 512, 512, 600);
-    bgGrad.addColorStop(0, '#1c1c28');
-    bgGrad.addColorStop(0.5, '#12121b');
-    bgGrad.addColorStop(1, '#09090f');
-    ctx.fillStyle = bgGrad;
+    // Obsidian base
+    var bg = ctx.createRadialGradient(512, 512, 50, 512, 512, 600);
+    bg.addColorStop(0, '#1c1a24');
+    bg.addColorStop(0.6, '#100f16');
+    bg.addColorStop(1, '#07070a');
+    ctx.fillStyle = bg;
     ctx.fillRect(0, 0, 1024, 1024);
 
-    // Brand Red Backlight Glow
-    const redGlow = ctx.createRadialGradient(380, 512, 0, 380, 512, 350);
-    redGlow.addColorStop(0, 'rgba(255, 23, 68, 0.40)');
-    redGlow.addColorStop(0.5, 'rgba(255, 23, 68, 0.10)');
-    redGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = redGlow;
+    // Crimson backlight glow
+    var rGlow = ctx.createRadialGradient(360, 512, 0, 360, 512, 380);
+    rGlow.addColorStop(0, 'rgba(255, 23, 68, 0.40)');
+    rGlow.addColorStop(0.7, 'rgba(255, 23, 68, 0.06)');
+    rGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = rGlow;
     ctx.fillRect(0, 0, 1024, 1024);
 
-    // Gold Inner Border Frame
-    ctx.strokeStyle = 'rgba(255, 199, 44, 0.55)';
-    ctx.lineWidth = 4;
-    ctx.strokeRect(40, 40, 944, 944);
-
-    ctx.strokeStyle = 'rgba(255, 199, 44, 0.20)';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(52, 52, 920, 920);
-
-    // Corner Accents (Gold L-brackets)
+    // Gold Outer & Inner Borders
     ctx.strokeStyle = '#ffc72c';
     ctx.lineWidth = 6;
-    const cl = 44;
-    // Top-Left
-    ctx.beginPath(); ctx.moveTo(40, 40 + cl); ctx.lineTo(40, 40); ctx.lineTo(40 + cl, 40); ctx.stroke();
-    // Top-Right
-    ctx.beginPath(); ctx.moveTo(984 - cl, 40); ctx.lineTo(984, 40); ctx.lineTo(984, 40 + cl); ctx.stroke();
-    // Bottom-Left
-    ctx.beginPath(); ctx.moveTo(40, 984 - cl); ctx.lineTo(40, 984); ctx.lineTo(40 + cl, 984); ctx.stroke();
-    // Bottom-Right
-    ctx.beginPath(); ctx.moveTo(984 - cl, 984); ctx.lineTo(984, 984); ctx.lineTo(984, 984 - cl); ctx.stroke();
+    ctx.strokeRect(36, 36, 952, 952);
+
+    ctx.strokeStyle = 'rgba(255, 199, 44, 0.35)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(48, 48, 928, 928);
+
+    // Corner L-Accents
+    ctx.fillStyle = '#ffc72c';
+    ctx.fillRect(30, 30, 44, 12); ctx.fillRect(30, 30, 12, 44);
+    ctx.fillRect(950, 30, 44, 12); ctx.fillRect(982, 30, 12, 44);
+    ctx.fillRect(30, 982, 44, 12); ctx.fillRect(30, 950, 12, 44);
+    ctx.fillRect(950, 982, 44, 12); ctx.fillRect(982, 950, 12, 44);
 
     // Top Brand Tag
     ctx.fillStyle = '#ffc72c';
-    ctx.font = 'bold 22px "Plus Jakarta Sans", "Syne", sans-serif';
+    ctx.font = 'bold 24px sans-serif';
     ctx.textAlign = 'center';
-    ctx.letterSpacing = '6px';
-    ctx.fillText('GLOBAL LOGIC MEDIA', 512, 110);
+    ctx.fillText('GLOBAL LOGIC MEDIA', 512, 115);
 
-    // Draw the Red Geometric Logo + White Typography
+    // Red Geometric Logo Icon
     ctx.fillStyle = '#FF1744';
     ctx.shadowColor = '#FF1744';
-    ctx.shadowBlur = 30;
+    ctx.shadowBlur = 25;
 
-    // Outer Red Triangle/G Icon
     ctx.beginPath();
-    ctx.moveTo(220, 310);
-    ctx.lineTo(450, 450);
-    ctx.lineTo(450, 500);
-    ctx.lineTo(390, 540);
-    ctx.lineTo(390, 470);
-    ctx.lineTo(260, 390);
-    ctx.lineTo(260, 630);
-    ctx.lineTo(390, 550);
-    ctx.lineTo(450, 590);
-    ctx.lineTo(450, 640);
-    ctx.lineTo(220, 780);
-    ctx.closePath();
-    ctx.fill();
+    ctx.moveTo(210, 310); ctx.lineTo(440, 450); ctx.lineTo(440, 500);
+    ctx.lineTo(390, 540); ctx.lineTo(390, 470); ctx.lineTo(250, 390);
+    ctx.lineTo(250, 630); ctx.lineTo(390, 550); ctx.lineTo(440, 590);
+    ctx.lineTo(440, 640); ctx.lineTo(210, 780);
+    ctx.closePath(); ctx.fill();
 
-    // Red Center Play Triangle
     ctx.beginPath();
-    ctx.moveTo(330, 465);
-    ctx.lineTo(410, 515);
-    ctx.lineTo(330, 565);
-    ctx.closePath();
-    ctx.fill();
+    ctx.moveTo(320, 465); ctx.lineTo(400, 515); ctx.lineTo(320, 565);
+    ctx.closePath(); ctx.fill();
 
-    // Reset Shadow for Crisp Text
     ctx.shadowColor = 'rgba(0,0,0,0)';
     ctx.shadowBlur = 0;
 
-    // Brand Name Typography
+    // Brand Name Typography on Right
     ctx.fillStyle = '#ffffff';
-    ctx.font = '900 68px "Syne", "Plus Jakarta Sans", sans-serif';
+    ctx.font = '900 70px sans-serif';
     ctx.textAlign = 'left';
-    ctx.fillText('GLOBAL', 485, 470);
-    ctx.fillText('LOGIC', 485, 545);
-    ctx.fillText('MEDIA', 485, 620);
+    ctx.fillText('GLOBAL', 480, 470);
+    ctx.fillText('LOGIC', 480, 550);
+    ctx.fillText('MEDIA', 480, 630);
 
-    // Bottom Badge
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-    ctx.font = '600 20px "Plus Jakarta Sans", sans-serif';
+    // Bottom Subtitle
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.font = '600 22px sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('EST. 2019  •  LUCKNOW, INDIA', 512, 910);
 
     // Overlay real logo.png if loaded
-    const logoImg = new Image();
+    var logoImg = new Image();
     logoImg.crossOrigin = 'anonymous';
     logoImg.onload = function() {
       ctx.drawImage(logoImg, 140, 240, 744, 544);
-      if (cardMesh && cardMesh.material && cardMesh.material[4]) {
+      if (cardMesh && cardMesh.material && cardMesh.material[4] && cardMesh.material[4].map) {
         cardMesh.material[4].map.needsUpdate = true;
       }
     };
     logoImg.src = '/logo.png';
 
-    const tex = new THREE.CanvasTexture(cvs);
+    var tex = new THREE.CanvasTexture(cvs);
     tex.generateMipmaps = true;
     tex.minFilter = THREE.LinearMipmapLinearFilter;
     tex.magFilter = THREE.LinearFilter;
     return tex;
   }
 
-  // 2. Generate Back Face Texture (Luxury Monogram Seal)
+  // 2. High-Definition Back Texture (Monogram Seal)
   function createBackTexture() {
-    const cvs = document.createElement('canvas');
+    var cvs = document.createElement('canvas');
     cvs.width = 1024;
     cvs.height = 1024;
-    const ctx = cvs.getContext('2d');
+    var ctx = cvs.getContext('2d');
 
-    const bgGrad = ctx.createLinearGradient(0, 0, 1024, 1024);
-    bgGrad.addColorStop(0, '#0e0e16');
-    bgGrad.addColorStop(0.5, '#161622');
-    bgGrad.addColorStop(1, '#09090f');
-    ctx.fillStyle = bgGrad;
+    var bg = ctx.createLinearGradient(0, 0, 1024, 1024);
+    bg.addColorStop(0, '#0e0e16');
+    bg.addColorStop(0.5, '#161622');
+    bg.addColorStop(1, '#09090f');
+    ctx.fillStyle = bg;
     ctx.fillRect(0, 0, 1024, 1024);
 
     ctx.strokeStyle = 'rgba(255, 199, 44, 0.6)';
@@ -165,14 +144,14 @@
     ctx.arc(512, 512, 360, 0, Math.PI * 2);
     ctx.stroke();
 
-    const redGlow = ctx.createRadialGradient(512, 512, 0, 512, 512, 250);
+    var redGlow = ctx.createRadialGradient(512, 512, 0, 512, 512, 250);
     redGlow.addColorStop(0, 'rgba(255, 23, 68, 0.4)');
     redGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = redGlow;
     ctx.fillRect(0, 0, 1024, 1024);
 
     ctx.fillStyle = '#ffc72c';
-    ctx.font = '900 130px "Syne", "Plus Jakarta Sans", sans-serif';
+    ctx.font = '900 130px sans-serif';
     ctx.textAlign = 'center';
     ctx.shadowColor = 'rgba(255, 199, 44, 0.6)';
     ctx.shadowBlur = 30;
@@ -182,14 +161,14 @@
     ctx.shadowBlur = 0;
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-    ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
+    ctx.font = '600 24px sans-serif';
     ctx.fillText('DIGITAL MARKETING & PERFORMANCE', 512, 640);
 
     ctx.fillStyle = '#FF1744';
-    ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif';
+    ctx.font = 'bold 20px sans-serif';
     ctx.fillText('WWW.GLOBALLOGICMEDIA.COM', 512, 685);
 
-    const tex = new THREE.CanvasTexture(cvs);
+    var tex = new THREE.CanvasTexture(cvs);
     tex.generateMipmaps = true;
     tex.minFilter = THREE.LinearMipmapLinearFilter;
     return tex;
@@ -200,138 +179,128 @@
     if (document.getElementById('glb-3d-logo-canvas')) return;
     initialized = true;
 
-    canvas = document.createElement('canvas');
+    var canvas = document.createElement('canvas');
     canvas.id = 'glb-3d-logo-canvas';
     canvas.style.position = 'absolute';
     canvas.style.top = '0';
     canvas.style.left = '0';
     canvas.style.width = '100%';
     canvas.style.height = '100%';
-    canvas.style.zIndex = '5';
+    canvas.style.zIndex = '10';
     canvas.style.borderRadius = '16px';
     canvas.style.pointerEvents = 'auto';
     container.appendChild(canvas);
 
-    const width = container.clientWidth || 550;
-    const height = container.clientHeight || 550;
+    var W = container.clientWidth || 550;
+    var H = container.clientHeight || 550;
 
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-    camera.position.set(0, 0, 6.2);
+    camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
+    camera.position.set(0, 0, 5.4);
 
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-    renderer.setSize(width, height);
+    renderer.setSize(W, H);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
+    renderer.toneMappingExposure = 1.15;
 
     cardGroup = new THREE.Group();
     scene.add(cardGroup);
 
-    // Studio Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
-    scene.add(ambientLight);
+    // Studio Lighting
+    scene.add(new THREE.AmbientLight(0xffffff, 0.85));
 
-    const spotLight = new THREE.SpotLight(0xffc72c, 6, 20, Math.PI / 3, 0.4, 1);
-    spotLight.position.set(3, 4, 6);
-    scene.add(spotLight);
+    var keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+    keyLight.position.set(4, 5, 5);
+    scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    rimLight.position.set(-4, 3, 5);
-    scene.add(rimLight);
+    var goldFill = new THREE.PointLight(0xffc72c, 2.5, 12);
+    goldFill.position.set(-3, 3, 4);
+    scene.add(goldFill);
 
-    const redRim = new THREE.PointLight(0xff1744, 4, 15);
-    redRim.position.set(0, -3, 3);
+    var redRim = new THREE.PointLight(0xff1744, 3.0, 12);
+    redRim.position.set(2, -3, 3);
     scene.add(redRim);
 
     // Materials
-    const frontTex = createFrontTexture();
-    const backTex = createBackTexture();
+    var frontTex = createFrontTexture();
+    var backTex = createBackTexture();
 
-    const frontMat = new THREE.MeshPhysicalMaterial({
+    var goldMat = new THREE.MeshStandardMaterial({
+      color: 0xffc72c,
+      roughness: 0.18,
+      metalness: 0.95,
+      emissive: 0xff9900,
+      emissiveIntensity: 0.15
+    });
+
+    var frontMat = new THREE.MeshPhysicalMaterial({
       map: frontTex,
       roughness: 0.15,
-      metalness: 0.65,
-      clearcoat: 1.0,
+      metalness: 0.45,
+      clearcoat: 0.9,
       clearcoatRoughness: 0.1,
       reflectivity: 0.9
     });
 
-    const backMat = new THREE.MeshPhysicalMaterial({
+    var backMat = new THREE.MeshPhysicalMaterial({
       map: backTex,
       roughness: 0.2,
-      metalness: 0.75,
-      clearcoat: 0.8,
+      metalness: 0.8,
+      clearcoat: 0.7,
       clearcoatRoughness: 0.15
     });
 
-    const goldEdgeMat = new THREE.MeshStandardMaterial({
-      color: 0xffc72c,
-      roughness: 0.18,
-      metalness: 0.95,
-      emissive: 0xffa500,
-      emissiveIntensity: 0.25
-    });
-
-    // 3D Card Geometry: [right, left, top, bottom, front, back]
-    const cardGeo = new THREE.BoxGeometry(3.6, 3.6, 0.16);
-    const materials = [
-      goldEdgeMat, // right
-      goldEdgeMat, // left
-      goldEdgeMat, // top
-      goldEdgeMat, // bottom
-      frontMat,    // front (+Z)
-      backMat      // back (-Z)
+    var materials = [
+      goldMat,  // right
+      goldMat,  // left
+      goldMat,  // top
+      goldMat,  // bottom
+      frontMat, // front (+Z)
+      backMat   // back (-Z)
     ];
 
-    cardMesh = new THREE.Mesh(cardGeo, materials);
+    cardMesh = new THREE.Mesh(new THREE.BoxGeometry(3.3, 3.3, 0.16), materials);
     cardGroup.add(cardMesh);
 
-    // Gold Trim Borders
-    const frameMat = new THREE.MeshStandardMaterial({
-      color: 0xffc72c,
-      roughness: 0.1,
-      metalness: 1.0
-    });
-    const trims = [
-      { s: [3.72, 0.05, 0.24], p: [0, 1.84, 0] },
-      { s: [3.72, 0.05, 0.24], p: [0, -1.84, 0] },
-      { s: [0.05, 3.68, 0.24], p: [-1.84, 0, 0] },
-      { s: [0.05, 3.68, 0.24], p: [1.84, 0, 0] }
+    // Gold outer bevel bars
+    var trims = [
+      { s: [3.38, 0.04, 0.22], p: [0, 1.67, 0] },
+      { s: [3.38, 0.04, 0.22], p: [0, -1.67, 0] },
+      { s: [0.04, 3.34, 0.22], p: [-1.67, 0, 0] },
+      { s: [0.04, 3.34, 0.22], p: [1.67, 0, 0] }
     ];
-    trims.forEach(t => {
-      const bar = new THREE.Mesh(new THREE.BoxGeometry(t.s[0], t.s[1], t.s[2]), frameMat);
-      bar.position.set(t.p[0], t.p[1], t.p[2]);
-      cardGroup.add(bar);
+    trims.forEach(function(t) {
+      var b = new THREE.Mesh(new THREE.BoxGeometry(t.s[0], t.s[1], t.s[2]), goldMat);
+      b.position.set(t.p[0], t.p[1], t.p[2]);
+      cardGroup.add(b);
     });
 
-    // 4. Ambient Sparkles
-    const particleCount = 45;
-    const pGeo = new THREE.BufferGeometry();
-    const pPos = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-      pPos[i * 3 + 0] = (Math.random() - 0.5) * 6.5;
-      pPos[i * 3 + 1] = (Math.random() - 0.5) * 6.5;
-      pPos[i * 3 + 2] = (Math.random() - 0.5) * 3.5;
+    // Ambient floating embers
+    var pGeo = new THREE.BufferGeometry();
+    var pPos = new Float32Array(40 * 3);
+    for (var i = 0; i < 40; i++) {
+      pPos[i * 3 + 0] = (Math.random() - 0.5) * 5.5;
+      pPos[i * 3 + 1] = (Math.random() - 0.5) * 5.5;
+      pPos[i * 3 + 2] = (Math.random() - 0.5) * 3;
     }
     pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-
-    const pMat = new THREE.PointsMaterial({
+    var pMat = new THREE.PointsMaterial({
       color: 0xffc72c,
       size: 0.06,
       transparent: true,
-      opacity: 0.75,
+      opacity: 0.8,
       blending: THREE.AdditiveBlending
     });
     particlesMesh = new THREE.Points(pGeo, pMat);
     scene.add(particlesMesh);
 
-    // 5. Mouse & Scroll Interaction
+    // Mouse events
     container.addEventListener('mousemove', function(e) {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      var rect = container.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
       mouse.targetX = ((x / rect.width) * 2 - 1) * 0.75;
       mouse.targetY = -((y / rect.height) * 2 - 1) * 0.75;
       isHovered = true;
@@ -344,17 +313,17 @@
     });
 
     window.addEventListener('scroll', function() {
-      const cur = window.scrollY;
-      const diff = cur - scrollY;
+      var cur = window.scrollY;
+      var diff = cur - scrollY;
       if (cardGroup) {
         cardGroup.rotation.y += diff * 0.003;
       }
       scrollY = cur;
     }, { passive: true });
 
-    const ro = new ResizeObserver(function() {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
+    var ro = new ResizeObserver(function() {
+      var w = container.clientWidth;
+      var h = container.clientHeight;
       if (w && h) {
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
@@ -366,35 +335,34 @@
     animate();
   }
 
-  // 6. 60 FPS Render Loop
-  let clock = 0;
+  // 4. Animation Loop
+  var clock = 0;
   function animate() {
     requestAnimationFrame(animate);
     if (!cardGroup) return;
 
     clock += 0.016;
 
-    // Inertia damping
     mouse.x += (mouse.targetX - mouse.x) * 0.08;
     mouse.y += (mouse.targetY - mouse.y) * 0.08;
 
     if (isHovered) {
-      // Dynamic tilt following mouse
-      const targetRotY = mouse.x * 0.85;
-      const targetRotX = mouse.y * 0.65;
+      // Direct mouse tracking tilt
+      var targetRotY = mouse.x * 0.85;
+      var targetRotX = mouse.y * 0.65;
       cardGroup.rotation.y += (targetRotY - cardGroup.rotation.y) * 0.08;
       cardGroup.rotation.x += (targetRotX - cardGroup.rotation.x) * 0.08;
       cardGroup.rotation.z = -mouse.x * 0.15;
     } else {
-      // Idle gentle float and tilt
-      const idleRotY = Math.sin(clock * 0.8) * 0.28;
-      const idleRotX = Math.cos(clock * 0.6) * 0.12;
+      // Idle elegant floating & wobble
+      var idleRotY = Math.sin(clock * 0.8) * 0.28;
+      var idleRotX = Math.cos(clock * 0.6) * 0.12;
       cardGroup.rotation.y += (idleRotY - cardGroup.rotation.y) * 0.05;
       cardGroup.rotation.x += (idleRotX - cardGroup.rotation.x) * 0.05;
       cardGroup.rotation.z = Math.sin(clock * 0.5) * 0.04;
     }
 
-    cardGroup.position.y = Math.sin(clock * 1.2) * 0.12;
+    cardGroup.position.y = Math.sin(clock * 1.2) * 0.10;
 
     if (particlesMesh) {
       particlesMesh.rotation.y = clock * 0.05;
@@ -404,45 +372,32 @@
     renderer.render(scene, camera);
   }
 
-  // 7. Robust Injector Loop
+  // 5. Injector Loop
   function checkAndReplace() {
     if (initialized && document.getElementById('glb-3d-logo-canvas')) return;
 
-    // Clean stray canvases outside About section
-    document.querySelectorAll('#glb-3d-logo-canvas').forEach(function(c) {
-      if (!c.closest('[data-framer-name="about me section"]')) c.remove();
-    });
+    var aboutSec = document.querySelector('[data-framer-name="about me section"]');
+    if (!aboutSec) return;
 
-    const aboutSection = document.querySelector('[data-framer-name="about me section"]');
-    if (!aboutSection) return;
+    var imgWrap = aboutSec.querySelector('.framer-vbrsas') ||
+                  aboutSec.querySelector('[data-framer-background-image-wrapper="true"]');
+    if (!imgWrap) return;
 
-    let targetImg = aboutSection.querySelector('img[src*="roWFLkzHAotwSx5UxGPxpxMeA.jpg"]');
-    let container = targetImg ? targetImg.parentElement : null;
-
-    if (!container) {
-      const wrapper = aboutSection.querySelector('.framer-vbrsas, [data-framer-background-image-wrapper="true"]');
-      if (wrapper) {
-        container = wrapper;
-        targetImg = wrapper.querySelector('img');
-      }
+    var img = imgWrap.querySelector('img');
+    if (img) {
+      img.style.opacity = '0';
+      img.style.pointerEvents = 'none';
     }
 
-    if (!container) return;
-
-    if (targetImg) {
-      targetImg.style.opacity = '0';
-      targetImg.style.pointerEvents = 'none';
-    }
-
-    if (window.getComputedStyle(container).position === 'static') {
-      container.style.position = 'relative';
-    }
+    imgWrap.style.position = 'relative';
+    imgWrap.style.overflow = 'visible';
 
     ensureThree(function() {
-      init3DLogo(container);
+      init3DLogo(imgWrap);
     });
   }
 
+  checkAndReplace();
   setInterval(checkAndReplace, 400);
 
 })();
