@@ -36,6 +36,7 @@ if (!html.includes('skills-section.js')) html = html.replace('</body>', '<script
 if (!html.includes('three-bg.js')) html = html.replace('</body>', '<script src="./three-bg.js"></script>\n</body>');
 if (!html.includes('global-logic-replacer.js')) html = html.replace('</body>', '<script src="./global-logic-replacer.js"></script>\n</body>');
 if (!html.includes('company-details.js')) html = html.replace('</body>', '<script src="./company-details.js"></script>\n</body>');
+if (!html.includes('three-logo-interactive.js')) html = html.replace('</body>', '<script src="./three-logo-interactive.js"></script>\n</body>');
 if (!html.includes('custom-cursor.js')) html = html.replace('</body>', '<script src="./custom-cursor.js"></script>\n</body>');
 
 fs.writeFileSync('index.html', html);
