@@ -1,6 +1,9 @@
 const fs = require('fs');
 let html = fs.readFileSync('index.html', 'utf8');
 
+// Clean existing Three.js tags in head or body to prevent duplicates
+html = html.replace(/<script src="https:\/\/cdnjs\.cloudflare\.com\/ajax\/libs\/three\.js\/r128\/three\.min\.js"><\/script>/g, '');
+
 // Ensure Three.js CDN is in head
 if (!html.includes('three.min.js')) {
     html = html.replace('</head>', '<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>\n</head>');
@@ -38,10 +41,15 @@ if (!html.includes('svg-decorations.js')) html = html.replace('</body>', '<scrip
 if (!html.includes('rabto-fx-engine.js')) html = html.replace('</body>', '<script src="./rabto-fx-engine.js"></script>\n</body>');
 if (!html.includes('bg-enhancer.js')) html = html.replace('</body>', '<script src="./bg-enhancer.js"></script>\n</body>');
 if (!html.includes('skills-section.js')) html = html.replace('</body>', '<script src="./skills-section.js"></script>\n</body>');
-if (!html.includes('three-bg.js')) html = html.replace('</body>', '<script src="./three-bg.js"></script>\n</body>');
+// Clean body instances of three-bg.js and three-logo-interactive.js to prevent hydration removal
+html = html.replace(/<script src="\.\/three-bg\.js"><\/script>/g, '');
+html = html.replace(/<script src="\.\/three-logo-interactive\.js"><\/script>/g, '');
+
+if (!html.includes('three-bg.js')) {
+    html = html.replace('</head>', '<script src="./three-bg.js" defer></script>\n</head>');
+}
 if (!html.includes('global-logic-replacer.js')) html = html.replace('</body>', '<script src="./global-logic-replacer.js"></script>\n</body>');
 if (!html.includes('company-details.js')) html = html.replace('</body>', '<script src="./company-details.js"></script>\n</body>');
-if (!html.includes('three-logo-interactive.js')) html = html.replace('</body>', '<script src="./three-logo-interactive.js"></script>\n</body>');
 if (!html.includes('custom-cursor.js')) html = html.replace('</body>', '<script src="./custom-cursor.js"></script>\n</body>');
 
 fs.writeFileSync('index.html', html);
