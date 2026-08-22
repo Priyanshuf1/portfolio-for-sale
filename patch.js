@@ -28,7 +28,8 @@ if (!html.includes('/* Hide old testimonials section */')) {
     margin: 0 !important;
   }
 </style>\n`;
-    html = html.replace('</head>', hideStyle + '</head>');
+    // Inject RIGHT AFTER <head> tag so it fires before ANY script runs and prevents FOUC
+    html = html.replace('<head>', '<head>\n' + hideStyle);
 }
 
 // Inject Firebase init before other custom scripts
