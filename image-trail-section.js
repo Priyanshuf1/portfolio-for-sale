@@ -116,7 +116,7 @@
           
           /* Staggered entrance initial state */
           opacity: 0;
-          transform: translateY(40px) scale(0.95);
+          transform: translateY(45px) scale(0.94);
           transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
         }
         .glm-marquee-item.animate-in {
@@ -212,7 +212,7 @@
 
           /* Staggered entrance initial state */
           opacity: 0;
-          transform: translateY(40px) scale(0.95);
+          transform: translateY(45px) scale(0.94);
           transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
         }
         .glm-insta-card.animate-in {
@@ -305,6 +305,15 @@
             <img src="${src}" alt="Portfolio Proof" loading="lazy">
           </div>
         `).join('');
+
+        // Staggered reveal animation triggers immediately on load
+        setTimeout(function() {
+          row.querySelectorAll('.glm-marquee-item').forEach(function(item, index) {
+            setTimeout(function() {
+              item.classList.add('animate-in');
+            }, index * 60);
+          });
+        }, 150);
       }
 
       fillRow('marquee-row-1', row1Images);
@@ -348,10 +357,7 @@
     // ── 4. Apply 3D Perspective Tilt Interaction & Gloss Glare ───────────────
     apply3DTiltEffect();
 
-    // ── 5. Staggered Entrance Viewport Scroll Animation ──────────────────────
-    initEntranceObserver();
-
-    // ── 6. Remove Instagram menu links from headers (User requested) ────────
+    // ── 5. Remove Instagram menu links from headers (User requested) ────────
     removeInstagramNavLinks();
   }
 
@@ -447,30 +453,6 @@
     });
   }
 
-  function initEntranceObserver() {
-    if (window.glmEntranceObserverInit) return;
-    window.glmEntranceObserverInit = true;
-
-    var observer = new IntersectionObserver(function(entries, obs) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          var cards = entry.target.querySelectorAll('.glm-marquee-item, .glm-insta-card');
-          cards.forEach(function(card, index) {
-            setTimeout(function() {
-              card.classList.add('animate-in');
-            }, index * 80); // Stagger reveal
-          });
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    var sections = document.querySelectorAll('#glm-image-trail-section, #glm-instagram-feed-section');
-    sections.forEach(function(sec) {
-      observer.observe(sec);
-    });
-  }
-
   function loadInstagramFeed() {
     var row = document.getElementById('insta-feed-row');
     if (!row) return;
@@ -536,16 +518,14 @@
       `).join('');
       apply3DTiltEffect();
       
-      // Re-trigger viewport check for animate-in on dynamically loaded feed items
-      var section = document.getElementById('glm-instagram-feed-section');
-      if (section) {
-        var cards = section.querySelectorAll('.glm-insta-card');
-        cards.forEach(function(card, index) {
+      // Trigger reveal stagger for Instagram cards immediately upon data render
+      setTimeout(function() {
+        row.querySelectorAll('.glm-insta-card').forEach(function(item, index) {
           setTimeout(function() {
-            card.classList.add('animate-in');
-          }, index * 80);
+            item.classList.add('animate-in');
+          }, index * 60);
         });
-      }
+      }, 150);
     }
   }
 
