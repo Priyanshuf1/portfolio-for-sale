@@ -143,7 +143,9 @@
       './ss11.png',
       './ss12.png',
       './ss13.png',
-      './ss14.png'
+      './ss14.png',
+      './ss15.png',
+      './ss16.png'
     ];
 
     var distThreshold = 65; // High responsiveness
