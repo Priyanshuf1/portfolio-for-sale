@@ -361,7 +361,7 @@
       var closeBtn = document.getElementById('glm-lightbox-close');
       var closeLightbox = function() {
         lightbox.style.opacity = '0';
-        lightbox.style.pointer-events = 'none';
+        lightbox.style.pointerEvents = 'none';
         document.getElementById('glm-lightbox-img').style.transform = 'scale(0.95)';
       };
 
@@ -377,7 +377,7 @@
         var img = document.getElementById('glm-lightbox-img');
         img.src = src;
         lightbox.style.opacity = '1';
-        lightbox.style.pointer-events = 'auto';
+        lightbox.style.pointerEvents = 'auto';
         img.style.transform = 'scale(1)';
       };
     }
