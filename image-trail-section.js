@@ -128,7 +128,7 @@
       p5Instance.remove();
     }
 
-    // Strictly use the official work screenshots + new campaign proofs
+    // Strictly use the official work screenshots + campaign and design proofs
     var imageUrls = [
       './work1.png',
       './work2.png',
@@ -138,7 +138,12 @@
       './ss6.png',
       './ss7.png',
       './ss8.png',
-      './ss9.png'
+      './ss9.png',
+      './ss10.png',
+      './ss11.png',
+      './ss12.png',
+      './ss13.png',
+      './ss14.png'
     ];
 
     var distThreshold = 65; // High responsiveness
