@@ -5,12 +5,23 @@
   // Uses work1.png → work4.png as trail images
   // ====================================================
 
-  function inject() {
-    if (document.getElementById('glm-image-trail-section')) return;
+  var p5Instance = null;
+  var clientX = -1000;
+  var clientY = -1000;
+  var mouseIn = false;
 
-    // ── Find and hide the Framer Recent Works section ──────────────────
+  // Track mouse position globally
+  window.addEventListener('mousemove', function(e) {
+    clientX = e.clientX;
+    clientY = e.clientY;
+  });
+
+  function inject() {
     var recentWorkEl = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
-    if (recentWorkEl) {
+    if (!recentWorkEl) return;
+
+    // Hide original section
+    if (recentWorkEl.style.display !== 'none') {
       recentWorkEl.style.display = 'none';
       recentWorkEl.style.visibility = 'hidden';
       recentWorkEl.style.height = '0';
@@ -19,7 +30,16 @@
       recentWorkEl.style.margin = '0';
     }
 
-    // ── Build the replacement section ──────────────────────────────────
+    // If already injected, make sure it's in the DOM at the correct position
+    var existingSection = document.getElementById('glm-image-trail-section');
+    if (existingSection) {
+      if (recentWorkEl.nextSibling !== existingSection) {
+        recentWorkEl.parentNode.insertBefore(existingSection, recentWorkEl.nextSibling);
+      }
+      return;
+    }
+
+    // Build the replacement section
     var section = document.createElement('section');
     section.id = 'glm-image-trail-section';
     section.style.cssText = [
@@ -57,14 +77,13 @@
     ].join('');
     section.appendChild(overlay);
 
-    // Insert section after the hidden one, or at the end of main
-    if (recentWorkEl && recentWorkEl.parentNode) {
-      recentWorkEl.parentNode.insertBefore(section, recentWorkEl.nextSibling);
-    } else {
-      document.body.appendChild(section);
-    }
+    // Insert section after the hidden one
+    recentWorkEl.parentNode.insertBefore(section, recentWorkEl.nextSibling);
 
-    // ── Load p5.js and launch the sketch ───────────────────────────────
+    section.addEventListener('mouseenter', function() { mouseIn = true; });
+    section.addEventListener('mouseleave', function() { mouseIn = false; });
+
+    // Load p5.js and launch the sketch
     if (window.p5) {
       launchSketch(section);
     } else {
@@ -76,6 +95,10 @@
   }
 
   function launchSketch(section) {
+    if (p5Instance) {
+      p5Instance.remove();
+    }
+
     var imageUrls = [
       './work1.png',
       './work2.png',
@@ -86,20 +109,7 @@
     var distThreshold = 75; // Distance mouse needs to move before next image
     var scaleFactor = 4;    // Scale factor to size images
 
-    // Track mouse position relative to viewport
-    var clientX = -1000;
-    var clientY = -1000;
-    var mouseIn = false;
-
-    window.addEventListener('mousemove', function(e) {
-      clientX = e.clientX;
-      clientY = e.clientY;
-    });
-
-    section.addEventListener('mouseenter', function() { mouseIn = true; });
-    section.addEventListener('mouseleave', function() { mouseIn = false; });
-
-    new p5(function(p) {
+    p5Instance = new p5(function(p) {
       var images = [];
       var queue = [];
       var lastPos = { x: -1000, y: -1000 };
@@ -164,9 +174,7 @@
 
             p.push();
             p.translate(item.x, item.y);
-            // Gentle rotation based on speed or index
             p.rotate(p.sin(i * 0.4) * 0.1);
-            // Apply opacity fade
             p.tint(255, item.life * 255);
             p.image(img, 0, 0, imgWidth, imgHeight);
             p.pop();
@@ -180,13 +188,19 @@
     }, 'canvas-parent');
   }
 
-  // Poll to find section
-  var interval = setInterval(function() {
-    var el = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
-    if (el) {
-      clearInterval(interval);
+  // Run continuously to survive Framer React hydration and re-renders
+  setInterval(inject, 500);
+
+  // Monitor DOM modifications to immediately re-run inject
+  var observer = new MutationObserver(inject);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      observer.observe(document.body, { childList: true, subtree: true });
       inject();
-    }
-  }, 200);
+    });
+  } else {
+    observer.observe(document.body, { childList: true, subtree: true });
+    inject();
+  }
 
 })();
