@@ -3,7 +3,9 @@
   // RECENT WORK MARQUEE & INSTAGRAM EMBEDDED FEED
   // - Transparent background for Recent Work marquee (shows site 3D mesh)
   // - Seamless lightbox zoom with (X) button on image tap
-  // - Embedded stylish auto-scrolling Instagram feed section below Recent Work
+  // - Expanded auto-scrolling Instagram feed section below Recent Work
+  // - 3D Perspective Tilt + Glossy Glare effect on hover
+  // - Dynamic removal of Instagram link from header nav menus
   // ====================================================
 
   function inject() {
@@ -46,7 +48,7 @@
       'position:relative',
       'width:100%',
       'min-height:75vh',
-      'background:transparent !important', // Transparent background as requested
+      'background:transparent !important',
       'display:flex',
       'flex-direction:column',
       'align-items:center',
@@ -76,7 +78,7 @@
         .glm-marquee-row {
           display: flex;
           width: max-content;
-          gap: 24px;
+          gap: 28px;
         }
         .glm-marquee-row.left {
           animation: glmMarqueeLeft 40s linear infinite;
@@ -94,16 +96,17 @@
           border-radius: 16px;
           overflow: hidden;
           border: 1px solid rgba(255,255,255,0.08);
-          background: rgba(13, 13, 17, 0.75); /* Dark semi-transparent background to stand out over grid */
+          background: rgba(13, 13, 17, 0.75);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
-          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+          transition: transform 0.15s ease-out, border-color 0.4s ease, box-shadow 0.4s ease;
           cursor: pointer;
+          position: relative;
+          transform-style: preserve-3d;
         }
         .glm-marquee-item:hover {
-          transform: scale(1.05) translateY(-5px);
           border-color: #FF1744;
-          box-shadow: 0 12px 30px rgba(255, 23, 68, 0.2);
+          box-shadow: 0 12px 30px rgba(255, 23, 68, 0.25);
         }
         .glm-marquee-item img {
           width: 100%;
@@ -111,6 +114,7 @@
           object-fit: cover;
           opacity: 0.85;
           transition: opacity 0.4s ease;
+          pointer-events: none;
         }
         .glm-marquee-item:hover img {
           opacity: 1;
@@ -120,14 +124,14 @@
         .glm-insta-section {
           position: relative;
           width: 100%;
-          min-height: 70vh;
+          min-height: 75vh;
           background: transparent !important;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           overflow: hidden;
-          padding: 60px 0 80px;
+          padding: 70px 0 90px;
           z-index: 8;
           border-top: 1px solid rgba(255,255,255,0.05);
         }
@@ -135,7 +139,7 @@
           display: flex;
           align-items: center;
           gap: 30px;
-          margin-bottom: 30px;
+          margin-bottom: 40px;
           padding: 0 20px;
           width: 100%;
           max-width: 1200px;
@@ -168,16 +172,16 @@
         .glm-insta-row {
           display: flex;
           width: max-content;
-          gap: 24px;
+          gap: 28px;
           animation: glmMarqueeLeft 45s linear infinite;
         }
         .glm-insta-row:hover {
           animation-play-state: paused;
         }
         .glm-insta-card {
-          width: 260px;
+          width: 320px; /* Expanded card size as requested */
           aspect-ratio: 1;
-          border-radius: 12px;
+          border-radius: 16px;
           overflow: hidden;
           position: relative;
           border: 1px solid rgba(255,255,255,0.06);
@@ -185,15 +189,14 @@
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
           cursor: pointer;
-          transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-        }
-        .glm-insta-card:hover {
-          transform: scale(1.03);
+          transition: transform 0.15s ease-out, border-color 0.4s ease;
+          transform-style: preserve-3d;
         }
         .glm-insta-card img {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          pointer-events: none;
         }
         .glm-insta-overlay {
           position: absolute;
@@ -204,26 +207,27 @@
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          padding: 20px;
+          padding: 24px;
           text-align: center;
           transition: opacity 0.3s ease;
+          z-index: 2;
         }
         .glm-insta-card:hover .glm-insta-overlay {
           opacity: 1;
         }
         .glm-insta-caption {
-          font-size: 0.82rem;
+          font-size: 0.85rem;
           color: #fff;
           line-height: 1.5;
-          margin-bottom: 12px;
+          margin-bottom: 15px;
           display: -webkit-box;
-          -webkit-line-clamp: 3;
+          -webkit-line-clamp: 4;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
         .glm-insta-link {
           color: #FF1744;
-          font-size: 0.8rem;
+          font-size: 0.82rem;
           font-weight: 700;
           text-transform: uppercase;
           text-decoration: none;
@@ -328,8 +332,11 @@
     // ── 3. Lightbox Setup ───────────────────────────────────────────────────
     setupLightbox();
 
-    // ── 4. Inject Dynamic Header Links ──────────────────────────────────────
-    injectInstagramNavLink();
+    // ── 4. Apply 3D Perspective Tilt Interaction & Gloss Glare ───────────────
+    apply3DTiltEffect();
+
+    // ── 5. Remove Instagram menu links from headers (User requested) ────────
+    removeInstagramNavLinks();
   }
 
   function setupLightbox() {
@@ -357,7 +364,6 @@
       `;
       document.body.appendChild(lightbox);
 
-      // Close handlers
       var closeBtn = document.getElementById('glm-lightbox-close');
       var closeLightbox = function() {
         lightbox.style.opacity = '0';
@@ -383,11 +389,53 @@
     }
   }
 
+  function apply3DTiltEffect() {
+    var cards = document.querySelectorAll('.glm-marquee-item, .glm-insta-card');
+    cards.forEach(function(card) {
+      if (card.dataset.tiltActive) return;
+      card.dataset.tiltActive = 'true';
+
+      // Create reflection glare element
+      var glare = document.createElement('div');
+      glare.style.cssText = [
+        'position:absolute',
+        'inset:0',
+        'background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%)',
+        'pointer-events:none',
+        'opacity:0',
+        'transition:opacity 0.3s ease',
+        'z-index:5'
+      ].join(';');
+      card.appendChild(glare);
+
+      card.addEventListener('mousemove', function(e) {
+        var rect = card.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        
+        var xc = rect.width / 2;
+        var yc = rect.height / 2;
+        
+        // Tilt values: max 10 degrees
+        var rotateY = ((x - xc) / xc) * 10;
+        var rotateX = -((y - yc) / yc) * 10;
+        
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
+        glare.style.opacity = '1';
+        glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%)`;
+      });
+
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)';
+        glare.style.opacity = '0';
+      });
+    });
+  }
+
   function loadInstagramFeed() {
     var row = document.getElementById('insta-feed-row');
     if (!row) return;
 
-    // Stylish placeholder posts to show instantly (representing GLM portfolio & creatives)
     var defaultPosts = [
       { src: './work1.png', cap: 'Empowering B Luxury Salon with an organic, conversion-optimized marketing push!' },
       { src: './work2.png', cap: 'Elegant creative visuals and brand photography for Vinca Unisex Salon.' },
@@ -399,7 +447,6 @@
 
     var token = localStorage.getItem('glm_instagram_token');
     if (token) {
-      // Dynamic API fetch if token is present
       fetch(`https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${token}`)
         .then(res => {
           if (!res.ok) throw new Error('API invalid');
@@ -424,21 +471,21 @@
     }
 
     function renderInstaData(posts) {
-      // Double the array to make seamless auto-scrolling loop
       var doubled = posts.concat(posts);
       row.innerHTML = doubled.map(p => `
         <div class="glm-insta-card" onclick="window.glmShowLightbox('${p.src}')">
           <img src="${p.src}" alt="Instagram Post" loading="lazy">
           <div class="glm-insta-overlay">
             <p class="glm-insta-caption">${p.cap}</p>
-            <a href="${p.link || 'https://instagram.com/globallogicmedia'}" target="_blank" rel="noopener" class="glm-insta-link" onclick="event.stopPropagation();">Instagram</a>
+            <span class="glm-insta-link" onclick="event.stopPropagation();">Instagram</span>
           </div>
         </div>
       `).join('');
+      // Re-apply 3D Tilt binding for dynamically loaded elements
+      apply3DTiltEffect();
     }
   }
 
-  // Token Prompt utility
   window.glmPromptToken = function() {
     var current = localStorage.getItem('glm_instagram_token') || '';
     var token = prompt('Enter your Instagram Basic Display API Access Token:', current);
@@ -454,18 +501,10 @@
     }
   };
 
-  function injectInstagramNavLink() {
-    var blogLinks = document.querySelectorAll('a[href*="blog.html"], a[href*="blog"]');
-    blogLinks.forEach(blogLink => {
-      var parent = blogLink.parentElement;
-      if (parent && !parent.querySelector('a[href*="instagram.html"]')) {
-        var instaLink = document.createElement('a');
-        instaLink.href = './instagram.html';
-        instaLink.innerText = 'Instagram';
-        instaLink.className = blogLink.className;
-        instaLink.style.cssText = blogLink.style.cssText;
-        blogLink.parentNode.insertBefore(instaLink, blogLink.nextSibling);
-      }
+  function removeInstagramNavLinks() {
+    var instaLinks = document.querySelectorAll('a[href*="instagram.html"], a[href*="instagram"]');
+    instaLinks.forEach(function(link) {
+      link.remove();
     });
   }
 
