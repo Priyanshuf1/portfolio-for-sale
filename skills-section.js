@@ -166,6 +166,39 @@
       width: 0%;
       transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
+    @media (max-width: 768px) {
+      .glb-skills-section {
+        padding: 40px 16px;
+      }
+      .glb-skills-header {
+        margin-bottom: 24px;
+      }
+      .glb-skills-tabs {
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+      .glb-skills-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .glb-skill-card {
+        padding: 16px;
+        gap: 10px;
+      }
+      .glb-skill-title {
+        font-size: 0.95rem;
+      }
+      .glb-skill-desc {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .glb-skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   `;
 
   const skillsData = [

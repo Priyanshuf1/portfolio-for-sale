@@ -128,6 +128,28 @@
     .framer-1pmfitp {
       display: none !important;
     }
+
+    @media (max-width: 768px) {
+      .glb-reviews-native-wrapper {
+        padding: 36px 0;
+      }
+      .glb-reviews-title-wrap {
+        margin-bottom: 24px;
+        padding: 0 16px;
+      }
+      .glb-review-card-premium {
+        flex: 0 0 270px;
+        padding: 18px;
+        gap: 12px;
+      }
+      .glb-home-blogs {
+        padding: 40px 16px !important;
+      }
+      .glb-blog-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+    }
   `;
 
   const styleEl = document.createElement('style');

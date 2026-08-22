@@ -14,18 +14,43 @@ if (!html.includes('/* Hide old testimonials section */')) {
 <style>
   /* Hide old testimonials section */
   #testimonials, section[data-framer-name="testimonials"], .framer-izep5p { display: none !important; }
-  /* Instantly hide original template sections to prevent flash of unstyled content */
+
+  /* ── Instantly hide ALL original Framer template sections ──
+     These are replaced by our custom sections below the Framer canvas.
+     Hiding them here (first in <head>) prevents any flash before JS runs. */
   [data-framer-name="about me section"],
   #about-me,
   [data-framer-name="Projects"],
   .framer-1mm21uq,
-  #projects {
+  #projects,
+  #process,
+  #services,
+  #faq {
     display: none !important;
     opacity: 0 !important;
     height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
     overflow: hidden !important;
     padding: 0 !important;
     margin: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* ── Collapse Framer scroll container to just hero height ──
+     Without this the scroll area still reserves space for hidden sections. */
+  .framer-povseb,
+  .framer-OLpjL {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  /* ── Reduce gap below hero section so our content starts immediately ── */
+  #hero ~ * { margin-top: 0 !important; }
+
+  /* ── Remove padding/spacing from Framer root that creates phantom gaps ── */
+  #main {
+    padding-bottom: 0 !important;
   }
 </style>\n`;
     // Inject RIGHT AFTER <head> tag so it fires before ANY script runs and prevents FOUC

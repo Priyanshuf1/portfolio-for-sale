@@ -54,7 +54,12 @@
       align-items: stretch;
     }
     @media (max-width: 900px) {
-      .glb-location-grid { grid-template-columns: 1fr; }
+      .glb-location-grid { grid-template-columns: 1fr; gap: 20px; }
+    }
+    @media (max-width: 768px) {
+      .glb-location-section { padding: 36px 16px; }
+      .glb-location-header { margin-bottom: 28px; }
+      .glb-contact-card { padding: 14px 16px; }
     }
     .glb-contact-cards-wrap {
       display: flex;
