@@ -41,3 +41,5 @@ if (!html.includes('custom-cursor.js')) html = html.replace('</body>', '<script 
 
 fs.writeFileSync('index.html', html);
 console.log('Appended firebase-init and native sections to index.html');
+
+require('./patch-webflow-expandable-cards.js');

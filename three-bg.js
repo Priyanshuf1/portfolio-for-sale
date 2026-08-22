@@ -12,7 +12,7 @@
       width: 100vw; height: 100vh;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.85;
+      opacity: 0.35;
     }
 
     [data-framer-root],
@@ -54,7 +54,7 @@
 
     const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 
     // Restore Original 3D Silver Perspective Grid Plane
     const gridGeo = new THREE.PlaneGeometry(1600, 1600, 40, 40);
@@ -62,7 +62,7 @@
       color: 0x94A3B8,
       wireframe: true,
       transparent: true,
-      opacity: 0.15
+      opacity: 0.10
     });
     const gridMesh = new THREE.Mesh(gridGeo, gridMat);
     gridMesh.rotation.x = -Math.PI / 2;
@@ -90,7 +90,7 @@
         color: color,
         wireframe: true,
         transparent: true,
-        opacity: 0.28
+        opacity: 0.18
       });
 
       const mesh = new THREE.Mesh(geo, mat);
@@ -102,9 +102,9 @@
       mesh.rotation.y = Math.random() * Math.PI;
 
       mesh.userData = {
-        rotSpeedX: (Math.random() - 0.5) * 0.012,
-        rotSpeedY: (Math.random() - 0.5) * 0.012,
-        floatSpeed: Math.random() * 0.02 + 0.005,
+        rotSpeedX: (Math.random() - 0.5) * 0.006,
+        rotSpeedY: (Math.random() - 0.5) * 0.006,
+        floatSpeed: Math.random() * 0.01 + 0.003,
         initialY: mesh.position.y
       };
 
@@ -113,7 +113,7 @@
     }
 
     // Restore Original 3D Silver Starfield Particles
-    const particleCount = 350;
+    const particleCount = 250;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
 
@@ -126,9 +126,9 @@
     particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const particleMat = new THREE.PointsMaterial({
       color: 0xE2E8F0,
-      size: 2,
+      size: 1.8,
       transparent: true,
-      opacity: 0.35
+      opacity: 0.22
     });
     const particleSystem = new THREE.Points(particleGeo, particleMat);
     scene.add(particleSystem);
@@ -137,8 +137,8 @@
     let targetMouseX = 0, targetMouseY = 0;
 
     window.addEventListener('mousemove', (e) => {
-      targetMouseX = (e.clientX - window.innerWidth / 2) * 0.5;
-      targetMouseY = (e.clientY - window.innerHeight / 2) * 0.5;
+      targetMouseX = (e.clientX - window.innerWidth / 2) * 0.3;
+      targetMouseY = (e.clientY - window.innerHeight / 2) * 0.3;
     });
 
     window.addEventListener('resize', () => {
@@ -151,6 +151,8 @@
 
     function animate() {
       requestAnimationFrame(animate);
+      if (document.hidden) return;
+
       const elapsedTime = clock.getElapsedTime();
 
       mouseX += (targetMouseX - mouseX) * 0.05;
@@ -160,22 +162,17 @@
       camera.position.y = -mouseY * 0.8 + 100;
       camera.lookAt(0, 0, 0);
 
-      const pos = gridGeo.attributes.position;
-      for (let i = 0; i < pos.count; i++) {
-        const u = pos.getX(i);
-        const v = pos.getY(i);
-        const z = Math.sin(u * 0.01 + elapsedTime * 1.5) * 15 + Math.cos(v * 0.01 + elapsedTime * 1.5) * 15;
-        pos.setZ(i, z);
-      }
-      pos.needsUpdate = true;
+      // GPU-only grid motion (Zero CPU vertex looping)
+      gridMesh.position.z = Math.sin(elapsedTime * 0.8) * 15;
+      gridMesh.rotation.z = Math.sin(elapsedTime * 0.4) * 0.04;
 
       shapes.forEach(shape => {
         shape.rotation.x += shape.userData.rotSpeedX;
         shape.rotation.y += shape.userData.rotSpeedY;
-        shape.position.y = shape.userData.initialY + Math.sin(elapsedTime * 2 + shape.position.x) * 20;
+        shape.position.y = shape.userData.initialY + Math.sin(elapsedTime * 1.5 + shape.position.x) * 15;
       });
 
-      particleSystem.rotation.y = elapsedTime * 0.02;
+      particleSystem.rotation.y = elapsedTime * 0.015;
 
       renderer.render(scene, camera);
     }
