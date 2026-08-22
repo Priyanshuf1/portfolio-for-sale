@@ -23,27 +23,125 @@
     if (!recentWorkEl && !projectsEl) return;
     var insertTarget = recentWorkEl || projectsEl;
 
-    // Create or update the Instagram Feed Section
+    // ── 1. Create or update the Recent Work Marquee Section ─────────────────
+    var marqueeSection = document.getElementById('glm-image-trail-section');
+    if (!marqueeSection) {
+      marqueeSection = document.createElement('section');
+      marqueeSection.id = 'glm-image-trail-section';
+      insertTarget.parentNode.insertBefore(marqueeSection, insertTarget.nextSibling);
+    }
+
+    marqueeSection.style.cssText = [
+      'position:relative',
+      'width:100%',
+      'min-height:75vh',
+      'background:transparent !important',
+      'display:flex',
+      'flex-direction:column',
+      'align-items:center',
+      'justify-content:center',
+      'overflow:hidden',
+      'padding:60px 0 40px',
+      'z-index:8'
+    ].join(';');
+
+    // ── 2. Create or update the Instagram Feed Section ──────────────────────
     var instaSection = document.getElementById('glm-instagram-feed-section');
     if (!instaSection) {
       instaSection = document.createElement('section');
       instaSection.id = 'glm-instagram-feed-section';
       instaSection.className = 'glm-insta-section';
-      insertTarget.parentNode.insertBefore(instaSection, insertTarget.nextSibling);
+      marqueeSection.parentNode.insertBefore(instaSection, marqueeSection.nextSibling);
     }
 
     // Inject styles and HTML content if not already built
     if (!instaSection.querySelector('#insta-feed')) {
-      // Custom Stylesheet for Bento Grid and Story Rings
+      // Combined Stylesheet for Marquee, Bento Grid, and Story Rings
       const styles = `
-<style id="glm-bento-insta-styles">
+<style id="glm-combined-layouts-styles">
   :root {
     --insta-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
   }
+  
+  /* Marquee Styling */
+  .glm-marquee-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-top: 30px;
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  }
+  .glm-marquee-row {
+    display: flex;
+    width: max-content;
+    gap: 28px;
+  }
+  .glm-marquee-row.left {
+    animation: glmMarqueeLeft 50s linear infinite;
+  }
+  .glm-marquee-row.right {
+    animation: glmMarqueeRight 50s linear infinite;
+  }
+  .glm-marquee-row:hover {
+    animation-play-state: paused;
+  }
+  .glm-marquee-item {
+    width: 290px;
+    height: 200px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(13, 13, 17, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    
+    /* Staggered entrance initial state */
+    opacity: 0;
+    transform: translateY(45px) scale(0.94);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+  .glm-marquee-item.animate-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .glm-marquee-item:hover {
+    border-color: #FF1744;
+    box-shadow: 0 12px 30px rgba(255, 23, 68, 0.25);
+  }
+  .glm-marquee-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .glm-marquee-item:hover img {
+    opacity: 1;
+  }
+
+  @keyframes glmMarqueeLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes glmMarqueeRight {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  /* Instagram Bento Section Styling */
   .glm-insta-section {
     position: relative;
     width: 100%;
-    background-color: #050505 !important;
+    background: transparent !important; /* Blend with canvas and particle background */
     color: #ffffff !important;
     padding: 80px 0 !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
@@ -90,6 +188,20 @@
   @media (max-width: 768px) {
     .bento-grid { grid-template-columns: repeat(2, 1fr); }
     .bento-item-large { grid-column: span 2; grid-row: span 1; }
+    
+    .glm-marquee-wrap {
+      margin-top: 15px;
+      gap: 16px;
+    }
+    .glm-marquee-row {
+      gap: 16px;
+    }
+    .glm-marquee-item {
+      width: 220px;
+      height: 150px;
+      border-radius: 12px;
+      transform: translateY(30px) scale(0.95);
+    }
   }
   
   /* Hide scrollbar helper */
@@ -99,12 +211,56 @@
 `;
       document.head.insertAdjacentHTML('beforeend', styles);
 
-      // Bento Instagram Showcase HTML structure
+      // ── Populate Marquee Section HTML ─────────────────────────────
+      marqueeSection.innerHTML = `
+        <div style="text-align:center;pointer-events:none;user-select:none;">
+          <p style="color:#FF1744;font-size:clamp(12px,1.2vw,16px);letter-spacing:0.4em;text-transform:uppercase;margin-bottom:15px;font-family:sans-serif;font-weight:700;">Recent Work</p>
+          <h2 style="color:#ffffff;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.1;font-family:sans-serif;margin:0;">Proven Marketing Results</h2>
+        </div>
+        <div class="glm-marquee-wrap">
+          <div class="glm-marquee-row left" id="marquee-row-1"></div>
+          <div class="glm-marquee-row right" id="marquee-row-2"></div>
+        </div>
+      `;
+
+      var row1Images = [
+        './work1.png', './work2.png', './work3.png', './work4.png',
+        './ss5.png', './ss6.png', './ss7.png', './ss8.png'
+      ];
+      var row2Images = [
+        './ss9.png', './ss10.png', './ss11.png', './ss12.png',
+        './ss13.png', './ss14.png', './ss15.png', './ss16.png'
+      ];
+
+      function fillRow(rowElId, images) {
+        var row = document.getElementById(rowElId);
+        if (!row) return;
+        var doubled = images.concat(images);
+        row.innerHTML = doubled.map(src => `
+          <div class="glm-marquee-item" onclick="window.glmShowLightbox('${src}')">
+            <img src="${src}" alt="Portfolio Proof" loading="lazy">
+          </div>
+        `).join('');
+
+        // Staggered reveal animation triggers immediately on load
+        setTimeout(function() {
+          row.querySelectorAll('.glm-marquee-item').forEach(function(item, index) {
+            setTimeout(function() {
+              item.classList.add('animate-in');
+            }, index * 60);
+          });
+        }, 150);
+      }
+
+      fillRow('marquee-row-1', row1Images);
+      fillRow('marquee-row-2', row2Images);
+
+      // ── Populate Bento Instagram Section HTML ──────────────────────
       instaSection.innerHTML = `
     <!-- BG Gradient Blobs -->
-    <div class="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden opacity-30 pointer-events-none">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-600 blur-[120px] rounded-full"></div>
+    <div class="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden opacity-20 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-600/20 blur-[120px] rounded-full"></div>
     </div>
 
     <div class="max-w-7xl mx-auto px-6 py-12">
@@ -248,6 +404,7 @@
 
       if (window.lucide) window.lucide.createIcons();
       setupLightbox();
+      apply3DTiltEffect();
       loadInstagramFeed();
     }
   }
@@ -280,6 +437,48 @@
         document.body.style.overflow = '';
       }, 300);
     };
+  }
+
+  function apply3DTiltEffect() {
+    var cards = document.querySelectorAll('.glm-marquee-item, .glass-card');
+    cards.forEach(function(card) {
+      if (card.dataset.tiltActive) return;
+      card.dataset.tiltActive = 'true';
+
+      // Create reflection glare element
+      var glare = document.createElement('div');
+      glare.style.cssText = [
+        'position:absolute',
+        'inset:0',
+        'background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%)',
+        'pointer-events:none',
+        'opacity:0',
+        'transition:opacity 0.3s ease',
+        'z-index:5'
+      ].join(';');
+      card.appendChild(glare);
+
+      card.addEventListener('mousemove', function(e) {
+        var rect = card.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        
+        var xc = rect.width / 2;
+        var yc = rect.height / 2;
+        
+        var rotateY = ((x - xc) / xc) * 10;
+        var rotateX = -((y - yc) / yc) * 10;
+        
+        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+        glare.style.opacity = '1';
+        glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%)`;
+      });
+
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)';
+        glare.style.opacity = '0';
+      });
+    });
   }
 
   function loadInstagramFeed() {

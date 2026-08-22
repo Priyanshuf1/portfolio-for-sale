@@ -62,30 +62,8 @@
       // Create main group
       logoCard = new THREE.Group();
       
-      // Inner wireframe sphere
-      const sphereGeom = new THREE.SphereGeometry(2.0, 24, 24);
-      const sphereMat = new THREE.MeshBasicMaterial({
-        color: 0xFF4500, // Orange-red theme accent
-        wireframe: true,
-        transparent: true,
-        opacity: 0.12
-      });
-      const sphereMesh = new THREE.Mesh(sphereGeom, sphereMat);
-      logoCard.add(sphereMesh);
-      
-      // Outer wireframe sphere
-      const outerGeom = new THREE.SphereGeometry(2.4, 16, 16);
-      const outerMat = new THREE.MeshBasicMaterial({
-        color: 0xFFD700, // Gold glowing accent
-        wireframe: true,
-        transparent: true,
-        opacity: 0.05
-      });
-      const outerMesh = new THREE.Mesh(outerGeom, outerMat);
-      logoCard.add(outerMesh);
-      
-      // Core logo plane
-      const logoGeom = new THREE.PlaneGeometry(2.2, 2.2);
+      // Core logo plane (zoomed/scaled up to 3.6 x 3.6)
+      const logoGeom = new THREE.PlaneGeometry(3.6, 3.6);
       const logoMat = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,
@@ -93,28 +71,6 @@
       });
       const logoMesh = new THREE.Mesh(logoGeom, logoMat);
       logoCard.add(logoMesh);
-      
-      // Orbiting particles shell
-      const particleCount = 60;
-      const particlesGeom = new THREE.BufferGeometry();
-      const positions = new Float32Array(particleCount * 3);
-      for (let i = 0; i < particleCount * 3; i += 3) {
-        const r = 2.0 + Math.random() * 0.6;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos((Math.random() * 2) - 1);
-        positions[i] = r * Math.sin(phi) * Math.cos(theta);
-        positions[i+1] = r * Math.sin(phi) * Math.sin(theta);
-        positions[i+2] = r * Math.cos(phi);
-      }
-      particlesGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      const particlesMat = new THREE.PointsMaterial({
-        color: 0xFFFFFF,
-        size: 0.05,
-        transparent: true,
-        opacity: 0.6
-      });
-      const particles = new THREE.Points(particlesGeom, particlesMat);
-      logoCard.add(particles);
       
       scene.add(logoCard);
       
@@ -169,21 +125,18 @@
     
     if (logoCard) {
       // Smoothly interpolate rotations towards target (damping effect)
-      mouse.x += (mouse.targetX - mouse.x) * 0.08;
-      mouse.y += (mouse.targetY - mouse.y) * 0.08;
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
       
-      // Calculate rotation
-      logoCard.rotation.x = mouse.y;
+      // Continuous time parameter
+      autoRotateAngle += 0.008;
       
-      if (isNear) {
-        // Face the cursor
-        logoCard.rotation.y = mouse.x;
-      } else {
-        // Idle floating/rotating animation when mouse is away
-        autoRotateAngle += 0.008;
-        logoCard.rotation.y = Math.sin(autoRotateAngle) * 0.35;
-        logoCard.position.y = Math.sin(autoRotateAngle * 1.5) * 0.15;
-      }
+      // Constant slow rotation + mouse tilt
+      logoCard.rotation.x = mouse.y + Math.sin(autoRotateAngle * 0.5) * 0.06;
+      logoCard.rotation.y = mouse.x + autoRotateAngle * 0.25; // Slow continuous rotation on Y
+      
+      // Constant gentle floating hover animation on Y
+      logoCard.position.y = Math.sin(autoRotateAngle * 1.5) * 0.25;
     }
     
     renderer.render(scene, camera);
