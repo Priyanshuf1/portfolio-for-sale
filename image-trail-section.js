@@ -20,16 +20,8 @@
   }
 
   function inject() {
-    // ── Find and hide the Framer Recent Works (About Me) section ────────
+    // ── Find the Framer Recent Works (About Me) section to use as insert target ────────
     var recentWorkEl = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
-    if (recentWorkEl) {
-      recentWorkEl.style.display = 'none';
-      recentWorkEl.style.visibility = 'hidden';
-      recentWorkEl.style.height = '0';
-      recentWorkEl.style.overflow = 'hidden';
-      recentWorkEl.style.padding = '0';
-      recentWorkEl.style.margin = '0';
-    }
 
     // ── Find and hide the Framer Projects section ──────────────────────
     var projectsEl = document.querySelector('[data-framer-name="Projects"]') || document.querySelector('.framer-1mm21uq') || document.getElementById('projects');
