@@ -8,13 +8,20 @@
   var p5Instance = null;
   var clientX = -1000;
   var clientY = -1000;
-  var mouseIn = false;
 
   // Track mouse position globally
   window.addEventListener('mousemove', function(e) {
     clientX = e.clientX;
     clientY = e.clientY;
   });
+
+  // Track touch position for mobile devices
+  window.addEventListener('touchmove', function(e) {
+    if (e.touches && e.touches[0]) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    }
+  }, { passive: true });
 
   function inject() {
     var recentWorkEl = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
@@ -80,9 +87,6 @@
     // Insert section after the hidden one
     recentWorkEl.parentNode.insertBefore(section, recentWorkEl.nextSibling);
 
-    section.addEventListener('mouseenter', function() { mouseIn = true; });
-    section.addEventListener('mouseleave', function() { mouseIn = false; });
-
     // Load p5.js and launch the sketch
     if (window.p5) {
       launchSketch(section);
@@ -138,8 +142,8 @@
         var mx = clientX - rect.left;
         var my = clientY - rect.top;
 
-        // If mouse is inside section and moves, append to queue
-        if (mouseIn && mx >= 0 && mx <= rect.width && my >= 0 && my <= rect.height) {
+        // Pure boundary check — no enter/leave events needed!
+        if (mx >= 0 && mx <= rect.width && my >= 0 && my <= rect.height) {
           if (lastPos.x === -1000) {
             lastPos = { x: mx, y: my };
           }
