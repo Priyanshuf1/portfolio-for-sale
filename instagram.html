@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Feed - Global Logic Media</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        :root {
+            --bg: #050507;
+            --surface: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.06);
+            --text: #ffffff;
+            --text-muted: #8A8F98;
+            --primary: #FF1744;
+            --primary-glow: rgba(255, 23, 68, 0.15);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Nav Header */
+        .header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(5, 5, 7, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
+        .logo-img {
+            height: 32px;
+            object-fit: contain;
+        }
+        .logo-text {
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+
+        /* Profile Banner Section */
+        .profile-section {
+            padding: 80px 5% 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            border-bottom: 1px solid var(--border);
+        }
+        .profile-avatar-wrap {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .profile-avatar-glow {
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), #FFC72C);
+            z-index: -1;
+            filter: blur(8px);
+            opacity: 0.75;
+        }
+        .profile-avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--bg);
+            background: #111115;
+        }
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .profile-header-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .profile-handle {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .instagram-btn {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+        .instagram-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 23, 68, 0.3);
+        }
+        .profile-stats {
+            display: flex;
+            gap: 40px;
+            margin: 10px 0;
+        }
+        .stat-item {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+        }
+        .stat-item strong {
+            color: white;
+            font-size: 1.15rem;
+            margin-right: 5px;
+        }
+        .profile-bio {
+            line-height: 1.6;
+            color: #d1d5db;
+            font-size: 0.98rem;
+            max-width: 600px;
+        }
+
+        /* Token Info Card */
+        .token-setup-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255,255,255,0.12);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 40px auto 10px;
+            max-width: 1200px;
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+        .token-setup-card h3 {
+            font-size: 1.2rem;
+            color: #FFC72C;
+            font-weight: 700;
+        }
+        .token-setup-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .token-input-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .token-input {
+            background: #111115;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 18px;
+            color: white;
+            flex-grow: 1;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .token-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .save-token-btn {
+            background: white;
+            color: black;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .save-token-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Feed Section */
+        .feed-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 5% 100px;
+            width: 100%;
+            flex-grow: 1;
+        }
+        .feed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .feed-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #111115;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .feed-item:hover {
+            transform: scale(1.02);
+        }
+        .feed-media {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .feed-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-align: center;
+        }
+        .feed-item:hover .feed-overlay {
+            opacity: 1;
+        }
+        .feed-caption {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #ffffff;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .feed-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1.5px solid var(--primary);
+            padding-bottom: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 5%;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: #020203;
+        }
+
+        /* Loading */
+        .loading-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 100px 0;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+                padding: 40px 5%;
+            }
+            .profile-stats {
+                justify-content: center;
+                gap: 20px;
+            }
+            .nav-links {
+                display: none; /* simple mobile fallback */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navbar -->
+    <header class="header">
+        <a href="/" class="logo-wrap">
+            <img src="./logo.png" alt="GLM Logo" class="logo-img">
+            <span class="logo-text">Global Logic</span>
+        </a>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/#about-me">About</a>
+            <a href="/#services">Services</a>
+            <a href="/blog.html">Blog</a>
+            <a href="/instagram.html" class="active">Instagram</a>
+            <a href="/#contact">Contact us</a>
+        </nav>
+    </header>
+
+    <!-- Profile Info Header Section -->
+    <section class="profile-section">
+        <div class="profile-avatar-wrap">
+            <div class="profile-avatar-glow"></div>
+            <img src="./logo.png" alt="Profile Avatar" class="profile-avatar" id="profile-pic">
+        </div>
+        <div class="profile-info">
+            <div class="profile-header-row">
+                <h1 class="profile-handle" id="profile-username">globallogicmedia</h1>
+                <a href="https://instagram.com/globallogicmedia" target="_blank" rel="noopener noreferrer" class="instagram-btn">Follow</a>
+            </div>
+            <div class="profile-stats">
+                <span class="stat-item"><strong id="post-count">124</strong>posts</span>
+                <span class="stat-item"><strong>18.4K</strong>followers</span>
+                <span class="stat-item"><strong>142</strong>following</span>
+            </div>
+            <p class="profile-bio" id="profile-bio">
+                <strong>Global Logic Media</strong><br>
+                Lucknow's premier 360° Digital Marketing & Branding Agency.<br>
+                Empowering brands to scale smarter, grow faster, and perform better indeed.
+            </p>
+        </div>
+    </section>
+
+    <!-- Token Configuration Card (Safe client-side helper) -->
+    <div class="token-setup-card" id="token-card">
+        <h3>Instagram Access Token Setup</h3>
+        <p>
+            Paste your Instagram Access Token (Basic Display API) here to populate the live feed.
+            This token is saved securely in your browser's local storage and is only used to query Instagram's Graph API directly from your browser.
+        </p>
+        <div class="token-input-group">
+            <input type="password" id="token-input" class="token-input" placeholder="Paste your Instagram Access Token here...">
+            <button id="save-token-btn" class="save-token-btn">Save Token</button>
+        </div>
+    </div>
+
+    <!-- Feed Content -->
+    <main class="feed-container">
+        <div class="feed-grid" id="feed-grid">
+            <div class="loading-state" id="loading-state">
+                Please configure your Instagram Access Token to load the feed.
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Global Logic Media. All rights reserved.</p>
+    </footer>
+
+    <!-- Script Operations -->
+    <script>
+        const STORAGE_KEY = 'glm_instagram_token';
+        
+        const tokenInput = document.getElementById('token-input');
+        const saveBtn = document.getElementById('save-token-btn');
+        const feedGrid = document.getElementById('feed-grid');
+        const loadingState = document.getElementById('loading-state');
+        const tokenCard = document.getElementById('token-card');
+
+        // Check for stored token
+        let token = localStorage.getItem(STORAGE_KEY);
+        if (token) {
+            tokenInput.value = token;
+            loadInstagramFeed(token);
+        }
+
+        saveBtn.addEventListener('click', () => {
+            const val = tokenInput.value.trim();
+            if (val) {
+                localStorage.setItem(STORAGE_KEY, val);
+                alert('Token saved successfully! Loading feed...');
+                loadInstagramFeed(val);
+            } else {
+                localStorage.removeItem(STORAGE_KEY);
+                alert('Token removed.');
+                location.reload();
+            }
+        });
+
+        function loadInstagramFeed(accessToken) {
+            loadingState.innerHTML = 'Fetching posts from Instagram...';
+            
+            const url = `https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${accessToken}`;
+            
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) throw new Error('API request failed. Please check if your access token is valid and not expired.');
+                    return res.json();
+                })
+                .then(data => {
+                    if (!data.data || data.data.length === 0) {
+                        feedGrid.innerHTML = '<div class="loading-state">No media posts found in this account.</div>';
+                        return;
+                    }
+                    
+                    feedGrid.innerHTML = ''; // Clear loading
+                    
+                    // Display feed items
+                    data.data.forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = 'feed-item';
+                        
+                        // Select image or video thumbnail
+                        let mediaUrl = item.media_url;
+                        if (item.media_type === 'VIDEO') {
+                            mediaUrl = item.thumbnail_url || item.media_url;
+                        }
+                        
+                        card.innerHTML = `
+                            <img src="${mediaUrl}" alt="Instagram Post" class="feed-media" loading="lazy">
+                            <div class="feed-overlay">
+                                <p class="feed-caption">${item.caption || 'Global Logic Media post'}</p>
+                                <a href="${item.permalink}" target="_blank" rel="noopener noreferrer" class="feed-link">View on Instagram</a>
+                            </div>
+                        `;
+                        
+                        feedGrid.appendChild(card);
+                    });
+
+                    // Trigger GSAP fade-in
+                    gsap.from('.feed-item', {
+                        opacity: 0,
+                        y: 30,
+                        stagger: 0.05,
+                        duration: 0.8,
+                        ease: 'power3.out'
+                    });
+
+                    // Hide token card if successfully loaded to keep view clean
+                    tokenCard.style.opacity = '0.35';
+                })
+                .catch(err => {
+                    feedGrid.innerHTML = `<div class="loading-state" style="color: #FF1744;">Error: ${err.message}</div>`;
+                });
+        }
+    </script>
+</body>
+</html>
