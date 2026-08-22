@@ -128,12 +128,17 @@
       p5Instance.remove();
     }
 
-    // Strictly use the official work screenshots (work1.png - work4.png)
+    // Strictly use the official work screenshots + new campaign proofs
     var imageUrls = [
       './work1.png',
       './work2.png',
       './work3.png',
-      './work4.png'
+      './work4.png',
+      './ss5.png',
+      './ss6.png',
+      './ss7.png',
+      './ss8.png',
+      './ss9.png'
     ];
 
     var distThreshold = 65; // High responsiveness
