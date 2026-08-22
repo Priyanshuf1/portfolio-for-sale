@@ -331,13 +331,10 @@
   }
 
   function removeInstagramNavLinks() {
-    var instaLinks = document.querySelectorAll('a[href*="instagram.html"], a[href*="instagram"]');
+    var instaLinks = document.querySelectorAll('a[href*="instagram.html"]');
     instaLinks.forEach(function(link) {
-      const href = link.getAttribute('href');
-      if (href && (href.includes('instagram.html') || href.includes('instagram.com/globallogicmedia'))) {
-        link.style.display = 'none';
-        link.remove();
-      }
+      link.style.display = 'none';
+      link.remove();
     });
   }
 
