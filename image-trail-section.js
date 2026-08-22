@@ -1,6 +1,6 @@
 (function() {
   // ====================================================
-  // IMAGE TRAIL — p5.js based, replaces Recent Works
+  // IMAGE TRAIL — p5.js based, replaces Recent Works & Projects
   // Adapted from https://image-trail-p5.webflow.io/
   // Uses work1.png → work4.png as trail images
   // ====================================================
@@ -24,11 +24,9 @@
   }, { passive: true });
 
   function inject() {
+    // ── Find and hide the Framer Recent Works (About Me) section ────────
     var recentWorkEl = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
-    if (!recentWorkEl) return;
-
-    // Hide original section
-    if (recentWorkEl.style.display !== 'none') {
+    if (recentWorkEl) {
       recentWorkEl.style.display = 'none';
       recentWorkEl.style.visibility = 'hidden';
       recentWorkEl.style.height = '0';
@@ -37,22 +35,38 @@
       recentWorkEl.style.margin = '0';
     }
 
+    // ── Find and hide the Framer Projects section ──────────────────────
+    var projectsEl = document.querySelector('[data-framer-name="Projects"]') || document.querySelector('.framer-1mm21uq') || document.getElementById('projects');
+    if (projectsEl) {
+      projectsEl.style.display = 'none';
+      projectsEl.style.visibility = 'hidden';
+      projectsEl.style.height = '0';
+      projectsEl.style.overflow = 'hidden';
+      projectsEl.style.padding = '0';
+      projectsEl.style.margin = '0';
+    }
+
+    if (!recentWorkEl && !projectsEl) return;
+
+    // Determine insert target (after the hidden About Me section)
+    var insertTarget = recentWorkEl || projectsEl;
+
     // If already injected, make sure it's in the DOM at the correct position
     var existingSection = document.getElementById('glm-image-trail-section');
     if (existingSection) {
-      if (recentWorkEl.nextSibling !== existingSection) {
-        recentWorkEl.parentNode.insertBefore(existingSection, recentWorkEl.nextSibling);
+      if (insertTarget.nextSibling !== existingSection) {
+        insertTarget.parentNode.insertBefore(existingSection, insertTarget.nextSibling);
       }
       return;
     }
 
-    // Build the replacement section
+    // Build the replacement section (Make it extra BIG as requested)
     var section = document.createElement('section');
     section.id = 'glm-image-trail-section';
     section.style.cssText = [
       'position:relative',
       'width:100%',
-      'min-height:100vh',
+      'min-height:160vh', // Extra big height to scroll and interact
       'background:#050507',
       'display:flex',
       'flex-direction:column',
@@ -68,7 +82,7 @@
     canvasParent.style.cssText = 'position:absolute;inset:0;z-index:1;pointer-events:none;';
     section.appendChild(canvasParent);
 
-    // Overlay text
+    // Overlay text (mix-blend-mode difference makes it change color over images)
     var overlay = document.createElement('div');
     overlay.style.cssText = [
       'position:relative',
@@ -79,13 +93,14 @@
       'mix-blend-mode:difference'
     ].join(';');
     overlay.innerHTML = [
-      '<p style="color:#FF1744;font-size:clamp(12px,1.2vw,16px);letter-spacing:0.3em;text-transform:uppercase;margin-bottom:24px;font-family:sans-serif;font-weight:700;">Recent Work</p>',
-      '<h2 style="color:#ffffff;font-size:clamp(48px,8vw,120px);font-weight:900;line-height:0.9;font-family:sans-serif;margin:0;">Move your<br>cursor</h2>'
+      '<p style="color:#FF1744;font-size:clamp(14px,1.5vw,20px);letter-spacing:0.4em;text-transform:uppercase;margin-bottom:24px;font-family:sans-serif;font-weight:700;">Recent Work</p>',
+      '<h2 style="color:#ffffff;font-size:clamp(56px,10vw,140px);font-weight:900;line-height:0.95;font-family:sans-serif;margin:0;">Move your<br>cursor</h2>',
+      '<p style="color:#8A8F98;font-size:clamp(12px,1.1vw,15px);letter-spacing:0.1em;font-family:sans-serif;margin-top:32px;">Interactive Image Trail</p>'
     ].join('');
     section.appendChild(overlay);
 
     // Insert section after the hidden one
-    recentWorkEl.parentNode.insertBefore(section, recentWorkEl.nextSibling);
+    insertTarget.parentNode.insertBefore(section, insertTarget.nextSibling);
 
     // Load p5.js and launch the sketch
     if (window.p5) {
@@ -110,8 +125,8 @@
       './work4.png'
     ];
 
-    var distThreshold = 75; // Distance mouse needs to move before next image
-    var scaleFactor = 4;    // Scale factor to size images
+    var distThreshold = 70; // Tight trigger distance
+    var scaleFactor = 3.5;   // Larger scale value for bigger images
 
     p5Instance = new p5(function(p) {
       var images = [];
@@ -142,7 +157,7 @@
         var mx = clientX - rect.left;
         var my = clientY - rect.top;
 
-        // Pure boundary check — no enter/leave events needed!
+        // Pure boundary check — covers the entire larger section area
         if (mx >= 0 && mx <= rect.width && my >= 0 && my <= rect.height) {
           if (lastPos.x === -1000) {
             lastPos = { x: mx, y: my };
@@ -155,17 +170,17 @@
           }
         }
 
-        // Keep queue size managed
-        if (queue.length > 25) {
+        // Manage active trail length
+        if (queue.length > 30) {
           queue.pop();
         }
 
         var scaleVal = p.width / scaleFactor;
 
-        // Draw images in queue (reversed so newest is on top)
+        // Draw image queue with rotation and fade
         for (var i = queue.length - 1; i >= 0; i--) {
           var item = queue[i];
-          item.life -= 0.015; // Slow fade out
+          item.life -= 0.012; // Slower fade out for longer trails
           if (item.life <= 0) {
             queue.splice(i, 1);
             continue;
@@ -178,7 +193,7 @@
 
             p.push();
             p.translate(item.x, item.y);
-            p.rotate(p.sin(i * 0.4) * 0.1);
+            p.rotate(p.sin(i * 0.45) * 0.12);
             p.tint(255, item.life * 255);
             p.image(img, 0, 0, imgWidth, imgHeight);
             p.pop();
@@ -192,7 +207,7 @@
     }, 'canvas-parent');
   }
 
-  // Run continuously to survive Framer React hydration and re-renders
+  // Poll continuously to survive Framer React hydration and re-renders
   setInterval(inject, 500);
 
   // Monitor DOM modifications to immediately re-run inject
