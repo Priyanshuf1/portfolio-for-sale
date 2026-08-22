@@ -2,13 +2,22 @@
   // ====================================================
   // IMAGE TRAIL — p5.js based, replaces Recent Works & Projects
   // Adapted from https://image-trail-p5.webflow.io/
-  // Uses all 24 user-uploaded screenshots (ss1.png → ss24.png)
+  // Uses strictly work1.png → work4.png as trail images
   // Solid black background (hides general site background)
+  // Layout optimized to shift headers up and trail down
   // ====================================================
 
+  // Check reduced motion preference
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var p5Instance = null;
   var clientX = -1000;
   var clientY = -1000;
+
+  if (reducedMotion) {
+    // Show static layout instead of animation if reduced motion is preferred
+    injectStatic();
+    return;
+  }
 
   // Track mouse position globally
   window.addEventListener('mousemove', function(e) {
@@ -49,7 +58,6 @@
 
     if (!recentWorkEl && !projectsEl) return;
 
-    // Determine insert target (after the hidden About Me section)
     var insertTarget = recentWorkEl || projectsEl;
 
     // If already injected, make sure it's in the DOM at the correct position
@@ -61,20 +69,21 @@
       return;
     }
 
-    // Build the replacement section (Make it extra BIG and solid black background)
+    // Build the replacement section
     var section = document.createElement('section');
     section.id = 'glm-image-trail-section';
     section.style.cssText = [
       'position:relative',
       'width:100%',
-      'min-height:180vh', // Expanded height as requested
-      'background:#000000 !important', // Solid black background as requested
+      'min-height:160vh', // Clean viewport height
+      'background:#000000 !important',
       'display:flex',
       'flex-direction:column',
       'align-items:center',
-      'justify-content:center',
+      'justify-content:flex-start', // Align headers to top, leaving center/bottom open for trail
+      'padding-top:15vh',
       'overflow:hidden',
-      'z-index:8' // High z-index to block fixed background canvases
+      'z-index:8'
     ].join(';');
 
     // Canvas parent (p5 mounts here)
@@ -94,9 +103,9 @@
       'mix-blend-mode:difference'
     ].join(';');
     overlay.innerHTML = [
-      '<p style="color:#FF1744;font-size:clamp(14px,1.5vw,20px);letter-spacing:0.4em;text-transform:uppercase;margin-bottom:24px;font-family:sans-serif;font-weight:700;">Recent Work</p>',
-      '<h2 style="color:#ffffff;font-size:clamp(56px,10vw,140px);font-weight:900;line-height:0.95;font-family:sans-serif;margin:0;">Move your<br>cursor</h2>',
-      '<p style="color:#8A8F98;font-size:clamp(12px,1.1vw,15px);letter-spacing:0.1em;font-family:sans-serif;margin-top:32px;">Interactive Image Trail</p>'
+      '<p style="color:#FF1744;font-size:clamp(14px,1.5vw,20px);letter-spacing:0.4em;text-transform:uppercase;margin-bottom:20px;font-family:sans-serif;font-weight:700;">Recent Work</p>',
+      '<h2 style="color:#ffffff;font-size:clamp(56px,10vw,130px);font-weight:900;line-height:0.95;font-family:sans-serif;margin:0;">Move your<br>cursor</h2>',
+      '<p style="color:#8A8F98;font-size:clamp(12px,1.1vw,15px);letter-spacing:0.1em;font-family:sans-serif;margin-top:24px;">Interactive Image Trail</p>'
     ].join('');
     section.appendChild(overlay);
 
@@ -119,14 +128,16 @@
       p5Instance.remove();
     }
 
-    // Populate all 24 screenshots
-    var imageUrls = [];
-    for (var i = 1; i <= 24; i++) {
-      imageUrls.push('./ss' + i + '.png');
-    }
+    // Strictly use the official work screenshots (work1.png - work4.png)
+    var imageUrls = [
+      './work1.png',
+      './work2.png',
+      './work3.png',
+      './work4.png'
+    ];
 
     var distThreshold = 65; // High responsiveness
-    var scaleFactor = 3.2;   // Even larger images
+    var scaleFactor = 3.4;   // Good proportions for work images
 
     p5Instance = new p5(function(p) {
       var images = [];
@@ -141,7 +152,10 @@
       };
 
       p.setup = function() {
-        var cnv = p.createCanvas(p.windowWidth, p.windowHeight);
+        // Size canvas exactly to section height to prevent scaling/stretch issues
+        var w = section.clientWidth || p.windowWidth;
+        var h = section.clientHeight || (p.windowHeight * 1.6);
+        var cnv = p.createCanvas(w, h);
         cnv.parent('canvas-parent');
         cnv.style('display', 'block');
         cnv.style('position', 'absolute');
@@ -150,8 +164,7 @@
       };
 
       p.draw = function() {
-        // Draw solid black background on the canvas to block the grid background completely inside this block
-        p.background(0);
+        p.clear();
 
         // Calculate mouse relative to section top-left
         var rect = section.getBoundingClientRect();
@@ -172,7 +185,7 @@
         }
 
         // Manage active trail length
-        if (queue.length > 35) {
+        if (queue.length > 30) {
           queue.pop();
         }
 
@@ -181,7 +194,7 @@
         // Draw image queue with rotation and fade
         for (var i = queue.length - 1; i >= 0; i--) {
           var item = queue[i];
-          item.life -= 0.012; // Smooth slow fade out
+          item.life -= 0.015; // Fade out
           if (item.life <= 0) {
             queue.splice(i, 1);
             continue;
@@ -203,9 +216,17 @@
       };
 
       p.windowResized = function() {
-        p.resizeCanvas(p.windowWidth, p.windowHeight);
+        var w = section.clientWidth || p.windowWidth;
+        var h = section.clientHeight || (p.windowHeight * 1.6);
+        p.resizeCanvas(w, h);
       };
     }, 'canvas-parent');
+  }
+
+  function injectStatic() {
+    // Basic fallback layout if user prefers reduced motion
+    var recentWorkEl = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
+    if (recentWorkEl) recentWorkEl.style.display = 'block';
   }
 
   // Run continuously to survive Framer React hydration and re-renders
