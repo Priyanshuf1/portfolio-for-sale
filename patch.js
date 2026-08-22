@@ -26,6 +26,16 @@ const hideStyle = `
     padding: 0 !important;
     margin: 0 !important;
   }
+  /* Hide the Instagram screenshots carousel from the Meet Global Logic Media section globally */
+  #about-me .framer-1ineur-container,
+  [data-framer-name="about me section"] .framer-1ineur-container {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
   /* Premium Mobile Layout Fixes */
   @media (max-width: 767px) {
     /* 1. Scale down logo header on mobile to prevent overflow & overlap */
@@ -41,16 +51,6 @@ const hideStyle = `
     .framer-povseb, .framer-OLpjL {
       height: auto !important;
       min-height: 0 !important;
-    }
-    /* Hide the Instagram screenshots carousel from the Meet Global Logic Media section */
-    #about-me .framer-1ineur-container,
-    [data-framer-name="about me section"] .framer-1ineur-container {
-      display: none !important;
-      visibility: hidden !important;
-      height: 0 !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      overflow: hidden !important;
     }
     /* 3. Tighten section spacing to eliminate massive blank page gaps */
     #hero, #about-me, #process, #services, #faq,
