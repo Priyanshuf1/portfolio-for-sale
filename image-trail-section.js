@@ -2,7 +2,8 @@
   // ====================================================
   // IMAGE TRAIL — p5.js based, replaces Recent Works & Projects
   // Adapted from https://image-trail-p5.webflow.io/
-  // Uses work1.png → work4.png as trail images
+  // Uses all 24 user-uploaded screenshots (ss1.png → ss24.png)
+  // Solid black background (hides general site background)
   // ====================================================
 
   var p5Instance = null;
@@ -60,20 +61,20 @@
       return;
     }
 
-    // Build the replacement section (Make it extra BIG as requested)
+    // Build the replacement section (Make it extra BIG and solid black background)
     var section = document.createElement('section');
     section.id = 'glm-image-trail-section';
     section.style.cssText = [
       'position:relative',
       'width:100%',
-      'min-height:160vh', // Extra big height to scroll and interact
-      'background:#050507',
+      'min-height:180vh', // Expanded height as requested
+      'background:#000000 !important', // Solid black background as requested
       'display:flex',
       'flex-direction:column',
       'align-items:center',
       'justify-content:center',
       'overflow:hidden',
-      'z-index:2'
+      'z-index:8' // High z-index to block fixed background canvases
     ].join(';');
 
     // Canvas parent (p5 mounts here)
@@ -118,15 +119,14 @@
       p5Instance.remove();
     }
 
-    var imageUrls = [
-      './work1.png',
-      './work2.png',
-      './work3.png',
-      './work4.png'
-    ];
+    // Populate all 24 screenshots
+    var imageUrls = [];
+    for (var i = 1; i <= 24; i++) {
+      imageUrls.push('./ss' + i + '.png');
+    }
 
-    var distThreshold = 70; // Tight trigger distance
-    var scaleFactor = 3.5;   // Larger scale value for bigger images
+    var distThreshold = 65; // High responsiveness
+    var scaleFactor = 3.2;   // Even larger images
 
     p5Instance = new p5(function(p) {
       var images = [];
@@ -150,14 +150,15 @@
       };
 
       p.draw = function() {
-        p.clear();
+        // Draw solid black background on the canvas to block the grid background completely inside this block
+        p.background(0);
 
         // Calculate mouse relative to section top-left
         var rect = section.getBoundingClientRect();
         var mx = clientX - rect.left;
         var my = clientY - rect.top;
 
-        // Pure boundary check — covers the entire larger section area
+        // Boundary check
         if (mx >= 0 && mx <= rect.width && my >= 0 && my <= rect.height) {
           if (lastPos.x === -1000) {
             lastPos = { x: mx, y: my };
@@ -171,7 +172,7 @@
         }
 
         // Manage active trail length
-        if (queue.length > 30) {
+        if (queue.length > 35) {
           queue.pop();
         }
 
@@ -180,7 +181,7 @@
         // Draw image queue with rotation and fade
         for (var i = queue.length - 1; i >= 0; i--) {
           var item = queue[i];
-          item.life -= 0.012; // Slower fade out for longer trails
+          item.life -= 0.012; // Smooth slow fade out
           if (item.life <= 0) {
             queue.splice(i, 1);
             continue;
@@ -207,7 +208,7 @@
     }, 'canvas-parent');
   }
 
-  // Poll continuously to survive Framer React hydration and re-renders
+  // Run continuously to survive Framer React hydration and re-renders
   setInterval(inject, 500);
 
   // Monitor DOM modifications to immediately re-run inject
