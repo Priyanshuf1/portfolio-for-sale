@@ -8,9 +8,26 @@ html = html.replace(/<script id="inline-logo3d-script">[\s\S]*?<\/script>\r?\n?/
 // Remove the old blog drawer if it exists
 html = html.replace('<script src="./blog-section.js"></script>\n', '');
 
-// Hide old Framer Client Reviews section
+// Hide old Framer Client Reviews and other sections immediately to prevent FOUC delay
 if (!html.includes('/* Hide old testimonials section */')) {
-    const hideStyle = `<style>/* Hide old testimonials section */ #testimonials, section[data-framer-name="testimonials"], .framer-izep5p { display: none !important; }</style>\n`;
+    const hideStyle = `
+<style>
+  /* Hide old testimonials section */
+  #testimonials, section[data-framer-name="testimonials"], .framer-izep5p { display: none !important; }
+  /* Instantly hide original template sections to prevent flash of unstyled content */
+  [data-framer-name="about me section"],
+  #about-me,
+  [data-framer-name="Projects"],
+  .framer-1mm21uq,
+  #projects {
+    display: none !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+</style>\n`;
     html = html.replace('</head>', hideStyle + '</head>');
 }
 

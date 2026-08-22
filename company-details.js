@@ -267,6 +267,22 @@
       line-height: 1.5;
       margin: 0;
     }
+
+    @media (max-width: 768px) {
+      .glb-why-us-section, .glb-team-section {
+        padding: 40px 16px;
+      }
+      .glb-why-us-header, .glb-team-header {
+        margin-bottom: 30px;
+      }
+      .glb-comparison-card {
+        padding: 24px;
+      }
+      .glb-team-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
   `;
 
   const comparisonData = {

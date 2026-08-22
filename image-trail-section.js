@@ -270,6 +270,69 @@
           0% { transform: translateX(-50%); }
           100% { transform: translateX(0); }
         }
+
+        /* ── Mobile Layout Adjustments ── */
+        @media (max-width: 768px) {
+          .glm-marquee-wrap {
+            margin-top: 15px;
+            gap: 16px;
+          }
+          .glm-marquee-row {
+            gap: 16px;
+          }
+          .glm-marquee-item {
+            width: 220px;
+            height: 150px;
+            border-radius: 12px;
+            transform: translateY(30px) scale(0.95);
+          }
+          .glm-insta-section {
+            padding: 40px 0 60px;
+            min-height: auto;
+          }
+          .glm-insta-header {
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+          }
+          .glm-insta-profile {
+            flex-direction: column;
+            gap: 12px;
+          }
+          .glm-insta-avatar {
+            width: 56px;
+            height: 56px;
+          }
+          .glm-insta-row {
+            gap: 16px;
+          }
+          .glm-insta-card {
+            width: 240px;
+            border-radius: 12px;
+            transform: translateY(30px) scale(0.95);
+          }
+          /* Reposition/resize custom floating contact buttons on mobile to avoid overlapping */
+          .glb-floating-btn, #glbTrigger {
+            left: 16px !important;
+            right: auto !important;
+            bottom: 20px !important;
+            padding: 10px 16px !important;
+            font-size: 13px !important;
+            background: rgba(10,10,15,0.85) !important;
+            backdrop-filter: blur(8px) !important;
+          }
+          .glb-floating-btn-book, #glbTriggerBook {
+            right: 16px !important;
+            left: auto !important;
+            bottom: 20px !important;
+            padding: 10px 16px !important;
+            font-size: 13px !important;
+            background: rgba(255,23,68,0.9) !important;
+            backdrop-filter: blur(8px) !important;
+          }
+        }
       `;
       document.head.appendChild(style);
     }
