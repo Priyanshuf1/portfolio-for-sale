@@ -358,7 +358,7 @@
       </li>
     `).join('');
 
-    // Build team cards HTML (Using premium glowing gradient initials to completely resolve broken URLs)
+    // Build team cards HTML (Using real image rendering with premium Unsplash fallback headshots)
     const teamCardsHtml = teamData.map(member => {
       const initials = member.name.split(' ').map(n => n.charAt(0)).join('').toUpperCase().substring(0, 2);
       const gradients = {
@@ -368,7 +368,21 @@
         "Aman": "linear-gradient(135deg, #11998e, #38ef7d)"
       };
       const grad = gradients[member.name] || "linear-gradient(135deg, #FF1744, #FFC72C)";
-      const imgContent = `<div style="width:100%; height:100%; border-radius:50%; background:${grad}; display:flex; justify-content:center; align-items:center; font-size:32px; font-weight:800; color:#ffffff; text-shadow:0 4px 10px rgba(0,0,0,0.25);">${initials}</div>`;
+      
+      const unsplashFallbacks = {
+        "Durgesh Choudary": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=256&h=256",
+        "Vishal Kumar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=256&h=256",
+        "Agrima Gupta": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=256&h=256",
+        "Aman": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=256&h=256"
+      };
+      const fallbackImg = unsplashFallbacks[member.name] || "";
+
+      const imgContent = `
+        <img src="${member.image}" 
+             alt="${member.name}" 
+             style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:block;"
+             onerror="this.onerror=null; this.src='${fallbackImg}';" />
+      `;
 
       return `
         <div class="glb-team-card">

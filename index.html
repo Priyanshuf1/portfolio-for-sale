@@ -18,7 +18,48 @@
     padding: 0 !important;
     margin: 0 !important;
   }
+  /* Premium Mobile Layout Fixes */
+  @media (max-width: 767px) {
+    /* 1. Scale down logo header on mobile to prevent overflow & overlap */
+    .framer-1lcme9 {
+      width: 150px !important;
+      height: 48px !important;
+      background-position: left center !important;
+    }
+    .framer-11n6lfm-container {
+      height: 60px !important;
+    }
+    /* 2. Collapse automatic empty height/spacing from Framer container elements */
+    .framer-povseb, .framer-OLpjL {
+      height: auto !important;
+      min-height: 0 !important;
+    }
+    /* 3. Tighten section spacing to eliminate massive blank page gaps */
+    #hero, #about-me, #process, #services, #faq,
+    [data-framer-name="hero"],
+    [data-framer-name="about me section"],
+    [data-framer-name="process"],
+    [data-framer-name="Services"],
+    [data-framer-name="FAQ's"] {
+      min-height: auto !important;
+      height: auto !important;
+      padding-top: 40px !important;
+      padding-bottom: 40px !important;
+    }
+    /* 4. Fix custom sections spacing */
+    #glm-image-trail-section {
+      min-height: auto !important;
+      padding: 40px 0 20px !important;
+    }
+    #glm-instagram-feed-section {
+      min-height: auto !important;
+      padding: 20px 0 40px !important;
+    }
+  }
 </style>
+
+
+
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
