@@ -9,14 +9,13 @@ html = html.replace(/<script id="inline-logo3d-script">[\s\S]*?<\/script>\r?\n?/
 html = html.replace('<script src="./blog-section.js"></script>\n', '');
 
 // Hide old Framer Client Reviews and other sections immediately to prevent FOUC delay
-if (!html.includes('/* Hide old testimonials section */')) {
-    const hideStyle = `
+html = html.replace(/<style>[\s\S]*?\/\* Hide old testimonials section \*\/[\s\S]*?<\/style>/gi, '');
+
+const hideStyle = `
 <style>
   /* Hide old testimonials section */
   #testimonials, section[data-framer-name="testimonials"], .framer-izep5p { display: none !important; }
   /* Instantly hide original template sections to prevent flash of unstyled content */
-  [data-framer-name="about me section"],
-  #about-me,
   [data-framer-name="Projects"],
   .framer-1mm21uq,
   #projects {
@@ -28,9 +27,8 @@ if (!html.includes('/* Hide old testimonials section */')) {
     margin: 0 !important;
   }
 </style>\n`;
-    // Inject RIGHT AFTER <head> tag so it fires before ANY script runs and prevents FOUC
-    html = html.replace('<head>', '<head>\n' + hideStyle);
-}
+// Inject RIGHT AFTER <head> tag so it fires before ANY script runs and prevents FOUC
+html = html.replace('<head>', '<head>\n' + hideStyle);
 
 // Inject Firebase init before other custom scripts
 if (!html.includes('firebase-init.js')) {
