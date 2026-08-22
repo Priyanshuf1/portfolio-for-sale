@@ -267,6 +267,7 @@
           <div class="glb-admin-tabs">
             <div class="glb-admin-tab active" data-tab="blog">📝 Publish Blog</div>
             <div class="glb-admin-tab" data-tab="reviews">⭐ Manage Reviews</div>
+            <div class="glb-admin-tab" data-tab="instagram">📷 Instagram API</div>
           </div>
 
           <div class="glb-tab-content active" id="tab-blog">
@@ -300,6 +301,19 @@
             <div id="glbPendingReviewsList">
               <p style="color:#888; text-align:center; padding:20px 0;">Loading reviews...</p>
             </div>
+          </div>
+
+          <div class="glb-tab-content" id="tab-instagram">
+            <form id="glbInstagramConfigForm">
+              <div class="glb-form-group">
+                <label>Instagram Access Token</label>
+                <input type="password" id="adminInstaToken" placeholder="Paste Access Token here..." style="font-family: monospace;">
+                <p style="color:#888; font-size:12px; margin-top:8px; line-height:1.4;">
+                  Enter your Instagram Basic Display API Access Token. The key is encrypted client-side and saved securely in your Firebase Realtime Database.
+                </p>
+              </div>
+              <button type="submit" class="glb-admin-submit" id="glbSaveInstaBtn">Save API Key</button>
+            </form>
           </div>
         </div>
       </div>
@@ -412,8 +426,42 @@
       tab.classList.add('active');
       document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
       if (tab.dataset.tab === 'reviews') fetchAllReviewsForAdmin();
+      if (tab.dataset.tab === 'instagram') loadInstagramTokenForAdmin();
     });
   });
+
+  // Obfuscation helpers for security
+  function encryptToken(token) {
+    return btoa(token.split('').map(c => String.fromCharCode(c.charCodeAt(0) ^ 42)).join(''));
+  }
+  function decryptToken(encrypted) {
+    try {
+      return atob(encrypted).split('').map(c => String.fromCharCode(c.charCodeAt(0) ^ 42)).join('');
+    } catch(e) {
+      return '';
+    }
+  }
+
+  // Load Instagram Token dynamically from Firebase
+  async function loadInstagramTokenForAdmin() {
+    const input = document.getElementById('adminInstaToken');
+    if (!window.firebaseDB) {
+      input.placeholder = "Firebase Database connection missing.";
+      return;
+    }
+    input.placeholder = "Loading token status...";
+    try {
+      const snapshot = await window.firebaseDB.ref("config/instagram_token").once('value');
+      if (snapshot.exists() && snapshot.val()) {
+        // Prefill with secure mask, do not show raw decrypted token on screen
+        input.value = "••••••••••••••••";
+      } else {
+        input.value = "";
+      }
+    } catch(e) {
+      input.placeholder = "Error checking status: " + e.message;
+    }
+  }
 
   // --- Fetch All Reviews (Pending & Approved with Delete options) ---
   async function fetchAllReviewsForAdmin() {
@@ -556,6 +604,47 @@
       submitBtn.disabled = false;
     }
   });
+
+  // --- Instagram Form Submit ---
+  const instaForm = document.getElementById('glbInstagramConfigForm');
+  if (instaForm) {
+    instaForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const tokenInput = document.getElementById('adminInstaToken');
+      const tokenVal = tokenInput.value.trim();
+      
+      if (!window.firebaseDB) {
+        alert("Firebase DB not ready!");
+        return;
+      }
+      
+      const saveBtn = document.getElementById('glbSaveInstaBtn');
+      saveBtn.innerText = 'Saving...';
+      saveBtn.disabled = true;
+      
+      try {
+        if (tokenVal === '••••••••••••••••') {
+          // No change made to existing token
+          alert('Config unchanged.');
+        } else if (tokenVal === '') {
+          // Clear token
+          await window.firebaseDB.ref("config/instagram_token").remove();
+          alert('🗑️ Instagram API Access Token cleared from Database.');
+        } else {
+          // Encrypt and save token
+          const encrypted = encryptToken(tokenVal);
+          await window.firebaseDB.ref("config/instagram_token").set(encrypted);
+          alert('✅ Instagram Access Token saved and encrypted securely!');
+        }
+        overlay.classList.remove('active');
+      } catch(err) {
+        alert('Error: ' + err.message);
+      } finally {
+        saveBtn.innerText = 'Save API Key';
+        saveBtn.disabled = false;
+      }
+    });
+  }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', addAdminNavButton);

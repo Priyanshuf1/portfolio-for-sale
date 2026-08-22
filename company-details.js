@@ -342,13 +342,17 @@
       </li>
     `).join('');
 
-    // Build team cards HTML
+    // Build team cards HTML (Using premium glowing gradient initials to completely resolve broken URLs)
     const teamCardsHtml = teamData.map(member => {
-      // If the image is the logo fallback, we can style it nicely or use initials circle
-      const useInitials = member.image.includes('cropped-Untitled-design-2.png');
-      const imgContent = useInitials 
-        ? `<div style="font-size:32px; font-weight:700; color:#FFC72C;">DC</div>`
-        : `<img src="${member.image}" class="glb-team-img" alt="${member.name}">`;
+      const initials = member.name.split(' ').map(n => n.charAt(0)).join('').toUpperCase().substring(0, 2);
+      const gradients = {
+        "Durgesh Choudary": "linear-gradient(135deg, #FF416C, #FF4B2B)",
+        "Vishal Kumar": "linear-gradient(135deg, #4776E6, #8E54E9)",
+        "Agrima Gupta": "linear-gradient(135deg, #f12711, #f5af19)",
+        "Aman": "linear-gradient(135deg, #11998e, #38ef7d)"
+      };
+      const grad = gradients[member.name] || "linear-gradient(135deg, #FF1744, #FFC72C)";
+      const imgContent = `<div style="width:100%; height:100%; border-radius:50%; background:${grad}; display:flex; justify-content:center; align-items:center; font-size:32px; font-weight:800; color:#ffffff; text-shadow:0 4px 10px rgba(0,0,0,0.25);">${initials}</div>`;
 
       return `
         <div class="glb-team-card">

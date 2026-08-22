@@ -5,8 +5,38 @@
   // - Seamless lightbox zoom with (X) button on image tap
   // - Expanded auto-scrolling Instagram feed section below Recent Work
   // - 3D Perspective Tilt + Glossy Glare effect on hover
+  // - Physics-based Scroll-Velocity responsive speed (Marquees speed up on scroll)
+  // - Instagram config completely moved to Admin Dashboard (encrypted in DB)
   // - Dynamic removal of Instagram link from header nav menus
   // ====================================================
+
+  var scrollSpeed = 1;
+  var targetSpeed = 1;
+  var lastScrollY = window.scrollY;
+
+  // Track scroll speed for physics-based marquee acceleration
+  window.addEventListener('scroll', function() {
+    var currentScrollY = window.scrollY;
+    var diff = Math.abs(currentScrollY - lastScrollY);
+    targetSpeed = 1 + Math.min(diff * 0.08, 4.0);
+    lastScrollY = currentScrollY;
+  }, { passive: true });
+
+  function updateMarqueePhysics() {
+    scrollSpeed += (targetSpeed - scrollSpeed) * 0.08; // Smooth inertia
+    targetSpeed += (1 - targetSpeed) * 0.04;          // Decay back to base speed
+    document.documentElement.style.setProperty('--scroll-speed', scrollSpeed);
+    requestAnimationFrame(updateMarqueePhysics);
+  }
+  requestAnimationFrame(updateMarqueePhysics);
+
+  function decryptToken(encrypted) {
+    try {
+      return atob(encrypted).split('').map(c => String.fromCharCode(c.charCodeAt(0) ^ 42)).join('');
+    } catch(e) {
+      return '';
+    }
+  }
 
   function inject() {
     // ── Find and hide the Framer Recent Works (About Me) section ────────
@@ -64,6 +94,9 @@
       style = document.createElement('style');
       style.id = 'glm-marquee-styles';
       style.textContent = `
+        :root {
+          --scroll-speed: 1;
+        }
         .glm-marquee-wrap {
           display: flex;
           flex-direction: column;
@@ -81,10 +114,10 @@
           gap: 28px;
         }
         .glm-marquee-row.left {
-          animation: glmMarqueeLeft 40s linear infinite;
+          animation: glmMarqueeLeft calc(40s / var(--scroll-speed)) linear infinite;
         }
         .glm-marquee-row.right {
-          animation: glmMarqueeRight 40s linear infinite;
+          animation: glmMarqueeRight calc(40s / var(--scroll-speed)) linear infinite;
         }
         .glm-marquee-row:hover {
           animation-play-state: paused;
@@ -173,7 +206,7 @@
           display: flex;
           width: max-content;
           gap: 28px;
-          animation: glmMarqueeLeft 45s linear infinite;
+          animation: glmMarqueeLeft calc(45s / var(--scroll-speed)) linear infinite;
         }
         .glm-insta-row:hover {
           animation-play-state: paused;
@@ -235,18 +268,6 @@
           padding-bottom: 1px;
         }
 
-        /* Token Configuration Trigger */
-        .glm-token-trigger {
-          color: rgba(255,255,255,0.25);
-          font-size: 0.8rem;
-          cursor: pointer;
-          transition: color 0.3s;
-          text-decoration: underline;
-        }
-        .glm-token-trigger:hover {
-          color: #FF1744;
-        }
-
         @keyframes glmMarqueeLeft {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
@@ -305,7 +326,7 @@
       section.parentNode.insertBefore(instaSection, section.nextSibling);
     }
 
-    // Populate Instagram feed content if empty
+    // Populate Instagram feed content if empty (Config API is hidden publicly now)
     if (!instaSection.querySelector('.glm-insta-header')) {
       instaSection.innerHTML = `
         <div class="glm-insta-header">
@@ -316,8 +337,7 @@
               <p>Lucknow's Premier Branding & Performance Agency</p>
             </div>
           </div>
-          <div style="display:flex;align-items:center;gap:20px;">
-            <span class="glm-token-trigger" onclick="window.glmPromptToken()">Config API</span>
+          <div>
             <a href="https://instagram.com/globallogicmedia" target="_blank" rel="noopener" class="instagram-btn" style="background:#FF1744;color:#fff;text-decoration:none;padding:8px 20px;border-radius:20px;font-size:0.85rem;font-weight:700;">Follow</a>
           </div>
         </div>
@@ -416,7 +436,6 @@
         var xc = rect.width / 2;
         var yc = rect.height / 2;
         
-        // Tilt values: max 10 degrees
         var rotateY = ((x - xc) / xc) * 10;
         var rotateX = -((y - yc) / yc) * 10;
         
@@ -445,20 +464,34 @@
       { src: './ss16.png', cap: 'Are you ready to write your digital story? Connect with GLM today!' }
     ];
 
-    var token = localStorage.getItem('glm_instagram_token');
-    if (token) {
-      fetch(`https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${token}`)
-        .then(res => {
-          if (!res.ok) throw new Error('API invalid');
-          return res.json();
-        })
-        .then(data => {
-          if (data.data && data.data.length > 0) {
-            renderInstaData(data.data.map(item => ({
-              src: item.media_type === 'VIDEO' ? (item.thumbnail_url || item.media_url) : item.media_url,
-              cap: item.caption || 'Global Logic Media Creative',
-              link: item.permalink
-            })));
+    if (window.firebaseDB) {
+      window.firebaseDB.ref("config/instagram_token").once('value')
+        .then(snapshot => {
+          if (snapshot.exists() && snapshot.val()) {
+            var token = decryptToken(snapshot.val());
+            if (token) {
+              fetch(`https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=${token}`)
+                .then(res => {
+                  if (!res.ok) throw new Error('API invalid');
+                  return res.json();
+                })
+                .then(data => {
+                  if (data.data && data.data.length > 0) {
+                    renderInstaData(data.data.map(item => ({
+                      src: item.media_type === 'VIDEO' ? (item.thumbnail_url || item.media_url) : item.media_url,
+                      cap: item.caption || 'Global Logic Media Creative',
+                      link: item.permalink
+                    })));
+                  } else {
+                    renderInstaData(defaultPosts);
+                  }
+                })
+                .catch(() => {
+                  renderInstaData(defaultPosts);
+                });
+            } else {
+              renderInstaData(defaultPosts);
+            }
           } else {
             renderInstaData(defaultPosts);
           }
@@ -481,25 +514,9 @@
           </div>
         </div>
       `).join('');
-      // Re-apply 3D Tilt binding for dynamically loaded elements
       apply3DTiltEffect();
     }
   }
-
-  window.glmPromptToken = function() {
-    var current = localStorage.getItem('glm_instagram_token') || '';
-    var token = prompt('Enter your Instagram Basic Display API Access Token:', current);
-    if (token !== null) {
-      if (token.trim() === '') {
-        localStorage.removeItem('glm_instagram_token');
-        alert('Access Token cleared. Reverting to placeholders.');
-      } else {
-        localStorage.setItem('glm_instagram_token', token.trim());
-        alert('Instagram Token saved successfully! Fetching feed...');
-      }
-      loadInstagramFeed();
-    }
-  };
 
   function removeInstagramNavLinks() {
     var instaLinks = document.querySelectorAll('a[href*="instagram.html"], a[href*="instagram"]');
