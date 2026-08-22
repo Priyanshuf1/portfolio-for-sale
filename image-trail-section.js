@@ -338,19 +338,22 @@
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      inject();
-      removeInstagramNavLinks();
-    });
-  } else {
+  function checkAndInject() {
+    var recentWorkEl = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
+    var projectsEl = document.querySelector('[data-framer-name="Projects"]') || document.querySelector('.framer-1mm21uq') || document.getElementById('projects');
+    
+    if (!recentWorkEl && !projectsEl) return;
+    
     inject();
     removeInstagramNavLinks();
   }
-  
-  // Re-run check on load just in case Framer loaded late
-  window.addEventListener('load', function() {
-    inject();
-    removeInstagramNavLinks();
-  });
+
+  // Initialize checks
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkAndInject);
+  } else {
+    checkAndInject();
+  }
+  window.addEventListener('load', checkAndInject);
+  setInterval(checkAndInject, 1000);
 })();
