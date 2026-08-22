@@ -1,16 +1,4 @@
 (function() {
-  // ====================================================
-  // RECENT WORK MARQUEE & INSTAGRAM EMBEDDED FEED
-  // - Transparent background for Recent Work marquee (shows site 3D mesh)
-  // - Seamless lightbox zoom with (X) button on image tap
-  // - Expanded auto-scrolling Instagram feed section below Recent Work
-  // - Premium 3D Perspective Tilt + Glossy Glare effect on hover
-  // - Smooth, constant, slow-cruising marquee animation (no jumpy scroll velocity)
-  // - Staggered scroll entrance fade & slide-up animation
-  // - Instagram config completely moved to Admin Dashboard (encrypted in DB)
-  // - Dynamic removal of Instagram link from header nav menus
-  // ====================================================
-
   function decryptToken(encrypted) {
     try {
       return atob(encrypted).split('').map(c => String.fromCharCode(c.charCodeAt(0) ^ 42)).join('');
@@ -20,11 +8,9 @@
   }
 
   function inject() {
-    // ── Find the Framer Recent Works (About Me) section to use as insert target ────────
     var recentWorkEl = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
-
-    // ── Find and hide the Framer Projects section ──────────────────────
     var projectsEl = document.querySelector('[data-framer-name="Projects"]') || document.querySelector('.framer-1mm21uq') || document.getElementById('projects');
+    
     if (projectsEl) {
       projectsEl.style.display = 'none';
       projectsEl.style.visibility = 'hidden';
@@ -35,491 +21,270 @@
     }
 
     if (!recentWorkEl && !projectsEl) return;
-
     var insertTarget = recentWorkEl || projectsEl;
 
-    // ── 1. Create or update the Recent Work Marquee Section ─────────────────
-    var section = document.getElementById('glm-image-trail-section');
-    if (!section) {
-      section = document.createElement('section');
-      section.id = 'glm-image-trail-section';
-      insertTarget.parentNode.insertBefore(section, insertTarget.nextSibling);
-    }
-
-    // Update section styling to be TRANSPARENT to show the three-bg canvas
-    section.style.cssText = [
-      'position:relative',
-      'width:100%',
-      'min-height:75vh',
-      'background:transparent !important',
-      'display:flex',
-      'flex-direction:column',
-      'align-items:center',
-      'justify-content:center',
-      'overflow:hidden',
-      'padding:60px 0 40px',
-      'z-index:8'
-    ].join(';');
-
-    // Inject marquee CSS styles
-    var style = document.getElementById('glm-marquee-styles');
-    if (!style) {
-      style = document.createElement('style');
-      style.id = 'glm-marquee-styles';
-      style.textContent = `
-        .glm-marquee-wrap {
-          display: flex;
-          flex-direction: column;
-          gap: 24px;
-          width: 100%;
-          overflow: hidden;
-          position: relative;
-          margin-top: 30px;
-          mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-          -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-        }
-        .glm-marquee-row {
-          display: flex;
-          width: max-content;
-          gap: 28px;
-        }
-        .glm-marquee-row.left {
-          animation: glmMarqueeLeft 50s linear infinite;
-        }
-        .glm-marquee-row.right {
-          animation: glmMarqueeRight 50s linear infinite;
-        }
-        .glm-marquee-row:hover {
-          animation-play-state: paused;
-        }
-        .glm-marquee-item {
-          width: 290px;
-          height: 200px;
-          flex-shrink: 0;
-          border-radius: 16px;
-          overflow: hidden;
-          border: 1px solid rgba(255,255,255,0.08);
-          background: rgba(13, 13, 17, 0.75);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          cursor: pointer;
-          position: relative;
-          transform-style: preserve-3d;
-          
-          /* Staggered entrance initial state */
-          opacity: 0;
-          transform: translateY(45px) scale(0.94);
-          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
-        }
-        .glm-marquee-item.animate-in {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-        .glm-marquee-item:hover {
-          border-color: #FF1744;
-          box-shadow: 0 12px 30px rgba(255, 23, 68, 0.25);
-        }
-        .glm-marquee-item img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          opacity: 0.85;
-          transition: opacity 0.4s ease;
-          pointer-events: none;
-        }
-        .glm-marquee-item:hover img {
-          opacity: 1;
-        }
-        
-        /* Instagram Section Styling */
-        .glm-insta-section {
-          position: relative;
-          width: 100%;
-          min-height: 75vh;
-          background: transparent !important;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          padding: 70px 0 90px;
-          z-index: 8;
-          border-top: 1px solid rgba(255,255,255,0.05);
-        }
-        .glm-insta-header {
-          display: flex;
-          align-items: center;
-          gap: 30px;
-          margin-bottom: 40px;
-          padding: 0 20px;
-          width: 100%;
-          max-width: 1200px;
-          justify-content: space-between;
-        }
-        .glm-insta-profile {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-        }
-        .glm-insta-avatar {
-          width: 64px;
-          height: 64px;
-          border-radius: 50%;
-          border: 2.5px solid #FF1744;
-          padding: 2px;
-          object-fit: cover;
-        }
-        .glm-insta-meta h4 {
-          color: #fff;
-          font-size: 1.15rem;
-          margin: 0;
-          font-weight: 700;
-        }
-        .glm-insta-meta p {
-          color: #8A8F98;
-          font-size: 0.88rem;
-          margin: 4px 0 0;
-        }
-        .glm-insta-row {
-          display: flex;
-          width: max-content;
-          gap: 28px;
-          animation: glmMarqueeLeft 55s linear infinite;
-        }
-        .glm-insta-row:hover {
-          animation-play-state: paused;
-        }
-        .glm-insta-card {
-          width: 320px;
-          aspect-ratio: 1;
-          border-radius: 16px;
-          overflow: hidden;
-          position: relative;
-          border: 1px solid rgba(255,255,255,0.06);
-          background: rgba(15,15,20,0.8);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          cursor: pointer;
-          transform-style: preserve-3d;
-
-          /* Staggered entrance initial state */
-          opacity: 0;
-          transform: translateY(45px) scale(0.94);
-          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
-        }
-        .glm-insta-card.animate-in {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-        .glm-insta-card img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          pointer-events: none;
-        }
-        .glm-insta-overlay {
-          position: absolute;
-          inset: 0;
-          background: rgba(0,0,0,0.82);
-          opacity: 0;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          padding: 24px;
-          text-align: center;
-          transition: opacity 0.3s ease;
-          z-index: 2;
-        }
-        .glm-insta-card:hover .glm-insta-overlay {
-          opacity: 1;
-        }
-        .glm-insta-caption {
-          font-size: 0.85rem;
-          color: #fff;
-          line-height: 1.5;
-          margin-bottom: 15px;
-          display: -webkit-box;
-          -webkit-line-clamp: 4;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-        .glm-insta-link {
-          color: #FF1744;
-          font-size: 0.82rem;
-          font-weight: 700;
-          text-transform: uppercase;
-          text-decoration: none;
-          border-bottom: 1.5px solid #FF1744;
-          padding-bottom: 1px;
-        }
-
-        @keyframes glmMarqueeLeft {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        @keyframes glmMarqueeRight {
-          0% { transform: translateX(-50%); }
-          100% { transform: translateX(0); }
-        }
-
-        /* ── Mobile Layout Adjustments ── */
-        @media (max-width: 768px) {
-          .glm-marquee-wrap {
-            margin-top: 15px;
-            gap: 16px;
-          }
-          .glm-marquee-row {
-            gap: 16px;
-          }
-          .glm-marquee-item {
-            width: 220px;
-            height: 150px;
-            border-radius: 12px;
-            transform: translateY(30px) scale(0.95);
-          }
-          .glm-insta-section {
-            padding: 40px 0 60px;
-            min-height: auto;
-          }
-          .glm-insta-header {
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 25px;
-            text-align: center;
-          }
-          .glm-insta-profile {
-            flex-direction: column;
-            gap: 12px;
-          }
-          .glm-insta-avatar {
-            width: 56px;
-            height: 56px;
-          }
-          .glm-insta-row {
-            gap: 16px;
-          }
-          .glm-insta-card {
-            width: 240px;
-            border-radius: 12px;
-            transform: translateY(30px) scale(0.95);
-          }
-          /* Reposition/resize custom floating contact buttons on mobile to avoid overlapping */
-          .glb-floating-btn, #glbTrigger {
-            left: 16px !important;
-            right: auto !important;
-            bottom: 20px !important;
-            padding: 10px 16px !important;
-            font-size: 13px !important;
-            background: rgba(10,10,15,0.85) !important;
-            backdrop-filter: blur(8px) !important;
-          }
-          .glb-floating-btn-book, #glbTriggerBook {
-            right: 16px !important;
-            left: auto !important;
-            bottom: 20px !important;
-            padding: 10px 16px !important;
-            font-size: 13px !important;
-            background: rgba(255,23,68,0.9) !important;
-            backdrop-filter: blur(8px) !important;
-          }
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    // Build Recent Work content if section is empty
-    if (!section.querySelector('.glm-marquee-wrap')) {
-      section.innerHTML = `
-        <div style="text-align:center;pointer-events:none;user-select:none;">
-          <p style="color:#FF1744;font-size:clamp(12px,1.2vw,16px);letter-spacing:0.4em;text-transform:uppercase;margin-bottom:15px;font-family:sans-serif;font-weight:700;">Recent Work</p>
-          <h2 style="color:#ffffff;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.1;font-family:sans-serif;margin:0;">Proven Marketing Results</h2>
-        </div>
-        <div class="glm-marquee-wrap">
-          <div class="glm-marquee-row left" id="marquee-row-1"></div>
-          <div class="glm-marquee-row right" id="marquee-row-2"></div>
-        </div>
-      `;
-
-      var row1Images = [
-        './work1.png', './work2.png', './work3.png', './work4.png',
-        './ss5.png', './ss6.png', './ss7.png', './ss8.png'
-      ];
-      var row2Images = [
-        './ss9.png', './ss10.png', './ss11.png', './ss12.png',
-        './ss13.png', './ss14.png', './ss15.png', './ss16.png'
-      ];
-
-      function fillRow(rowElId, images) {
-        var row = document.getElementById(rowElId);
-        if (!row) return;
-        var doubled = images.concat(images);
-        row.innerHTML = doubled.map(src => `
-          <div class="glm-marquee-item" onclick="window.glmShowLightbox('${src}')">
-            <img src="${src}" alt="Portfolio Proof" loading="lazy">
-          </div>
-        `).join('');
-
-        // Staggered reveal animation triggers immediately on load
-        setTimeout(function() {
-          row.querySelectorAll('.glm-marquee-item').forEach(function(item, index) {
-            setTimeout(function() {
-              item.classList.add('animate-in');
-            }, index * 60);
-          });
-        }, 150);
-      }
-
-      fillRow('marquee-row-1', row1Images);
-      fillRow('marquee-row-2', row2Images);
-    }
-
-    // ── 2. Create or update the Instagram Feed Section ──────────────────────
+    // Create or update the Instagram Feed Section
     var instaSection = document.getElementById('glm-instagram-feed-section');
     if (!instaSection) {
       instaSection = document.createElement('section');
       instaSection.id = 'glm-instagram-feed-section';
       instaSection.className = 'glm-insta-section';
-      section.parentNode.insertBefore(instaSection, section.nextSibling);
+      insertTarget.parentNode.insertBefore(instaSection, insertTarget.nextSibling);
     }
 
-    if (!instaSection.querySelector('.glm-insta-header')) {
+    // Inject styles and HTML content if not already built
+    if (!instaSection.querySelector('#insta-feed')) {
+      // Custom Stylesheet for Bento Grid and Story Rings
+      const styles = `
+<style id="glm-bento-insta-styles">
+  :root {
+    --insta-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  }
+  .glm-insta-section {
+    position: relative;
+    width: 100%;
+    background-color: #050505 !important;
+    color: #ffffff !important;
+    padding: 80px 0 !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    z-index: 10;
+  }
+  .font-heading { font-family: 'Space Grotesk', sans-serif; }
+  
+  /* Glassmorphism */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+  .glass-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Story Ring Animation */
+  .story-ring {
+    position: relative;
+    padding: 3px;
+    background: var(--insta-gradient);
+    border-radius: 22px;
+    cursor: pointer;
+  }
+  .story-inner {
+    background: #050505;
+    border-radius: 19px;
+    padding: 2px;
+  }
+
+  /* Bento Grid Customization */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 240px;
+    gap: 1.5rem;
+  }
+  .bento-item-large { grid-column: span 2; grid-row: span 2; }
+  .bento-item-tall { grid-row: span 2; }
+
+  @media (max-width: 768px) {
+    .bento-grid { grid-template-columns: repeat(2, 1fr); }
+    .bento-item-large { grid-column: span 2; grid-row: span 1; }
+  }
+  
+  /* Hide scrollbar helper */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+`;
+      document.head.insertAdjacentHTML('beforeend', styles);
+
+      // Bento Instagram Showcase HTML structure
       instaSection.innerHTML = `
-        <div class="glm-insta-header">
-          <div class="glm-insta-profile">
-            <img src="./logo.png" alt="Profile" class="glm-insta-avatar">
-            <div class="glm-insta-meta">
-              <h4>globallogicmedia</h4>
-              <p>Lucknow's Premier Branding & Performance Agency</p>
+    <!-- BG Gradient Blobs -->
+    <div class="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden opacity-30 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-600 blur-[120px] rounded-full"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 py-12">
+        
+        <!-- SECTION: PROFILE HEADER -->
+        <header class="flex flex-col md:flex-row items-center justify-between mb-16 gap-8">
+            <div class="flex items-center gap-8">
+                <div class="story-ring group">
+                    <div class="story-inner">
+                        <img src="./logo.png" class="w-32 h-32 rounded-[17px] object-cover" alt="Profile">
+                    </div>
+                </div>
+                <div>
+                    <h1 class="text-4xl font-heading font-bold mb-2 flex items-center gap-2">
+                        @globallogicmedia 
+                        <i data-lucide="check-circle" class="w-6 h-6 text-blue-400 fill-blue-400/20"></i>
+                    </h1>
+                    <p class="text-gray-400 text-lg mb-4 max-w-md">Digital Curator & Visual Storyteller. Lucknow's Premier Branding & Performance Agency. ⚡️</p>
+                    <div class="flex gap-6 text-sm">
+                        <span><b class="text-white">65</b> Posts</span>
+                        <span><b class="text-white">12.5k</b> Followers</span>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div>
-            <a href="https://instagram.com/globallogicmedia" target="_blank" rel="noopener" class="instagram-btn" style="background:#FF1744;color:#fff;text-decoration:none;padding:8px 20px;border-radius:20px;font-size:0.85rem;font-weight:700;">Follow</a>
-          </div>
+            <div class="flex gap-4">
+                <a href="https://www.instagram.com/globallogicmedia/" target="_blank" class="bg-white text-black px-8 py-3 rounded-2xl font-bold hover:scale-105 transition-transform flex items-center justify-center">Follow</a>
+                <a href="https://www.instagram.com/globallogicmedia/" target="_blank" class="glass-card px-6 py-3 rounded-2xl font-bold flex items-center gap-2">
+                    <i data-lucide="send" class="w-4 h-4"></i> Message
+                </a>
+            </div>
+        </header>
+
+        <!-- SECTION: STORIES -->
+        <div class="flex gap-8 mb-16 overflow-x-auto pb-4 no-scrollbar">
+            <!-- Story Highlight 1 -->
+            <div class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group">
+                <div class="w-20 h-20 rounded-[24px] border-2 border-zinc-800 p-1 group-hover:border-orange-500 transition-all">
+                    <img src="./work1.png" class="w-full h-full object-cover rounded-[18px]">
+                </div>
+                <span class="text-xs font-medium text-zinc-500 group-hover:text-white transition-colors">Process</span>
+            </div>
+            <!-- Story Highlight 2 -->
+            <div class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group">
+                <div class="w-20 h-20 rounded-[24px] border-2 border-zinc-800 p-1 group-hover:border-orange-500 transition-all">
+                    <img src="./work2.png" class="w-full h-full object-cover rounded-[18px]">
+                </div>
+                <span class="text-xs font-medium text-zinc-500 group-hover:text-white transition-colors">Lifestyle</span>
+            </div>
+            <!-- Story Highlight 3 -->
+            <div class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group">
+                <div class="w-20 h-20 rounded-[24px] border-2 border-zinc-800 p-1 group-hover:border-orange-500 transition-all">
+                    <img src="./work3.png" class="w-full h-full object-cover rounded-[18px]">
+                </div>
+                <span class="text-xs font-medium text-zinc-500 group-hover:text-white transition-colors">Designs</span>
+            </div>
+            <!-- Story Highlight 4 -->
+            <div class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group">
+                <div class="w-20 h-20 rounded-[24px] border-2 border-zinc-800 p-1 group-hover:border-orange-500 transition-all">
+                    <img src="./work4.png" class="w-full h-full object-cover rounded-[18px]">
+                </div>
+                <span class="text-xs font-medium text-zinc-500 group-hover:text-white transition-colors">Vibes</span>
+            </div>
         </div>
-        <div class="glm-marquee-wrap">
-          <div class="glm-insta-row" id="insta-feed-row"></div>
+
+        <!-- SECTION: BENTO FEED -->
+        <div class="bento-grid" id="insta-feed">
+            <!-- Large Featured Post -->
+            <div class="bento-item-large glass-card rounded-[40px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work1.png', 'The evolution of digital workspace in 2026. #minimalism #workspace')">
+                <img src="./work1.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end">
+                    <div class="flex gap-4 mb-2">
+                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-5 h-5 fill-white"></i> 2.4k</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-5 h-5 fill-white"></i> 120</span>
+                    </div>
+                    <p class="text-sm line-clamp-2">The evolution of digital workspace in 2026. #minimalism #workspace</p>
+                </div>
+            </div>
+
+            <!-- Tall Post (Reel/Video) -->
+            <div class="bento-item-tall glass-card rounded-[40px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work2.png', 'Vinca Unisex Salon creative visual campaigns.')">
+                <div class="absolute top-5 right-5 z-10 bg-black/20 backdrop-blur-md p-2 rounded-full">
+                    <i data-lucide="play" class="w-4 h-4 fill-white"></i>
+                </div>
+                <img src="./work2.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+
+            <!-- Square Post -->
+            <div class="glass-card rounded-[40px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work3.png', 'Deep ROAS optimization for meta ads setups.')">
+                <img src="./work3.png" class="w-full h-full object-cover">
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-black/40 transition-opacity">
+                    <i data-lucide="instagram" class="w-8 h-8 text-white"></i>
+                </div>
+            </div>
+
+            <!-- Square Post 2 -->
+            <div class="glass-card rounded-[40px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./ss11.png', 'Crisp social media flyer assets for Spicy Affair Lucknow.')">
+                <img src="./ss11.png" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Square Post 3 -->
+            <div class="glass-card rounded-[40px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./ss15.png', 'Bold brand identities built from scratch.')">
+                <img src="./ss15.png" class="w-full h-full object-cover">
+            </div>
         </div>
+
+        <!-- FOOTER: CTA -->
+        <footer class="mt-20 text-center py-10 border-t border-zinc-900">
+            <p class="text-zinc-500 mb-4">Want to see more?</p>
+            <a href="https://www.instagram.com/globallogicmedia/" target="_blank" class="inline-flex items-center gap-2 text-xl font-heading font-bold hover:text-orange-500 transition-colors">
+                VIEW FULL PROFILE <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+            </a>
+        </footer>
+    </div>
+
+    <!-- LIGHTBOX / MODAL (Hidden by default) -->
+    <div id="post-modal" class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <button onclick="window.closeModal()" class="absolute top-10 right-10 text-white hover:rotate-90 transition-transform">
+            <i data-lucide="x" class="w-10 h-10"></i>
+        </button>
+        <div class="max-w-5xl w-full grid md:grid-cols-2 bg-zinc-900 rounded-[30px] overflow-hidden">
+            <div class="bg-black flex items-center justify-center">
+                <img id="modal-img" src="" class="max-h-[80vh] w-full object-contain">
+            </div>
+            <div class="p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <img src="./logo.png" class="w-10 h-10 rounded-full">
+                        <span class="font-bold">globallogicmedia</span>
+                    </div>
+                    <p id="modal-caption" class="text-zinc-300 leading-relaxed"></p>
+                </div>
+                <div class="pt-6 border-t border-zinc-800">
+                    <a id="modal-link" href="https://www.instagram.com/globallogicmedia/" target="_blank" class="w-full bg-white text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-2">
+                        View Original Post <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
       `;
 
+      if (window.lucide) window.lucide.createIcons();
+      setupLightbox();
       loadInstagramFeed();
     }
-
-    // ── 3. Lightbox Setup ───────────────────────────────────────────────────
-    setupLightbox();
-
-    // ── 4. Apply 3D Perspective Tilt Interaction & Gloss Glare ───────────────
-    apply3DTiltEffect();
-
-    // ── 5. Remove Instagram menu links from headers (User requested) ────────
-    removeInstagramNavLinks();
   }
 
   function setupLightbox() {
-    var lightbox = document.getElementById('glm-lightbox');
-    if (!lightbox) {
-      lightbox = document.createElement('div');
-      lightbox.id = 'glm-lightbox';
-      lightbox.style.cssText = [
-        'position:fixed',
-        'inset:0',
-        'background:rgba(0,0,0,0.92)',
-        'display:flex',
-        'align-items:center',
-        'justify-content:center',
-        'z-index:9999',
-        'opacity:0',
-        'pointer-events:none',
-        'transition:opacity 0.4s ease',
-        'backdrop-filter:blur(10px)',
-        '-webkit-backdrop-filter:blur(10px)'
-      ].join(';');
-      lightbox.innerHTML = `
-        <button id="glm-lightbox-close" style="position:absolute;top:30px;right:40px;background:none;border:none;color:#fff;font-size:42px;cursor:pointer;font-weight:200;transition:transform 0.3s ease;">&times;</button>
-        <img id="glm-lightbox-img" style="max-width:90%;max-height:85vh;object-fit:contain;border-radius:12px;transform:scale(0.95);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);box-shadow:0 25px 60px rgba(0,0,0,0.8);">
-      `;
-      document.body.appendChild(lightbox);
+    const modal = document.getElementById('post-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+    const modalLink = document.getElementById('modal-link');
 
-      var closeBtn = document.getElementById('glm-lightbox-close');
-      var closeLightbox = function() {
-        lightbox.style.opacity = '0';
-        lightbox.style.pointerEvents = 'none';
-        document.getElementById('glm-lightbox-img').style.transform = 'scale(0.95)';
-      };
+    window.glmShowLightbox = function(imgSrc, caption, link) {
+      modalImg.src = imgSrc;
+      modalCaption.innerText = caption || "Global Logic Media Creative Content";
+      if (link) {
+        modalLink.href = link;
+        modalLink.style.display = 'flex';
+      } else {
+        modalLink.href = "https://www.instagram.com/globallogicmedia/";
+        modalLink.style.display = 'flex';
+      }
+      modal.classList.remove('hidden');
+      setTimeout(() => modal.classList.add('opacity-100'), 10);
+      document.body.style.overflow = 'hidden';
+    };
 
-      closeBtn.addEventListener('click', closeLightbox);
-      lightbox.addEventListener('click', function(e) {
-        if (e.target === lightbox) closeLightbox();
-      });
-      window.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') closeLightbox();
-      });
-
-      window.glmShowLightbox = function(src) {
-        var img = document.getElementById('glm-lightbox-img');
-        img.src = src;
-        lightbox.style.opacity = '1';
-        lightbox.style.pointerEvents = 'auto';
-        img.style.transform = 'scale(1)';
-      };
-    }
-  }
-
-  function apply3DTiltEffect() {
-    var cards = document.querySelectorAll('.glm-marquee-item, .glm-insta-card');
-    cards.forEach(function(card) {
-      if (card.dataset.tiltActive) return;
-      card.dataset.tiltActive = 'true';
-
-      // Create reflection glare element
-      var glare = document.createElement('div');
-      glare.style.cssText = [
-        'position:absolute',
-        'inset:0',
-        'background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 60%)',
-        'pointer-events:none',
-        'opacity:0',
-        'transition:opacity 0.3s ease',
-        'z-index:5'
-      ].join(';');
-      card.appendChild(glare);
-
-      card.addEventListener('mousemove', function(e) {
-        var rect = card.getBoundingClientRect();
-        var x = e.clientX - rect.left;
-        var y = e.clientY - rect.top;
-        
-        var xc = rect.width / 2;
-        var yc = rect.height / 2;
-        
-        var rotateY = ((x - xc) / xc) * 10;
-        var rotateX = -((y - yc) / yc) * 10;
-        
-        card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
-        glare.style.opacity = '1';
-        glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%)`;
-      });
-
-      card.addEventListener('mouseleave', function() {
-        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale(1)';
-        glare.style.opacity = '0';
-      });
-    });
+    window.closeModal = function() {
+      modal.classList.remove('opacity-100');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }, 300);
+    };
   }
 
   function loadInstagramFeed() {
-    var row = document.getElementById('insta-feed-row');
-    if (!row) return;
-
-    var defaultPosts = [
-      { src: './work1.png', cap: 'Empowering B Luxury Salon with an organic, conversion-optimized marketing push!' },
-      { src: './work2.png', cap: 'Elegant creative visuals and brand photography for Vinca Unisex Salon.' },
-      { src: './work3.png', cap: 'Behind the numbers: Deep ROAS optimization on our meta ads setups.' },
-      { src: './ss11.png', cap: 'Crisp social media flyer assets for Spicy Affair Lucknow.' },
-      { src: './ss15.png', cap: 'Bold brand identities built from scratch: Krazy 4 Cakes by Muskan.' },
-      { src: './ss16.png', cap: 'Are you ready to write your digital story? Connect with GLM today!' }
-    ];
+    const feedContainer = document.getElementById('insta-feed');
+    if (!feedContainer) return;
 
     if (window.firebaseDB) {
       window.firebaseDB.ref("config/instagram_token").once('value')
@@ -534,76 +299,61 @@
                 })
                 .then(data => {
                   if (data.data && data.data.length > 0) {
-                    renderInstaData(data.data.map(item => ({
-                      src: item.media_type === 'VIDEO' ? (item.thumbnail_url || item.media_url) : item.media_url,
-                      cap: item.caption || 'Global Logic Media Creative',
-                      link: item.permalink
-                    })));
-                  } else {
-                    renderInstaData(defaultPosts);
+                    updateBentoFeed(data.data);
                   }
                 })
-                .catch(() => {
-                  renderInstaData(defaultPosts);
-                });
-            } else {
-              renderInstaData(defaultPosts);
+                .catch(() => {});
             }
-          } else {
-            renderInstaData(defaultPosts);
           }
         })
-        .catch(() => {
-          renderInstaData(defaultPosts);
-        });
-    } else {
-      renderInstaData(defaultPosts);
+        .catch(() => {});
     }
+  }
 
-    function renderInstaData(posts) {
-      var doubled = posts.concat(posts);
-      row.innerHTML = doubled.map(p => `
-        <div class="glm-insta-card" onclick="window.glmShowLightbox('${p.src}')">
-          <img src="${p.src}" alt="Instagram Post" loading="lazy">
-          <div class="glm-insta-overlay">
-            <p class="glm-insta-caption">${p.cap}</p>
-            <span class="glm-insta-link" onclick="event.stopPropagation();">Instagram</span>
-          </div>
-        </div>
-      `).join('');
-      apply3DTiltEffect();
+  function updateBentoFeed(posts) {
+    const items = document.querySelectorAll('#insta-feed > div');
+    posts.slice(0, 5).forEach((p, idx) => {
+      if (idx >= items.length) return;
+      const item = items[idx];
+      const img = item.querySelector('img');
+      const mediaUrl = p.media_type === 'VIDEO' ? (p.thumbnail_url || p.media_url) : p.media_url;
+      const caption = p.caption || 'Global Logic Media Creative';
       
-      // Trigger reveal stagger for Instagram cards immediately upon data render
-      setTimeout(function() {
-        row.querySelectorAll('.glm-insta-card').forEach(function(item, index) {
-          setTimeout(function() {
-            item.classList.add('animate-in');
-          }, index * 60);
-        });
-      }, 150);
-    }
+      if (img) img.src = mediaUrl;
+      
+      item.onclick = function() {
+        window.glmShowLightbox(mediaUrl, caption, p.permalink);
+      };
+      
+      const desc = item.querySelector('p');
+      if (desc) desc.innerText = caption;
+    });
   }
 
   function removeInstagramNavLinks() {
     var instaLinks = document.querySelectorAll('a[href*="instagram.html"], a[href*="instagram"]');
     instaLinks.forEach(function(link) {
-      link.remove();
+      const href = link.getAttribute('href');
+      if (href && (href.includes('instagram.html') || href.includes('instagram.com/globallogicmedia'))) {
+        link.style.display = 'none';
+        link.remove();
+      }
     });
   }
 
-  // Run continuously to survive Framer React hydration and re-renders
-  setInterval(inject, 500);
-
-  // Monitor DOM modifications to immediately re-run inject
-  var observer = new MutationObserver(inject);
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
-      observer.observe(document.body, { childList: true, subtree: true });
       inject();
+      removeInstagramNavLinks();
     });
   } else {
-    observer.observe(document.body, { childList: true, subtree: true });
     inject();
+    removeInstagramNavLinks();
   }
-
+  
+  // Re-run check on load just in case Framer loaded late
+  window.addEventListener('load', function() {
+    inject();
+    removeInstagramNavLinks();
+  });
 })();

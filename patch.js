@@ -94,8 +94,25 @@ if (!html.includes('skills-section.js')) html = html.replace('</body>', '<script
 if (!html.includes('global-logic-replacer.js')) html = html.replace('</body>', '<script src="./global-logic-replacer.js"></script>\n</body>');
 if (!html.includes('company-details.js')) html = html.replace('</body>', '<script src="./company-details.js"></script>\n</body>');
 if (!html.includes('three-bg.js')) html = html.replace('</body>', '<script src="./three-bg.js"></script>\n</body>');
+if (!html.includes('three-logo-interactive.js')) html = html.replace('</body>', '<script src="./three-logo-interactive.js"></script>\n</body>');
 if (!html.includes('image-trail-section.js')) html = html.replace('</body>', '<script src="./image-trail-section.js"></script>\n</body>');
 if (!html.includes('custom-cursor.js')) html = html.replace('</body>', '<script src="./custom-cursor.js"></script>\n</body>');
+
+// Inject Tailwind CSS safely without Preflight reset to prevent breaking Framer styles
+if (!html.includes('tailwindcss')) {
+    const tailwindScript = `
+<script>
+  window.tailwind = {
+    corePlugins: {
+      preflight: false,
+    }
+  }
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+`;
+    html = html.replace('</head>', tailwindScript + '\n</head>');
+}
 
 fs.writeFileSync('index.html', html);
 console.log('Appended firebase-init and native sections to index.html');

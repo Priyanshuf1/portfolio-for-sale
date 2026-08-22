@@ -52,24 +52,70 @@
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
     
-    // 4. Load Logo Texture
+    // 4. Load Logo Texture and create a true 3D interactive composite model
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load('./logo.png', function(texture) {
       texture.generateMipmaps = true;
       texture.minFilter = THREE.LinearMipmapLinearFilter;
       texture.magFilter = THREE.LinearFilter;
       
-      // Flat plane — no card shape, just the logo itself
-      const geometry = new THREE.PlaneGeometry(3.8, 3.8);
+      // Create main group
+      logoCard = new THREE.Group();
       
-      // MeshBasicMaterial: renders exact PNG colors, bypassing any lighting shading/silver wash
-      const material = new THREE.MeshBasicMaterial({
+      // Inner wireframe sphere
+      const sphereGeom = new THREE.SphereGeometry(2.0, 24, 24);
+      const sphereMat = new THREE.MeshBasicMaterial({
+        color: 0xFF4500, // Orange-red theme accent
+        wireframe: true,
+        transparent: true,
+        opacity: 0.12
+      });
+      const sphereMesh = new THREE.Mesh(sphereGeom, sphereMat);
+      logoCard.add(sphereMesh);
+      
+      // Outer wireframe sphere
+      const outerGeom = new THREE.SphereGeometry(2.4, 16, 16);
+      const outerMat = new THREE.MeshBasicMaterial({
+        color: 0xFFD700, // Gold glowing accent
+        wireframe: true,
+        transparent: true,
+        opacity: 0.05
+      });
+      const outerMesh = new THREE.Mesh(outerGeom, outerMat);
+      logoCard.add(outerMesh);
+      
+      // Core logo plane
+      const logoGeom = new THREE.PlaneGeometry(2.2, 2.2);
+      const logoMat = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,
         side: THREE.DoubleSide
       });
+      const logoMesh = new THREE.Mesh(logoGeom, logoMat);
+      logoCard.add(logoMesh);
       
-      logoCard = new THREE.Mesh(geometry, material);
+      // Orbiting particles shell
+      const particleCount = 60;
+      const particlesGeom = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        const r = 2.0 + Math.random() * 0.6;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+        positions[i] = r * Math.sin(phi) * Math.cos(theta);
+        positions[i+1] = r * Math.sin(phi) * Math.sin(theta);
+        positions[i+2] = r * Math.cos(phi);
+      }
+      particlesGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const particlesMat = new THREE.PointsMaterial({
+        color: 0xFFFFFF,
+        size: 0.05,
+        transparent: true,
+        opacity: 0.6
+      });
+      const particles = new THREE.Points(particlesGeom, particlesMat);
+      logoCard.add(particles);
+      
       scene.add(logoCard);
       
       // Subtle float animation
@@ -143,32 +189,16 @@
     renderer.render(scene, camera);
   }
   
-  // Continuous search for the headphone girl image to replace
+  // Continuous search for the logo.png image inside the About section to replace
   function checkAndReplace() {
-    // Clean up any canvas created in the wrong section (like Projects)
-    const existingCanvases = document.querySelectorAll('#glb-3d-logo-canvas');
-    existingCanvases.forEach(c => {
-      const parentSec = c.closest('[data-framer-name="about me section"]');
-      if (!parentSec) {
-        c.remove();
-        // Restore opacity of any projects image that was hidden by mistake
-        const projImg = document.querySelector('img[src*="RYRvZnstUexQMOl8zRyrvDfDT0.png"]');
-        if (projImg) projImg.style.opacity = '1';
-        const otherAboutImg = document.querySelector('img[src*="roWFLkzHAotwSx5UxGPxpxMeA.jpg"]');
-        if (otherAboutImg && otherAboutImg.getBoundingClientRect().top + window.scrollY > 2000) {
-          otherAboutImg.style.opacity = '1';
-        }
-      }
-    });
-
-    const aboutSection = document.querySelector('[data-framer-name="about me section"]');
+    const aboutSection = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
     if (!aboutSection) return;
 
-    // Find the target image specifically inside the About section
-    const targetImg = aboutSection.querySelector('img[src*="roWFLkzHAotwSx5UxGPxpxMeA.jpg"]');
+    // Find the target logo image inside the About section card (skip header logo or other wrappers)
+    const targetImg = aboutSection.querySelector('img[src*="logo.png"]');
     if (!targetImg) return;
     
-    // Target container is the parent background image wrapper
+    // Target container is the parent wrapper
     const container = targetImg.parentElement;
     if (!container) return;
     
@@ -176,7 +206,7 @@
     targetImg.style.opacity = '0';
     targetImg.style.pointerEvents = 'none';
     
-    // Make sure container holds absolute positioning for canvas
+    // Make sure container holds relative positioning for canvas
     if (window.getComputedStyle(container).position === 'static') {
       container.style.position = 'relative';
     }
