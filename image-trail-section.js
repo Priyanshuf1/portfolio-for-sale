@@ -4,31 +4,12 @@
   // - Transparent background for Recent Work marquee (shows site 3D mesh)
   // - Seamless lightbox zoom with (X) button on image tap
   // - Expanded auto-scrolling Instagram feed section below Recent Work
-  // - 3D Perspective Tilt + Glossy Glare effect on hover
-  // - Physics-based Scroll-Velocity responsive speed (Marquees speed up on scroll)
+  // - Premium 3D Perspective Tilt + Glossy Glare effect on hover
+  // - Smooth, constant, slow-cruising marquee animation (no jumpy scroll velocity)
+  // - Staggered scroll entrance fade & slide-up animation
   // - Instagram config completely moved to Admin Dashboard (encrypted in DB)
   // - Dynamic removal of Instagram link from header nav menus
   // ====================================================
-
-  var scrollSpeed = 1;
-  var targetSpeed = 1;
-  var lastScrollY = window.scrollY;
-
-  // Track scroll speed for physics-based marquee acceleration
-  window.addEventListener('scroll', function() {
-    var currentScrollY = window.scrollY;
-    var diff = Math.abs(currentScrollY - lastScrollY);
-    targetSpeed = 1 + Math.min(diff * 0.08, 4.0);
-    lastScrollY = currentScrollY;
-  }, { passive: true });
-
-  function updateMarqueePhysics() {
-    scrollSpeed += (targetSpeed - scrollSpeed) * 0.08; // Smooth inertia
-    targetSpeed += (1 - targetSpeed) * 0.04;          // Decay back to base speed
-    document.documentElement.style.setProperty('--scroll-speed', scrollSpeed);
-    requestAnimationFrame(updateMarqueePhysics);
-  }
-  requestAnimationFrame(updateMarqueePhysics);
 
   function decryptToken(encrypted) {
     try {
@@ -94,9 +75,6 @@
       style = document.createElement('style');
       style.id = 'glm-marquee-styles';
       style.textContent = `
-        :root {
-          --scroll-speed: 1;
-        }
         .glm-marquee-wrap {
           display: flex;
           flex-direction: column;
@@ -114,10 +92,10 @@
           gap: 28px;
         }
         .glm-marquee-row.left {
-          animation: glmMarqueeLeft calc(40s / var(--scroll-speed)) linear infinite;
+          animation: glmMarqueeLeft 50s linear infinite;
         }
         .glm-marquee-row.right {
-          animation: glmMarqueeRight calc(40s / var(--scroll-speed)) linear infinite;
+          animation: glmMarqueeRight 50s linear infinite;
         }
         .glm-marquee-row:hover {
           animation-play-state: paused;
@@ -132,10 +110,18 @@
           background: rgba(13, 13, 17, 0.75);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
-          transition: transform 0.15s ease-out, border-color 0.4s ease, box-shadow 0.4s ease;
           cursor: pointer;
           position: relative;
           transform-style: preserve-3d;
+          
+          /* Staggered entrance initial state */
+          opacity: 0;
+          transform: translateY(40px) scale(0.95);
+          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        .glm-marquee-item.animate-in {
+          opacity: 1;
+          transform: translateY(0) scale(1);
         }
         .glm-marquee-item:hover {
           border-color: #FF1744;
@@ -206,13 +192,13 @@
           display: flex;
           width: max-content;
           gap: 28px;
-          animation: glmMarqueeLeft calc(45s / var(--scroll-speed)) linear infinite;
+          animation: glmMarqueeLeft 55s linear infinite;
         }
         .glm-insta-row:hover {
           animation-play-state: paused;
         }
         .glm-insta-card {
-          width: 320px; /* Expanded card size as requested */
+          width: 320px;
           aspect-ratio: 1;
           border-radius: 16px;
           overflow: hidden;
@@ -222,8 +208,16 @@
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
           cursor: pointer;
-          transition: transform 0.15s ease-out, border-color 0.4s ease;
           transform-style: preserve-3d;
+
+          /* Staggered entrance initial state */
+          opacity: 0;
+          transform: translateY(40px) scale(0.95);
+          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+        }
+        .glm-insta-card.animate-in {
+          opacity: 1;
+          transform: translateY(0) scale(1);
         }
         .glm-insta-card img {
           width: 100%;
@@ -326,7 +320,6 @@
       section.parentNode.insertBefore(instaSection, section.nextSibling);
     }
 
-    // Populate Instagram feed content if empty (Config API is hidden publicly now)
     if (!instaSection.querySelector('.glm-insta-header')) {
       instaSection.innerHTML = `
         <div class="glm-insta-header">
@@ -355,7 +348,10 @@
     // ── 4. Apply 3D Perspective Tilt Interaction & Gloss Glare ───────────────
     apply3DTiltEffect();
 
-    // ── 5. Remove Instagram menu links from headers (User requested) ────────
+    // ── 5. Staggered Entrance Viewport Scroll Animation ──────────────────────
+    initEntranceObserver();
+
+    // ── 6. Remove Instagram menu links from headers (User requested) ────────
     removeInstagramNavLinks();
   }
 
@@ -451,6 +447,30 @@
     });
   }
 
+  function initEntranceObserver() {
+    if (window.glmEntranceObserverInit) return;
+    window.glmEntranceObserverInit = true;
+
+    var observer = new IntersectionObserver(function(entries, obs) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var cards = entry.target.querySelectorAll('.glm-marquee-item, .glm-insta-card');
+          cards.forEach(function(card, index) {
+            setTimeout(function() {
+              card.classList.add('animate-in');
+            }, index * 80); // Stagger reveal
+          });
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    var sections = document.querySelectorAll('#glm-image-trail-section, #glm-instagram-feed-section');
+    sections.forEach(function(sec) {
+      observer.observe(sec);
+    });
+  }
+
   function loadInstagramFeed() {
     var row = document.getElementById('insta-feed-row');
     if (!row) return;
@@ -515,6 +535,17 @@
         </div>
       `).join('');
       apply3DTiltEffect();
+      
+      // Re-trigger viewport check for animate-in on dynamically loaded feed items
+      var section = document.getElementById('glm-instagram-feed-section');
+      if (section) {
+        var cards = section.querySelectorAll('.glm-insta-card');
+        cards.forEach(function(card, index) {
+          setTimeout(function() {
+            card.classList.add('animate-in');
+          }, index * 80);
+        });
+      }
     }
   }
 
