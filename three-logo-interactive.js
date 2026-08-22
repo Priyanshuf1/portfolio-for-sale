@@ -17,6 +17,14 @@
   let isNear = false;
   let autoRotateAngle = 0;
   
+  function loadThreeJS(callback) {
+    if (window.THREE) { callback(); return; }
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    script.onload = callback;
+    document.head.appendChild(script);
+  }
+
   function init3DLogo(container) {
     if (document.getElementById('glb-3d-logo-canvas')) return;
     
@@ -164,7 +172,9 @@
       container.style.position = 'relative';
     }
     
-    init3DLogo(container);
+    loadThreeJS(function() {
+      init3DLogo(container);
+    });
   }
   
   // Initialize check loop

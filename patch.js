@@ -124,6 +124,11 @@ if (!html.includes('tailwindcss')) {
     html = html.replace('</head>', tailwindScript + '\n</head>');
 }
 
+// Cache-busting version overrides to bypass browser cache
+const cacheBuster = Date.now();
+html = html.replace(/src="\.\/three-logo-interactive\.js(\?v=[^"]*)?"/g, `src="./three-logo-interactive.js?v=${cacheBuster}"`);
+html = html.replace(/src="\.\/image-trail-section\.js(\?v=[^"]*)?"/g, `src="./image-trail-section.js?v=${cacheBuster}"`);
+
 fs.writeFileSync('index.html', html);
 console.log('Appended firebase-init and native sections to index.html');
 
