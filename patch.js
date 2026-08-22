@@ -1,6 +1,12 @@
 const fs = require('fs');
 let html = fs.readFileSync('index.html', 'utf8');
 
+// ACTIVELY REMOVE three-bg.js (smoky fluid background) & three-logo-interactive.js (unused 3D model)
+html = html.replace(/<script[^>]+three-bg\.js[^>]*><\/script>\r?\n?/gi, '');
+html = html.replace(/<script[^>]+three-logo-interactive\.js[^>]*><\/script>\r?\n?/gi, '');
+html = html.replace(/<script id="inline-threebg-script">[\s\S]*?<\/script>\r?\n?/gi, '');
+html = html.replace(/<script id="inline-logo3d-script">[\s\S]*?<\/script>\r?\n?/gi, '');
+
 // Remove the old blog drawer if it exists
 html = html.replace('<script src="./blog-section.js"></script>\n', '');
 
@@ -33,10 +39,9 @@ if (!html.includes('svg-decorations.js')) html = html.replace('</body>', '<scrip
 if (!html.includes('rabto-fx-engine.js')) html = html.replace('</body>', '<script src="./rabto-fx-engine.js"></script>\n</body>');
 if (!html.includes('bg-enhancer.js')) html = html.replace('</body>', '<script src="./bg-enhancer.js"></script>\n</body>');
 if (!html.includes('skills-section.js')) html = html.replace('</body>', '<script src="./skills-section.js"></script>\n</body>');
-if (!html.includes('three-bg.js')) html = html.replace('</body>', '<script src="./three-bg.js"></script>\n</body>');
 if (!html.includes('global-logic-replacer.js')) html = html.replace('</body>', '<script src="./global-logic-replacer.js"></script>\n</body>');
 if (!html.includes('company-details.js')) html = html.replace('</body>', '<script src="./company-details.js"></script>\n</body>');
-if (!html.includes('three-logo-interactive.js')) html = html.replace('</body>', '<script src="./three-logo-interactive.js"></script>\n</body>');
+if (!html.includes('image-trail-section.js')) html = html.replace('</body>', '<script src="./image-trail-section.js"></script>\n</body>');
 if (!html.includes('custom-cursor.js')) html = html.replace('</body>', '<script src="./custom-cursor.js"></script>\n</body>');
 
 fs.writeFileSync('index.html', html);
