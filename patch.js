@@ -43,3 +43,4 @@ fs.writeFileSync('index.html', html);
 console.log('Appended firebase-init and native sections to index.html');
 
 require('./patch-webflow-expandable-cards.js');
+require('./patch-three-cards-logo.js');
