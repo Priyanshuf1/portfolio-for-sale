@@ -215,6 +215,7 @@
   const trigger = document.getElementById('glbTriggerBook');
   const overlay = document.getElementById('glbOverlayBook');
   const closeBtn = document.getElementById('glbCloseBook');
+  const form = document.getElementById('glbBookForm');
 
   function openModal() {
     overlay.classList.add('active');

@@ -16,14 +16,14 @@
       transition: opacity 0.3s ease;
     }
 
-    #grid-trail-canvas {
+    #vanta-bg-container {
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
       pointer-events: none;
-      z-index: -1;
+      z-index: 0;
       opacity: 0;
-      display: none;
+      display: block;
       transition: opacity 0.3s ease;
     }
 
@@ -55,7 +55,7 @@
   function loadP5JS(callback) {
     if (window.p5) { callback(); return; }
     const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js';
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js';
     script.onload = callback;
     document.head.appendChild(script);
   }
@@ -79,12 +79,12 @@
       canvasAmbient.style.display = 'none';
     }
     
-    // Grid Trail Canvas (Only visible on the first page / hero section, fades on scroll)
-    const opacityTrail = Math.max(0, 0.45 - (scrollY / fadeHeight) * 0.45);
-    const canvasTrail = document.getElementById('grid-trail-canvas');
-    if (canvasTrail) {
-      canvasTrail.style.opacity = opacityTrail;
-      canvasTrail.style.display = opacityTrail === 0 ? 'none' : 'block';
+    // Vanta Topology Background (Only visible on the first page / hero section, fades on scroll)
+    const opacityVanta = Math.max(0, 1.0 - (scrollY / fadeHeight) * 1.0);
+    const canvasVanta = document.getElementById('vanta-bg-container');
+    if (canvasVanta) {
+      canvasVanta.style.opacity = opacityVanta;
+      canvasVanta.style.display = opacityVanta === 0 ? 'none' : 'block';
     }
   }
 
@@ -230,149 +230,71 @@
     animate();
   }
 
-  // 2. Initialize Grid Trail Canvas (Other Pages)
-  function initGridTrailScene() {
-    if (!window.p5 || document.getElementById('grid-trail-canvas')) return;
-
-    new p5((p) => {
-      const CELL_SIZE = 40;
-      const COLOR_R = 226;
-      const COLOR_G = 0;
-      const COLOR_B = 1;
-      const STARTING_ALPHA = 200;
-      const BACKGROUND_COLOR = [255, 255, 255];
-      const PROB_OF_NEIGHBOR = 0.5;
-      const AMT_FADE_PER_FRAME = 5;
-
-      let colorWithAlpha;
-      let numRows;
-      let numCols;
-      let currentRow = -2;
-      let currentCol = -2;
-      let allNeighbors = [];
-      
-      let virtualT = 0;
-      let lastMouseX = 0;
-      let lastMouseY = 0;
-      let isMouseMoving = false;
-      let idleTimer = 0;
-      let cursorAlpha = 0;
-
-      p.setup = () => {
-        let cnv = p.createCanvas(p.windowWidth, p.windowHeight);
-        cnv.id('grid-trail-canvas');
-        cnv.style("position", "fixed");
-        cnv.style("inset", 0);
-        cnv.style("z-index", -1);
-        cnv.style("pointer-events", "none");
-        cnv.style("opacity", "0");
-        cnv.style("display", "none");
-        
-        colorWithAlpha = p.color(COLOR_R, COLOR_G, COLOR_B, STARTING_ALPHA);
-        p.noFill();
-        p.stroke(colorWithAlpha);
-        p.strokeWeight(1);
-        numRows = Math.ceil(p.height / CELL_SIZE);
-        numCols = Math.ceil(p.width / CELL_SIZE);
-
-        window.addEventListener('mousemove', (e) => {
-          lastMouseX = e.clientX;
-          lastMouseY = e.clientY;
-          isMouseMoving = true;
-          idleTimer = 0;
-        });
-
-        // Trigger scroll handler once elements exist to initialize sizes and states
-        updateCanvasOpacities();
-      };
-
-      p.draw = () => {
-        p.clear();
-
-        let xCoord = lastMouseX;
-        let yCoord = lastMouseY;
-        
-        const isMobile = p.width < 768;
-        if (isMobile) {
-          virtualT += 0.015;
-          xCoord = (p.width / 2) + Math.cos(virtualT * 0.7) * (p.width * 0.45);
-          yCoord = (p.height / 2) + Math.sin(virtualT * 1.1) * (p.height * 0.45);
-          cursorAlpha = STARTING_ALPHA;
-        } else {
-          if (isMouseMoving) {
-            idleTimer++;
-            if (idleTimer > 60) { // After 1 second of inactivity, fade out
-              cursorAlpha = p.max(0, cursorAlpha - AMT_FADE_PER_FRAME);
-              if (cursorAlpha === 0) {
-                isMouseMoving = false;
-              }
-            } else {
-              cursorAlpha = STARTING_ALPHA;
-            }
-          } else {
-            cursorAlpha = p.max(0, cursorAlpha - AMT_FADE_PER_FRAME);
-          }
+  // 2. Load Vanta Topology and dependencies dynamically
+  function loadVantaTopology(callback) {
+    loadThreeJS(() => {
+      loadP5JS(() => {
+        if (window.VANTA && window.VANTA.TOPOLOGY) {
+          callback();
+          return;
         }
-
-        let row = p.floor(yCoord / CELL_SIZE);
-        let col = p.floor(xCoord / CELL_SIZE);
-
-        if (cursorAlpha > 0) {
-          if (row !== currentRow || col !== currentCol) {
-            currentRow = row;
-            currentCol = col;
-            allNeighbors.push(...getRandomNeighbors(row, col));
-          }
-
-          let x = col * CELL_SIZE;
-          let y = row * CELL_SIZE;
-
-          p.stroke(COLOR_R, COLOR_G, COLOR_B, cursorAlpha);
-          p.rect(x, y, CELL_SIZE, CELL_SIZE);
-        }
-
-        for (let neighbor of allNeighbors) {
-          let neighborX = neighbor.col * CELL_SIZE;
-          let neighborY = neighbor.row * CELL_SIZE;
-          neighbor.opacity = p.max(0, neighbor.opacity - AMT_FADE_PER_FRAME);
-          p.stroke(COLOR_R, COLOR_G, COLOR_B, neighbor.opacity);
-          p.rect(neighborX, neighborY, CELL_SIZE, CELL_SIZE);
-        }
-        
-        allNeighbors = allNeighbors.filter((neighbor) => neighbor.opacity > 0);
-      };
-
-      function getRandomNeighbors(row, col) {
-        let neighbors = [];
-        for (let dRow = -1; dRow <= 1; dRow++) {
-          for (let dCol = -1; dCol <= 1; dCol++) {
-            let neighborRow = row + dRow;
-            let neighborCol = col + dCol;
-            let isCurrentCell = dRow === 0 && dCol === 0;
-            let isInBounds = neighborRow >= 0 && neighborRow < numRows && neighborCol >= 0 && neighborCol < numCols;
-            if (!isCurrentCell && isInBounds && Math.random() < PROB_OF_NEIGHBOR) {
-              neighbors.push({
-                row: neighborRow,
-                col: neighborCol,
-                opacity: 255
-              });
-            }
-          }
-        }
-        return neighbors;
-      }
-
-      p.windowResized = () => {
-        p.resizeCanvas(p.windowWidth, p.windowHeight);
-        numRows = Math.ceil(p.height / CELL_SIZE);
-        numCols = Math.ceil(p.width / CELL_SIZE);
-      };
+        const script = document.createElement('script');
+        script.src = './vanta.topology.js?v=' + Date.now();
+        script.onload = callback;
+        document.head.appendChild(script);
+      });
     });
   }
 
-  // Load libraries and initialize
-  // loadThreeJS(init3DScene); // Disabled 3D scene to use only grid trail
-  loadP5JS(initGridTrailScene); // Enabled grid trail animation
+  // 3. Initialize Vanta Topology Background Scene
+  function initVantaTopology() {
+    if (document.getElementById('vanta-bg-container')) return;
+
+    // Create background container wrapper
+    const bgContainer = document.createElement('div');
+    bgContainer.id = 'vanta-bg-container';
+    
+    // Insert behind everything
+    document.body.insertBefore(bgContainer, document.body.firstChild);
+
+    let vantaEffect = null;
+    function startVanta() {
+      if (window.VANTA && window.VANTA.TOPOLOGY) {
+        vantaEffect = window.VANTA.TOPOLOGY({
+          el: "#vanta-bg-container",
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          scale: 1.00,
+          scaleMobile: 1.00,
+          color: 0xe20001,           // Brand Red color (#e20001)
+          backgroundColor: 0xffffff  // Solid White background
+        });
+        console.log('[Vanta] ✅ Topology effect initialized successfully');
+        
+        // Initial trigger for opacity setup
+        updateCanvasOpacities();
+      } else {
+        setTimeout(startVanta, 100);
+      }
+    }
+    
+    startVanta();
+  }
+
+  // Load libraries and initialize Vanta Topology after page load is fully complete
+  if (document.readyState === 'complete') {
+    loadVantaTopology(initVantaTopology);
+  } else {
+    window.addEventListener('load', () => {
+      // Extra 100ms delay to ensure hydration has settled
+      setTimeout(() => {
+        loadVantaTopology(initVantaTopology);
+      }, 100);
+    });
+  }
 
   // Setup scroll opacity listener
   window.addEventListener('scroll', updateCanvasOpacities);

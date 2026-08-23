@@ -12,6 +12,32 @@ html = html.replace('<script src="./blog-section.js"></script>\n', '');
 html = html.replace(/<style>[\s\S]*?\/\* Hide old testimonials section \*\/[\s\S]*?<\/style>/gi, '');
 
 const hideStyle = `
+<script id="debug-error-catcher">
+window.__pageErrors = [];
+window.addEventListener('error', function(e) {
+  window.__pageErrors.push({
+    message: e.message,
+    filename: e.filename,
+    lineno: e.lineno,
+    colno: e.colno,
+    stack: e.error ? e.error.stack : null
+  });
+});
+window.addEventListener('unhandledrejection', function(e) {
+  window.__pageErrors.push({
+    message: e.reason ? e.reason.message : 'Unhandled rejection',
+    stack: e.reason ? e.reason.stack : null
+  });
+});
+const origError = console.error;
+console.error = function(...args) {
+  window.__pageErrors.push({
+    message: args.map(a => String(a)).join(' '),
+    stack: new Error().stack
+  });
+  origError.apply(console, args);
+};
+</script>
 <style>
   /* Hide old testimonials section */
   #testimonials, section[data-framer-name="testimonials"], .framer-izep5p { display: none !important; }
@@ -124,12 +150,9 @@ if (!html.includes('tailwindcss')) {
     html = html.replace('</head>', tailwindScript + '\n</head>');
 }
 
-// Cache-busting version overrides to bypass browser cache
+// Cache-busting version overrides to bypass browser cache for all custom scripts
 const cacheBuster = Date.now();
-html = html.replace(/src="\.\/three-logo-interactive\.js(\?v=[^"]*)?"/g, `src="./three-logo-interactive.js?v=${cacheBuster}"`);
-html = html.replace(/src="\.\/image-trail-section\.js(\?v=[^"]*)?"/g, `src="./image-trail-section.js?v=${cacheBuster}"`);
-html = html.replace(/src="\.\/three-bg\.js(\?v=[^"]*)?"/g, `src="./three-bg.js?v=${cacheBuster}"`);
-html = html.replace(/src="\.\/bg-enhancer\.js(\?v=[^"]*)?"/g, `src="./bg-enhancer.js?v=${cacheBuster}"`);
+html = html.replace(/src="\.\/([a-zA-Z0-9_-]+\.js)(\?v=[^"]*)?"/g, `src="./$1?v=${cacheBuster}"`);
 
 fs.writeFileSync('index.html', html);
 console.log('Appended firebase-init and native sections to index.html');

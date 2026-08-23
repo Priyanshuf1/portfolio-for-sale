@@ -33,7 +33,7 @@ const newReplacementsScript = `
     'Brand Identity Design': 'Digital Marketing Agency',
     'Start a Conversation': 'Get Started Today',
     'Helping businesses standout with brand identity packaging that captivates and converts effectively.': 'We empower businesses to enhance online traffic, generate leads, and increase revenue through growth-focused marketing.',
-    'Have a project in mind? Let\'s build something remarkable together.': 'Ready to grow your business? Let\'s build something remarkable together.'
+    'Have a project in mind? Let\\\'s build something remarkable together.': 'Ready to grow your business? Let\\\'s build something remarkable together.'
   };
 
   function replaceText(node) {
