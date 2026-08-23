@@ -18,13 +18,23 @@ const customCSS = `
     background-color: var(--midnight) !important;
   }
 
-  /* Razor-Sharp Rich Red text for headings */
-  h1, h2 {
-    background: linear-gradient(180deg, #111827 0%, #e20001 70%, #7f0001 100%) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    background-clip: text !important;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8)) !important;
+  /* Crisp Solid Slate for Headings & Clean Brand Red for Highlights */
+  h1, h2, h3, h1 *, h2 *, h3 * {
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+    color: #111827 !important;
+    text-shadow: none !important;
+    filter: none !important;
+  }
+  h1 span, h2 span, h3 span,
+  [class*="framer-"] h1 span, [class*="framer-"] h2 span, [class*="framer-"] h3 span {
+    color: #e20001 !important;
+    -webkit-text-fill-color: #e20001 !important;
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    text-shadow: none !important;
+    filter: none !important;
   }
 
   /* Scrollbar */

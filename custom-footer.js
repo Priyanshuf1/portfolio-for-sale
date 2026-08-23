@@ -1,11 +1,11 @@
 (function() {
   const footerStyles = `
     .glb-footer, footer {
-      background: #0A0E27 !important;
-      color: #eaeaea;
+      background: #ffffff !important;
+      color: #374151;
       padding: 60px 20px 40px;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      border-top: 1px solid rgba(226, 0, 1, 0.35) !important;
+      border-top: 1px solid rgba(226, 0, 1, 0.15) !important;
       position: relative;
       left: 0;
       width: 100%;
@@ -29,14 +29,14 @@
     }
     
     .glb-footer-logo-text {
-      font-size: 32px;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 20px;
-      letter-spacing: -1px;
-      background: linear-gradient(90deg, #fff, #999);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 28px;
+      font-weight: 900;
+      color: #e20001 !important;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+      background: none !important;
+      -webkit-background-clip: initial !important;
+      -webkit-text-fill-color: #e20001 !important;
     }
     
     .glb-footer-socials {
@@ -46,9 +46,9 @@
     }
     
     .glb-footer-socials a {
-      color: #aaa;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+      color: #374151;
+      background: rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.08);
       width: 36px;
       height: 36px;
       border-radius: 50%;
@@ -60,17 +60,18 @@
     }
     
     .glb-footer-socials a:hover {
-      background: rgba(255,255,255,0.15);
-      color: #fff;
+      background: rgba(226,0,1,0.08);
+      color: #e20001;
+      border-color: rgba(226,0,1,0.2);
       transform: translateY(-2px);
     }
     
     .glb-footer-heading {
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: #fff;
+      color: #111827;
       margin-bottom: 20px;
     }
     
@@ -84,14 +85,14 @@
     }
     
     .glb-footer-links li a {
-      color: #999;
+      color: #4b5563;
       text-decoration: none;
       font-size: 15px;
       transition: color 0.2s ease;
     }
     
     .glb-footer-links li a:hover {
-      color: #fff;
+      color: #e20001;
     }
     
     .glb-footer-contact-item {
@@ -99,14 +100,14 @@
       gap: 12px;
       margin-bottom: 16px;
       align-items: flex-start;
-      color: #999;
+      color: #4b5563;
       font-size: 15px;
       line-height: 1.5;
     }
     
     .glb-footer-contact-item svg {
       flex-shrink: 0;
-      color: #fff;
+      color: #e20001;
       margin-top: 2px;
     }
     
@@ -114,9 +115,9 @@
       max-width: 1200px;
       margin: 40px auto 0;
       padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(0,0,0,0.06);
       text-align: center;
-      color: #666;
+      color: #6b7280;
       font-size: 13px;
     }
     
@@ -134,8 +135,8 @@
   const footerHTML = `
     <div class="glb-footer-container">
       <div class="glb-footer-col">
-        <div class="glb-footer-logo-text">Convert</div>
-        <div style="color:#999; font-size:14px; margin-bottom: 10px;">Global Logic Media</div>
+        <div class="glb-footer-logo-text">Global Logic Media</div>
+        <div style="color:#4b5563; font-size:14px; margin-bottom: 10px;">Digital Marketing Agency</div>
         <div class="glb-footer-socials">
           <a href="https://www.facebook.com/globallogicmedia" target="_blank" aria-label="Facebook" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
           <a href="https://www.instagram.com/globallogicmedia" target="_blank" aria-label="Instagram" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>

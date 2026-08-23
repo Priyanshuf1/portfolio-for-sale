@@ -11,7 +11,7 @@
       top: 0; left: 0;
       width: 100vw; height: 100vh;
       pointer-events: none;
-      z-index: 0;
+      z-index: -1;
       opacity: 0.35;
       transition: opacity 0.3s ease;
     }
@@ -21,7 +21,7 @@
       top: 0; left: 0;
       width: 100vw; height: 100vh;
       pointer-events: none;
-      z-index: 0;
+      z-index: -1;
       opacity: 0;
       display: block;
       transition: opacity 0.3s ease;
@@ -268,7 +268,7 @@
           minHeight: 200.00,
           minWidth: 200.00,
           scale: 1.00,
-          scaleMobile: 1.00,
+          scaleMobile: 3.00,
           color: 0xe20001,           // Brand Red color (#e20001)
           backgroundColor: 0xffffff  // Solid White background
         });

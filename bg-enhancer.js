@@ -83,19 +83,59 @@
       --framer-text-color: #1f2937 !important;
     }
 
-    /* Gradient Override for Section and Hero Headings and their span elements (Red Brand Theme) */
+    /* Simplify Section and Hero Headings to Solid Slate Text and Solid Brand Red Highlight Spans */
     html body [data-framer-name="about me section"] h2,
     html body .framer-12f38e1 h2,
-    html body [data-framer-name="about me section"] h2 span,
-    html body .framer-12f38e1 h2 span,
     html body [data-framer-name="hero"] h1,
     html body .framer-1wqlnff h1,
-    html body [data-framer-name="hero"] h1 span,
-    html body .framer-1wqlnff h1 span {
-      background: linear-gradient(135deg, #111827 30%, #e20001 100%) !important;
-      -webkit-background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      color: transparent !important;
+    html body [data-framer-name="about me section"] h2 *,
+    html body .framer-12f38e1 h2 *,
+    html body [data-framer-name="hero"] h1 *,
+    html body .framer-1wqlnff h1 *,
+    html body [data-framer-name="hero"] h1 span:nth-child(1),
+    html body [data-framer-name="hero"] h1 span:nth-child(2),
+    html body [data-framer-name="hero"] h1 span:nth-child(3),
+    html body .framer-1wqlnff h1 span:nth-child(1),
+    html body .framer-1wqlnff h1 span:nth-child(2),
+    html body .framer-1wqlnff h1 span:nth-child(3),
+    html body [data-framer-name="hero"] h1 span:nth-child(1) *,
+    html body [data-framer-name="hero"] h1 span:nth-child(2) *,
+    html body [data-framer-name="hero"] h1 span:nth-child(3) *,
+    html body .framer-1wqlnff h1 span:nth-child(1) *,
+    html body .framer-1wqlnff h1 span:nth-child(2) *,
+    html body .framer-1wqlnff h1 span:nth-child(3) * {
+      background: none !important;
+      -webkit-background-clip: initial !important;
+      -webkit-text-fill-color: initial !important;
+      color: #111827 !important;
+      text-shadow: none !important;
+      filter: none !important;
+    }
+
+    /* ONLY make "Better Indeed" (spans 5 and 6) brand red, matching the logo */
+    html body [data-framer-name="hero"] h1 span:nth-child(5),
+    html body [data-framer-name="hero"] h1 span:nth-child(6),
+    html body .framer-1wqlnff h1 span:nth-child(5),
+    html body .framer-1wqlnff h1 span:nth-child(6),
+    html body [data-framer-name="hero"] h1 span:nth-child(5) *,
+    html body [data-framer-name="hero"] h1 span:nth-child(6) *,
+    html body .framer-1wqlnff h1 span:nth-child(5) *,
+    html body .framer-1wqlnff h1 span:nth-child(6) * {
+      color: #e20001 !important;
+      -webkit-text-fill-color: #e20001 !important;
+      background: none !important;
+      -webkit-background-clip: initial !important;
+      text-shadow: none !important;
+      filter: none !important;
+    }
+
+    /* Remove translucent red glowing ambient aura behind the hero text */
+    [data-framer-name="Hero"]::before, 
+    [data-framer-name="hero"]::before {
+      display: none !important;
+      content: none !important;
+      opacity: 0 !important;
+      background: none !important;
     }
 
     /* Contact Card Text visibility */
@@ -246,9 +286,9 @@
     .framer-1l7inir,
     .framer-unn2aa,
     .framer-NIbMY {
-      background: #ffffff !important;
-      background-color: #ffffff !important;
-      border: 1px solid rgba(226, 0, 1, 0.15) !important;
+      background: #fffdf5 !important;
+      background-color: #fffdf5 !important;
+      border: 1px solid rgba(217, 119, 6, 0.18) !important;
       border-radius: 16px !important;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
       transition: all 0.3s ease !important;
@@ -259,11 +299,13 @@
     .glb-skill-card:hover,
     .glb-map-container-box:hover,
     .glb-map-tilt-wrapper:hover,
-    .framer-6o1HC:hover {
-      background: rgba(226, 0, 1, 0.04) !important;
-      border-color: rgba(226, 0, 1, 0.4) !important;
+    .framer-6o1HC:hover,
+    .framer-1l7inir:hover {
+      background: #fff9e6 !important;
+      background-color: #fff9e6 !important;
+      border-color: rgba(226, 0, 1, 0.35) !important;
       box-shadow: 0 8px 24px rgba(226, 0, 1, 0.08) !important;
-      transform: translateY(-2px);
+      transform: translateY(-2px) !important;
     }
 
     /* ── Unified Logo-Themed Button Design System ── */
@@ -368,6 +410,54 @@
     [data-framer-name="FAQ's"] .framer-4y99x1-container,
     [data-framer-name="faq"] .framer-4y99x1-container {
       display: none !important;
+    }
+
+    /* Force all SVG icons to be dark slate for legibility on white background */
+    svg, svg *, [class*="framer-"] svg, [class*="framer-"] svg * {
+      --21h8s6: #1f2937 !important;
+      stroke: #1f2937 !important;
+    }
+
+    /* Retain white color for icons inside CTA buttons and active tags (having dark backgrounds) */
+    html body a[class*="1dk6y11"] svg, html body a[class*="1dk6y11"] svg *,
+    html body a[class*="1z0enj7"] svg, html body a[class*="1z0enj7"] svg *,
+    html body a[class*="1yuh7ai"] svg, html body a[class*="1yuh7ai"] svg *,
+    html body a[href*="book"] svg, html body a[href*="book"] svg *,
+    html body a[href*="call"] svg, html body a[href*="call"] svg *,
+    html body a[href*="project"] svg, html body a[href*="project"] svg *,
+    html body a[data-framer-name="Primary"] svg, html body a[data-framer-name="Primary"] svg *,
+    html body .framer-caRRT svg, html body .framer-caRRT svg *,
+    html body .glb-floating-btn-book svg, html body .glb-floating-btn-book svg *,
+    html body .glb-modal-book-btn svg, html body .glb-modal-book-btn svg * {
+      --21h8s6: #ffffff !important;
+      stroke: #ffffff !important;
+    }
+
+    /* ── Mobile Phone UI Custom Optimizations ── */
+    @media (max-width: 768px) {
+      /* Hide secondary and cluttered floating buttons to keep UI clean */
+      .glb-floating-btn,
+      .glb-floating-btn-review,
+      #glbTrigger,
+      #glbTriggerReview {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+
+      /* Convert primary "Book a Call" trigger to a clean bottom full-width sticky bar */
+      .glb-floating-btn-book,
+      #glbTriggerBook {
+        left: 20px !important;
+        right: 20px !important;
+        bottom: 20px !important;
+        width: auto !important;
+        transform: none !important;
+        justify-content: center !important;
+        box-shadow: 0 8px 30px rgba(226, 0, 1, 0.45) !important;
+        z-index: 9999 !important;
+      }
     }
   `;
 
