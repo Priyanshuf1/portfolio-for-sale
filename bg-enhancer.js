@@ -12,11 +12,11 @@
     html, body, html body, #main, [data-framer-root] {
       background-color: #050508 !important;
       background-image: 
-        radial-gradient(at 15% 10%, rgba(255, 255, 255, 0.04) 0px, transparent 50%),
-        radial-gradient(at 85% 15%, rgba(148, 163, 184, 0.03) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(255, 255, 255, 0.03) 0px, transparent 55%),
-        radial-gradient(at 85% 85%, rgba(148, 163, 184, 0.02) 0px, transparent 50%),
-        radial-gradient(at 15% 85%, rgba(255, 255, 255, 0.02) 0px, transparent 50%) !important;
+        radial-gradient(at 15% 10%, rgba(255, 255, 255, 0.05) 0px, transparent 50%),
+        radial-gradient(at 85% 15%, rgba(148, 163, 184, 0.04) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(255, 255, 255, 0.04) 0px, transparent 55%),
+        radial-gradient(at 85% 85%, rgba(148, 163, 184, 0.03) 0px, transparent 50%),
+        radial-gradient(at 15% 85%, rgba(255, 255, 255, 0.03) 0px, transparent 50%) !important;
       background-attachment: fixed !important;
       background-size: cover !important;
       color: #ffffff !important;
@@ -134,7 +134,7 @@
       height: 100vh;
       pointer-events: none;
       z-index: -2;
-      background: radial-gradient(circle 350px at var(--mouse-x, -1000px) var(--mouse-y, -1000px), rgba(255, 255, 255, 0.04), transparent 80%);
+      background: radial-gradient(circle 350px at var(--mouse-x, -1000px) var(--mouse-y, -1000px), rgba(255, 255, 255, 0.06), transparent 80%);
       transition: background 0.05s ease;
     }
   `;

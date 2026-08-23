@@ -74,7 +74,7 @@
     }
 
     // Ambient Particles Canvas (Visible across all sections, softer in content)
-    const opacityAmbient = Math.max(0.20, 0.45 - (scrollY / fadeHeight) * 0.25);
+    const opacityAmbient = Math.max(0.26, 0.52 - (scrollY / fadeHeight) * 0.26);
     const canvasAmbient = document.getElementById('rabto-ambient-canvas');
     if (canvasAmbient) {
       canvasAmbient.style.opacity = opacityAmbient;
