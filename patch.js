@@ -269,27 +269,132 @@ console.error = function(...args) {
     background: transparent !important;
   }
 
-  /* Fix text visibility inside dark services cards */
+  /* =====================================================
+     VANILLA WARM YELLOWISH-WHITE — ALL CARD CONTAINERS
+     Static base color, hover gets a subtle warm glow lift
+  ===================================================== */
+
+  /* Core service feature cards (framer-nSE2Y) — override inline dark token */
   .framer-nSE2Y,
-  .framer-nSE2Y * {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
-  }
-  
-  .framer-nSE2Y p {
-    color: #d1d5db !important;
-    -webkit-text-fill-color: #d1d5db !important;
-    font-size: 15px !important;
-    line-height: 1.6 !important;
+  [class*="framer-nSE2Y"] {
+    background-color: #FFFDF0 !important;
+    background: #FFFDF0 !important;
+    /* Override the inline CSS var that makes it dark */
+    --token-0c62d1bb-1ac3-4cd6-8f0f-8ee3950e02c0: #FFFDF0 !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(226, 160, 0, 0.12) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
   }
 
+  /* Hover effect on service cards — warm amber glow lift */
+  .framer-nSE2Y:hover,
+  [class*="framer-nSE2Y"]:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 12px 36px rgba(226, 120, 0, 0.12), 0 2px 8px rgba(0,0,0,0.04) !important;
+    border-color: rgba(226, 160, 0, 0.25) !important;
+  }
+
+  /* Text inside service cards — dark charcoal for readability */
+  .framer-nSE2Y *,
+  [class*="framer-nSE2Y"] * {
+    color: #1f2937 !important;
+    -webkit-text-fill-color: #1f2937 !important;
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+
+  /* Paragraph text slightly softer */
+  .framer-nSE2Y p,
+  [class*="framer-nSE2Y"] p {
+    color: #4b5563 !important;
+    -webkit-text-fill-color: #4b5563 !important;
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+  }
+
+  /* Headings inside cards — bold dark */
   .framer-nSE2Y h1,
   .framer-nSE2Y h2,
   .framer-nSE2Y h3,
-  .framer-nSE2Y h4 {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
+  .framer-nSE2Y h4,
+  [class*="framer-nSE2Y"] h1,
+  [class*="framer-nSE2Y"] h2,
+  [class*="framer-nSE2Y"] h3,
+  [class*="framer-nSE2Y"] h4 {
+    color: #111827 !important;
+    -webkit-text-fill-color: #111827 !important;
     font-weight: 700 !important;
+  }
+
+  /* Icons inside service cards — keep them dark/charcoal, not white */
+  .framer-nSE2Y svg,
+  [class*="framer-nSE2Y"] svg {
+    color: #374151 !important;
+    stroke: #374151 !important;
+    fill: currentColor !important;
+  }
+
+  /* Stats / Stats cards (framer-t9Edp) — also vanilla warm white */
+  html body .framer-t9Edp {
+    background: #FFFDF0 !important;
+    background-color: #FFFDF0 !important;
+    border: 1px solid rgba(226, 160, 0, 0.12) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
+  }
+  html body .framer-t9Edp:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 28px rgba(226, 120, 0, 0.1) !important;
+    border-color: rgba(226, 0, 1, 0.25) !important;
+  }
+
+  /* Comparison cards in "Mind behind Work" section — vanilla warm */
+  .glb-comparison-card.others {
+    background: #FFFDF0 !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  }
+  .glb-comparison-card.others:hover {
+    background: #FFF9E6 !important;
+    border-color: rgba(226, 160, 0, 0.2) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06) !important;
+  }
+  /* Text color fix in others comparison card */
+  .glb-comparison-card.others .glb-comp-title { color: #374151 !important; }
+  .glb-comparison-card.others .glb-comp-item { color: #4b5563 !important; }
+
+  /* Team cards in team section — vanilla warm */
+  .glb-team-card {
+    background: #FFFDF0 !important;
+    border: 1px solid rgba(226, 160, 0, 0.1) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+  }
+  .glb-team-card:hover {
+    background: #FFF9E6 !important;
+    border-color: rgba(226, 0, 1, 0.25) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(226, 0, 1, 0.08) !important;
+    transform: translateY(-4px) !important;
+  }
+  /* Team card text — dark on vanilla bg */
+  .glb-team-name { color: #111827 !important; }
+  .glb-team-desc { color: #6b7280 !important; }
+
+  /* Review / skill cards in custom sections */
+  .glb-review-card-premium,
+  .glb-skill-card,
+  .glb-contact-card,
+  .glb-map-container-box {
+    background: #FFFDF0 !important;
+    border: 1px solid rgba(226, 160, 0, 0.1) !important;
+  }
+  .glb-review-card-premium:hover,
+  .glb-skill-card:hover,
+  .glb-contact-card:hover {
+    background: #FFF9E6 !important;
+    border-color: rgba(226, 0, 1, 0.2) !important;
+    transform: translateY(-3px) !important;
   }
 </style>\n`;
 // Inject RIGHT AFTER <head> tag so it fires before ANY script runs and prevents FOUC
