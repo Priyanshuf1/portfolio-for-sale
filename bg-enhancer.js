@@ -125,6 +125,18 @@
     .framer-text {
       color: #ffffff !important;
     }
+
+    #monochrome-spotlight {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -2;
+      background: radial-gradient(circle 350px at var(--mouse-x, -1000px) var(--mouse-y, -1000px), rgba(255, 255, 255, 0.04), transparent 80%);
+      transition: background 0.05s ease;
+    }
   `;
 
   const styleEl = document.createElement('style');
@@ -141,10 +153,27 @@
     });
   }
 
+  // Inject spotlight DOM element
+  function initMonochromeSpotlight() {
+    if (document.getElementById('monochrome-spotlight')) return;
+    const spotlight = document.createElement('div');
+    spotlight.id = 'monochrome-spotlight';
+    document.body.appendChild(spotlight);
+
+    window.addEventListener('mousemove', (e) => {
+      spotlight.style.setProperty('--mouse-x', `${e.clientX}px`);
+      spotlight.style.setProperty('--mouse-y', `${e.clientY}px`);
+    });
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', resetHeroCloudFilter);
+    document.addEventListener('DOMContentLoaded', () => {
+      resetHeroCloudFilter();
+      initMonochromeSpotlight();
+    });
   } else {
     resetHeroCloudFilter();
+    initMonochromeSpotlight();
   }
   setInterval(resetHeroCloudFilter, 500);
 })();

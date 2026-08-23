@@ -73,12 +73,12 @@
       canvas3D.style.display = opacity3D === 0 ? 'none' : 'block';
     }
 
-    // Ambient Particles Canvas (Only visible on the first page / hero section)
-    const opacityAmbient = Math.max(0, 0.85 - (scrollY / fadeHeight) * 0.85);
+    // Ambient Particles Canvas (Visible across all sections, softer in content)
+    const opacityAmbient = Math.max(0.20, 0.45 - (scrollY / fadeHeight) * 0.25);
     const canvasAmbient = document.getElementById('rabto-ambient-canvas');
     if (canvasAmbient) {
       canvasAmbient.style.opacity = opacityAmbient;
-      canvasAmbient.style.display = opacityAmbient === 0 ? 'none' : 'block';
+      canvasAmbient.style.display = 'block'; // Always visible
     }
     
     // Grid Trail Canvas (Fades in as we scroll past the first page)
