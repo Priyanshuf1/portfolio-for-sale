@@ -3,13 +3,13 @@ const path = require('path');
 
 const customCSS = `
 <style id="priyanshu-custom-theme">
-  /* ── Luxury Midnight Blue + Gold Theme with Liquid Platinum Silver Buttons ── */
+  /* ── Luxury White + Brand Red Theme with Liquid Platinum Silver Buttons ── */
   :root {
-    --gold: #FFC72C;
-    --gold-light: #FFE066;
-    --midnight: #050508;
-    --midnight-mid: #08080c;
-    --midnight-card: #0f0f13;
+    --gold: #e20001;
+    --gold-light: #ff3333;
+    --midnight: #ffffff;
+    --midnight-mid: #f9fafb;
+    --midnight-card: #ffffff;
     --silver-liquid: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 45%, #94A3B8 100%);
   }
 
@@ -18,9 +18,9 @@ const customCSS = `
     background-color: var(--midnight) !important;
   }
 
-  /* Razor-Sharp Rich Gold text for headings */
+  /* Razor-Sharp Rich Red text for headings */
   h1, h2 {
-    background: linear-gradient(180deg, #FFF2A3 0%, #FFC72C 50%, #D48806 100%) !important;
+    background: linear-gradient(180deg, #111827 0%, #e20001 70%, #7f0001 100%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     background-clip: text !important;
@@ -33,15 +33,15 @@ const customCSS = `
   ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
 
   /* Gold selection highlight */
-  ::selection { background: rgba(255, 199, 44, 0.35); color: #fff; }
+  ::selection { background: rgba(226, 0, 1, 0.35); color: #fff; }
 
   /* Nav bar luxury glass */
   header, nav, [data-framer-name="Navbar"],
   [data-framer-name="nav"], [data-framer-name="Nav"] {
-    background: rgba(10, 14, 39, 0.85) !important;
+    background: rgba(255, 255, 255, 0.85) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
-    border-bottom: 1px solid rgba(255, 199, 44, 0.25) !important;
+    border-bottom: 1px solid rgba(226, 0, 1, 0.08) !important;
   }
 
   /* ⚡ ONLY CTA Primary Buttons → Liquid Platinum Silver Gradient ⚡ */
@@ -84,19 +84,19 @@ const customCSS = `
 
   /* Cards hover glow → Sharp Gold */
   [class*="framer-"]:hover > [class*="framer-s7w4jd"] {
-    box-shadow: 0 0 30px rgba(255, 199, 44, 0.35) !important;
+    box-shadow: 0 0 30px rgba(226, 0, 1, 0.35) !important;
   }
 
   /* Project card overlay border → gold tint */
   [data-framer-name="View Project"],
   [data-framer-name="View Casestudy"] {
-    border-color: rgba(255, 199, 44, 0.5) !important;
+    border-color: rgba(226, 0, 1, 0.5) !important;
     background-color: rgba(10, 14, 39, 0.75) !important;
   }
 
   /* Gold divider lines */
   [data-framer-name="separation"] {
-    background-color: rgba(255, 199, 44, 0.4) !important;
+    background-color: rgba(226, 0, 1, 0.4) !important;
     opacity: 1 !important;
   }
 
@@ -109,20 +109,20 @@ const customCSS = `
   /* Footer bg */
   footer, [data-framer-name="Footer"] {
     background: var(--midnight) !important;
-    border-top: 1px solid rgba(255, 199, 44, 0.2) !important;
+    border-top: 1px solid rgba(226, 0, 1, 0.2) !important;
   }
 
-  /* "Available / Open to projects" badge → Sharp Gold */
+  /* "Available / Open to projects" badge → Sharp Red */
   [class*="framer-"][class*="jral3p"] {
-    border: 1px solid rgba(255, 199, 44, 0.6) !important;
-    background: rgba(255, 199, 44, 0.12) !important;
+    border: 1px solid rgba(226, 0, 1, 0.6) !important;
+    background: rgba(226, 0, 1, 0.12) !important;
     color: var(--gold) !important;
   }
 
-  /* Social icon hover → gold */
+  /* Social icon hover → red */
   a[class*="framer-ir3zuj"]:hover svg,
   a[class*="framer-ir3zuj"]:hover use {
-    --21h8s6: #FFC72C !important;
+    --21h8s6: #e20001 !important;
   }
 
   html { scroll-behavior: smooth; }

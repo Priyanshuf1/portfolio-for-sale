@@ -1,9 +1,9 @@
 (function() {
   const styles = `
     html, body, html body {
-      background-color: #050507 !important;
-      background: #050507 !important;
-      color: #ffffff !important;
+      background-color: transparent !important;
+      background: transparent !important;
+      color: #1f2937 !important;
     }
 
     #rabto-3d-canvas {
@@ -65,24 +65,22 @@
     const scrollY = window.scrollY;
     const fadeHeight = window.innerHeight * 0.8;
     
-    // 3D Canvas (Only visible on the first page / hero section)
-    const opacity3D = Math.max(0, 0.35 - (scrollY / fadeHeight) * 0.35);
+    // 3D Canvas (Disabled)
     const canvas3D = document.getElementById('rabto-3d-canvas');
     if (canvas3D) {
-      canvas3D.style.opacity = opacity3D;
-      canvas3D.style.display = opacity3D === 0 ? 'none' : 'block';
+      canvas3D.style.opacity = 0;
+      canvas3D.style.display = 'none';
     }
 
-    // Ambient Particles Canvas (Visible across all sections, softer in content)
-    const opacityAmbient = Math.max(0.26, 0.52 - (scrollY / fadeHeight) * 0.26);
+    // Ambient Particles Canvas (Disabled)
     const canvasAmbient = document.getElementById('rabto-ambient-canvas');
     if (canvasAmbient) {
-      canvasAmbient.style.opacity = opacityAmbient;
-      canvasAmbient.style.display = 'block'; // Always visible
+      canvasAmbient.style.opacity = 0;
+      canvasAmbient.style.display = 'none';
     }
     
-    // Grid Trail Canvas (Fades in as we scroll past the first page)
-    const opacityTrail = Math.min(1.0, scrollY / fadeHeight);
+    // Grid Trail Canvas (Only visible on the first page / hero section, fades on scroll)
+    const opacityTrail = Math.max(0, 0.45 - (scrollY / fadeHeight) * 0.45);
     const canvasTrail = document.getElementById('grid-trail-canvas');
     if (canvasTrail) {
       canvasTrail.style.opacity = opacityTrail;
@@ -238,11 +236,11 @@
 
     new p5((p) => {
       const CELL_SIZE = 40;
-      const COLOR_R = 79;
-      const COLOR_G = 38;
-      const COLOR_B = 233;
+      const COLOR_R = 226;
+      const COLOR_G = 0;
+      const COLOR_B = 1;
       const STARTING_ALPHA = 200;
-      const BACKGROUND_COLOR = [5, 5, 7]; // matching body dark theme #050507
+      const BACKGROUND_COLOR = [255, 255, 255];
       const PROB_OF_NEIGHBOR = 0.5;
       const AMT_FADE_PER_FRAME = 5;
 
@@ -373,8 +371,8 @@
   }
 
   // Load libraries and initialize
-  loadThreeJS(init3DScene);
-  // loadP5JS(initGridTrailScene); // Disabled grid trail for premium monochrome look
+  // loadThreeJS(init3DScene); // Disabled 3D scene to use only grid trail
+  loadP5JS(initGridTrailScene); // Enabled grid trail animation
 
   // Setup scroll opacity listener
   window.addEventListener('scroll', updateCanvasOpacities);

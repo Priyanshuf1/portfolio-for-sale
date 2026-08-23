@@ -144,7 +144,7 @@
     .glb-star-rating label:hover,
     .glb-star-rating label:hover ~ label,
     .glb-star-rating input:checked ~ label {
-      color: #FFC72C;
+      color: #e20001;
     }
 
     .glb-form-group {

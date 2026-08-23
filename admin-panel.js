@@ -484,7 +484,7 @@
           if (rev.status === 'pending') {
             pendingHtml += `
               <div class="glb-pending-review" id="review-${key}">
-                <p><strong>${rev.author || 'Anonymous'}</strong> &nbsp;•&nbsp; <span style="color:#FFC72C">${stars}</span> (${rev.rating || 5}/5)</p>
+                <p><strong>${rev.author || 'Anonymous'}</strong> &nbsp;•&nbsp; <span style="color:#e20001">${stars}</span> (${rev.rating || 5}/5)</p>
                 <p>"${rev.text}"</p>
                 <div class="glb-review-action-btns">
                   <button class="glb-approve-btn" onclick="window.approveReview('${key}')">✓ Approve & Make Live</button>
@@ -495,7 +495,7 @@
           } else {
             approvedHtml += `
               <div class="glb-pending-review" id="review-${key}">
-                <p><strong>${rev.author || 'Anonymous'}</strong> &nbsp;•&nbsp; <span style="color:#FFC72C">${stars}</span> (Live)</p>
+                <p><strong>${rev.author || 'Anonymous'}</strong> &nbsp;•&nbsp; <span style="color:#e20001">${stars}</span> (Live)</p>
                 <p>"${rev.text}"</p>
                 <div class="glb-review-action-btns">
                   <button class="glb-delete-btn" onclick="window.deleteReview('${key}')">🗑 Delete Review</button>

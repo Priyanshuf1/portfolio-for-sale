@@ -18,7 +18,7 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       pointer-events: none;
-      background: radial-gradient(550px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 199, 44, 0.18), transparent 45%);
+      background: radial-gradient(550px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(226, 0, 1, 0.18), transparent 45%);
       border-radius: inherit;
       z-index: 3;
       opacity: 0;
@@ -30,8 +30,8 @@
     }
 
     .rabto-tilt-card:hover {
-      border-color: rgba(255, 199, 44, 0.5) !important;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 199, 44, 0.25) !important;
+      border-color: rgba(226, 0, 1, 0.5) !important;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(226, 0, 1, 0.25) !important;
     }
 
     /* ── Live Pulsing Radar Beacon Rings ── */
@@ -49,7 +49,7 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background: rgba(255, 199, 44, 0.4);
+      background: rgba(226, 0, 1, 0.4);
       animation: rabtoRadarPulse 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
       pointer-events: none;
     }
@@ -106,7 +106,7 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 2px;
-      background: linear-gradient(90deg, transparent, #FFC72C, #FFE066, #FFFFFF, transparent);
+      background: linear-gradient(90deg, transparent, #e20001, #ff3333, #FFFFFF, transparent);
       background-size: 200% 100%;
       animation: rabtoHeaderGlow 6s linear infinite;
       pointer-events: none;

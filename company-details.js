@@ -12,7 +12,7 @@
     /* Why Choose Us Section */
     .glb-why-us-section {
       padding: 90px 5%;
-      border-top: 1px solid rgba(255, 199, 44, 0.15);
+      border-top: 1px solid rgba(226, 0, 1, 0.15);
     }
     .glb-why-us-inner {
       max-width: 1200px;
@@ -25,9 +25,9 @@
     .glb-why-us-badge {
       display: inline-block;
       padding: 5px 14px;
-      background: rgba(255, 199, 44, 0.1);
-      border: 1px solid rgba(255, 199, 44, 0.35);
-      color: #FFC72C;
+      background: rgba(226, 0, 1, 0.1);
+      border: 1px solid rgba(226, 0, 1, 0.35);
+      color: #e20001;
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 1px;
@@ -38,7 +38,7 @@
     .glb-why-us-header h2 {
       font-size: clamp(2rem, 4vw, 3rem);
       margin: 0 0 10px;
-      background: linear-gradient(180deg, #FFF2A3 0%, #FFC72C 50%, #D48806 100%);
+      background: linear-gradient(180deg, #ff9999 0%, #e20001 50%, #7f0001 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;
@@ -86,14 +86,14 @@
     }
     
     .glb-comparison-card.glm {
-      border: 1px solid rgba(255, 199, 44, 0.25);
-      background: rgba(255, 199, 44, 0.02);
-      box-shadow: inset 0 0 25px rgba(255, 199, 44, 0.03);
+      border: 1px solid rgba(226, 0, 1, 0.25);
+      background: rgba(226, 0, 1, 0.02);
+      box-shadow: inset 0 0 25px rgba(226, 0, 1, 0.03);
     }
     .glb-comparison-card.glm:hover {
-      border-color: rgba(255, 199, 44, 0.6);
-      background: rgba(255, 199, 44, 0.04);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(255, 199, 44, 0.08);
+      border-color: rgba(226, 0, 1, 0.6);
+      background: rgba(226, 0, 1, 0.04);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(226, 0, 1, 0.08);
     }
     
     .glb-comp-title {
@@ -105,7 +105,7 @@
       color: #aaa;
     }
     .glb-comparison-card.glm .glb-comp-title {
-      background: linear-gradient(180deg, #FFF2A3 0%, #FFC72C 100%);
+      background: linear-gradient(180deg, #ff9999 0%, #e20001 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -149,7 +149,7 @@
     /* Team Section */
     .glb-team-section {
       padding: 90px 5%;
-      border-top: 1px solid rgba(255, 199, 44, 0.15);
+      border-top: 1px solid rgba(226, 0, 1, 0.15);
     }
     .glb-team-inner {
       max-width: 1200px;
@@ -162,9 +162,9 @@
     .glb-team-badge {
       display: inline-block;
       padding: 5px 14px;
-      background: rgba(255, 199, 44, 0.1);
-      border: 1px solid rgba(255, 199, 44, 0.35);
-      color: #FFC72C;
+      background: rgba(226, 0, 1, 0.1);
+      border: 1px solid rgba(226, 0, 1, 0.35);
+      color: #e20001;
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 1px;
@@ -175,7 +175,7 @@
     .glb-team-header h2 {
       font-size: clamp(2rem, 4vw, 3rem);
       margin: 0 0 10px;
-      background: linear-gradient(180deg, #FFF2A3 0%, #FFC72C 50%, #D48806 100%);
+      background: linear-gradient(180deg, #ff9999 0%, #e20001 50%, #7f0001 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;
@@ -211,9 +211,9 @@
     }
     
     .glb-team-card:hover {
-      border-color: rgba(255, 199, 44, 0.45);
-      background: rgba(255, 199, 44, 0.02);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 199, 44, 0.1);
+      border-color: rgba(226, 0, 1, 0.45);
+      background: rgba(226, 0, 1, 0.02);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(226, 0, 1, 0.1);
       transform: translateY(-4px);
     }
     
@@ -227,11 +227,11 @@
       justify-content: center;
       align-items: center;
       transition: all 0.35s ease;
-      background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,199,44,0.05));
+      background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(226, 0, 1,0.05));
     }
     .glb-team-card:hover .glb-team-img-wrap {
-      border-color: #FFC72C;
-      box-shadow: 0 0 20px rgba(255, 199, 44, 0.3);
+      border-color: #e20001;
+      box-shadow: 0 0 20px rgba(226, 0, 1, 0.3);
     }
     .glb-team-img {
       width: 100%;
@@ -256,7 +256,7 @@
     .glb-team-role {
       font-size: 12px;
       font-weight: 700;
-      color: #FFC72C;
+      color: #e20001;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
@@ -367,7 +367,7 @@
         "Agrima Gupta": "linear-gradient(135deg, #f12711, #f5af19)",
         "Aman": "linear-gradient(135deg, #11998e, #38ef7d)"
       };
-      const grad = gradients[member.name] || "linear-gradient(135deg, #FF1744, #FFC72C)";
+      const grad = gradients[member.name] || "linear-gradient(135deg, #e20001, #e20001)";
       
       const unsplashFallbacks = {
         "Durgesh Choudary": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=256&h=256",

@@ -159,7 +159,7 @@
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = `rgba(255, 199, 44, ${tetherAlpha})`;
+          ctx.strokeStyle = `rgba(226, 0, 1, ${tetherAlpha})`;
           ctx.lineWidth = 1.1;
           ctx.stroke();
         }

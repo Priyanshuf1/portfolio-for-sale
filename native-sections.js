@@ -120,7 +120,7 @@
       font-weight: 600;
     }
     .glb-review-stars {
-      color: #FFC72C;
+      color: #e20001;
       font-size: 16px;
       letter-spacing: 2px;
     }
