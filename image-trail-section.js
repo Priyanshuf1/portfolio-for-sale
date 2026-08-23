@@ -377,14 +377,14 @@
 
     <!-- LIGHTBOX / MODAL (Hidden by default) -->
     <div id="post-modal" class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
-        <button onclick="window.closeModal()" class="absolute top-10 right-10 text-white hover:rotate-90 transition-transform">
-            <i data-lucide="x" class="w-10 h-10"></i>
+        <button onclick="window.closeModal()" class="absolute top-10 right-10 text-white bg-white/10 hover:bg-white/20 border border-white/20 w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-all z-[110]" aria-label="Close">
+            <span style="font-size: 28px; font-weight: 300; font-family: system-ui, sans-serif; line-height: 1; margin-top: -2px;">&times;</span>
         </button>
-        <div class="max-w-5xl w-full grid md:grid-cols-2 bg-zinc-900 rounded-[30px] overflow-hidden">
+        <div id="modal-grid" class="max-w-5xl w-full grid md:grid-cols-2 bg-zinc-900 rounded-[30px] overflow-hidden transition-all duration-300">
             <div class="bg-black flex items-center justify-center">
                 <img id="modal-img" src="" class="max-h-[80vh] w-full object-contain">
             </div>
-            <div class="p-8 flex flex-col justify-between">
+            <div id="modal-sidebar" class="p-8 flex flex-col justify-between bg-zinc-900">
                 <div>
                     <div class="flex items-center gap-3 mb-6">
                         <img src="./logo.png" class="w-10 h-10 rounded-full">
@@ -414,17 +414,36 @@
     const modalImg = document.getElementById('modal-img');
     const modalCaption = document.getElementById('modal-caption');
     const modalLink = document.getElementById('modal-link');
+    const modalGrid = document.getElementById('modal-grid');
+    const modalSidebar = document.getElementById('modal-sidebar');
 
     window.glmShowLightbox = function(imgSrc, caption, link) {
       modalImg.src = imgSrc;
-      modalCaption.innerText = caption || "Global Logic Media Creative Content";
-      if (link) {
-        modalLink.href = link;
-        modalLink.style.display = 'flex';
+      
+      if (!caption && !link) {
+        // It's a marquee recent work proof image - NOT an instagram post
+        if (modalSidebar) modalSidebar.style.display = 'none';
+        if (modalGrid) {
+          modalGrid.classList.remove('md:grid-cols-2');
+          modalGrid.classList.add('max-w-3xl'); // Center and size down the image card
+        }
       } else {
-        modalLink.href = "https://www.instagram.com/globallogicmedia/";
-        modalLink.style.display = 'flex';
+        // It's an instagram bento feed item
+        if (modalSidebar) modalSidebar.style.display = 'flex';
+        if (modalGrid) {
+          modalGrid.classList.add('md:grid-cols-2');
+          modalGrid.classList.remove('max-w-3xl');
+        }
+        modalCaption.innerText = caption || "Global Logic Media Creative Content";
+        if (link) {
+          modalLink.href = link;
+          modalLink.style.display = 'flex';
+        } else {
+          modalLink.href = "https://www.instagram.com/globallogicmedia/";
+          modalLink.style.display = 'flex';
+        }
       }
+      
       modal.classList.remove('hidden');
       setTimeout(() => modal.classList.add('opacity-100'), 10);
       document.body.style.overflow = 'hidden';

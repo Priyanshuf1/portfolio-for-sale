@@ -57,7 +57,7 @@
 
     /* Modal Content Box */
     .glb-modal-content {
-      background: linear-gradient(180deg, rgba(30,30,30,0.8) 0%, rgba(15,15,15,0.95) 100%);
+      background: linear-gradient(180deg, #1e1e1e 0%, #0f0f0f 100%) !important;
       border: 1px solid rgba(200, 200, 200, 0.15);
       border-radius: 24px;
       width: 90%;

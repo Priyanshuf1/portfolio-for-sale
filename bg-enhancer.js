@@ -44,8 +44,7 @@
     nav,
     section,
     section[class*="framer-"],
-    div[class*="framer-"],
-    div[class*="glb-"] {
+    div[class*="framer-"] {
       background-color: transparent !important;
       background: transparent !important;
       backdrop-filter: none !important;
