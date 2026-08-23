@@ -310,6 +310,12 @@
 
   const teamData = [
     {
+      name: "Ankur Verma",
+      role: "Founder",
+      image: "https://globallogicmedia.com/wp-content/uploads/2026/06/Ankur-Verma.png", // real profile image or fallback
+      desc: "Visionary founder of Global Logic Media, driving digital marketing excellence, growth strategies, and high-impact campaigns globally."
+    },
+    {
       name: "Durgesh Choudary",
       role: "Co-Founder & SEO Lead",
       image: "https://globallogicmedia.com/wp-content/uploads/2025/08/cropped-Untitled-design-2.png", // Fallback placeholder
@@ -362,6 +368,7 @@
     const teamCardsHtml = teamData.map(member => {
       const initials = member.name.split(' ').map(n => n.charAt(0)).join('').toUpperCase().substring(0, 2);
       const gradients = {
+        "Ankur Verma": "linear-gradient(135deg, #FF9900, #FF5E62)",
         "Durgesh Choudary": "linear-gradient(135deg, #FF416C, #FF4B2B)",
         "Vishal Kumar": "linear-gradient(135deg, #4776E6, #8E54E9)",
         "Agrima Gupta": "linear-gradient(135deg, #f12711, #f5af19)",
@@ -370,6 +377,7 @@
       const grad = gradients[member.name] || "linear-gradient(135deg, #e20001, #e20001)";
       
       const unsplashFallbacks = {
+        "Ankur Verma": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=256&h=256",
         "Durgesh Choudary": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=256&h=256",
         "Vishal Kumar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=256&h=256",
         "Agrima Gupta": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=256&h=256",

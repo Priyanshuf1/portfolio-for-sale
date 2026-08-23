@@ -100,6 +100,197 @@ console.error = function(...args) {
       padding: 20px 0 40px !important;
     }
   }
+
+  /* Horizontal Nav links tray on mobile devices */
+  /* Horizontal Nav links tray on mobile devices */
+  @media (max-width: 810px) {
+    /* Set fixed wrapper height to auto to fit logo + links tray */
+    .framer-11n6lfm-container {
+      height: auto !important;
+      min-height: 145px !important;
+      background: rgba(255, 255, 255, 0.96) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    }
+
+    /* Adjust header height and style */
+    header,
+    header[data-framer-name="Desktop"],
+    .framer-QWF25.framer-9hd2nx {
+      height: auto !important;
+      min-height: 145px !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+      padding: 8px 16px !important;
+      gap: 6px !important;
+      background: transparent !important;
+      overflow: visible !important;
+    }
+    
+    /* Re-layout header wrapper children */
+    .framer-1o2om4 {
+      width: 100% !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+    
+    .framer-h0ping {
+      width: 100% !important;
+      justify-content: center !important;
+      display: flex !important;
+      margin-top: 2px !important;
+    }
+    
+    /* Make horizontal links list scrollable with smooth touch momentum scroll */
+    nav[data-framer-name="nav links"] {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+      gap: 16px !important;
+      width: 100% !important;
+      max-width: 100vw !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+      padding: 6px 12px !important;
+      background: rgba(255, 255, 255, 0.8) !important;
+      border-radius: 20px !important;
+      border: none !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+      scrollbar-width: none !important;
+    }
+
+    nav[data-framer-name="nav links"]::-webkit-scrollbar {
+      display: none !important;
+    }
+    
+    /* Prevent elements inside scrollable nav from stretching/wrapping */
+    nav[data-framer-name="nav links"] > div {
+      flex: 0 0 auto !important;
+    }
+    
+    /* Adjust mobile text sizes inside active pills */
+    nav[data-framer-name="nav links"] a {
+      padding: 5px 10px !important;
+      font-size: 13px !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* Hide native menu trigger button so it doesn't float over our horizontal links tray */
+    div[data-framer-name="Menu Button"],
+    div[class*="menu-button"] {
+      display: none !important;
+    }
+  }
+
+  /* Style for mini skill cards / badges in Services section - Bold Brand Red Filled */
+  html body [data-framer-name="Services"] .framer-NIbMY,
+  html body .framer-NIbMY {
+    background: rgb(226, 0, 1) !important;
+    background-color: rgb(226, 0, 1) !important;
+    border: none !important;
+    border-radius: 20px !important;
+    padding: 8px 18px !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 10px rgba(226, 0, 1, 0.15) !important;
+  }
+
+  html body [data-framer-name="Services"] .framer-NIbMY *,
+  html body .framer-NIbMY * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    font-weight: 600 !important;
+  }
+
+  html body [data-framer-name="Services"] .framer-NIbMY:hover,
+  html body .framer-NIbMY:hover {
+    background: #111827 !important;
+    background-color: #111827 !important;
+    transform: translateY(-3px) scale(1.05) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  html body [data-framer-name="Services"] .framer-NIbMY:hover *,
+  html body .framer-NIbMY:hover * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
+
+  /* Premium filled layout for Stats Cards (framer-t9Edp) */
+  html body [data-framer-name="Services"] .framer-t9Edp,
+  html body .framer-t9Edp {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02) !important;
+    transition: all 0.3s ease !important;
+    padding: 14px 20px !important;
+  }
+  
+  html body [data-framer-name="Services"] .framer-t9Edp:hover,
+  html body .framer-t9Edp:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+    border-color: rgba(226, 0, 1, 0.2) !important;
+  }
+
+  /* Color stat numbers brand red */
+  html body [data-framer-name="Services"] .framer-18ouoo9,
+  html body [data-framer-name="Services"] .framer-18ouoo9 *,
+  html body .framer-18ouoo9,
+  html body .framer-18ouoo9 * {
+    color: rgb(226, 0, 1) !important;
+    -webkit-text-fill-color: rgb(226, 0, 1) !important;
+    background-color: transparent !important;
+    background: transparent !important;
+    font-weight: 800 !important;
+  }
+
+  /* Color description texts charcoal gray */
+  html body [data-framer-name="Services"] .framer-1lqu27a,
+  html body [data-framer-name="Services"] .framer-1lqu27a *,
+  html body [data-framer-name="Services"] .framer-i2bbrs,
+  html body [data-framer-name="Services"] .framer-i2bbrs *,
+  html body .framer-1lqu27a,
+  html body .framer-1lqu27a *,
+  html body .framer-i2bbrs,
+  html body .framer-i2bbrs * {
+    color: #374151 !important;
+    -webkit-text-fill-color: #374151 !important;
+    background-color: transparent !important;
+    background: transparent !important;
+  }
+
+  /* Fix text visibility inside dark services cards */
+  .framer-nSE2Y,
+  .framer-nSE2Y * {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
+  
+  .framer-nSE2Y p {
+    color: #d1d5db !important;
+    -webkit-text-fill-color: #d1d5db !important;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+  }
+
+  .framer-nSE2Y h1,
+  .framer-nSE2Y h2,
+  .framer-nSE2Y h3,
+  .framer-nSE2Y h4 {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-weight: 700 !important;
+  }
 </style>\n`;
 // Inject RIGHT AFTER <head> tag so it fires before ANY script runs and prevents FOUC
 html = html.replace('<head>', '<head>\n' + hideStyle);
@@ -130,9 +321,86 @@ if (!html.includes('skills-section.js')) html = html.replace('</body>', '<script
 if (!html.includes('global-logic-replacer.js')) html = html.replace('</body>', '<script src="./global-logic-replacer.js"></script>\n</body>');
 if (!html.includes('company-details.js')) html = html.replace('</body>', '<script src="./company-details.js"></script>\n</body>');
 if (!html.includes('three-bg.js')) html = html.replace('</body>', '<script src="./three-bg.js"></script>\n</body>');
-if (!html.includes('three-logo-interactive.js')) html = html.replace('</body>', '<script src="./three-logo-interactive.js"></script>\n</body>');
 if (!html.includes('image-trail-section.js')) html = html.replace('</body>', '<script src="./image-trail-section.js"></script>\n</body>');
 if (!html.includes('custom-cursor.js')) html = html.replace('</body>', '<script src="./custom-cursor.js"></script>\n</body>');
+
+const scrollSpyScript = `
+<script id="glb-scroll-spy-navbar">
+(function() {
+  const sections = [
+    { id: 'hero', name: 'Home' },
+    { id: 'about-me', name: 'About' },
+    { id: 'services', name: 'Services' },
+    { id: 'process', name: 'Services' },
+    { id: 'faq', name: 'Services' },
+    { id: 'contact', name: 'Contact us' }
+  ];
+
+  function updateActiveNav() {
+    const scrollY = window.scrollY || window.pageYOffset;
+    const viewportHeight = window.innerHeight;
+    const scrollBottom = scrollY + viewportHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    
+    let activeSectionName = 'Home';
+
+    if (scrollBottom >= docHeight - 120) {
+      activeSectionName = 'Contact us';
+    } else {
+      for (const section of sections) {
+        const el = document.getElementById(section.id) || document.querySelector(\`[data-framer-name="\${section.id}"]\`);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= viewportHeight * 0.45 && rect.bottom >= viewportHeight * 0.15) {
+            activeSectionName = section.name;
+          }
+        }
+      }
+    }
+
+    const navLinksContainer = document.querySelector('nav[data-framer-name="nav links"]');
+    if (navLinksContainer) {
+      const links = navLinksContainer.querySelectorAll('a');
+      links.forEach(a => {
+        const p = a.querySelector('p');
+        if (!p) return;
+        
+        const linkText = p.textContent.trim();
+        
+        if (linkText === activeSectionName) {
+          a.style.setProperty('background-color', 'rgb(226, 0, 1)', 'important');
+          a.style.setProperty('color', '#ffffff', 'important');
+          a.style.setProperty('border-radius', '20px', 'important');
+          a.style.setProperty('padding', '6px 14px', 'important');
+          a.style.setProperty('font-weight', '700', 'important');
+          a.style.setProperty('transition', 'all 0.3s ease', 'important');
+          p.style.setProperty('color', '#ffffff', 'important');
+          p.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
+        } else {
+          a.style.setProperty('background-color', 'transparent', 'important');
+          a.style.setProperty('color', '#1f2937', 'important');
+          a.style.setProperty('border-radius', '0px', 'important');
+          a.style.setProperty('padding', '0px', 'important');
+          p.style.setProperty('color', '#1f2937', 'important');
+          p.style.setProperty('-webkit-text-fill-color', '#1f2937', 'important');
+        }
+      });
+    }
+  }
+
+  window.addEventListener('scroll', updateActiveNav);
+  window.addEventListener('resize', updateActiveNav);
+
+  const observer = new MutationObserver(updateActiveNav);
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  setTimeout(updateActiveNav, 500);
+})();
+</script>
+`;
+if (!html.includes('glb-scroll-spy-navbar')) {
+    html = html.replace('</body>', scrollSpyScript + '\n</body>');
+}
 
 // Inject Tailwind CSS safely without Preflight reset to prevent breaking Framer styles
 if (!html.includes('tailwindcss')) {

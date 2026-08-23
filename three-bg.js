@@ -267,12 +267,12 @@
           gyroControls: false,
           minHeight: 200.00,
           minWidth: 200.00,
-          scale: 1.00,
-          scaleMobile: 3.00,
-          color: 0xe20001,           // Brand Red color (#e20001)
+          scale: 3.50,               // Spacious grid for fewer lines (fewer lines)
+          scaleMobile: 5.50,         // Spacious grid on mobile
+          color: 0x4b5563,           // Premium Monochrome color (Charcoal #4b5563)
           backgroundColor: 0xffffff  // Solid White background
         });
-        console.log('[Vanta] ✅ Topology effect initialized successfully');
+        console.log('[Vanta] ✅ Topology monochrome lines initialized successfully');
         
         // Initial trigger for opacity setup
         updateCanvasOpacities();
