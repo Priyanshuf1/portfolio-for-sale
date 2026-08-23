@@ -99,7 +99,7 @@
     document.body.appendChild(canvas);
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x050507, 0.0018);
+    scene.fog = new THREE.FogExp2(0x050508, 0.0018);
 
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
     camera.position.z = 400;
@@ -274,8 +274,8 @@
         p.noFill();
         p.stroke(colorWithAlpha);
         p.strokeWeight(1);
-        numRows = Math.ceil(p.windowHeight / CELL_SIZE);
-        numCols = Math.ceil(p.windowWidth / CELL_SIZE);
+        numRows = Math.ceil(p.height / CELL_SIZE);
+        numCols = Math.ceil(p.width / CELL_SIZE);
 
         window.addEventListener('mousemove', (e) => {
           lastMouseX = e.clientX;
@@ -289,12 +289,12 @@
       };
 
       p.draw = () => {
-        p.background(BACKGROUND_COLOR[0], BACKGROUND_COLOR[1], BACKGROUND_COLOR[2]);
+        p.clear();
 
         let xCoord = lastMouseX;
         let yCoord = lastMouseY;
         
-        const isMobile = p.windowWidth < 768;
+        const isMobile = p.width < 768;
         if (isMobile) {
           virtualT += 0.015;
           xCoord = (p.width / 2) + Math.cos(virtualT * 0.7) * (p.width * 0.45);
@@ -305,6 +305,9 @@
             idleTimer++;
             if (idleTimer > 60) { // After 1 second of inactivity, fade out
               cursorAlpha = p.max(0, cursorAlpha - AMT_FADE_PER_FRAME);
+              if (cursorAlpha === 0) {
+                isMouseMoving = false;
+              }
             } else {
               cursorAlpha = STARTING_ALPHA;
             }
@@ -363,15 +366,15 @@
 
       p.windowResized = () => {
         p.resizeCanvas(p.windowWidth, p.windowHeight);
-        numRows = Math.ceil(p.windowHeight / CELL_SIZE);
-        numCols = Math.ceil(p.windowWidth / CELL_SIZE);
+        numRows = Math.ceil(p.height / CELL_SIZE);
+        numCols = Math.ceil(p.width / CELL_SIZE);
       };
     });
   }
 
   // Load libraries and initialize
   loadThreeJS(init3DScene);
-  loadP5JS(initGridTrailScene);
+  // loadP5JS(initGridTrailScene); // Disabled grid trail for premium monochrome look
 
   // Setup scroll opacity listener
   window.addEventListener('scroll', updateCanvasOpacities);

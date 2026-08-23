@@ -10,13 +10,13 @@
 
     /* ── Single Unified Website Background (Midnight Dark + Brand Red & Violet Glow) ── */
     html, body, html body, #main, [data-framer-root] {
-      background-color: #0A0E27 !important;
+      background-color: #050508 !important;
       background-image: 
-        radial-gradient(at 15% 10%, rgba(255, 199, 44, 0.28) 0px, transparent 50%),
-        radial-gradient(at 85% 15%, rgba(139, 92, 246, 0.28) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(255, 199, 44, 0.2) 0px, transparent 55%),
-        radial-gradient(at 85% 85%, rgba(139, 92, 246, 0.22) 0px, transparent 50%),
-        radial-gradient(at 15% 85%, rgba(16, 185, 129, 0.18) 0px, transparent 50%) !important;
+        radial-gradient(at 15% 10%, rgba(255, 255, 255, 0.04) 0px, transparent 50%),
+        radial-gradient(at 85% 15%, rgba(148, 163, 184, 0.03) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(255, 255, 255, 0.03) 0px, transparent 55%),
+        radial-gradient(at 85% 85%, rgba(148, 163, 184, 0.02) 0px, transparent 50%),
+        radial-gradient(at 15% 85%, rgba(255, 255, 255, 0.02) 0px, transparent 50%) !important;
       background-attachment: fixed !important;
       background-size: cover !important;
       color: #ffffff !important;
@@ -63,8 +63,8 @@
     .glb-footer,
     footer,
     [data-framer-name="Footer"] {
-      background-color: #0A0E27 !important;
-      background: #0A0E27 !important;
+      background-color: #050508 !important;
+      background: #050508 !important;
       border-top: 1px solid rgba(255, 199, 44, 0.35) !important;
       position: relative !important;
       z-index: 100 !important;

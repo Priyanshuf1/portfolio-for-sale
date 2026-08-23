@@ -7,9 +7,9 @@ const customCSS = `
   :root {
     --gold: #FFC72C;
     --gold-light: #FFE066;
-    --midnight: #0A0E27;
-    --midnight-mid: #131840;
-    --midnight-card: #1A2255;
+    --midnight: #050508;
+    --midnight-mid: #08080c;
+    --midnight-card: #0f0f13;
     --silver-liquid: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 45%, #94A3B8 100%);
   }
 

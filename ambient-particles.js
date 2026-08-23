@@ -47,12 +47,12 @@
   const particles = [];
   const maxDistance = 160;
 
-  // Brand Red (#FFC72C) & Metallic Accents Palette
+  // Luxury Monochrome Particles Palette
   const colors = [
-    { r: 255, g: 23,  b: 68  }, // Brand Red (#FFC72C)
-    { r: 255, g: 82,  b: 82  }, // Bright Ruby Red (#FF5252)
-    { r: 241, g: 239, b: 234 }, // Destinyland Cream (#F1EFEA)
-    { r: 139, g: 92,  b: 246 }  // Deep Violet (#8B5CF6)
+    { r: 255, g: 255, b: 255 }, // Pure White
+    { r: 226, g: 232, b: 240 }, // Slate 200 (Light Silver-Grey)
+    { r: 148, g: 163, b: 184 }, // Slate 400 (Medium Grey)
+    { r: 71,  g: 85,  b: 105 }  // Slate 600 (Dark Slate Grey)
   ];
 
   class ConstellationParticle {

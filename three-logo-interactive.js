@@ -139,12 +139,13 @@
       // Continuous time parameter
       autoRotateAngle += 0.008;
       
-      // Constant slow rotation + mouse tilt
-      logoCard.rotation.x = mouse.y + Math.sin(autoRotateAngle * 0.5) * 0.06;
-      logoCard.rotation.y = mouse.x + autoRotateAngle * 0.25; // Slow continuous rotation on Y
+      // Constant gentle tilt hover
+      logoCard.rotation.x = mouse.y + Math.sin(autoRotateAngle * 0.5) * 0.03;
+      logoCard.rotation.y = mouse.x + Math.cos(autoRotateAngle * 0.3) * 0.05;
+      logoCard.rotation.z = 0; // Lock Z rotation to keep the logo right side up
       
       // Constant gentle floating hover animation on Y
-      logoCard.position.y = Math.sin(autoRotateAngle * 1.5) * 0.25;
+      logoCard.position.y = Math.sin(autoRotateAngle * 1.5) * 0.15;
     }
     
     renderer.render(scene, camera);
