@@ -137,6 +137,13 @@
       background: radial-gradient(circle 350px at var(--mouse-x, -1000px) var(--mouse-y, -1000px), rgba(255, 255, 255, 0.06), transparent 80%);
       transition: background 0.05s ease;
     }
+
+    /* Hide redundant Book a Free Call CTA buttons */
+    [data-framer-name="process"] [data-framer-name="buttons"],
+    [data-framer-name="FAQ's"] .framer-4y99x1-container,
+    [data-framer-name="faq"] .framer-4y99x1-container {
+      display: none !important;
+    }
   `;
 
   const styleEl = document.createElement('style');
@@ -166,14 +173,41 @@
     });
   }
 
+  // Intercept all "Book a Call" buttons to trigger the local modal
+  function patchBookACallLinks() {
+    const elements = document.querySelectorAll('a, button');
+    elements.forEach(el => {
+      const text = (el.textContent || '').trim().toLowerCase();
+      if (text.includes('book') && text.includes('call')) {
+        if (!el.dataset.patchedGlbCall) {
+          el.dataset.patchedGlbCall = 'true';
+          el.setAttribute('href', 'javascript:void(0)');
+          el.removeAttribute('target');
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof window.openBookACallModal === 'function') {
+              window.openBookACallModal();
+            }
+          });
+        }
+      }
+    });
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       resetHeroCloudFilter();
       initMonochromeSpotlight();
+      patchBookACallLinks();
     });
   } else {
     resetHeroCloudFilter();
     initMonochromeSpotlight();
+    patchBookACallLinks();
   }
-  setInterval(resetHeroCloudFilter, 500);
+  setInterval(() => {
+    resetHeroCloudFilter();
+    patchBookACallLinks();
+  }, 500);
 })();
