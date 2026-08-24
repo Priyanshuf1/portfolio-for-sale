@@ -12,6 +12,10 @@ html = html.replace('<script src="./blog-section.js"></script>\n', '');
 html = html.replace(/<style>[\s\S]*?\/\* Hide old testimonials section \*\/[\s\S]*?<\/style>/gi, '');
 
 const hideStyle = `
+<!-- Cache Control Meta Tags to Prevent Stale/Old Commit Flashes -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <script id="debug-error-catcher">
 window.__pageErrors = [];
 window.addEventListener('error', function(e) {
@@ -558,3 +562,5 @@ console.log('Appended firebase-init and native sections to index.html');
 
 require('./patch-webflow-expandable-cards.js');
 require('./patch-three-cards-logo.js');
+require('./patch-section-images.js');
+
