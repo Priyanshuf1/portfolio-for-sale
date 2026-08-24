@@ -66,19 +66,19 @@
       transform: scale(1.08);
     }
     
-    /* Premium Shiny silver monochrome color treatment for moving logos */
+    /* Premium Clean moving logos with opacity hover styling */
     .glm-brand-logo-item img {
       height: 34px;
       width: auto;
       max-width: 130px;
       object-fit: contain;
       display: block;
-      mix-blend-mode: multiply;
-      filter: grayscale(1) brightness(0.22) contrast(1.7) opacity(0.85) !important;
-      transition: filter 0.3s ease, opacity 0.3s ease;
+      filter: none !important;
+      opacity: 0.65 !important;
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
     .glm-brand-logo-item:hover img {
-      filter: grayscale(0) brightness(1) contrast(1) opacity(1) !important;
+      opacity: 1 !important;
     }
 
     /* Disable grayscale filter in About section to let the logo show in true colors */
