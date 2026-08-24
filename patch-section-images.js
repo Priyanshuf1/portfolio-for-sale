@@ -15,18 +15,24 @@ filesToPatch.forEach(relPath => {
 
   let content = fs.readFileSync(filePath, 'utf8');
 
-  // 1. FAQ (answers) Section Image: QqqmFNIdzb0HbOiMSHvqZXkwT7w -> faq_desk.jpg
-  content = content.replace(/https:\/\/framerusercontent\.com\/images\/QqqmFNIdzb0HbOiMSHvqZXkwT7w\.[a-zA-Z0-9_\-\?&=.]+/g, './faq_desk.jpg');
-  content = content.replace(/(?<=src="[^"]*)QqqmFNIdzb0HbOiMSHvqZXkwT7w\.png/g, 'faq_desk.jpg');
+  // FAQ
+  content = content.replace(/https:\/\/framerusercontent\.com\/images\/QqqmFNIdzb0HbOiMSHvqZXkwT7w\.[a-zA-Z0-9_\-\?&=.]+/g, './faq_graphics.jpg');
+  content = content.replace(/QqqmFNIdzb0HbOiMSHvqZXkwT7w\.png/g, 'faq_graphics.jpg');
+  content = content.replace(/\.\/faq_desk\.jpg/g, './faq_graphics.jpg');
+  content = content.replace(/\.\/faq_graphics\.jpg[a-zA-Z0-9_\-\?&=.;]*/g, './faq_graphics.jpg');
 
-  // 2. Process Section Image: djbcRHCD89IflJ1okJAa1J65cuM -> process_flow.png
-  content = content.replace(/https:\/\/framerusercontent\.com\/images\/djbcRHCD89IflJ1okJAa1J65cuM\.[a-zA-Z0-9_\-\?&=.]+/g, './process_flow.png');
-  content = content.replace(/(?<=src="[^"]*)djbcRHCD89IflJ1okJAa1J65cuM\.png/g, 'process_flow.png');
+  // Process
+  content = content.replace(/https:\/\/framerusercontent\.com\/images\/djbcRHCD89IflJ1okJAa1J65cuM\.[a-zA-Z0-9_\-\?&=.]+/g, './process_graphics.jpg');
+  content = content.replace(/djbcRHCD89IflJ1okJAa1J65cuM\.png/g, 'process_graphics.jpg');
+  content = content.replace(/\.\/process_flow\.png/g, './process_graphics.jpg');
+  content = content.replace(/\.\/process_graphics\.jpg[a-zA-Z0-9_\-\?&=.;]*/g, './process_graphics.jpg');
 
-  // 3. Services Section Image: p6Im6dfknHAI0ig4NqDcO4WNpc -> services_tablet.png
-  content = content.replace(/https:\/\/framerusercontent\.com\/images\/p6Im6dfknHAI0ig4NqDcO4WNpc\.[a-zA-Z0-9_\-\?&=.]+/g, './services_tablet.png');
-  content = content.replace(/(?<=src="[^"]*)p6Im6dfknHAI0ig4NqDcO4WNpc\.jpg/g, 'services_tablet.png');
+  // Services
+  content = content.replace(/https:\/\/framerusercontent\.com\/images\/p6Im6dfknHAI0ig4NqDcO4WNpc\.[a-zA-Z0-9_\-\?&=.]+/g, './services_graphics.jpg');
+  content = content.replace(/p6Im6dfknHAI0ig4NqDcO4WNpc\.jpg/g, 'services_graphics.jpg');
+  content = content.replace(/\.\/services_tablet\.png/g, './services_graphics.jpg');
+  content = content.replace(/\.\/services_graphics\.jpg[a-zA-Z0-9_\-\?&=.;]*/g, './services_graphics.jpg');
 
   fs.writeFileSync(filePath, content);
-  console.log(`Updated section images in: ${relPath}`);
+  console.log(`Updated section images to clean 3D graphics paths in: ${relPath}`);
 });

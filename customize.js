@@ -37,15 +37,26 @@ const customCSS = `
     transform: none !important;
   }
 
-  /* Prevent cropping on swapped client section images */
-  img[src*="process_flow.png"],
-  img[src*="faq_desk.jpg"],
-  img[src*="services_tablet.png"] {
-    object-fit: contain !important;
-    background-color: #ffffff !important;
+  /* Premium Hover lift, shadow, and scale for generated 3D section graphics */
+  img[src*="process_graphics.jpg"],
+  img[src*="faq_graphics.jpg"],
+  img[src*="services_graphics.jpg"] {
+    object-fit: cover !important;
     border-radius: 16px !important;
-    padding: 8px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04), 0 1px 8px rgba(0,0,0,0.02) !important;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    padding: 0 !important;
     box-sizing: border-box !important;
+  }
+  img[src*="process_graphics.jpg"] { background-color: transparent !important; }
+  img[src*="faq_graphics.jpg"] { background-color: transparent !important; }
+  img[src*="services_graphics.jpg"] { background-color: transparent !important; }
+  
+  img[src*="process_graphics.jpg"]:hover,
+  img[src*="faq_graphics.jpg"]:hover,
+  img[src*="services_graphics.jpg"]:hover {
+    transform: scale(1.025) translateY(-4px) !important;
+    box-shadow: 0 20px 40px rgba(226, 0, 1, 0.08), 0 1px 12px rgba(226, 0, 1, 0.04) !important;
   }
 
   /* Crisp Slate for Headings & Clean Brand Red for Highlights */

@@ -74,7 +74,7 @@
       object-fit: contain;
       display: block;
       mix-blend-mode: multiply;
-      filter: grayscale(1) brightness(1.6) contrast(1.3) opacity(0.9) !important;
+      filter: grayscale(1) brightness(0.22) contrast(1.7) opacity(0.85) !important;
       transition: filter 0.3s ease, opacity 0.3s ease;
     }
     .glm-brand-logo-item:hover img {
@@ -164,21 +164,8 @@
           <svg viewBox="0 0 100 100" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 1; transform: translateZ(-20px);">
             <circle cx="50" cy="50" r="47" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="8 6" class="glm-rotating-ring-element" style="transform-origin: center; stroke: #fbbf24 !important; fill: none !important;"></circle>
           </svg>
-          <!-- GLM Vector Logo (3D depth: translateZ(25px)) -->
-          <svg viewBox="0 0 340 120" style="width: 85%; height: 85%; z-index: 2; overflow: visible; transform: translateZ(25px); filter: drop-shadow(0 15px 25px rgba(0,0,0,0.06));">
-            <g>
-              <!-- Red logo triangle outline -->
-              <path d="M 90 30 L 15 10 L 15 110 L 90 90 Z" fill="none" stroke="#e20001" stroke-width="12" stroke-linejoin="miter" stroke-linecap="butt" style="stroke: #e20001 !important; fill: none !important;"></path>
-              <!-- Red play symbol -->
-              <polygon points="40,40 75,60 40,80" fill="#e20001" style="fill: #e20001 !important;"></polygon>
-            </g>
-            <!-- Logo Text: Black -->
-            <g fill="#111827" font-family="Inter, sans-serif" font-weight="900" font-size="34" letter-spacing="-0.5" style="fill: #111827 !important;">
-              <text x="110" y="42" style="fill: #111827 !important;">GLOBAL</text>
-              <text x="110" y="76" style="fill: #111827 !important;">LOGIC</text>
-              <text x="110" y="110" style="fill: #111827 !important;">MEDIA</text>
-            </g>
-          </svg>
+          <!-- Real logo.png image (3D depth: translateZ(25px)) -->
+          <img src="./logo.png" style="width: 85%; height: auto; z-index: 2; transform: translateZ(25px); filter: drop-shadow(0 15px 25px rgba(0,0,0,0.06)); object-fit: contain;">
         </div>
       </div>
     `;
