@@ -264,10 +264,11 @@
         <div class="glb-admin-dashboard" id="glbAdminDashboard">
           <div class="glb-admin-title">Admin Dashboard</div>
 
-          <div class="glb-admin-tabs">
-            <div class="glb-admin-tab active" data-tab="blog">📝 Publish Blog</div>
-            <div class="glb-admin-tab" data-tab="reviews">⭐ Manage Reviews</div>
-            <div class="glb-admin-tab" data-tab="instagram">📷 Instagram API</div>
+          <div class="glb-admin-tabs" style="display: flex; gap: 4px; overflow-x: auto;">
+            <div class="glb-admin-tab active" data-tab="blog">📝 Blog</div>
+            <div class="glb-admin-tab" data-tab="reviews">⭐ Reviews</div>
+            <div class="glb-admin-tab" data-tab="bookings">📞 Bookings</div>
+            <div class="glb-admin-tab" data-tab="instagram">📷 Insta API</div>
           </div>
 
           <div class="glb-tab-content active" id="tab-blog">
@@ -300,6 +301,12 @@
           <div class="glb-tab-content" id="tab-reviews">
             <div id="glbPendingReviewsList">
               <p style="color:#888; text-align:center; padding:20px 0;">Loading reviews...</p>
+            </div>
+          </div>
+
+          <div class="glb-tab-content" id="tab-bookings">
+            <div id="glbBookingsList">
+              <p style="color:#888; text-align:center; padding:20px 0;">Loading bookings...</p>
             </div>
           </div>
 
@@ -426,6 +433,7 @@
       tab.classList.add('active');
       document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
       if (tab.dataset.tab === 'reviews') fetchAllReviewsForAdmin();
+      if (tab.dataset.tab === 'bookings') fetchAllBookingsForAdmin();
       if (tab.dataset.tab === 'instagram') loadInstagramTokenForAdmin();
     });
   });
@@ -645,6 +653,90 @@
       }
     });
   }
+
+  // --- Bookings Management ---
+  async function fetchAllBookingsForAdmin() {
+    const list = document.getElementById('glbBookingsList');
+    if (!list) return;
+    list.innerHTML = '<p style="color:#888; text-align:center; padding:20px 0;">Loading bookings...</p>';
+    
+    let bookings = [];
+    
+    // Load from LocalStorage first as offline fallback
+    try {
+      const local = JSON.parse(localStorage.getItem('glb_bookings')) || [];
+      bookings = [...local];
+    } catch(e) {
+      console.error(e);
+    }
+    
+    if (window.firebaseDB) {
+      try {
+        const snapshot = await window.firebaseDB.ref("bookings").once('value');
+        if (snapshot.exists()) {
+          const fbBookings = [];
+          snapshot.forEach(childSnapshot => {
+            fbBookings.push({
+              key: childSnapshot.key,
+              ...childSnapshot.val()
+            });
+          });
+          // Merge and sort
+          bookings = [...fbBookings, ...bookings.filter(lb => !fbBookings.some(fb => fb.email === lb.email && fb.phone === lb.phone))];
+        }
+      } catch (e) {
+        console.error("Firebase read error:", e);
+      }
+    }
+    
+    // Sort bookings by createdAt descending
+    bookings.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    
+    if (bookings.length === 0) {
+      list.innerHTML = '<p style="color:#888; text-align:center; padding:20px 0;">No bookings received yet.</p>';
+      return;
+    }
+    
+    let bookingsHtml = '';
+    bookings.forEach(b => {
+      const dateStr = b.createdAt ? new Date(b.createdAt).toLocaleString() : 'N/A';
+      const deleteAction = b.key ? `window.deleteBooking('${b.key}')` : `window.deleteLocalBooking('${b.email}')`;
+      bookingsHtml += `
+        <div class="glb-pending-review" id="booking-${b.key || b.email.replace(/[@\.]/g, '')}">
+          <p style="margin:0 0 8px; font-size:15px;"><strong>📞 ${b.name || 'Client'}</strong> &nbsp;•&nbsp; <span style="color:#888; font-size:12px;">${dateStr}</span></p>
+          <p style="margin:4px 0; font-size:14px;">📧 Email: <a href="mailto:${b.email}" style="color:#4ade80; text-decoration:underline;">${b.email}</a></p>
+          <p style="margin:4px 0; font-size:14px;">📱 Phone: <a href="tel:${b.phone}" style="color:#4ade80; text-decoration:underline;">${b.phone}</a></p>
+          <p style="margin:10px 0 4px; font-size:14px; color:#ddd; font-style:italic;">"${b.businessDetails || 'No details provided'}"</p>
+          <div class="glb-review-action-btns">
+            <button class="glb-delete-btn" onclick="${deleteAction}">🗑 Mark as Contacted / Delete</button>
+          </div>
+        </div>
+      `;
+    });
+    
+    list.innerHTML = bookingsHtml;
+  }
+
+  window.deleteBooking = async function(key) {
+    if (!window.firebaseDB) return;
+    if (!confirm("Are you sure you want to delete this booking record?")) return;
+    try {
+      await window.firebaseDB.ref("bookings/" + key).remove();
+      alert("✅ Booking record deleted.");
+      fetchAllBookingsForAdmin();
+    } catch(e) {
+      alert("Error: " + e.message);
+    }
+  };
+
+  window.deleteLocalBooking = function(email) {
+    if (!confirm("Are you sure you want to delete this local booking record?")) return;
+    let local = JSON.parse(localStorage.getItem('glb_bookings')) || [];
+    local = local.filter(b => b.email !== email);
+    localStorage.setItem('glb_bookings', JSON.stringify(local));
+    alert("✅ Local booking record deleted.");
+    fetchAllBookingsForAdmin();
+  };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', addAdminNavButton);

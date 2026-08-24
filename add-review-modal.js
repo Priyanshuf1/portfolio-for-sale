@@ -324,7 +324,18 @@
         }, 3000);
       } catch (error) {
         console.error("Error adding document: ", error);
-        alert("Database Error: " + error.message);
+        const errorDiv = document.createElement('div');
+        errorDiv.id = 'glbReviewErrorMsg';
+        errorDiv.style.color = '#f87171';
+        errorDiv.style.marginTop = '10px';
+        errorDiv.style.textAlign = 'center';
+        errorDiv.style.fontSize = '14px';
+        errorDiv.textContent = "Error: " + error.message;
+        
+        const existing = form.querySelector('#glbReviewErrorMsg');
+        if (existing) existing.remove();
+        form.appendChild(errorDiv);
+        setTimeout(() => errorDiv.remove(), 5000);
       } finally {
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;

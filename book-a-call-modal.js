@@ -185,25 +185,36 @@
       <div class="glb-modal-content-book">
         <div class="glb-modal-close-book" id="glbCloseBook">✕</div>
         
-        <div class="glb-modal-book-subtitle">Let's Talk</div>
-        <div class="glb-modal-book-title">Book a Call With Us</div>
-        <div style="color: #999; margin-bottom: 24px; font-size: 15px;">Schedule a free consultation with our experts to discuss your digital marketing needs.</div>
-        
-        <form id="glbBookForm" onsubmit="event.preventDefault(); alert('Request submitted! We will contact you shortly.'); document.getElementById('glbCloseBook').click();">
-          <div class="glb-form-group">
-            <input type="text" placeholder="Your Name" required>
-          </div>
-          <div class="glb-form-group">
-            <input type="email" placeholder="Email Address" required>
-          </div>
-          <div class="glb-form-group">
-            <input type="tel" placeholder="Phone Number" required>
-          </div>
-          <div class="glb-form-group">
-            <textarea placeholder="Tell us about your business..." rows="4"></textarea>
-          </div>
-          <button type="submit" class="glb-modal-book-btn">Schedule Call</button>
-        </form>
+        <div id="glbBookFormContainer">
+          <div class="glb-modal-book-subtitle">Let's Talk</div>
+          <div class="glb-modal-book-title">Book a Call With Us</div>
+          <div style="color: #999; margin-bottom: 24px; font-size: 15px;">Schedule a free consultation with our experts to discuss your digital marketing needs.</div>
+          
+          <form id="glbBookForm">
+            <div class="glb-form-group">
+              <input type="text" placeholder="Your Name" required>
+            </div>
+            <div class="glb-form-group">
+              <input type="email" placeholder="Email Address" required>
+            </div>
+            <div class="glb-form-group">
+              <input type="tel" placeholder="Phone Number" required>
+            </div>
+            <div class="glb-form-group">
+              <textarea placeholder="Tell us about your business..." rows="4"></textarea>
+            </div>
+            <button type="submit" class="glb-modal-book-btn">Schedule Call</button>
+          </form>
+        </div>
+
+        <div id="glbBookSuccess" style="display: none; text-align: center; padding: 20px 0;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin: 0 auto 16px; display: block;">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <div class="glb-modal-book-title" style="background: none; -webkit-text-fill-color: #4ade80; color: #4ade80 !important; font-size: 24px; text-shadow: none;">Thank You!</div>
+            <div style="color: #999; font-size: 15px; margin-top: 8px;">Your booking request was submitted successfully!</div>
+        </div>
       </div>
     </div>
   `;
@@ -216,9 +227,16 @@
   const overlay = document.getElementById('glbOverlayBook');
   const closeBtn = document.getElementById('glbCloseBook');
   const form = document.getElementById('glbBookForm');
+  const formContainer = document.getElementById('glbBookFormContainer');
+  const successMsg = document.getElementById('glbBookSuccess');
 
   function openModal() {
     overlay.classList.add('active');
+    formContainer.style.display = 'block';
+    successMsg.style.display = 'none';
+    form.reset();
+    const existingErr = form.querySelector('#glbBookErrorMsg');
+    if (existingErr) existingErr.remove();
   }
 
   function closeModal() {
@@ -250,10 +268,14 @@
 
       if (window.firebaseDB) {
         const addPromise = window.firebaseDB.ref("bookings").push(formData);
-        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout: Database connection failed. Please ensure you clicked 'Create Database' in Firebase Realtime Database.")), 8000));
+        const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout: Database connection failed.")), 8000));
         await Promise.race([addPromise, timeoutPromise]);
       } else {
         console.error("Firebase not loaded");
+        // Localstorage fallback
+        let bookings = JSON.parse(localStorage.getItem('glb_bookings')) || [];
+        bookings.unshift({...formData, createdAt: Date.now()});
+        localStorage.setItem('glb_bookings', JSON.stringify(bookings));
       }
 
       formContainer.style.display = 'none';
@@ -263,7 +285,18 @@
       }, 3000);
     } catch (error) {
       console.error("Error adding document: ", error);
-      alert("Database Error: " + error.message);
+      const errorDiv = document.createElement('div');
+      errorDiv.id = 'glbBookErrorMsg';
+      errorDiv.style.color = '#f87171';
+      errorDiv.style.marginTop = '10px';
+      errorDiv.style.textAlign = 'center';
+      errorDiv.style.fontSize = '14px';
+      errorDiv.textContent = "Error: " + error.message;
+      
+      const existing = form.querySelector('#glbBookErrorMsg');
+      if (existing) existing.remove();
+      form.appendChild(errorDiv);
+      setTimeout(() => errorDiv.remove(), 5000);
     } finally {
       submitBtn.textContent = originalText;
       submitBtn.disabled = false;
