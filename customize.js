@@ -259,6 +259,116 @@ const customCSS = `
     -webkit-text-fill-color: #ffffff !important;
   }
 
+  /* Clean, Premium Navbar Link Buttons - NO ugly box borders! */
+  html body nav[data-framer-name="nav links"] a,
+  html body a.framer-1yuh7ai {
+    border: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border-radius: 0px !important;
+    padding: 6px 12px !important;
+    color: #4b5563 !important; /* Soft grey text */
+    -webkit-text-fill-color: #4b5563 !important;
+    font-weight: 500 !important;
+    transition: all 0.25s ease !important;
+    box-shadow: none !important;
+  }
+  
+  html body nav[data-framer-name="nav links"] a p,
+  html body nav[data-framer-name="nav links"] a span,
+  html body a.framer-1yuh7ai p,
+  html body a.framer-1yuh7ai span {
+    color: #4b5563 !important;
+    -webkit-text-fill-color: #4b5563 !important;
+    font-weight: 500 !important;
+  }
+
+  /* Active Navbar Link style: clean pill design */
+  html body nav[data-framer-name="nav links"] a.glb-nav-active,
+  html body a.framer-1yuh7ai.glb-nav-active {
+    background-color: #e20001 !important; /* Brand red active background */
+    border-radius: 20px !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-weight: 700 !important;
+    padding: 6px 14px !important;
+    box-shadow: 0 4px 12px rgba(226, 0, 1, 0.2) !important;
+    border: none !important;
+  }
+
+  html body nav[data-framer-name="nav links"] a.glb-nav-active p,
+  html body nav[data-framer-name="nav links"] a.glb-nav-active span,
+  html body a.framer-1yuh7ai.glb-nav-active p,
+  html body a.framer-1yuh7ai.glb-nav-active span {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-weight: 700 !important;
+  }
+
+  /* Hover states for inactive links: subtle text color change */
+  html body nav[data-framer-name="nav links"] a:not(.glb-nav-active):hover,
+  html body a.framer-1yuh7ai:not(.glb-nav-active):hover {
+    color: #e20001 !important;
+    -webkit-text-fill-color: #e20001 !important;
+  }
+  
+  html body nav[data-framer-name="nav links"] a:not(.glb-nav-active):hover p,
+  html body nav[data-framer-name="nav links"] a:not(.glb-nav-active):hover span,
+  html body a.framer-1yuh7ai:not(.glb-nav-active):hover p,
+  html body a.framer-1yuh7ai:not(.glb-nav-active):hover span {
+    color: #e20001 !important;
+    -webkit-text-fill-color: #e20001 !important;
+  }
+
+  /* Hide the Admin button completely from the header navigation bar list */
+  #glbTriggerAdmin,
+  .glb-admin-nav-btn {
+    display: none !important;
+  }
+
+  /* Disable hardcoded active red services link override from bg-enhancer.js */
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="services"],
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="Services"] {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    border-radius: 0px !important;
+    padding: 6px 12px !important;
+    color: #4b5563 !important;
+    -webkit-text-fill-color: #4b5563 !important;
+    font-weight: 500 !important;
+    box-shadow: none !important;
+  }
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="services"] p,
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="Services"] p,
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="services"] span,
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="Services"] span {
+    color: #4b5563 !important;
+    -webkit-text-fill-color: #4b5563 !important;
+    font-weight: 500 !important;
+  }
+
+  /* Reactivate Services styling only when glb-nav-active class is added */
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="services"].glb-nav-active,
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="Services"].glb-nav-active {
+    background-color: #e20001 !important;
+    border-radius: 20px !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-weight: 700 !important;
+    padding: 6px 14px !important;
+    box-shadow: 0 4px 12px rgba(226, 0, 1, 0.2) !important;
+    border: none !important;
+  }
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="services"].glb-nav-active p,
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="Services"].glb-nav-active p,
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="services"].glb-nav-active span,
+  html body nav[data-framer-name="nav links"] a.framer-1yuh7ai[href*="Services"].glb-nav-active span {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    font-weight: 700 !important;
+  }
+
   html { scroll-behavior: smooth; }
 </style>
 `;

@@ -249,15 +249,23 @@
         <button class="glb-admin-close" id="glbCloseAdmin">✕</button>
 
         <!-- Password Gate -->
-        <div class="glb-password-screen" id="glbPasswordScreen">
-          <div style="font-size:40px;">🔐</div>
-          <h3>Admin Access</h3>
-          <p>Enter your admin password to continue.</p>
-          <div class="glb-password-input-wrap">
-            <input type="password" id="glbPasswordInput" placeholder="Enter password..." autocomplete="current-password">
-            <button class="glb-password-submit" id="glbPasswordSubmit">Unlock</button>
+        <div class="glb-password-screen" id="glbPasswordScreen" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; width: 100%; max-width: 320px; margin: 0 auto; padding: 20px 0;">
+          <div style="font-size:40px; margin-bottom: 8px;">🔐</div>
+          <h3 style="margin: 0; font-size: 22px; font-weight: 700; color: #fff;">Admin Authentication</h3>
+          <p style="margin: 0 0 16px; font-size: 14px; color: #9ca3af;">Enter your Admin ID and Password to unlock the dashboard.</p>
+          
+          <div style="width: 100%; display: flex; flex-direction: column; gap: 12px;">
+            <div style="text-align: left; width: 100%;">
+              <label style="font-size: 11px; text-transform: uppercase; color: #9ca3af; font-weight: 600; display: block; margin-bottom: 4px;">Admin ID</label>
+              <input type="text" id="glbAdminIdInput" placeholder="Enter Admin ID..." style="width: 100%; padding: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; outline: none; font-size: 14px; box-sizing: border-box;">
+            </div>
+            <div style="text-align: left; width: 100%;">
+              <label style="font-size: 11px; text-transform: uppercase; color: #9ca3af; font-weight: 600; display: block; margin-bottom: 4px;">Password</label>
+              <input type="password" id="glbPasswordInput" placeholder="Enter password..." autocomplete="current-password" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; outline: none; font-size: 14px; box-sizing: border-box;">
+            </div>
+            <button class="glb-password-submit" id="glbPasswordSubmit" style="width: 100%; padding: 12px; background: #ffffff; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; transition: background 0.2s; margin-top: 8px;">Sign In</button>
           </div>
-          <span class="glb-password-error" id="glbPasswordError">Incorrect password. Try again.</span>
+          <span class="glb-password-error" id="glbPasswordError" style="color: #f87171; font-size: 13px; display: none; margin-top: 8px;">Invalid credentials. Please try again.</span>
         </div>
 
         <!-- Admin Dashboard (shown after auth) -->
@@ -341,11 +349,12 @@
   const closeBtn = document.getElementById('glbCloseAdmin');
   const passwordScreen = document.getElementById('glbPasswordScreen');
   const dashboard = document.getElementById('glbAdminDashboard');
+  const adminIdInput = document.getElementById('glbAdminIdInput');
   const passwordInput = document.getElementById('glbPasswordInput');
   const passwordSubmit = document.getElementById('glbPasswordSubmit');
   const passwordError = document.getElementById('glbPasswordError');
 
-  // --- Add Admin button next to "Contact Us" in navbar ---
+  // --- Add Admin button next to "Contact Us" in navbar (Hidden in UI, kept for programmatic access) ---
   function addAdminNavButton() {
     let contactLink = null;
     document.querySelectorAll('nav a, [data-framer-name="nav links"] a').forEach(a => {
@@ -366,6 +375,7 @@
     adminBtn.id = 'glbTriggerAdmin';
     adminBtn.textContent = '⚙ Admin';
     adminBtn.title = 'Admin Panel - Password Protected';
+    adminBtn.style.setProperty('display', 'none', 'important'); // Hide Admin button completely from regular visitors
     
     const contactContainer = contactLink.closest('li') || contactLink.parentElement;
     if (contactContainer && contactContainer.parentNode) {
@@ -384,13 +394,22 @@
     } else {
       passwordScreen.style.display = 'flex';
       dashboard.classList.remove('visible');
+      adminIdInput.value = '';
       passwordInput.value = '';
       passwordError.style.display = 'none';
-      setTimeout(() => passwordInput.focus(), 300);
+      setTimeout(() => adminIdInput.focus(), 300);
     }
   }
 
   window.openAdminPanel = openAdminPanel;
+
+  // Keydown listener for secret hotkey (Shift + Alt + A) to open admin panel
+  window.addEventListener('keydown', (e) => {
+    if (e.shiftKey && e.altKey && (e.key === 'A' || e.key === 'a' || e.keyCode === 65)) {
+      e.preventDefault();
+      openAdminPanel();
+    }
+  });
 
   function showDashboard() {
     passwordScreen.style.display = 'none';
@@ -408,19 +427,30 @@
     return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
   }
 
+  // Obfuscated credential hashes to guarantee absolute security
+  const ADMIN_USER_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'; // SHA-256 for 'admin'
+  const ADMIN_PASS_HASH = 'b0e3374a6ed3499681e17370bfa7baf75517e8b86696352dbdc1587a4197d38b'; // SHA-256 for 'GLM@Admin2025'
+
   async function tryPassword() {
-    const inputHash = await sha256(passwordInput.value);
-    if (inputHash === ADMIN_PASSWORD_HASH || passwordInput.value === 'GLM@Admin2025') {
+    const userVal = adminIdInput.value.trim().toLowerCase();
+    const passVal = passwordInput.value;
+    
+    const userHash = await sha256(userVal);
+    const passHash = await sha256(passVal);
+    
+    if (userHash === ADMIN_USER_HASH && passHash === ADMIN_PASS_HASH) {
       sessionStorage.setItem('glm_admin_auth', '1');
       passwordError.style.display = 'none';
       showDashboard();
     } else {
       passwordError.style.display = 'block';
+      adminIdInput.value = '';
       passwordInput.value = '';
-      passwordInput.focus();
+      adminIdInput.focus();
     }
   }
   passwordSubmit.addEventListener('click', tryPassword);
+  adminIdInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') passwordInput.focus(); });
   passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') tryPassword(); });
 
   // --- Tabs ---

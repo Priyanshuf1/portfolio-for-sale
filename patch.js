@@ -544,21 +544,9 @@ const scrollSpyScript = `
         const linkText = p.textContent.trim();
         
         if (linkText === activeSectionName) {
-          a.style.setProperty('background-color', 'rgb(226, 0, 1)', 'important');
-          a.style.setProperty('color', '#ffffff', 'important');
-          a.style.setProperty('border-radius', '20px', 'important');
-          a.style.setProperty('padding', '6px 14px', 'important');
-          a.style.setProperty('font-weight', '700', 'important');
-          a.style.setProperty('transition', 'all 0.3s ease', 'important');
-          p.style.setProperty('color', '#ffffff', 'important');
-          p.style.setProperty('-webkit-text-fill-color', '#ffffff', 'important');
+          a.classList.add('glb-nav-active');
         } else {
-          a.style.setProperty('background-color', 'transparent', 'important');
-          a.style.setProperty('color', '#1f2937', 'important');
-          a.style.setProperty('border-radius', '0px', 'important');
-          a.style.setProperty('padding', '0px', 'important');
-          p.style.setProperty('color', '#1f2937', 'important');
-          p.style.setProperty('-webkit-text-fill-color', '#1f2937', 'important');
+          a.classList.remove('glb-nav-active');
         }
       });
     }
@@ -574,7 +562,9 @@ const scrollSpyScript = `
 })();
 </script>
 `;
-if (!html.includes('glb-scroll-spy-navbar')) {
+if (html.includes('glb-scroll-spy-navbar')) {
+    html = html.replace(/<script id="glb-scroll-spy-navbar">[\s\S]*?<\/script>/gi, scrollSpyScript);
+} else {
     html = html.replace('</body>', scrollSpyScript + '\n</body>');
 }
 
