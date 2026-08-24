@@ -37,6 +37,17 @@ const customCSS = `
     transform: none !important;
   }
 
+  /* Prevent cropping on swapped client section images */
+  img[src*="process_flow.png"],
+  img[src*="faq_desk.jpg"],
+  img[src*="services_tablet.png"] {
+    object-fit: contain !important;
+    background-color: #ffffff !important;
+    border-radius: 16px !important;
+    padding: 8px !important;
+    box-sizing: border-box !important;
+  }
+
   /* Crisp Slate for Headings & Clean Brand Red for Highlights */
   h1, h2, h3, h1 *, h2 *, h3 * {
     background: none !important;

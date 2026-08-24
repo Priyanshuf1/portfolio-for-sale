@@ -1,4 +1,4 @@
-﻿/**
+/**
  * brand-logos-marquee.js
  * Replaces the Framer company logos strip with a CSS-animated marquee.
  * Wordmarks are styled in a premium dark silver grayscale mix-blend mode.
@@ -66,7 +66,7 @@
       transform: scale(1.08);
     }
     
-    /* Premium Dark silver monochrome color treatment for moving logos */
+    /* Premium Shiny silver monochrome color treatment for moving logos */
     .glm-brand-logo-item img {
       height: 34px;
       width: auto;
@@ -74,7 +74,7 @@
       object-fit: contain;
       display: block;
       mix-blend-mode: multiply;
-      filter: contrast(0.85) brightness(0.6) grayscale(1) opacity(0.7) !important;
+      filter: grayscale(1) brightness(1.6) contrast(1.3) opacity(0.9) !important;
       transition: filter 0.3s ease, opacity 0.3s ease;
     }
     .glm-brand-logo-item:hover img {

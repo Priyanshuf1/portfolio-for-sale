@@ -16,6 +16,25 @@ const hideStyle = `
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<script id="kill-service-workers">
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for (let registration of registrations) {
+        registration.unregister().then(function() {
+          console.log('Stale service worker unregistered!');
+          window.location.reload(true);
+        });
+      }
+    });
+  }
+  if ('caches' in window) {
+    caches.keys().then(function(names) {
+      for (let name of names) {
+        caches.delete(name);
+      }
+    });
+  }
+</script>
 <script id="debug-error-catcher">
 window.__pageErrors = [];
 window.addEventListener('error', function(e) {
@@ -68,6 +87,17 @@ console.error = function(...args) {
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
+  }
+
+  /* Prevent cropping on swapped client section images */
+  img[src*="process_flow.png"],
+  img[src*="faq_desk.jpg"],
+  img[src*="services_tablet.png"] {
+    object-fit: contain !important;
+    background-color: #ffffff !important;
+    border-radius: 16px !important;
+    padding: 8px !important;
+    box-sizing: border-box !important;
   }
 
   /* Instantly hide original template sections to prevent flash of unstyled content */
