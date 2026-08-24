@@ -1,8 +1,8 @@
 ﻿/**
  * brand-logos-marquee.js
  * Replaces the Framer company logos strip with a CSS-animated marquee.
- * wordmarks are styled in a premium silver grayscale mix-blend mode.
- * Replaces About section image with a flat rotating company logo mark + black text.
+ * Wordmarks are styled in a premium dark silver grayscale mix-blend mode.
+ * Replaces About section image with a 3D floating company logo card + rotating ring.
  */
 (function() {
 
@@ -66,7 +66,7 @@
       transform: scale(1.08);
     }
     
-    /* Silver-gray monochrome color treatment for moving logos */
+    /* Premium Dark silver monochrome color treatment for moving logos */
     .glm-brand-logo-item img {
       height: 34px;
       width: auto;
@@ -74,7 +74,7 @@
       object-fit: contain;
       display: block;
       mix-blend-mode: multiply;
-      filter: contrast(0.4) brightness(1.45) grayscale(1) opacity(0.55) !important;
+      filter: contrast(0.85) brightness(0.6) grayscale(1) opacity(0.7) !important;
       transition: filter 0.3s ease, opacity 0.3s ease;
     }
     .glm-brand-logo-item:hover img {
@@ -97,32 +97,6 @@
     }
     .glm-rotating-ring-element {
       animation: glmRingRotate 22s linear infinite !important;
-    }
-
-    /* 2D Flat Spin for the Logo mark (keeps it exact as in company logo) */
-    @keyframes glmLogoSpin2D {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-    .glm-spinning-logo-mark {
-      animation: glmLogoSpin2D 10s linear infinite !important;
-      transform-origin: 52px 60px !important;
-    }
-
-    /* Direct selector overrides for About section logo colors */
-    .glm-about-logo-container svg path {
-      stroke: #e20001 !important;
-      fill: none !important;
-    }
-    .glm-about-logo-container svg polygon {
-      fill: #e20001 !important;
-    }
-    .glm-about-logo-container svg circle {
-      stroke: #fbbf24 !important;
-      fill: none !important;
-    }
-    .glm-about-logo-container svg text {
-      fill: #111827 !important;
     }
   `;
   document.head.appendChild(style);
@@ -169,8 +143,136 @@
     if (framerContainer) framerContainer.style.setProperty('display', 'none', 'important');
   }
 
-  // ── 4. REPLACE ABOUT LOGO WITH LIVE ROTATING SVG ──────────────────────────
-  function replaceAboutLogoWithSVG() {
+  // ── 4. THREE.JS 3D ROTATING LOGO CARD ──────────────────────────────────────
+  let scene, camera, renderer, logoCard, canvas;
+  let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+  let scrollY = window.scrollY;
+  let isNear = false;
+  let autoRotateAngle = 0;
+
+  function loadThreeJS(callback) {
+    if (window.THREE) { callback(); return; }
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    script.onload = callback;
+    document.head.appendChild(script);
+  }
+
+  function init3DLogo(container) {
+    if (document.getElementById('glb-3d-logo-canvas')) return;
+    
+    // Create canvas
+    canvas = document.createElement('canvas');
+    canvas.id = 'glb-3d-logo-canvas';
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '5';
+    canvas.style.borderRadius = 'inherit';
+    canvas.style.pointerEvents = 'auto'; // Capture hover/pointer events
+    
+    container.appendChild(canvas);
+    
+    const width = container.clientWidth || 300;
+    const height = container.clientHeight || 450;
+    
+    scene = new THREE.Scene();
+    
+    camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    camera.position.z = 6.5;
+    
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
+    
+    // Load Logo Texture (using aspect ratio 4.8 x 1.7)
+    const textureLoader = new THREE.TextureLoader();
+    textureLoader.load('./logo.png', function(texture) {
+      texture.generateMipmaps = true;
+      texture.minFilter = THREE.LinearMipmapLinearFilter;
+      texture.magFilter = THREE.LinearFilter;
+      
+      logoCard = new THREE.Group();
+      
+      const logoGeom = new THREE.PlaneGeometry(4.8, 1.7); // Exact aspect ratio of logo!
+      const logoMat = new THREE.MeshBasicMaterial({
+        map: texture,
+        transparent: true,
+        side: THREE.DoubleSide
+      });
+      const logoMesh = new THREE.Mesh(logoGeom, logoMat);
+      logoCard.add(logoMesh);
+      
+      scene.add(logoCard);
+      
+      animate();
+    });
+    
+    // Hover interactions
+    container.addEventListener('mousemove', function(e) {
+      const rect = container.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      mouse.targetX = ((x / rect.width) * 2 - 1) * 0.7;
+      mouse.targetY = -((y / rect.height) * 2 - 1) * 0.7;
+      isNear = true;
+    });
+    
+    container.addEventListener('mouseleave', function() {
+      mouse.targetX = 0;
+      mouse.targetY = 0;
+      isNear = false;
+    });
+    
+    // Scroll interaction
+    window.addEventListener('scroll', function() {
+      const currentScroll = window.scrollY;
+      const diff = currentScroll - scrollY;
+      if (logoCard) {
+        logoCard.rotation.y += diff * 0.003;
+      }
+      scrollY = currentScroll;
+    });
+    
+    const resizeObserver = new ResizeObserver(() => {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      if (w && h) {
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      }
+    });
+    resizeObserver.observe(container);
+  }
+  
+  function animate() {
+    requestAnimationFrame(animate);
+    
+    if (logoCard) {
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+      
+      autoRotateAngle += 0.008;
+      
+      // Floating and tilting in 3D space
+      logoCard.rotation.x = mouse.y + Math.sin(autoRotateAngle * 0.5) * 0.03;
+      logoCard.rotation.y = mouse.x + Math.cos(autoRotateAngle * 0.3) * 0.05;
+      logoCard.rotation.z = 0;
+      
+      logoCard.position.y = Math.sin(autoRotateAngle * 1.5) * 0.15;
+    }
+    
+    renderer.render(scene, camera);
+  }
+
+  // ── 5. REPLACE ABOUT LOGO CONTAINER ────────────────────────────────────────
+  function replaceAboutLogoWith3D() {
     const aboutSection = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
     if (!aboutSection) return;
 
@@ -184,38 +286,28 @@
     if (!container) return;
 
     const svgHTML = `
-      <div class="glm-about-logo-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; min-height: 250px; background: transparent; padding: 20px; box-sizing: border-box;">
-        <div class="glm-about-logo-wrapper" style="position: relative; width: 220px; height: 220px; display: flex; justify-content: center; align-items: center;">
-          <!-- Rotating Yellow Ring SVG -->
-          <svg viewBox="0 0 100 100" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 1;">
-            <circle cx="50" cy="50" r="47" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="8 6" class="glm-rotating-ring-element" style="transform-origin: center; stroke: #fbbf24 !important; fill: none !important;"></circle>
-          </svg>
-          <!-- GLM Vector Logo with Spinning Mark -->
-          <svg viewBox="0 0 340 120" style="width: 85%; height: 85%; z-index: 2; overflow: visible;">
-            <g class="glm-spinning-logo-mark" style="transform-origin: 52px 60px;">
-              <!-- Red logo triangle outline -->
-              <path d="M 90 30 L 15 10 L 15 110 L 90 90 Z" fill="none" stroke="#e20001" stroke-width="12" stroke-linejoin="miter" stroke-linecap="butt" style="stroke: #e20001 !important; fill: none !important;"></path>
-              <!-- Red play symbol -->
-              <polygon points="40,40 75,60 40,80" fill="#e20001" style="fill: #e20001 !important;"></polygon>
-            </g>
-            <!-- Logo Text: Black -->
-            <g fill="#111827" font-family="Inter, sans-serif" font-weight="900" font-size="34" letter-spacing="-0.5" style="fill: #111827 !important;">
-              <text x="110" y="42" style="fill: #111827 !important;">GLOBAL</text>
-              <text x="110" y="76" style="fill: #111827 !important;">LOGIC</text>
-              <text x="110" y="110" style="fill: #111827 !important;">MEDIA</text>
-            </g>
-          </svg>
-        </div>
+      <div class="glm-about-logo-container" style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; min-height: 250px; background: transparent; padding: 20px; box-sizing: border-box; position: relative;">
+        <!-- Rotating Yellow Ring SVG behind 3D Canvas -->
+        <svg viewBox="0 0 100 100" style="position: absolute; width: 220px; height: 220px; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; z-index: 1;">
+          <circle cx="50" cy="50" r="47" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="8 6" class="glm-rotating-ring-element" style="transform-origin: center; stroke: #fbbf24 !important; fill: none !important;"></circle>
+        </svg>
       </div>
     `;
 
     container.innerHTML = svgHTML;
+    
+    const wrapper = container.querySelector('.glm-about-logo-container');
+    if (wrapper) {
+      loadThreeJS(function() {
+        init3DLogo(wrapper);
+      });
+    }
   }
 
-  // ── 5. RUN ────────────────────────────────────────────────────────────────
+  // ── 6. RUN ────────────────────────────────────────────────────────────────
   function run() { 
     injectMarquee(); 
-    replaceAboutLogoWithSVG(); 
+    replaceAboutLogoWith3D(); 
   }
 
   if (document.readyState === 'loading') {

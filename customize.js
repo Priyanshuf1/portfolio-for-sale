@@ -13,12 +13,31 @@ const customCSS = `
     --silver-liquid: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 45%, #94A3B8 100%);
   }
 
-  /* Global background */
-  body, html {
+  /* Global background overrides to instantly force white theme before React hydration */
+  body, html, #main,
+  .framer-OLpjL,
+  .framer-povseb,
+  div[class*="framer-povseb"],
+  [data-framer-name="hero"],
+  [data-framer-name="about me section"],
+  [data-framer-name="Services"],
+  [data-framer-name="process"],
+  [data-framer-name="FAQ's"] {
     background-color: var(--midnight) !important;
+    background: var(--midnight) !important;
   }
 
-  /* Crisp Solid Slate for Headings & Clean Brand Red for Highlights */
+  /* Instantly show all hero & text content to bypass hydration delay opacity/transform lock */
+  [data-framer-name="hero"] *,
+  [data-framer-name="about me section"] *,
+  .framer-1tw6hmz,
+  .framer-1wqlnff {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
+  /* Crisp Slate for Headings & Clean Brand Red for Highlights */
   h1, h2, h3, h1 *, h2 *, h3 * {
     background: none !important;
     -webkit-background-clip: initial !important;

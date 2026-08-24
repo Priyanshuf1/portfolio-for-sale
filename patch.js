@@ -41,6 +41,31 @@ console.error = function(...args) {
 <style>
   /* Hide old testimonials section */
   #testimonials, section[data-framer-name="testimonials"], .framer-izep5p { display: none !important; }
+  
+  /* Global background overrides to instantly force white theme before React hydration */
+  body, html, #main,
+  .framer-OLpjL,
+  .framer-povseb,
+  div[class*="framer-povseb"],
+  [data-framer-name="hero"],
+  [data-framer-name="about me section"],
+  [data-framer-name="Services"],
+  [data-framer-name="process"],
+  [data-framer-name="FAQ's"] {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+  }
+
+  /* Instantly show all hero & text content to bypass hydration delay opacity/transform lock */
+  [data-framer-name="hero"] *,
+  [data-framer-name="about me section"] *,
+  .framer-1tw6hmz,
+  .framer-1wqlnff {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
   /* Instantly hide original template sections to prevent flash of unstyled content */
   [data-framer-name="Projects"],
   .framer-1mm21uq,
