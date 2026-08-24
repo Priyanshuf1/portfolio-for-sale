@@ -387,6 +387,24 @@
     adminBtn.addEventListener('click', openAdminPanel);
   }
 
+  function checkLockout() {
+    const lockoutUntil = parseInt(localStorage.getItem('glb_admin_lockout_until') || '0', 10);
+    const now = Date.now();
+    if (lockoutUntil > now) {
+      const remainingMin = Math.ceil((lockoutUntil - now) / 60000);
+      passwordError.style.display = 'block';
+      passwordError.textContent = `Too many failed attempts. Locked out for ${remainingMin} more minutes.`;
+      passwordSubmit.disabled = true;
+      adminIdInput.disabled = true;
+      passwordInput.disabled = true;
+      return true;
+    }
+    passwordSubmit.disabled = false;
+    adminIdInput.disabled = false;
+    passwordInput.disabled = false;
+    return false;
+  }
+
   function openAdminPanel() {
     overlay.classList.add('active');
     if (sessionStorage.getItem('glm_admin_auth') === '1') {
@@ -397,7 +415,10 @@
       adminIdInput.value = '';
       passwordInput.value = '';
       passwordError.style.display = 'none';
-      setTimeout(() => adminIdInput.focus(), 300);
+      checkLockout();
+      if (!adminIdInput.disabled) {
+        setTimeout(() => adminIdInput.focus(), 300);
+      }
     }
   }
 
@@ -432,6 +453,8 @@
   const ADMIN_PASS_HASH = 'b0e3374a6ed3499681e17370bfa7baf75517e8b86696352dbdc1587a4197d38b'; // SHA-256 for 'GLM@Admin2025'
 
   async function tryPassword() {
+    if (checkLockout()) return;
+
     const userVal = adminIdInput.value.trim().toLowerCase();
     const passVal = passwordInput.value;
     
@@ -440,13 +463,25 @@
     
     if (userHash === ADMIN_USER_HASH && passHash === ADMIN_PASS_HASH) {
       sessionStorage.setItem('glm_admin_auth', '1');
+      localStorage.removeItem('glb_admin_failed_attempts');
+      localStorage.removeItem('glb_admin_lockout_until');
       passwordError.style.display = 'none';
       showDashboard();
     } else {
-      passwordError.style.display = 'block';
-      adminIdInput.value = '';
-      passwordInput.value = '';
-      adminIdInput.focus();
+      let attempts = parseInt(localStorage.getItem('glb_admin_failed_attempts') || '0', 10) + 1;
+      localStorage.setItem('glb_admin_failed_attempts', attempts);
+      
+      if (attempts >= 5) {
+        const lockoutTime = Date.now() + 15 * 60 * 1000; // 15 minutes lockout
+        localStorage.setItem('glb_admin_lockout_until', lockoutTime);
+        checkLockout();
+      } else {
+        passwordError.style.display = 'block';
+        passwordError.textContent = `Invalid credentials. ${5 - attempts} attempts remaining.`;
+        adminIdInput.value = '';
+        passwordInput.value = '';
+        adminIdInput.focus();
+      }
     }
   }
   passwordSubmit.addEventListener('click', tryPassword);
