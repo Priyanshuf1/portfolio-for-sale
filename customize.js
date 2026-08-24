@@ -176,6 +176,89 @@ const customCSS = `
     --21h8s6: #e20001 !important;
   }
 
+  /* Modal Overlay and Content Light Text Theme Force */
+  html body .glb-modal-content,
+  html body .glb-modal-content *,
+  html body .glb-modal-content-book,
+  html body .glb-modal-content-book *,
+  html body .glb-modal-content-review,
+  html body .glb-modal-content-review *,
+  html body .glb-admin-content,
+  html body .glb-admin-content * {
+    color: #f3f4f6 !important;
+    -webkit-text-fill-color: #f3f4f6 !important;
+  }
+
+  /* Titles / Highlights inside modals */
+  html body .glb-modal-title,
+  html body .glb-modal-book-title,
+  html body .glb-modal-review-title,
+  html body .glb-admin-title {
+    background: linear-gradient(90deg, #ffffff 0%, #e2e8f0 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+  }
+
+  /* Subtitles inside modals */
+  html body .glb-modal-subtitle,
+  html body .glb-modal-book-subtitle,
+  html body .glb-modal-review-subtitle {
+    color: #e20001 !important;
+    -webkit-text-fill-color: #e20001 !important;
+  }
+
+  /* Form input text typed by users inside modals */
+  html body .glb-form-group input,
+  html body .glb-form-group textarea,
+  html body .glb-form-group select,
+  html body .glb-form-group input *,
+  html body .glb-form-group textarea *,
+  html body #glbPasswordInput {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* Input placeholders */
+  html body .glb-form-group input::placeholder,
+  html body .glb-form-group textarea::placeholder {
+    color: #9ca3af !important;
+    -webkit-text-fill-color: #9ca3af !important;
+  }
+
+  /* Button text colors inside modals */
+  html body .glb-modal-cta,
+  html body .glb-modal-book-btn,
+  html body .glb-modal-review-btn,
+  html body .glb-admin-submit,
+  html body .glb-password-submit,
+  html body .glb-approve-btn {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    background-color: #ffffff !important;
+  }
+  html body .glb-modal-cta:hover,
+  html body .glb-modal-book-btn:hover,
+  html body .glb-modal-review-btn:hover,
+  html body .glb-admin-submit:hover,
+  html body .glb-password-submit:hover,
+  html body .glb-approve-btn:hover {
+    background-color: #e2e8f0 !important;
+  }
+
+  html body .glb-delete-btn {
+    color: #f87171 !important;
+    -webkit-text-fill-color: #f87171 !important;
+    background-color: rgba(248, 113, 113, 0.1) !important;
+    border: 1px solid rgba(248, 113, 113, 0.2) !important;
+  }
+  html body .glb-delete-btn:hover {
+    background-color: #f87171 !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
+
   html { scroll-behavior: smooth; }
 </style>
 `;
