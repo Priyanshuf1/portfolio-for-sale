@@ -866,6 +866,180 @@ window.addEventListener('error', function(e) {
     stack: e.error ? e.error.stack : null
   });
 });
+window.addEventListener('unhandledrejection', function(e) {
+  window.__pageErrors.push({
+    message: e.reason ? e.reason.message : 'Unhandled rejection',
+    stack: e.reason ? e.reason.stack : null
+  });
+});
+const origError = console.error;
+console.error = function(...args) {
+  window.__pageErrors.push({
+    message: args.map(a => String(a)).join(' '),
+    stack: new Error().stack
+  });
+  origError.apply(console, args);
+};
+</script>
+
+
+
+<script id="debug-error-catcher">
+window.__pageErrors = [];
+window.addEventListener('error', function(e) {
+  window.__pageErrors.push({
+    message: e.message,
+    filename: e.filename,
+    lineno: e.lineno,
+    colno: e.colno,
+    stack: e.error ? e.error.stack : null
+  });
+});
+window.addEventListener('unhandledrejection', function(e) {
+  window.__pageErrors.push({
+    message: e.reason ? e.reason.message : 'Unhandled rejection',
+    stack: e.reason ? e.reason.stack : null
+  });
+});
+const origError = console.error;
+console.error = function(...args) {
+  window.__pageErrors.push({
+    message: args.map(a => String(a)).join(' '),
+    stack: new Error().stack
+  });
+  origError.apply(console, args);
+};
+</script>
+
+
+
+<script id="debug-error-catcher">
+window.__pageErrors = [];
+window.addEventListener('error', function(e) {
+  window.__pageErrors.push({
+    message: e.message,
+    filename: e.filename,
+    lineno: e.lineno,
+    colno: e.colno,
+    stack: e.error ? e.error.stack : null
+  });
+});
+window.addEventListener('unhandledrejection', function(e) {
+  window.__pageErrors.push({
+    message: e.reason ? e.reason.message : 'Unhandled rejection',
+    stack: e.reason ? e.reason.stack : null
+  });
+});
+const origError = console.error;
+console.error = function(...args) {
+  window.__pageErrors.push({
+    message: args.map(a => String(a)).join(' '),
+    stack: new Error().stack
+  });
+  origError.apply(console, args);
+};
+</script>
+
+
+
+<script id="debug-error-catcher">
+window.__pageErrors = [];
+window.addEventListener('error', function(e) {
+  window.__pageErrors.push({
+    message: e.message,
+    filename: e.filename,
+    lineno: e.lineno,
+    colno: e.colno,
+    stack: e.error ? e.error.stack : null
+  });
+});
+window.addEventListener('unhandledrejection', function(e) {
+  window.__pageErrors.push({
+    message: e.reason ? e.reason.message : 'Unhandled rejection',
+    stack: e.reason ? e.reason.stack : null
+  });
+});
+const origError = console.error;
+console.error = function(...args) {
+  window.__pageErrors.push({
+    message: args.map(a => String(a)).join(' '),
+    stack: new Error().stack
+  });
+  origError.apply(console, args);
+};
+</script>
+
+
+
+<script id="debug-error-catcher">
+window.__pageErrors = [];
+window.addEventListener('error', function(e) {
+  window.__pageErrors.push({
+    message: e.message,
+    filename: e.filename,
+    lineno: e.lineno,
+    colno: e.colno,
+    stack: e.error ? e.error.stack : null
+  });
+});
+window.addEventListener('unhandledrejection', function(e) {
+  window.__pageErrors.push({
+    message: e.reason ? e.reason.message : 'Unhandled rejection',
+    stack: e.reason ? e.reason.stack : null
+  });
+});
+const origError = console.error;
+console.error = function(...args) {
+  window.__pageErrors.push({
+    message: args.map(a => String(a)).join(' '),
+    stack: new Error().stack
+  });
+  origError.apply(console, args);
+};
+</script>
+
+
+
+<script id="debug-error-catcher">
+window.__pageErrors = [];
+window.addEventListener('error', function(e) {
+  window.__pageErrors.push({
+    message: e.message,
+    filename: e.filename,
+    lineno: e.lineno,
+    colno: e.colno,
+    stack: e.error ? e.error.stack : null
+  });
+});
+window.addEventListener('unhandledrejection', function(e) {
+  window.__pageErrors.push({
+    message: e.reason ? e.reason.message : 'Unhandled rejection',
+    stack: e.reason ? e.reason.stack : null
+  });
+});
+const origError = console.error;
+console.error = function(...args) {
+  window.__pageErrors.push({
+    message: args.map(a => String(a)).join(' '),
+    stack: new Error().stack
+  });
+  origError.apply(console, args);
+};
+</script>
+
+
+
+<script id="debug-error-catcher">
+window.__pageErrors = [];
+window.addEventListener('error', function(e) {
+  window.__pageErrors.push({
+    message: e.message,
+    filename: e.filename,
+    lineno: e.lineno,
+    colno: e.colno,
+    stack: e.error ? e.error.stack : null
+  });
+});
 </script>
 
 
@@ -1575,6 +1749,12 @@ html { scroll-behavior: smooth; }
 
 
 
+
+
+
+
+
+
 <style id="priyanshu-custom-theme">
   /* ── Luxury White + Brand Red Theme with Liquid Platinum Silver Buttons ── */
   :root {
@@ -1710,6 +1890,12 @@ html { scroll-behavior: smooth; }
 
   html { scroll-behavior: smooth; }
 </style>
+
+
+
+
+
+
 
 
 
@@ -2123,23 +2309,23 @@ html { scroll-behavior: smooth; }
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-<script src="./firebase-init.js?v=1787521104248"></script>
-<script src="./about-us-modal.js?v=1787521104248"></script>
-<script src="./custom-footer.js?v=1787521104248"></script>
-<script src="./book-a-call-modal.js?v=1787521104248"></script>
-<script src="./add-review-modal.js?v=1787521104248"></script>
-<script src="./native-sections.js?v=1787521104248"></script>
-<script src="./admin-panel.js?v=1787521104248"></script>
-<script src="./location-section.js?v=1787521104248"></script>
-<script src="./ambient-particles.js?v=1787521104248"></script>
-<script src="./audio-system.js?v=1787521104248"></script>
-<script src="./svg-decorations.js?v=1787521104248"></script>
-<script src="./rabto-fx-engine.js?v=1787521104248"></script>
-<script src="./bg-enhancer.js?v=1787521104248"></script>
-<script src="./skills-section.js?v=1787521104248"></script>
-<script src="./custom-cursor.js?v=1787521104248"></script>
-<script src="./blog-section.js?v=1787521104248"></script>
-<script src="./global-logic-replacer.js?v=1787521104248"></script>
+<script src="./firebase-init.js?v=1787562294802"></script>
+<script src="./about-us-modal.js?v=1787562294802"></script>
+<script src="./custom-footer.js?v=1787562294802"></script>
+<script src="./book-a-call-modal.js?v=1787562294802"></script>
+<script src="./add-review-modal.js?v=1787562294802"></script>
+<script src="./native-sections.js?v=1787562294802"></script>
+<script src="./admin-panel.js?v=1787562294802"></script>
+<script src="./location-section.js?v=1787562294802"></script>
+<script src="./ambient-particles.js?v=1787562294802"></script>
+<script src="./audio-system.js?v=1787562294802"></script>
+<script src="./svg-decorations.js?v=1787562294802"></script>
+<script src="./rabto-fx-engine.js?v=1787562294802"></script>
+<script src="./bg-enhancer.js?v=1787562294802"></script>
+<script src="./skills-section.js?v=1787562294802"></script>
+<script src="./custom-cursor.js?v=1787562294802"></script>
+<script src="./blog-section.js?v=1787562294802"></script>
+<script src="./global-logic-replacer.js?v=1787562294802"></script>
 
 <script>
 // GLM Section Reorder: Page 2 = Meet Global Logic Media, Page 3 = Projects (headphone)
@@ -2205,9 +2391,9 @@ html { scroll-behavior: smooth; }
 })();
 </script>
 
-<script src="./company-details.js?v=1787521104248"></script>
-<script src="./image-trail-section.js?v=1787521104248"></script>
-<script src="./three-bg.js?v=1787521104248"></script>
+<script src="./company-details.js?v=1787562294802"></script>
+<script src="./image-trail-section.js?v=1787562294802"></script>
+<script src="./three-bg.js?v=1787562294802"></script>
 
 <script id="glb-scroll-spy-navbar">
 (function() {
@@ -2282,5 +2468,6 @@ html { scroll-behavior: smooth; }
 })();
 </script>
 
+<script src="./brand-logos-marquee.js?v=1787562294802"></script>
 </body>
 </html>

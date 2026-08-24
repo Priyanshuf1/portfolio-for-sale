@@ -428,6 +428,7 @@ if (!html.includes('company-details.js')) html = html.replace('</body>', '<scrip
 if (!html.includes('three-bg.js')) html = html.replace('</body>', '<script src="./three-bg.js"></script>\n</body>');
 if (!html.includes('image-trail-section.js')) html = html.replace('</body>', '<script src="./image-trail-section.js"></script>\n</body>');
 if (!html.includes('custom-cursor.js')) html = html.replace('</body>', '<script src="./custom-cursor.js"></script>\n</body>');
+if (!html.includes('brand-logos-marquee.js')) html = html.replace('</body>', '<script src="./brand-logos-marquee.js"></script>\n</body>');
 
 const scrollSpyScript = `
 <script id="glb-scroll-spy-navbar">
