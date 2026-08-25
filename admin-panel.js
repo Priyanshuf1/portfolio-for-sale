@@ -272,13 +272,14 @@
         <div class="glb-admin-dashboard" id="glbAdminDashboard">
           <div class="glb-admin-title">Admin Dashboard</div>
 
-          <div class="glb-admin-tabs" style="display: flex; gap: 4px; overflow-x: auto;">
+           <div class="glb-admin-tabs" style="display: flex; gap: 4px; overflow-x: auto;">
             <div class="glb-admin-tab active" data-tab="blog">📝 Blog</div>
             <div class="glb-admin-tab" data-tab="reviews">⭐ Reviews</div>
             <div class="glb-admin-tab" data-tab="bookings">📞 Bookings</div>
+            <div class="glb-admin-tab" data-tab="security">🔐 Security</div>
             <div class="glb-admin-tab" data-tab="instagram">📷 Insta API</div>
           </div>
-
+ 
           <div class="glb-tab-content active" id="tab-blog">
             <form id="glbAdminForm">
               <div class="glb-form-group">
@@ -305,19 +306,38 @@
               <button type="submit" class="glb-admin-submit">Publish to Website</button>
             </form>
           </div>
-
+ 
           <div class="glb-tab-content" id="tab-reviews">
             <div id="glbPendingReviewsList">
               <p style="color:#888; text-align:center; padding:20px 0;">Loading reviews...</p>
             </div>
           </div>
-
+ 
           <div class="glb-tab-content" id="tab-bookings">
             <div id="glbBookingsList">
               <p style="color:#888; text-align:center; padding:20px 0;">Loading bookings...</p>
             </div>
           </div>
 
+          <div class="glb-tab-content" id="tab-security">
+            <form id="glbAdminPassForm">
+              <div class="glb-form-group">
+                <label>Current Password</label>
+                <input type="password" id="adminCurrentPass" required placeholder="Enter current password...">
+              </div>
+              <div class="glb-form-group">
+                <label>New Password</label>
+                <input type="password" id="adminNewPass" required placeholder="Enter new password (min 6 chars)...">
+              </div>
+              <div class="glb-form-group">
+                <label>Confirm New Password</label>
+                <input type="password" id="adminConfirmPass" required placeholder="Confirm new password...">
+              </div>
+              <p id="adminPassMsg" style="font-size: 13px; margin: 8px 0; font-weight: 600;"></p>
+              <button type="submit" class="glb-admin-submit" id="adminSavePassBtn">Update Password</button>
+            </form>
+          </div>
+ 
           <div class="glb-tab-content" id="tab-instagram">
             <form id="glbInstagramConfigForm">
               <div class="glb-form-group">
@@ -452,8 +472,29 @@
   const ADMIN_USER_HASH = '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918'; // SHA-256 for 'admin'
   const ADMIN_PASS_HASH = 'b0e3374a6ed3499681e17370bfa7baf75517e8b86696352dbdc1587a4197d38b'; // SHA-256 for 'GLM@Admin2025'
 
+  let activePassHash = ADMIN_PASS_HASH;
+
+  async function syncPasswordHash() {
+    const offlineHash = localStorage.getItem('glb_admin_offline_pass_hash');
+    if (offlineHash) {
+      activePassHash = offlineHash;
+    }
+    if (window.firebaseDB) {
+      try {
+        const snapshot = await window.firebaseDB.ref("config/admin_pass_hash").once('value');
+        if (snapshot.exists() && snapshot.val()) {
+          activePassHash = snapshot.val();
+        }
+      } catch(e) {
+        console.error("Firebase syncPasswordHash failed:", e);
+      }
+    }
+  }
+
   async function tryPassword() {
     if (checkLockout()) return;
+
+    await syncPasswordHash();
 
     const userVal = adminIdInput.value.trim().toLowerCase();
     const passVal = passwordInput.value;
@@ -461,7 +502,7 @@
     const userHash = await sha256(userVal);
     const passHash = await sha256(passVal);
     
-    if (userHash === ADMIN_USER_HASH && passHash === ADMIN_PASS_HASH) {
+    if (userHash === ADMIN_USER_HASH && passHash === activePassHash) {
       sessionStorage.setItem('glm_admin_auth', '1');
       localStorage.removeItem('glb_admin_failed_attempts');
       localStorage.removeItem('glb_admin_lockout_until');
@@ -500,8 +541,77 @@
       if (tab.dataset.tab === 'reviews') fetchAllReviewsForAdmin();
       if (tab.dataset.tab === 'bookings') fetchAllBookingsForAdmin();
       if (tab.dataset.tab === 'instagram') loadInstagramTokenForAdmin();
+      if (tab.dataset.tab === 'security') {
+        const msgEl = document.getElementById('adminPassMsg');
+        if (msgEl) msgEl.textContent = '';
+      }
     });
   });
+
+  // Change Password Action handler
+  async function changePassword(e) {
+    e.preventDefault();
+    const currentVal = document.getElementById('adminCurrentPass').value;
+    const newVal = document.getElementById('adminNewPass').value;
+    const confirmVal = document.getElementById('adminConfirmPass').value;
+    const msgEl = document.getElementById('adminPassMsg');
+    const saveBtn = document.getElementById('adminSavePassBtn');
+    
+    if (newVal !== confirmVal) {
+      msgEl.style.color = '#f87171';
+      msgEl.textContent = "New passwords do not match!";
+      return;
+    }
+    
+    if (newVal.length < 6) {
+      msgEl.style.color = '#f87171';
+      msgEl.textContent = "Password must be at least 6 characters!";
+      return;
+    }
+    
+    saveBtn.innerText = 'Updating...';
+    saveBtn.disabled = true;
+    msgEl.textContent = '';
+    
+    try {
+      await syncPasswordHash();
+      const currentHash = await sha256(currentVal);
+      if (currentHash !== activePassHash) {
+        msgEl.style.color = '#f87171';
+        msgEl.textContent = "Current password is incorrect!";
+        return;
+      }
+      
+      const newHash = await sha256(newVal);
+      if (window.firebaseDB) {
+        await window.firebaseDB.ref("config/admin_pass_hash").set(newHash);
+        activePassHash = newHash;
+        localStorage.removeItem('glb_admin_offline_pass_hash');
+        msgEl.style.color = '#4ade80';
+        msgEl.textContent = "✅ Password updated successfully in Firebase Database!";
+      } else {
+        localStorage.setItem('glb_admin_offline_pass_hash', newHash);
+        activePassHash = newHash;
+        msgEl.style.color = '#4ade80';
+        msgEl.textContent = "✅ Password updated locally (offline mode)!";
+      }
+      document.getElementById('glbAdminPassForm').reset();
+    } catch(err) {
+      msgEl.style.color = '#f87171';
+      msgEl.textContent = "Error: " + err.message;
+    } finally {
+      saveBtn.innerText = 'Update Password';
+      saveBtn.disabled = false;
+    }
+  }
+
+  // Register form submit
+  setTimeout(() => {
+    const passForm = document.getElementById('glbAdminPassForm');
+    if (passForm) {
+      passForm.addEventListener('submit', changePassword);
+    }
+  }, 1000);
 
   // Obfuscation helpers for security
   function encryptToken(token) {

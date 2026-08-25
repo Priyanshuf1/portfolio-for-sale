@@ -504,52 +504,83 @@ const scrollSpyScript = `
 <script id="glb-scroll-spy-navbar">
 (function() {
   const sections = [
-    { id: 'hero', name: 'Home' },
-    { id: 'about-me', name: 'About' },
-    { id: 'services', name: 'Services' },
-    { id: 'process', name: 'Services' },
-    { id: 'faq', name: 'Services' },
-    { id: 'contact', name: 'Contact us' }
+    { id: '#hero', name: 'Home' },
+    { id: '#about-me', name: 'About' },
+    { id: '#glm-image-trail-section', name: 'About' },
+    { id: '#glm-instagram-feed-section', name: 'About' },
+    { id: '#process', name: 'Services' },
+    { id: '#services', name: 'Services' },
+    { id: '#why-choose-us', name: 'Services' },
+    { id: '#our-team', name: 'About' },
+    { id: '#faq', name: 'Services' },
+    { id: '#glb-reviews-section', name: 'About' },
+    { id: '.glb-home-blogs-section-wrapper', name: 'Blog' },
+    { id: '#glb-location', name: 'Contact us' },
+    { id: '#glb-skills-section', name: 'Contact us' }
   ];
 
   function updateActiveNav() {
     const scrollY = window.scrollY || window.pageYOffset;
     const viewportHeight = window.innerHeight;
-    const scrollBottom = scrollY + viewportHeight;
     const docHeight = document.documentElement.scrollHeight;
     
     let activeSectionName = 'Home';
 
-    if (scrollBottom >= docHeight - 120) {
+    if (scrollY + viewportHeight >= docHeight - 120) {
       activeSectionName = 'Contact us';
     } else {
-      for (const section of sections) {
-        const el = document.getElementById(section.id) || document.querySelector(\`[data-framer-name="\${section.id}"]\`);
+      let maxVisibleHeight = 0;
+      
+      sections.forEach(section => {
+        let el = document.querySelector(section.id);
+        if (!el) {
+          const cleanId = section.id.replace(/[#.]/g, '');
+          el = document.querySelector('[data-framer-name="' + cleanId + '"]');
+        }
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= viewportHeight * 0.45 && rect.bottom >= viewportHeight * 0.15) {
+          const visibleTop = Math.max(0, rect.top);
+          const visibleBottom = Math.min(viewportHeight, rect.bottom);
+          const visibleHeight = visibleBottom - visibleTop;
+          
+          if (visibleHeight > 0 && visibleHeight > maxVisibleHeight) {
+            maxVisibleHeight = visibleHeight;
             activeSectionName = section.name;
           }
         }
-      }
-    }
-
-    const navLinksContainer = document.querySelector('nav[data-framer-name="nav links"]');
-    if (navLinksContainer) {
-      const links = navLinksContainer.querySelectorAll('a');
-      links.forEach(a => {
-        const p = a.querySelector('p');
-        if (!p) return;
-        
-        const linkText = p.textContent.trim();
-        
-        if (linkText === activeSectionName) {
-          a.classList.add('glb-nav-active');
-        } else {
-          a.classList.remove('glb-nav-active');
-        }
       });
     }
+
+    // Update class glb-nav-active on ALL links matching activeSectionName (including mobile menu drawer)
+    const allLinks = document.querySelectorAll('a');
+    allLinks.forEach(a => {
+      const p = a.querySelector('p') || a;
+      const text = p.textContent.trim().toLowerCase();
+      if (!text) return;
+
+      const isHome = text === 'home';
+      const isAbout = text === 'about' || text === 'about us';
+      const isServices = text === 'services' || text === 'service';
+      const isBlog = text === 'blog';
+      const isContact = text === 'contact us' || text === 'contact';
+
+      let isMatch = false;
+      if (activeSectionName === 'Home' && isHome) isMatch = true;
+      if (activeSectionName === 'About' && isAbout) isMatch = true;
+      if (activeSectionName === 'Services' && isServices) isMatch = true;
+      if (activeSectionName === 'Blog' && isBlog) isMatch = true;
+      if (activeSectionName === 'Contact us' && isContact) isMatch = true;
+
+      // Don't apply active styling overrides to footer links
+      const isFooter = a.closest('footer') || a.closest('.glb-footer') || a.closest('[data-framer-name*="footer"]') || a.closest('[class*="footer"]');
+      if (isFooter) return;
+
+      if (isMatch) {
+        a.classList.add('glb-nav-active');
+      } else {
+        a.classList.remove('glb-nav-active');
+      }
+    });
   }
 
   window.addEventListener('scroll', updateActiveNav);
