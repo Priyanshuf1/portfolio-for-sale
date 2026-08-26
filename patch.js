@@ -20,6 +20,16 @@ const hideStyle = `
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <script id="kill-service-workers">
+  // Force document title to brand name and protect from Framer runtime overrides
+  const brandTitle = document.querySelector('title') ? document.querySelector('title').textContent : "Global Logic Media";
+  document.title = brandTitle;
+  const titleObserver = new MutationObserver(function() {
+    if (document.title !== brandTitle) {
+      document.title = brandTitle;
+    }
+  });
+  titleObserver.observe(document.querySelector('title') || document.documentElement, { subtree: true, characterData: true, childList: true });
+
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {
       for (let registration of registrations) {
@@ -633,6 +643,16 @@ const swKiller = `
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <script id="kill-service-workers">
+  // Force document title to brand name and protect from Framer runtime overrides
+  const brandTitle = document.querySelector('title') ? document.querySelector('title').textContent : "Global Logic Media";
+  document.title = brandTitle;
+  const titleObserver = new MutationObserver(function() {
+    if (document.title !== brandTitle) {
+      document.title = brandTitle;
+    }
+  });
+  titleObserver.observe(document.querySelector('title') || document.documentElement, { subtree: true, characterData: true, childList: true });
+
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {
       for (let registration of registrations) {
@@ -657,7 +677,13 @@ otherHtmls.forEach(fileName => {
   if (fs.existsSync(fileName)) {
     let fHtml = fs.readFileSync(fileName, 'utf8');
     let updated = false;
-    if (!fHtml.includes('kill-service-workers')) {
+    if (fHtml.includes('kill-service-workers')) {
+      const scriptMatch = swKiller.match(/<script id="kill-service-workers">[\s\S]*?<\/script>/gi);
+      if (scriptMatch) {
+        fHtml = fHtml.replace(/<script id="kill-service-workers">[\s\S]*?<\/script>/gi, scriptMatch[0]);
+        updated = true;
+      }
+    } else {
       fHtml = fHtml.replace('<head>', '<head>\n' + swKiller);
       updated = true;
     }

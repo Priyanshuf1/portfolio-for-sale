@@ -7,6 +7,16 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <script id="kill-service-workers">
+  // Force document title to brand name and protect from Framer runtime overrides
+  const brandTitle = document.querySelector('title') ? document.querySelector('title').textContent : "Global Logic Media";
+  document.title = brandTitle;
+  const titleObserver = new MutationObserver(function() {
+    if (document.title !== brandTitle) {
+      document.title = brandTitle;
+    }
+  });
+  titleObserver.observe(document.querySelector('title') || document.documentElement, { subtree: true, characterData: true, childList: true });
+
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {
       for (let registration of registrations) {
