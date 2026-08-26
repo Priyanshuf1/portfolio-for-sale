@@ -6,17 +6,17 @@ html = html.replace(/Meet Meily/g, 'Meet Global Logic Media');
 
 html = html.replace(
   /I'm Meily, a passionate Brand Identity &amp; Package Designer based in tokyo\. I specialize in crafting bold visual identities and packaging that captivate and inspire, blending creativity with strategy to elevate brands\./g,
-  'Welcome to Global Logic Media — Lucknow\'s premier 360° Digital Marketing &amp; Performance Agency. We specialize in Search Engine Optimization (SEO), Google &amp; Meta Ads, Social Media Growth, Custom Web Design, and Lead Generation to help businesses grow smarter, faster, and better.'
+  'Welcome to Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation— Lucknow\'s premier 360° Digital Marketing &amp; Performance Agency. We specialize in Search Engine Optimization (SEO), Google &amp; Meta Ads, Social Media Growth, Custom Web Design, and Lead Generation to help businesses grow smarter, faster, and better.'
 );
 
 html = html.replace(
   /Computer Engineering student at GESCOE, also pursuing Data Science at IIT Madras\. Skilled in C\+\+, Python, and exploring FastAPI\. Self-taught 3D artist passionate about merging technology and creativity\. Eager learner always seeking new challenges in tech and digital art\./g,
-  'Global Logic Media is a leading digital marketing and web development agency based in Gomti Nagar, Lucknow. We empower startups, local businesses, and growing enterprises to enhance online visibility, drive high-intent traffic, and maximize ROI through data-driven digital strategies.'
+  'Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generationis a leading digital marketing and web development agency based in Gomti Nagar, Lucknow. We empower startups, local businesses, and growing enterprises to enhance online visibility, drive high-intent traffic, and maximize ROI through data-driven digital strategies.'
 );
 
 html = html.replace(/Working with Meily/g, 'Working with Global Logic Media');
 html = html.replace(/Meily's strategic approach/g, 'Global Logic Media\'s strategic approach');
-html = html.replace(/Every project Meily touches/g, 'Every campaign Global Logic Media touches');
+html = html.replace(/Every project Meily touches/g, 'Every campaign Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generationtouches');
 html = html.replace(/Meily's designs speak/g, 'Global Logic Media\'s results speak');
 html = html.replace(/with Meily/g, 'with Global Logic Media');
 html = html.replace(/Meily's/g, 'Global Logic Media\'s');
@@ -84,4 +84,4 @@ if (html.includes('id="priyanshu-content-patch"')) {
 }
 
 fs.writeFileSync('index.html', html);
-console.log('Successfully updated index.html with Global Logic Media content!');
+console.log('Successfully updated index.html with Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generationcontent!');

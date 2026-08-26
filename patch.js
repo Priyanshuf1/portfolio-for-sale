@@ -125,7 +125,7 @@ console.error = function(...args) {
     padding: 0 !important;
     margin: 0 !important;
   }
-  /* Hide the Instagram screenshots carousel from the Meet Global Logic Media section globally */
+  /* Hide the Instagram screenshots carousel from the Meet Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generationsection globally */
   #about-me .framer-1ineur-container,
   [data-framer-name="about me section"] .framer-1ineur-container {
     display: none !important;
@@ -673,4 +673,5 @@ otherHtmls.forEach(fileName => {
 require('./patch-webflow-expandable-cards.js');
 require('./patch-three-cards-logo.js');
 require('./patch-section-images.js');
+require('./patch-metadata.js');
 

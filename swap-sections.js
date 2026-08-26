@@ -95,4 +95,4 @@ const newHtml = before + aboutBlock + between + projectsBlock + after;
 
 fs.writeFileSync('index.html', newHtml);
 console.log('\n✅ SUCCESS: About section moved before Projects section!');
-console.log('New order: Hero → Meet Global Logic Media → Projects → ...');
+console.log('New order: Hero → Meet Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation→ Projects → ...');

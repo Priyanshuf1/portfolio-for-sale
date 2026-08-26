@@ -434,7 +434,7 @@
           modalGrid.classList.add('md:grid-cols-2');
           modalGrid.classList.remove('max-w-3xl');
         }
-        modalCaption.innerText = caption || "Global Logic Media Creative Content";
+        modalCaption.innerText = caption || "Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead GenerationCreative Content";
         if (link) {
           modalLink.href = link;
           modalLink.style.display = 'flex';
@@ -535,7 +535,7 @@
       const item = items[idx];
       const img = item.querySelector('img');
       const mediaUrl = p.media_type === 'VIDEO' ? (p.thumbnail_url || p.media_url) : p.media_url;
-      const caption = p.caption || 'Global Logic Media Creative';
+      const caption = p.caption || 'Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead GenerationCreative';
       
       if (img) img.src = mediaUrl;
       

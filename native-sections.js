@@ -135,7 +135,7 @@
   document.head.appendChild(styleEl);
 
   const defaultReviews = [
-    { author: "Sarah Jenkins", text: "Global Logic Media completely transformed our online presence. Our lead generation has 3x'd in just two months!", rating: 5 },
+    { author: "Sarah Jenkins", text: "Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generationcompletely transformed our online presence. Our lead generation has 3x'd in just two months!", rating: 5 },
     { author: "Michael Chen", text: "The web design team is top-tier. They captured our brand perfectly and built a blazing fast site.", rating: 5 },
     { author: "Jessica Robles", text: "Highly recommend for SEO. We are finally ranking on page 1 of Google for our main keywords.", rating: 4 },
     { author: "David Wallace", text: "Amazing ROI on Meta Ads. Their strategy is data-driven and the results speak for themselves.", rating: 5 },

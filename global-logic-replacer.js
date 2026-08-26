@@ -13,11 +13,11 @@
       }
 
       if (val.includes('Brand Identity & Package Designer based in tokyo') || val.includes('crafting bold visual identities and packaging')) {
-        node.nodeValue = 'Welcome to Global Logic Media — Lucknow\'s premier 360° Digital Marketing & Performance Agency. We specialize in SEO, Google & Meta Ads, Social Media Growth, Custom Web Design, and Lead Generation to help businesses grow smarter, faster, and better.';
+        node.nodeValue = 'Welcome to Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation— Lucknow\'s premier 360° Digital Marketing & Performance Agency. We specialize in SEO, Google & Meta Ads, Social Media Growth, Custom Web Design, and Lead Generation to help businesses grow smarter, faster, and better.';
       }
 
       if (val.includes('Computer Engineering student at GESCOE')) {
-        node.nodeValue = 'Global Logic Media is a leading digital marketing and web development agency based in Gomti Nagar, Lucknow. We empower startups, local businesses, and growing enterprises to enhance online visibility, drive high-intent traffic, and maximize ROI through data-driven digital strategies.';
+        node.nodeValue = 'Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generationis a leading digital marketing and web development agency based in Gomti Nagar, Lucknow. We empower startups, local businesses, and growing enterprises to enhance online visibility, drive high-intent traffic, and maximize ROI through data-driven digital strategies.';
       }
 
       // Replace timeline/experience items with official stats

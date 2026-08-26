@@ -413,7 +413,7 @@
           <div class="glb-why-us-header">
             <span class="glb-why-us-badge">The Advantage</span>
             <h2>Why Choose Us?</h2>
-            <p>See how Global Logic Media stacks up against generic marketing agencies and why we are trusted by Lucknow's leading companies.</p>
+            <p>See how Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generationstacks up against generic marketing agencies and why we are trusted by Lucknow's leading companies.</p>
           </div>
           
           <div class="glb-comparison-grid">
