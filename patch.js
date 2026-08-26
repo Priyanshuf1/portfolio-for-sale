@@ -1,6 +1,9 @@
 const fs = require('fs');
 let html = fs.readFileSync('index.html', 'utf8');
 
+// Update viewport meta tag for mobile accessibility
+html = html.replace(/<meta[^>]*name=["']viewport["'][^>]*>/gi, '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">');
+
 // ACTIVELY REMOVE three-logo-interactive.js (unused 3D model)
 html = html.replace(/<script[^>]+three-logo-interactive\.js[^>]*><\/script>\r?\n?/gi, '');
 html = html.replace(/<script id="inline-logo3d-script">[\s\S]*?<\/script>\r?\n?/gi, '');
@@ -653,10 +656,16 @@ const swKiller = `
 otherHtmls.forEach(fileName => {
   if (fs.existsSync(fileName)) {
     let fHtml = fs.readFileSync(fileName, 'utf8');
+    let updated = false;
     if (!fHtml.includes('kill-service-workers')) {
       fHtml = fHtml.replace('<head>', '<head>\n' + swKiller);
+      updated = true;
+    }
+    const origViewport = fHtml;
+    fHtml = fHtml.replace(/<meta[^>]*name=["']viewport["'][^>]*>/gi, '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">');
+    if (fHtml !== origViewport || updated) {
       fs.writeFileSync(fileName, fHtml);
-      console.log('Injected service worker unregister script into ' + fileName);
+      console.log('Updated service worker and viewport meta tag in ' + fileName);
     }
   }
 });

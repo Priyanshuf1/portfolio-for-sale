@@ -369,6 +369,42 @@ const customCSS = `
     font-weight: 700 !important;
   }
 
+  /* Mobile touch/tap target expansion to WCAG 44x44px minimum target size */
+  @media (max-width: 809px) {
+    html body nav[data-framer-name="nav links"] a,
+    div[data-framer-name="Hamburger"],
+    a[href*="facebook"],
+    a[href*="instagram"],
+    a[href*="linkedin"],
+    a[href*="youtube"],
+    a[href*="wa.me"],
+    .glb-contact-card-action,
+    .glb-map-direct-btn {
+      position: relative !important;
+    }
+    
+    html body nav[data-framer-name="nav links"] a::after,
+    div[data-framer-name="Hamburger"]::after,
+    a[href*="facebook"]::after,
+    a[href*="instagram"]::after,
+    a[href*="linkedin"]::after,
+    a[href*="youtube"]::after,
+    a[href*="wa.me"]::after,
+    .glb-contact-card-action::after,
+    .glb-map-direct-btn::after {
+      content: "" !important;
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 100% !important;
+      min-width: 44px !important;
+      height: 100% !important;
+      min-height: 44px !important;
+      z-index: 10 !important;
+    }
+  }
+
   html { scroll-behavior: smooth; }
 </style>
 `;

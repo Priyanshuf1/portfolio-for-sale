@@ -191,6 +191,12 @@
           <div style="color: #999; margin-bottom: 24px; font-size: 15px;">Schedule a free consultation with our experts to discuss your digital marketing needs.</div>
           
           <form id="glbBookForm">
+            <!-- Honeypot Bot Trap (Invisible to humans, caught by spam bots) -->
+            <div style="display: none; position: absolute; left: -9999px;">
+              <label for="glbFormTrap">Leave this empty if you are human</label>
+              <input type="text" id="glbFormTrap" name="glbFormTrap" tabindex="-1" autocomplete="off">
+            </div>
+            
             <div class="glb-form-group">
               <input type="text" placeholder="Your Name" required>
             </div>
@@ -251,6 +257,16 @@
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    
+    // Bot prevention: check honeypot trap
+    const trap = document.getElementById('glbFormTrap');
+    if (trap && trap.value) {
+      console.warn("Spam bot submission blocked via honeypot trap.");
+      // Fake a successful submission to fool the bot without pushing spam to DB
+      formContainer.style.display = 'none';
+      successMsg.style.display = 'block';
+      return;
+    }
     
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
