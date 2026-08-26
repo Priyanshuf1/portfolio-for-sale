@@ -21,14 +21,27 @@ const hideStyle = `
 <meta http-equiv="Expires" content="0">
 <script id="kill-service-workers">
   // Force document title to brand name and protect from Framer runtime overrides
-  const brandTitle = document.querySelector('title') ? document.querySelector('title').textContent : "Global Logic Media";
-  document.title = brandTitle;
+  let brandTitle = "Global Logic Media";
   const titleObserver = new MutationObserver(function() {
     if (document.title !== brandTitle) {
       document.title = brandTitle;
     }
   });
-  titleObserver.observe(document.querySelector('title') || document.documentElement, { subtree: true, characterData: true, childList: true });
+
+  function initTitleLock() {
+    const titleEl = document.querySelector('title');
+    if (titleEl) {
+      brandTitle = titleEl.textContent;
+      document.title = brandTitle;
+      titleObserver.observe(titleEl, { characterData: true, childList: true });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTitleLock);
+  } else {
+    initTitleLock();
+  }
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {
@@ -480,8 +493,14 @@ console.error = function(...args) {
     transform: translateY(-3px) !important;
   }
 </style>\n`;
-// Inject RIGHT AFTER <head> tag so it fires before ANY script runs and prevents FOUC
-html = html.replace('<head>', '<head>\n' + hideStyle);
+if (html.includes('kill-service-workers')) {
+    const mainScriptMatch = hideStyle.match(/<script id="kill-service-workers">[\s\S]*?<\/script>/gi);
+    if (mainScriptMatch) {
+        html = html.replace(/<script id="kill-service-workers">[\s\S]*?<\/script>/gi, mainScriptMatch[0]);
+    }
+} else {
+    html = html.replace('<head>', '<head>\n' + hideStyle);
+}
 
 // Inject Firebase init before other custom scripts
 if (!html.includes('firebase-init.js')) {
@@ -644,14 +663,27 @@ const swKiller = `
 <meta http-equiv="Expires" content="0">
 <script id="kill-service-workers">
   // Force document title to brand name and protect from Framer runtime overrides
-  const brandTitle = document.querySelector('title') ? document.querySelector('title').textContent : "Global Logic Media";
-  document.title = brandTitle;
+  let brandTitle = "Global Logic Media";
   const titleObserver = new MutationObserver(function() {
     if (document.title !== brandTitle) {
       document.title = brandTitle;
     }
   });
-  titleObserver.observe(document.querySelector('title') || document.documentElement, { subtree: true, characterData: true, childList: true });
+
+  function initTitleLock() {
+    const titleEl = document.querySelector('title');
+    if (titleEl) {
+      brandTitle = titleEl.textContent;
+      document.title = brandTitle;
+      titleObserver.observe(titleEl, { characterData: true, childList: true });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTitleLock);
+  } else {
+    initTitleLock();
+  }
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {

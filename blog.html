@@ -8,14 +8,27 @@
 <meta http-equiv="Expires" content="0">
 <script id="kill-service-workers">
   // Force document title to brand name and protect from Framer runtime overrides
-  const brandTitle = document.querySelector('title') ? document.querySelector('title').textContent : "Global Logic Media";
-  document.title = brandTitle;
+  let brandTitle = "Global Logic Media";
   const titleObserver = new MutationObserver(function() {
     if (document.title !== brandTitle) {
       document.title = brandTitle;
     }
   });
-  titleObserver.observe(document.querySelector('title') || document.documentElement, { subtree: true, characterData: true, childList: true });
+
+  function initTitleLock() {
+    const titleEl = document.querySelector('title');
+    if (titleEl) {
+      brandTitle = titleEl.textContent;
+      document.title = brandTitle;
+      titleObserver.observe(titleEl, { characterData: true, childList: true });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTitleLock);
+  } else {
+    initTitleLock();
+  }
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.getRegistrations().then(function(registrations) {
