@@ -622,6 +622,45 @@ html = html.replace(/src="\.\/([a-zA-Z0-9_-]+\.js)(\?v=[^"]*)?"/g, `src="./$1?v=
 fs.writeFileSync('index.html', html);
 console.log('Appended firebase-init and native sections to index.html');
 
+// Patch other HTML files (blog, instagram, 404) to include the service worker killer block
+const otherHtmls = ['blog.html', 'instagram.html', '404.html'];
+const swKiller = `
+<!-- Cache Control Meta Tags to Prevent Stale/Old Commit Flashes -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<script id="kill-service-workers">
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for (let registration of registrations) {
+        registration.unregister().then(function() {
+          console.log('Stale service worker unregistered!');
+          window.location.reload(true);
+        });
+      }
+    });
+  }
+  if ('caches' in window) {
+    caches.keys().then(function(names) {
+      for (let name of names) {
+        caches.delete(name);
+      }
+    });
+  }
+</script>
+`;
+
+otherHtmls.forEach(fileName => {
+  if (fs.existsSync(fileName)) {
+    let fHtml = fs.readFileSync(fileName, 'utf8');
+    if (!fHtml.includes('kill-service-workers')) {
+      fHtml = fHtml.replace('<head>', '<head>\n' + swKiller);
+      fs.writeFileSync(fileName, fHtml);
+      console.log('Injected service worker unregister script into ' + fileName);
+    }
+  }
+});
+
 require('./patch-webflow-expandable-cards.js');
 require('./patch-three-cards-logo.js');
 require('./patch-section-images.js');
