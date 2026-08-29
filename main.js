@@ -255,7 +255,7 @@
           scrollTrigger: {
             trigger: section,
             start: isMobile ? 'top 90%' : 'top 82%',
-            toggleActions: 'play reset play reset'
+            toggleActions: 'play none play none'
           }
         }
       );

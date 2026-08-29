@@ -255,7 +255,7 @@
           scrollTrigger: {
             trigger: headerTitle,
             start: 'top 92%',
-            toggleActions: 'play reset play reset'
+            toggleActions: 'play none play none'
           }
         }
       );
@@ -270,7 +270,7 @@
           scrollTrigger: {
             trigger: headerTitle,
             start: 'top 92%',
-            toggleActions: 'play reset play reset'
+            toggleActions: 'play none play none'
           }
         }
       );
@@ -298,7 +298,7 @@
             scrollTrigger: {
               trigger: card,
               start: 'top 92%',
-              toggleActions: 'play reset play reset',
+              toggleActions: 'play none play none',
               onEnter: () => {
                 // Animate progress bar fill
                 gsap.to(fill, { width: `${level}%`, duration: 1.1, ease: 'power2.out' });
