@@ -1,1 +1,57 @@
 .vercel
+__pycache__/
+*.py[cod]
+*.pyc
+
+# Dev-only scratch workspace
+scratch/
+
+# Screenshot artifacts
+ss*.png
+
+# Dev and patch scripts
+cdp_screenshot.js
+customize.js
+deep_clone.js
+embed_logo.js
+find-order.js
+find-query-selectors.js
+global-logic-replacer.js
+inject-content.js
+inject-fonts.js
+inject-vfx.js
+inspect.js
+inspect-full-services.js
+inspect-logo-dim.js
+patch.js
+patch-metadata.js
+patch-section-images.js
+patch-text.js
+patch-three-cards-logo.js
+patch-webflow-expandable-cards.js
+rebuild.js
+replace_text.js
+replace-logo.js
+restore.js
+safe-patch.js
+scan-sections.js
+snap.js
+snap2.js
+swap-*.js
+sync-full-source.js
+test-review.js
+update_title.js
+update-company-info.js
+update-hero-glow.js
+verify.js
+words.txt
+card.html
+card_html.txt
+parent.html
+
+# Unused animation scripts
+three-bg.js
+ambient-particles.js
+vanta.topology.js
+three-logo-interactive.BACKUP.js
+.vercel-rebuild.txt
