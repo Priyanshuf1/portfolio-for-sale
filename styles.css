@@ -1173,7 +1173,8 @@ footer.glb-footer {
     box-shadow: 0 4px 14px rgba(226, 0, 1, 0.25) !important;
     z-index: 9999 !important;
   }
-  html body .glb-floating-btn-about,
+  html body .glb-floating-btn,
+  html body #glbTrigger,
   html body #glbAboutUsFloating,
   html body #glbTriggerAbout {
     display: inline-flex !important;
