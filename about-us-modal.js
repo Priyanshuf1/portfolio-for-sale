@@ -9,11 +9,11 @@
       z-index: 9998;
       background: linear-gradient(135deg, #111, #333);
       color: #eaeaea;
-      padding: 14px 24px;
+      padding: 16px 28px;
       border-radius: 30px;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 700;
       letter-spacing: 0.5px;
       cursor: pointer;
       box-shadow: 0 8px 24px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.1);

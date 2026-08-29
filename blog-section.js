@@ -134,14 +134,14 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 14px 32px;
+      padding: 16px 36px;
       background: #FFFDF0;
       color: #111;
       border: 1px solid rgba(226, 0, 1, 0.25);
-      border-radius: 12px;
+      border-radius: 30px;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 15px;
+      font-weight: 700;
+      font-size: 16px;
       transition: all 0.3s ease;
     }
     .glb-home-blogs-btn:hover {
