@@ -167,6 +167,11 @@ console.error = function(...args) {
       background: none !important;
       background-image: none !important;
     }
+    /* Hide the React-restored duplicate child div and images to prevent double rendering */
+    .framer-1lcme9 div,
+    .framer-1lcme9 img {
+      display: none !important;
+    }
     .framer-11n6lfm-container {
       height: 60px !important;
     }
