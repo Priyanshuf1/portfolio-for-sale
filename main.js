@@ -226,7 +226,7 @@
     );
 
     // ── RESTORE STAGGERED REVEALS FOR ALL OTHER ELEMENTS ──
-    const revealSections = ['#about-me', '#projects', '#services', '#faq', '#glb-skills-section', '#glb-reviews-section', '#glb-location', 'footer'];
+    const revealSections = ['#about-me', '#services', '#faq', '#glb-skills-section', '#glb-reviews-section', '#glb-location', 'footer'];
     revealSections.forEach(selector => {
       const section = document.querySelector(selector);
       if (!section) return;

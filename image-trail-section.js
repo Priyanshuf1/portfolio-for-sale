@@ -8,11 +8,16 @@
   }
 
   function inject() {
-    var teamSec = document.getElementById('glb-meet-team');
-    var fallbackSec = document.getElementById('about-me');
-    var insertTarget = teamSec || fallbackSec;
-    
-    if (!insertTarget) return;
+    // ── Determine insertion anchor: after FAQ or after company-details or fallback to before footer ──
+    var faqSec = document.getElementById('faq');
+    var companyWrapper = document.getElementById('glb-company-details-wrapper');
+    var reviewsSec = document.getElementById('glb-reviews-section');
+    var footerEl = document.querySelector('footer.glb-footer') || document.querySelector('footer');
+
+    // We want order: ... FAQ → marquee (our clients) → instagram → reviews → footer
+    // Insert marquee right before glb-reviews-section if it exists, else before footer
+    var insertAnchor = reviewsSec || footerEl;
+    if (!insertAnchor) return;
 
     // ── 1. Create or update the Recent Work Marquee Section ─────────────────
     var marqueeSection = document.getElementById('glm-image-trail-section');
@@ -21,15 +26,9 @@
       marqueeSection.id = 'glm-image-trail-section';
     }
 
-    // Insert marqueeSection relative to target
-    if (insertTarget === teamSec) {
-      if (marqueeSection.nextSibling !== teamSec) {
-        teamSec.parentNode.insertBefore(marqueeSection, teamSec);
-      }
-    } else {
-      if (marqueeSection.previousSibling !== fallbackSec) {
-        fallbackSec.parentNode.insertBefore(marqueeSection, fallbackSec.nextSibling);
-      }
+    // Place marquee right before the anchor (reviews or footer)
+    if (marqueeSection.nextSibling !== insertAnchor) {
+      insertAnchor.parentNode.insertBefore(marqueeSection, insertAnchor);
     }
 
     marqueeSection.style.cssText = [
@@ -54,12 +53,13 @@
       instaSection.className = 'glm-insta-section';
     }
 
+    // Place instagram right after marquee
     if (marqueeSection.nextSibling !== instaSection) {
       marqueeSection.parentNode.insertBefore(instaSection, marqueeSection.nextSibling);
     }
 
-    // Inject styles and HTML content if not already built
-    if (!instaSection.querySelector('#insta-feed')) {
+    // Inject styles and HTML content ONCE — use data-built flag to prevent re-injection
+    if (!instaSection.dataset.elfsightBuilt) {
       // Combined Stylesheet for Marquee, Bento Grid, and Story Rings
       const styles = `
 <style id="glm-combined-layouts-styles">
@@ -145,62 +145,20 @@
   .glm-insta-section {
     position: relative;
     width: 100%;
-    background: transparent !important; /* Blend with canvas and particle background */
+    background: transparent !important;
     color: #ffffff !important;
-    padding: 80px 0 !important;
+    padding: 80px 5% !important;
     font-family: 'Plus Jakarta Sans', sans-serif !important;
     z-index: 10;
   }
-  .font-heading { font-family: 'Space Grotesk', sans-serif; }
   
-  /* Glassmorphism */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-  }
-  .glass-card:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.2);
-  }
-
-  /* Story Ring Animation */
-  .story-ring {
-    position: relative;
-    padding: 3px;
-    background: var(--insta-gradient);
-    border-radius: 22px;
-    cursor: pointer;
-  }
-  .story-inner {
-    background: #050505;
-    border-radius: 19px;
-    padding: 2px;
-  }
-
-  /* Instagram Profile-style 3-Column Square Grid Customization */
-  .bento-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+  .glm-insta-section .elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40 {
+    min-height: 400px;
+    display: block;
     width: 100%;
-    max-width: 935px;
-    margin: 0 auto;
-  }
-  .bento-grid > div {
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
   }
 
   @media (max-width: 768px) {
-    .bento-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4px; /* tighter spacing on mobile, just like real instagram app */
-    }
-    
     .glm-marquee-wrap {
       margin-top: 15px;
       gap: 16px;
@@ -221,7 +179,9 @@
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 `;
-      document.head.insertAdjacentHTML('beforeend', styles);
+      if (!document.getElementById('glm-combined-layouts-styles')) {
+        document.head.insertAdjacentHTML('beforeend', styles);
+      }
 
       // ── Populate Marquee Section HTML ─────────────────────────────
       marqueeSection.innerHTML = `
@@ -267,24 +227,26 @@
       fillRow('marquee-row-1', row1Images);
       fillRow('marquee-row-2', row2Images);
 
-      // ── Populate Bento Instagram Section HTML ──────────────────────
+      // ── Populate Instagram Section with Elfsight Widget ────────────
       instaSection.innerHTML = `
-        <div style="text-align:center; margin-bottom: 40px; padding: 0 5%;">
-          <span class="badge-pill-red" style="display:inline-block; margin-bottom: 15px;">Instagram</span>
-          <h2 class="h2-fluid" style="margin: 0; font-weight: 900; color: #111827;">Follow Our Journey</h2>
+        <div style="text-align:center; margin-bottom: 40px;">
+          <span style="display:inline-block; padding: 5px 16px; background: rgba(226,0,1,0.1); border: 1px solid rgba(226,0,1,0.3); color: #e20001; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 20px; margin-bottom: 14px;">Instagram</span>
+          <h2 style="margin: 0; font-weight: 900; color: #111827; font-size: clamp(1.8rem, 4vw, 2.8rem);">Follow Our Journey</h2>
         </div>
-        <div class="max-w-7xl mx-auto px-6" style="margin-top: 20px; min-height: 350px;">
-          <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
+        <div style="max-width: 1100px; margin: 0 auto; min-height: 400px;">
           <div class="elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40" data-elfsight-app-lazy></div>
         </div>
       `;
 
-      // Load Elfsight platform script programmatically
+      // Mark as built so we never re-inject
+      instaSection.dataset.elfsightBuilt = '1';
+
+      // Load Elfsight platform script — only once globally
       if (!document.querySelector('script[src*="elfsightcdn.com"]')) {
         const script = document.createElement('script');
         script.src = "https://elfsightcdn.com/platform.js";
         script.async = true;
-        document.body.appendChild(script);
+        document.head.appendChild(script);
       }
     }
   }
