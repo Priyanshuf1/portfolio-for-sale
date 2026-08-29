@@ -217,53 +217,39 @@
     if (activeSkillsTimeline) { activeSkillsTimeline.kill(); activeSkillsTimeline = null; }
     gsap.killTweensOf(cards);
 
-    // Reset all cards to base state
-    cards.forEach(card => {
-      gsap.set(card, { clearProps: 'all' });
-      const fill = card.querySelector('.glb-skill-progress-fill');
-      const pct = card.querySelector('.glb-skill-percent');
-      if (fill) gsap.set(fill, { width: '0%' });
-      if (pct) pct.textContent = '0%';
-    });
-
-    // Per-card scroll-reveal: each card fades up + progress bar counts when entering viewport
-    cards.forEach((card, i) => {
+    // Cards are ALWAYS fully visible — only animate progress bar fill & percentage count on scroll
+    cards.forEach((card) => {
       const fill = card.querySelector('.glb-skill-progress-fill');
       const pct = card.querySelector('.glb-skill-percent');
       const level = parseInt(pct ? pct.dataset.level : 0);
-      let countObj = { val: 0 };
 
-      gsap.fromTo(card,
-        { opacity: 0, y: 40, scale: 0.97 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.65,
-          delay: i * 0.05, // slight stagger
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 88%',
-            toggleActions: 'play reset play reset',
-            onEnter: () => {
-              if (fill) gsap.to(fill, { width: `${level}%`, duration: 1.1, ease: 'power2.out' });
-              if (pct) {
+      // Ensure card itself is 100% visible
+      gsap.set(card, { opacity: 1, y: 0, scale: 1 });
+
+      if (fill && pct) {
+        let countObj = { val: 0 };
+        gsap.fromTo(fill,
+          { width: '0%' },
+          {
+            width: `${level}%`,
+            duration: 1.0,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 92%',
+              toggleActions: 'play none none none',
+              onEnter: () => {
                 gsap.fromTo(countObj, { val: 0 }, {
                   val: level,
-                  duration: 1.1,
+                  duration: 1.0,
                   ease: 'power2.out',
                   onUpdate: () => { pct.textContent = Math.round(countObj.val) + '%'; }
                 });
               }
-            },
-            onLeaveBack: () => {
-              if (fill) gsap.set(fill, { width: '0%' });
-              if (pct) { pct.textContent = '0%'; countObj.val = 0; }
             }
           }
-        }
-      );
+        );
+      }
     });
 
     ScrollTrigger.refresh();
