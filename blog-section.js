@@ -3,11 +3,11 @@
     .glb-home-blogs {
       padding: 80px 5%;
       background: transparent;
-      color: white;
+      color: #111111;
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       position: relative;
       z-index: 10;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
     .glb-home-blogs-header {
       text-align: center;
@@ -16,9 +16,9 @@
     .glb-home-blogs-badge {
       display: inline-block;
       padding: 6px 14px;
-      background: rgba(74, 222, 128, 0.1);
-      border: 1px solid rgba(74, 222, 128, 0.25);
-      color: #4ade80;
+      background: rgba(226, 0, 1, 0.06);
+      border: 1px solid rgba(226, 0, 1, 0.25);
+      color: #e20001;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 1.5px;
@@ -29,14 +29,14 @@
     .glb-home-blogs-header h2 {
       font-size: clamp(2rem, 4vw, 3rem);
       margin: 0 0 10px;
-      background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
+      background: linear-gradient(180deg, #111111 0%, #444444 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;
       font-weight: 700;
     }
     .glb-home-blogs-header p {
-      color: #888;
+      color: #666;
       font-size: 1.1rem;
       margin: 0;
     }
@@ -48,19 +48,19 @@
       margin: 0 auto;
     }
     .glb-home-blog-card {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #FFFDF0;
+      border: 1px solid rgba(226, 160, 0, 0.15);
       border-radius: 18px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       text-decoration: none;
-      color: white;
+      color: #333333;
       transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .glb-home-blog-card:hover {
-      border-color: rgba(255, 199, 44, 0.4);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 199, 44, 0.15);
+      border-color: rgba(226, 160, 0, 0.4);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.03);
     }
     .glb-home-blog-img-wrap {
       width: 100%;
@@ -95,8 +95,8 @@
       margin-bottom: 12px;
     }
     .glb-home-blog-category {
-      color: #4ade80;
-      background: rgba(74, 222, 128, 0.1);
+      color: #e20001;
+      background: rgba(226, 0, 1, 0.06);
       padding: 3px 10px;
       border-radius: 12px;
     }
@@ -105,17 +105,17 @@
       margin: 0 0 12px;
       line-height: 1.4;
       font-weight: 600;
-      color: #fff;
+      color: #111111;
     }
     .glb-home-blog-excerpt {
-      color: #999;
+      color: #555555;
       font-size: 14px;
       line-height: 1.6;
       margin: 0 0 20px;
       flex-grow: 1;
     }
     .glb-home-blog-read {
-      color: #fff;
+      color: #e20001;
       font-size: 14px;
       font-weight: 600;
       display: inline-flex;
@@ -124,7 +124,7 @@
       transition: color 0.2s;
     }
     .glb-home-blog-card:hover .glb-home-blog-read {
-      color: #4ade80;
+      color: #a30000;
     }
     .glb-home-blogs-btn-wrapper {
       text-align: center;
@@ -135,9 +135,9 @@
       align-items: center;
       gap: 10px;
       padding: 14px 32px;
-      background: rgba(255,255,255,0.05);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.15);
+      background: #FFFDF0;
+      color: #111;
+      border: 1px solid rgba(226, 0, 1, 0.25);
       border-radius: 12px;
       text-decoration: none;
       font-weight: 600;
@@ -145,11 +145,11 @@
       transition: all 0.3s ease;
     }
     .glb-home-blogs-btn:hover {
-      background: #4ade80;
-      color: #111;
-      border-color: #4ade80;
+      background: #e20001;
+      color: #fff;
+      border-color: #e20001;
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(74, 222, 128, 0.25);
+      box-shadow: 0 10px 25px rgba(226, 0, 1, 0.2);
     }
   `;
 

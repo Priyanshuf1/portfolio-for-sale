@@ -38,7 +38,7 @@
     .glb-why-us-header h2 {
       font-size: clamp(2rem, 4vw, 3rem);
       margin: 0 0 10px;
-      background: linear-gradient(180deg, #ff9999 0%, #e20001 50%, #7f0001 100%);
+      background: linear-gradient(180deg, #e20001 0%, #990000 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;
@@ -175,7 +175,7 @@
     .glb-team-header h2 {
       font-size: clamp(2rem, 4vw, 3rem);
       margin: 0 0 10px;
-      background: linear-gradient(180deg, #ff9999 0%, #e20001 50%, #7f0001 100%);
+      background: linear-gradient(180deg, #e20001 0%, #990000 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;

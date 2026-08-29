@@ -218,7 +218,7 @@
       gsap.ticker.lagSmoothing(0);
     }
 
-    const isMobile = window.innerWidth <= 767;
+    const isMobile = window.innerWidth <= 767 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
     // ── HERO — immediate reveal on load ──
     gsap.fromTo(

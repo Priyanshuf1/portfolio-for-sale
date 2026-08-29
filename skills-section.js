@@ -194,7 +194,7 @@
     const cards = section.querySelectorAll('.glb-skill-card');
     if (!cards.length) return;
 
-    const isDesktop = window.innerWidth > 900;
+    const isDesktop = window.innerWidth > 900 && !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
     // Clean up any existing ScrollTrigger for this section/grid
     ScrollTrigger.getAll().forEach(t => {
@@ -392,7 +392,12 @@
     });
 
     // Refresh layout on resize to adapt between grid and stack modes
-    window.addEventListener('resize', initSkillsStackingAnimation, { passive: true });
+    let lastWidth = window.innerWidth;
+    window.addEventListener('resize', () => {
+      if (window.innerWidth === lastWidth) return;
+      lastWidth = window.innerWidth;
+      initSkillsStackingAnimation();
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading') {

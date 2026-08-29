@@ -1004,9 +1004,12 @@ footer.glb-footer {
   .hero-title-text br { display: none; }
   .hero-cta-row { flex-direction: column !important; align-items: center !important; gap: 10px; width: 100%; }
   .btn-primary, .btn-secondary {
-    width: 100%; text-align: center; padding: 14px 20px !important;
-    font-size: 15px; border-radius: 14px !important; justify-content: center;
-    display: flex; align-items: center;
+    width: 100%; max-width: 300px; margin: 0 auto; text-align: center; padding: 13px 24px !important;
+    font-size: 14px; font-weight: 700; border-radius: 30px !important; justify-content: center;
+    display: inline-flex; align-items: center; box-shadow: 0 4px 12px rgba(226, 0, 1, 0.12);
+  }
+  .btn-secondary {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   }
   .hero-metrics-row { flex-wrap: wrap; justify-content: center; gap: 10px !important; }
   .hero-metric-item { flex-direction: column; align-items: center; text-align: center; min-width: 80px; }
@@ -1068,8 +1071,8 @@ footer.glb-footer {
   #glb-skills-section { padding: 56px 5% !important; }
   .glb-skills-tabs-nav { flex-wrap: wrap !important; gap: 6px !important; justify-content: center; }
   .glb-skills-tab { font-size: 12px !important; padding: 6px 12px !important; }
-  .glb-skills-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
-  .glb-skill-card { padding: 12px 10px !important; border-radius: 12px !important; }
+  .glb-skills-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+  .glb-skill-card { padding: 20px !important; border-radius: 16px !important; }
 
   /* Location / Map */
   .glb-location-section { padding: 56px 5% !important; }
@@ -1270,20 +1273,28 @@ footer.glb-footer {
   white-space: nowrap;
   border-top: 1px solid rgba(0,0,0,0.05);
   border-bottom: 1px solid rgba(0,0,0,0.05);
-  padding: 14px 0;
+  padding: 20px 0;
+  background: rgba(0, 0, 0, 0.01);
 }
 .glm-marquee-text-track {
   display: inline-flex;
-  gap: 60px;
-  animation: glmTextMarquee 20s linear infinite;
+  gap: 16px;
+  animation: glmTextMarquee 25s linear infinite;
+  align-items: center;
 }
-.glm-marquee-text-track span {
-  font-size: 13px;
+.glm-marquee-text-track .marquee-capsule {
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  color: #111111;
+  background: #FFFDF0;
+  border: 1px solid rgba(226, 160, 0, 0.2);
+  border-radius: 30px;
+  padding: 8px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
   flex-shrink: 0;
+  white-space: nowrap;
 }
 @keyframes glmTextMarquee {
   from { transform: translateX(0); }

@@ -7,7 +7,7 @@
       box-sizing: border-box;
       position: relative;
       z-index: 10;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(0,0,0,0.05);
     }
     .glb-reviews-title-wrap {
       text-align: center;
@@ -17,14 +17,14 @@
     .glb-reviews-title-wrap h2 {
       font-size: clamp(2rem, 4vw, 3rem);
       margin: 0 0 10px;
-      background: linear-gradient(180deg, #FFFFFF 0%, #888888 100%);
+      background: linear-gradient(180deg, #111111 0%, #444444 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;
       font-weight: 700;
     }
     .glb-reviews-title-wrap p {
-      color: #888;
+      color: #666;
       font-size: 1.1rem;
       margin: 0;
     }
@@ -51,14 +51,15 @@
     }
     .glb-review-card-premium {
       flex: 0 0 350px;
-      background: transparent;
+      background: #FFFDF0;
       border-radius: 16px;
       padding: 28px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
       gap: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(226, 160, 0, 0.15);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
       white-space: normal;
     }
     .glb-review-header {
@@ -70,11 +71,11 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #4ade80, #3b82f6);
+      background: linear-gradient(135deg, #e20001, #ffc72c);
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #000;
+      color: #fff;
       font-weight: 700;
       font-size: 18px;
       flex-shrink: 0;
@@ -86,22 +87,22 @@
     }
     .glb-review-name {
       margin: 0;
-      color: #fff;
+      color: #111;
       font-size: 18px;
       font-weight: 600;
     }
     .glb-review-role {
       margin: 0;
-      color: rgba(255,255,255,0.5);
+      color: #666;
       font-size: 13px;
     }
     .glb-review-divider {
       height: 1px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(0, 0, 0, 0.08);
       width: 100%;
     }
     .glb-review-text {
-      color: rgba(255,255,255,0.8);
+      color: #333;
       font-size: 15px;
       line-height: 1.6;
       margin: 0;
@@ -115,7 +116,7 @@
       margin-top: 6px;
     }
     .glb-review-score {
-      color: #fff;
+      color: #111;
       font-size: 16px;
       font-weight: 600;
     }
