@@ -32,7 +32,7 @@
   <title>Global Logic Media</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css?v=1.1">
 
   <!-- GSAP Core and ScrollTrigger for animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -53,7 +53,7 @@
     <div class="glb-header-container">
       <div class="glb-logo-container">
         <a href="#hero" class="glb-logo-link">
-          <img src="./logo.png" alt="Global Logic Media Logo" class="glb-logo-img">
+          <img src="./logo_icon.png" alt="Global Logic Media Logo" class="glb-logo-img">
         </a>
       </div>
       
@@ -62,8 +62,6 @@
         <a href="#hero" class="glb-nav-active">Home</a>
         <a href="#about-me">About</a>
         <a href="#services">Services</a>
-        <a href="#projects">Work</a>
-        <a href="#faq">FAQ</a>
         <a href="./blog.html">Blog</a>
         <a href="#contact">Contact us</a>
       </nav>
@@ -71,13 +69,13 @@
       <!-- Header Action Buttons (Call Button & Mobile Menu Toggle) -->
       <div class="glb-header-actions">
         <!-- Call Button -->
-        <a href="tel:+917570060896" class="glb-call-btn" title="Call Us">
+        <a href="tel:+919208111603" class="glb-call-btn" title="Call Us">
           <span class="glb-call-icon-wrap">
             <svg class="glb-call-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
             </svg>
           </span>
-          <span class="glb-call-number">+91 75700 60896</span>
+          <span class="glb-call-number">+91 92081 11603</span>
         </a>
         
         <!-- Mobile Menu Toggle Button -->
@@ -95,20 +93,18 @@
     <div class="glb-drawer-overlay" id="glbDrawerOverlay"></div>
     <div class="glb-drawer-content">
       <div class="glb-drawer-header">
-        <img src="./logo.png" alt="Global Logic Media Logo" class="glb-drawer-logo">
+        <img src="./logo_icon.png" alt="Global Logic Media Logo" class="glb-drawer-logo">
         <button class="glb-drawer-close" id="glbDrawerClose" aria-label="Close Menu">&times;</button>
       </div>
       <nav class="glb-drawer-nav">
         <a href="#hero" class="glb-drawer-link">Home</a>
         <a href="#about-me" class="glb-drawer-link">About</a>
         <a href="#services" class="glb-drawer-link">Services</a>
-        <a href="#projects" class="glb-drawer-link">Work</a>
-        <a href="#faq" class="glb-drawer-link">FAQ</a>
         <a href="./blog.html" class="glb-drawer-link">Blog</a>
         <a href="#contact" class="glb-drawer-link">Contact us</a>
       </nav>
       <div class="glb-drawer-footer">
-        <a href="tel:+917570060896" class="glb-drawer-call-btn">
+        <a href="tel:+919208111603" class="glb-drawer-call-btn">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
           </svg>
@@ -298,11 +294,17 @@
         <div class="about-content-col">
           <span class="badge-pill-gold" style="align-self: flex-start;">FAQ's</span>
           <h2 class="h2-fluid">Common Questions</h2>
-          <p class="body-fluid" style="color: var(--text-muted);">
+          <p class="body-fluid" style="color: var(--text-muted); font-size: 1.25rem !important; font-weight: 500 !important; line-height: 1.6 !important; margin-bottom: 24px !important;">
             Find answers to common questions about our design process, capabilities, and digital marketing strategies.
           </p>
-          <div style="margin-top: 10px;">
-            <button class="btn-secondary" onclick="document.getElementById('glbTriggerBook').click();">Book a Free Call</button>
+          <div style="margin-top: 15px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+            <button class="btn-primary" style="padding: 14px 28px; font-size: 16px; font-weight: 700; border-radius: 30px;" onclick="document.getElementById('glbTriggerBook').click();">Book a Free Call</button>
+            <a href="https://wa.me/919208111603" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="background: #25D366 !important; color: #fff !important; border-color: #25D366 !important; padding: 14px 28px; font-size: 16px; font-weight: 700; border-radius: 30px; display: inline-flex; align-items: center; gap: 8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
+              </svg>
+              Chat on WhatsApp
+            </a>
           </div>
         </div>
         
@@ -433,19 +435,19 @@
   <!-- ── Functional Modules & Database Scripts ── -->
   <script src="firebase-init.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="add-review-modal.js"></script>
-  <script src="book-a-call-modal.js"></script>
-  <script src="admin-panel.js"></script>
-  <script src="blog-section.js"></script>
-  <script src="location-section.js"></script>
-  <script src="company-details.js"></script>
-  <script src="skills-section.js"></script>
-  <script src="native-sections.js"></script>
-  <script src="brand-logos-marquee.js"></script>
-  <script src="about-us-modal.js"></script>
-  <script src="custom-footer.js"></script>
-  <script src="image-trail-section.js"></script>
-  <script src="main.js"></script>
+  <script src="add-review-modal.js?v=1.1"></script>
+  <script src="book-a-call-modal.js?v=1.1"></script>
+  <script src="admin-panel.js?v=1.1"></script>
+  <script src="blog-section.js?v=1.1"></script>
+  <script src="location-section.js?v=1.1"></script>
+  <script src="company-details.js?v=1.1"></script>
+  <script src="skills-section.js?v=1.1"></script>
+  <script src="native-sections.js?v=1.1"></script>
+  <script src="brand-logos-marquee.js?v=1.1"></script>
+  <script src="about-us-modal.js?v=1.1"></script>
+  <script src="custom-footer.js?v=1.1"></script>
+  <script src="image-trail-section.js?v=1.1"></script>
+  <script src="main.js?v=1.1"></script>
 
 </body>
 </html>

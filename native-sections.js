@@ -15,11 +15,9 @@
       padding: 0 20px;
     }
     .glb-reviews-title-wrap h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
       margin: 0 0 10px;
-      background: linear-gradient(180deg, #111111 0%, #444444 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #111827;
       letter-spacing: -1px;
       font-weight: 900;
     }
@@ -200,6 +198,11 @@
             ${trackContent}
             ${trackContent}
           </div>
+        </div>
+        <div class="glb-reviews-cta-wrap" style="text-align: center; margin-top: 30px;">
+          <button id="glbTriggerReview" class="btn-primary" style="padding: 12px 28px; font-size: 15px; font-weight: 700; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">
+            Leave a Review
+          </button>
         </div>
       `;
 

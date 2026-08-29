@@ -10,7 +10,7 @@ const observerScript = `
     'Start a Conversation': 'Get Started Today',
     'Helping businesses standout with brand identity packaging that captivates and converts effectively.': 'We empower businesses to enhance online traffic, generate leads, and increase revenue through growth-focused marketing.',
     'Have a project in mind? Let\\'s build something remarkable together.': 'Ready to grow your business? Let\\'s build something remarkable together.',
-    'priyanshu@creative.dev': '+91-7570060896 | hello@globallogicmedia.com',
+    'priyanshu@creative.dev': '+91-9208111603 | hello@globallogicmedia.com',
     'Creative Director & Lead Designer': 'Leading Digital Marketing Agency in Lucknow',
     'What services do you provide?': 'What digital marketing services do you provide?',
     'I specialize in brand identity and package design, with experience in web design, UI/UX, and to create brand experiences.': 'We specialize in SEO, Google Ads, Meta Ads, Social Media Marketing, and Website Design to help businesses grow online.'

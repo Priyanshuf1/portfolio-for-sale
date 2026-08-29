@@ -211,14 +211,6 @@
   document.head.appendChild(styleEl);
 
   const modalHTML = `
-    <!-- Floating Trigger -->
-    <div class="glb-floating-btn-review" id="glbTriggerReview">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-      </svg>
-      Leave Review
-    </div>
-
     <!-- Modal Overlay -->
     <div class="glb-modal-overlay-review" id="glbOverlayReview">
       <div class="glb-modal-content-review">
@@ -263,7 +255,6 @@
   wrapper.innerHTML = modalHTML;
   document.body.appendChild(wrapper);
 
-  const trigger = document.getElementById('glbTriggerReview');
   const overlay = document.getElementById('glbOverlayReview');
   const closeBtn = document.getElementById('glbCloseReview');
   const form = document.getElementById('glbReviewForm');
@@ -281,7 +272,13 @@
     overlay.classList.remove('active');
   }
 
-  trigger.addEventListener('click', openModal);
+  // Use event delegation for dynamically injected trigger review button
+  document.addEventListener('click', (e) => {
+    if (e.target && e.target.closest('#glbTriggerReview')) {
+      openModal();
+    }
+  });
+
   closeBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) closeModal();

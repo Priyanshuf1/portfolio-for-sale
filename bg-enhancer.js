@@ -366,7 +366,6 @@
     /* 2. Secondary CTA Buttons (Dark Slate, White Text, Turns Red on Hover) */
     html body a[href*="project"],
     html body a[href*="services"],
-    html body .glb-floating-btn,
     html body .glass-card.px-6.py-3,
     html body .glb-home-blogs-btn {
       background: #1f2937 !important;
@@ -428,6 +427,7 @@
     html body a[data-framer-name="Primary"] svg, html body a[data-framer-name="Primary"] svg *,
     html body .framer-caRRT svg, html body .framer-caRRT svg *,
     html body .glb-floating-btn-book svg, html body .glb-floating-btn-book svg *,
+    html body .glb-floating-btn svg, html body .glb-floating-btn svg *,
     html body .glb-modal-book-btn svg, html body .glb-modal-book-btn svg * {
       --21h8s6: #ffffff !important;
       stroke: #ffffff !important;

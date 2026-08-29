@@ -100,22 +100,6 @@
       transform: translateY(-3px);
       box-shadow: 0 10px 25px rgba(226, 0, 1, 0.05);
     }
-    @media (min-width: 901px) {
-      .glb-skills-grid {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 0 !important;
-        max-width: 850px !important;
-        margin: 40px auto 0 !important;
-        position: relative !important;
-      }
-      .glb-skill-card {
-        width: 100% !important;
-        margin-bottom: 0 !important;
-        box-sizing: border-box !important;
-      }
-    }
     .glb-skill-top {
       display: flex;
       justify-content: space-between;
@@ -190,13 +174,12 @@
     { title: "Custom Web Architecture", category: "development", icon: "⚡", badge: "100/100 Speed", desc: "Next.js, Vite React, Framer, and custom ultra-fast web development.", level: 96 },
     { title: "UI/UX & Brand Design", category: "design", icon: "🎨", badge: "Awwwards Standard", desc: "Figma design systems, glassmorphism, 3D interactive layouts, and brand identity.", level: 94 },
     { title: "Social Media Growth", category: "marketing", icon: "📲", badge: "3x Organic Reach", desc: "Viral short-form video strategy, engagement, and multi-channel brand building.", level: 92 },
-    { title: "Conversion Optimization", category: "marketing", icon: "📈", badge: "3x Lead Rate", desc: "A/B testing, user journey mapping, and conversion funnel engineering.", level: 95 },
     { title: "Analytics & Tracking", category: "development", icon: "📊", badge: "Data-Driven", desc: "GA4, Google Tag Manager, custom event tracking, and ROI attribution dashboards.", level: 90 },
     { title: "Copywriting & Strategy", category: "design", icon: "✍️", badge: "High Converting", desc: "Persuasive sales copy, landing page messaging, and SEO editorial content.", level: 93 },
     
     // Additional Max UI/UX Skills
     { title: "Figma Design Systems", category: "design", icon: "💎", badge: "Pro Components", desc: "Reusable component libraries, variables, advanced auto-layout, and clickable high-fi prototypes.", level: 97 },
-    { title: "Motion Physics & GSAP", category: "design", icon: "🎬", badge: "60fps Smoothness", desc: "Custom cubic-bezier transitions, Lenis scroll integration, and fluid GSAP choreographies.", level: 94 },
+    { title: "Shoot & Editing", category: "design", icon: "🎬", badge: "Production Pro", desc: "Professional commercial shoots, post-production video editing, sound design, and color grading.", level: 94 },
     { title: "User Research & Audit", category: "design", icon: "🔍", badge: "Heuristics Expert", desc: "Heatmaps, click maps, user journeys, behavioral heuristics, and usability testing.", level: 91 },
     { title: "Growth Funnel Engineering", category: "marketing", icon: "🎯", badge: "High Convert", desc: "High-speed landing page architecture, CRM automations, lead captures, and A/B split-tests.", level: 96 }
   ];
@@ -207,51 +190,72 @@
     const section = document.getElementById('glb-skills-section');
     if (!section) return;
 
+    const grid = document.getElementById('glbSkillsGrid');
     const cards = Array.from(section.querySelectorAll('.glb-skill-card'));
     if (!cards.length) return;
 
-    // Kill any existing ScrollTriggers and timelines for this section
+    // Clean up any existing ScrollTriggers and active animations for this section
     ScrollTrigger.getAll().forEach(t => {
-      if (t.trigger === section || cards.includes(t.trigger)) t.kill(true);
-    });
-    if (activeSkillsTimeline) { activeSkillsTimeline.kill(); activeSkillsTimeline = null; }
-    gsap.killTweensOf(cards);
-
-    // Cards are ALWAYS fully visible — only animate progress bar fill & percentage count on scroll
-    cards.forEach((card) => {
-      const fill = card.querySelector('.glb-skill-progress-fill');
-      const pct = card.querySelector('.glb-skill-percent');
-      const level = parseInt(pct ? pct.dataset.level : 0);
-
-      // Ensure card itself is 100% visible
-      gsap.set(card, { opacity: 1, y: 0, scale: 1 });
-
-      if (fill && pct) {
-        let countObj = { val: 0 };
-        gsap.fromTo(fill,
-          { width: '0%' },
-          {
-            width: `${level}%`,
-            duration: 1.0,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 92%',
-              toggleActions: 'play none none none',
-              onEnter: () => {
-                gsap.fromTo(countObj, { val: 0 }, {
-                  val: level,
-                  duration: 1.0,
-                  ease: 'power2.out',
-                  onUpdate: () => { pct.textContent = Math.round(countObj.val) + '%'; }
-                });
-              }
-            }
-          }
-        );
+      if (t.trigger === section || t.trigger === grid || cards.includes(t.trigger)) {
+        t.kill(true);
       }
     });
 
+    if (activeSkillsTimeline) {
+      activeSkillsTimeline.kill();
+      activeSkillsTimeline = null;
+    }
+    gsap.killTweensOf(cards);
+
+    // Reset layout height and styles
+    grid.style.minHeight = '';
+    grid.style.height = '';
+
+    // Reveal cards individually as the scroll reaches each card's real position in flow
+    cards.forEach(card => {
+      const fill = card.querySelector('.glb-skill-progress-fill');
+      const pct = card.querySelector('.glb-skill-percent');
+      if (!fill || !pct) return;
+      const level = parseInt(pct.dataset.level || 0);
+
+      // Reset width
+      gsap.set(fill, { width: '0%' });
+      pct.textContent = '0%';
+
+      let countObj = { val: 0 };
+      gsap.fromTo(card,
+        { opacity: 0, y: 35, scale: 0.96 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 92%',
+            toggleActions: 'play reset play reset',
+            onEnter: () => {
+              gsap.to(fill, { width: `${level}%`, duration: 1.0, ease: 'power2.out' });
+              gsap.fromTo(countObj, { val: 0 }, {
+                val: level,
+                duration: 1.0,
+                ease: 'power2.out',
+                onUpdate: () => {
+                  pct.textContent = Math.round(countObj.val) + '%';
+                }
+              });
+            },
+            onLeaveBack: () => {
+              gsap.set(fill, { width: '0%' });
+              pct.textContent = '0%';
+            }
+          }
+        }
+      );
+    });
+
+    // Force recalculation of scroll coordinates
     ScrollTrigger.refresh();
   }
 
@@ -281,13 +285,11 @@
       </div>
     `).join('');
 
-    // Trigger card stacking calculations
+    // Trigger card reveal animation
     setTimeout(initSkillsStackingAnimation, 60);
   }
 
   function injectSkillsSection() {
-    if (document.getElementById('glb-skills-section')) return;
-
     const html = `
       <div class="glb-skills-section" id="glb-skills-section">
         <div class="glb-skills-inner">
@@ -309,51 +311,73 @@
       </div>
     `;
 
-    const styleEl = document.createElement('style');
-    styleEl.innerHTML = styles;
-    document.head.appendChild(styleEl);
+    let container = document.getElementById('glb-skills-section');
+    if (!container) {
+      container = document.createElement('section');
+      container.id = 'glb-skills-section';
+      container.className = 'glb-skills-section';
+      container.innerHTML = html;
 
-    const container = document.createElement('section');
-    container.innerHTML = html;
+      const styleEl = document.createElement('style');
+      styleEl.innerHTML = styles;
+      document.head.appendChild(styleEl);
 
-    let reviewsSec = document.getElementById('glb-reviews-section');
-    let blogSec = document.querySelector('.glb-home-blogs-section-wrapper');
-    let footer = document.querySelector('footer.glb-footer');
-    let body = document.body;
+      renderSkills('all');
 
-    if (reviewsSec && reviewsSec.parentNode) {
-      reviewsSec.parentNode.insertBefore(container.firstElementChild, reviewsSec);
-    } else if (blogSec && blogSec.parentNode) {
-      blogSec.parentNode.insertBefore(container.firstElementChild, blogSec);
-    } else if (footer && footer.parentNode) {
-      footer.parentNode.insertBefore(container.firstElementChild, footer);
+      // Bind tabs once when section is created
+      setTimeout(() => {
+        document.querySelectorAll('.glb-skills-tab').forEach(tab => {
+          tab.addEventListener('click', () => {
+            document.querySelectorAll('.glb-skills-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            renderSkills(tab.dataset.filter);
+            if (window.rabtoPlayClickSFX) window.rabtoPlayClickSFX(750, 'sine', 0.08);
+          });
+        });
+      }, 50);
     } else {
-      body.appendChild(container.firstElementChild);
+      const grid = document.getElementById('glbSkillsGrid');
+      if (grid && grid.children.length === 0) {
+        renderSkills('all');
+      }
     }
 
-    renderSkills('all');
+    // Always position it before #why-choose-us (or #glb-company-details-wrapper)
+    const whyUs = document.getElementById('why-choose-us') || document.getElementById('glb-company-details-wrapper');
+    const reviewsSec = document.getElementById('glb-reviews-section');
+    const blogSec = document.querySelector('.glb-home-blogs-section-wrapper');
+    const footer = document.querySelector('footer.glb-footer');
 
-    document.querySelectorAll('.glb-skills-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.glb-skills-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        renderSkills(tab.dataset.filter);
-        if (window.rabtoPlayClickSFX) window.rabtoPlayClickSFX(750, 'sine', 0.08);
-      });
-    });
-
-    // Refresh layout on resize to adapt between grid and stack modes
-    let lastWidth = window.innerWidth;
-    window.addEventListener('resize', () => {
-      if (window.innerWidth === lastWidth) return;
-      lastWidth = window.innerWidth;
-      initSkillsStackingAnimation();
-    }, { passive: true });
+    if (whyUs && whyUs.parentNode) {
+      if (container.nextElementSibling !== whyUs) {
+        whyUs.parentNode.insertBefore(container, whyUs);
+      }
+    } else if (reviewsSec && reviewsSec.parentNode) {
+      if (container.nextElementSibling !== reviewsSec) {
+        reviewsSec.parentNode.insertBefore(container, reviewsSec);
+      }
+    } else if (blogSec && blogSec.parentNode) {
+      if (container.nextElementSibling !== blogSec) {
+        blogSec.parentNode.insertBefore(container, blogSec);
+      }
+    } else if (footer && footer.parentNode) {
+      if (container.nextElementSibling !== footer) {
+        footer.parentNode.insertBefore(container, footer);
+      }
+    } else if (!container.parentNode) {
+      document.body.appendChild(container);
+    }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(injectSkillsSection, 300));
-  } else {
-    setTimeout(injectSkillsSection, 300);
-  }
+  // Initial and recurring check
+  injectSkillsSection();
+  setInterval(injectSkillsSection, 600);
+
+  // Refresh layout on resize
+  let lastWidth = window.innerWidth;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === lastWidth) return;
+    lastWidth = window.innerWidth;
+    initSkillsStackingAnimation();
+  }, { passive: true });
 })();

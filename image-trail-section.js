@@ -16,10 +16,11 @@
       return; // Both fully built — nothing to do
     }
 
-    // ── Determine insertion anchor: before reviews section or before footer ──
+    // ── Determine insertion anchor: before location section (map), reviews section, or footer ──
+    var mapSec = document.getElementById('glb-location');
     var reviewsSec = document.getElementById('glb-reviews-section');
     var footerEl = document.querySelector('footer.glb-footer') || document.querySelector('footer');
-    var insertAnchor = reviewsSec || footerEl;
+    var insertAnchor = mapSec || reviewsSec || footerEl;
     if (!insertAnchor) return;
 
     // ── 1. Create or position the Recent Work Marquee Section ─────────────────
@@ -195,15 +196,10 @@
           <h2 style="color:#ffffff;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.1;font-family:sans-serif;margin:0;">Proven Marketing Results</h2>
         </div>
         <div class="glm-marquee-wrap">
-          <div class="glm-marquee-row left" id="marquee-row-1"></div>
           <div class="glm-marquee-row right" id="marquee-row-2"></div>
         </div>
       `;
 
-      var row1Images = [
-        './work1.png', './work2.png', './work3.png', './work4.png',
-        './ss5.png', './ss6.png', './ss7.png', './ss8.png'
-      ];
       var row2Images = [
         './ss9.png', './ss10.png', './ss11.png', './ss12.png',
         './ss13.png', './ss14.png', './ss15.png', './ss16.png'
@@ -229,7 +225,6 @@
         }, 150);
       }
 
-      fillRow('marquee-row-1', row1Images);
       fillRow('marquee-row-2', row2Images);
 
       marqueeSection.dataset.marqueeBuilt = '1';

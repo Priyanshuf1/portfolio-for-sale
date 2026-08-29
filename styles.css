@@ -318,11 +318,13 @@ nav.glb-nav-menu a.glb-nav-active {
 
 /* Mobile Menu Toggle Hamburger */
 .glb-menu-toggle {
-  display: none; /* hidden on desktop */
+  display: flex; /* visible on all screens */
   flex-direction: column;
-  justify-content: space-between;
-  width: 20px;
-  height: 14px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  min-width: 44px;
+  min-height: 44px;
   background: transparent;
   border: none;
   padding: 0;
@@ -331,10 +333,11 @@ nav.glb-nav-menu a.glb-nav-active {
   outline: none;
 }
 .glb-menu-bar {
-  width: 100%;
+  width: 22px;
   height: 2px;
   background-color: #111827;
-  border-radius: 2px;
+  display: block;
+  border-radius: 1px;
   transition: all 0.3s ease;
 }
 
@@ -819,6 +822,7 @@ nav.glb-nav-menu a.glb-nav-active {
 /* ── FAQ Section ── */
 #faq {
   border-top: 1px solid rgba(0,0,0,0.04);
+  border-bottom: 1px solid rgba(0,0,0,0.05); /* Separator line below FAQ */
 }
 
 .faq-grid {
@@ -1143,21 +1147,7 @@ footer.glb-footer {
   }
   .section-header { margin-bottom: 36px !important; text-align: center; }
 
-  /* Sleek mobile-first floating pill buttons (Book a Call, About Us, Leave Review) */
-  html body .glb-floating-btn-review,
-  html body #glbTriggerReview {
-    display: inline-flex !important;
-    position: fixed !important;
-    bottom: 16px !important;
-    left: 16px !important;
-    right: auto !important;
-    font-size: clamp(10px, 3.2vw, 12px) !important;
-    padding: 8px 16px !important;
-    min-height: 40px !important;
-    border-radius: 25px !important;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
-    z-index: 9999 !important;
-  }
+
   html body .glb-floating-btn-book,
   html body #glbBookACallFloating,
   html body #glbTriggerBook {
@@ -1613,6 +1603,8 @@ footer.glb-footer {
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
 }
 .glm-word-inner {
   display: inline-block;

@@ -174,7 +174,7 @@
         scrollTrigger: {
           trigger: h,
           start: 'top 85%',
-          toggleActions: 'play reset play reset'
+          toggleActions: 'play none none none'
         }
       });
     });
@@ -230,10 +230,12 @@
     revealSections.forEach(selector => {
       const section = document.querySelector(selector);
       if (!section) return;
+      if (section.classList.contains('glb-anim-initialized')) return;
+      section.classList.add('glb-anim-initialized');
 
       // Select inner elements that should animate in smoothly on scroll (excluding .glb-skill-card to avoid clashes)
       const anims = section.querySelectorAll(
-        '.badge-pill-red, .badge-pill-gold, .badge-pill-red, .badge-pill-gold, .body-fluid, p, .btn-primary, .btn-secondary, .about-stat-card, .project-card, .service-card-item, .faq-row, .glb-review-card-premium, .footer-inner > *, .services-image-col, .glb-map-container-box, .glb-contact-card'
+        '.badge-pill-red, .badge-pill-gold, .badge-pill-red, .badge-pill-gold, .body-fluid, .section-header p, .glb-reviews-title-wrap p, .glb-why-us-header p, .glb-team-header p, .glb-skills-header p, .btn-primary, .btn-secondary, .about-stat-card, .project-card, .service-card-item, .faq-row, .glb-review-card-premium, .footer-inner > *, .services-image-col, .glb-map-container-box, .glb-contact-card'
       );
       if (anims.length === 0) return;
 
@@ -248,7 +250,7 @@
           scrollTrigger: {
             trigger: section,
             start: isMobile ? 'top 90%' : 'top 82%',
-            toggleActions: 'play reset play reset'
+            toggleActions: 'play none none none'
           }
         }
       );

@@ -181,10 +181,10 @@
                 <div class="glb-contact-card-icon">📞</div>
                 <div class="glb-contact-card-info">
                   <span class="glb-contact-card-label">Direct Phone</span>
-                  <span class="glb-contact-card-val">+91-7570060896 / +91-9208111603</span>
+                  <span class="glb-contact-card-val">+91-9208111603</span>
                 </div>
               </div>
-              <a href="tel:+917570060896" class="glb-contact-card-action">Call Us 📞</a>
+              <a href="tel:+919208111603" class="glb-contact-card-action">Call Us 📞</a>
             </div>
             <div class="glb-contact-card">
               <div class="glb-contact-card-left">
