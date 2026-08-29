@@ -162,9 +162,10 @@ console.error = function(...args) {
   @media (max-width: 767px) {
     /* 1. Scale down logo header on mobile to prevent overflow & overlap */
     .framer-1lcme9 {
-      width: 150px !important;
+      width: 160px !important;
       height: 48px !important;
-      background-position: left center !important;
+      background: none !important;
+      background-image: none !important;
     }
     .framer-11n6lfm-container {
       height: 60px !important;
@@ -176,8 +177,14 @@ console.error = function(...args) {
       overflow: visible !important;
     }
     /* 3. Tighten section spacing to eliminate massive blank page gaps */
-    #hero, #about-me, #process, #services, #faq,
-    [data-framer-name="hero"],
+    #hero,
+    [data-framer-name="hero"] {
+      min-height: auto !important;
+      height: auto !important;
+      padding-top: 100px !important; /* Pushes content down to clear the floating header */
+      padding-bottom: 40px !important;
+    }
+    #about-me, #process, #services, #faq,
     [data-framer-name="about me section"],
     [data-framer-name="process"],
     [data-framer-name="Services"],
