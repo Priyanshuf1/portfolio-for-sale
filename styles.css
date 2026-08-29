@@ -1144,6 +1144,7 @@ footer.glb-footer {
   header.glb-site-header {
     top: 8px !important;
     width: calc(100% - 16px) !important;
+    max-width: none !important;
     padding: 0 !important;
     border-radius: 24px !important;
   }
