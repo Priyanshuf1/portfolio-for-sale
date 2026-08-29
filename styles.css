@@ -1206,7 +1206,8 @@ footer.glb-footer {
     padding: 0 16px !important;
   }
   .glb-logo-img {
-    height: 34px !important;
+    height: 38px !important;
+    width: auto !important;
   }
   .glb-call-btn {
     padding: 10px 16px !important;
@@ -1221,10 +1222,22 @@ footer.glb-footer {
   }
   .glb-menu-toggle {
     display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 4px !important;
     min-width: 44px !important;
     min-height: 44px !important;
-    align-items: center !important;
-    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+  .glb-menu-bar {
+    width: 22px !important;
+    height: 2px !important;
+    background-color: #111827 !important;
+    display: block !important;
+    border-radius: 1px !important;
   }
   nav.glb-nav-menu {
     display: none !important;
@@ -1304,12 +1317,20 @@ footer.glb-footer {
   .about-visual-col { width: 100%; border-radius: 20px; overflow: hidden; }
   .about-tags-row { justify-content: center; }
 
-  /* Design Services Section — Phone Layout Order (Text & Cards First, Image Below) */
   #services { padding: 56px 5% !important; }
   .services-grid-wrap {
     display: flex !important;
     flex-direction: column-reverse !important;
     gap: 28px !important;
+  }
+  #services .process-img-wrap {
+    max-height: 220px !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+  }
+  #services .process-img-wrap img {
+    height: 100% !important;
+    object-fit: cover !important;
   }
   .services-cards-col { grid-template-columns: 1fr !important; gap: 16px; }
   .service-card-item {
