@@ -64,10 +64,8 @@
       marqueeSection.parentNode.insertBefore(instaSection, marqueeSection.nextSibling);
     }
 
-    // Inject styles and HTML content ONCE — use data-built flag to prevent re-injection
-    if (!instaSection.dataset.elfsightBuilt) {
-      // Combined Stylesheet for Marquee, Bento Grid, and Story Rings
-      const styles = `
+    // Combined Stylesheet for Marquee, Bento Grid, and Story Rings
+    const styles = `
 <style id="glm-combined-layouts-styles">
   :root {
     --insta-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
@@ -185,11 +183,12 @@
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 `;
-      if (!document.getElementById('glm-combined-layouts-styles')) {
-        document.head.insertAdjacentHTML('beforeend', styles);
-      }
+    if (!document.getElementById('glm-combined-layouts-styles')) {
+      document.head.insertAdjacentHTML('beforeend', styles);
+    }
 
-      // ── Populate Marquee Section HTML ─────────────────────────────
+    // ── 3. Populate Marquee Section HTML (Uncoupled from Instagram Check) ─────
+    if (!marqueeSection.dataset.marqueeBuilt) {
       marqueeSection.innerHTML = `
         <div style="text-align:center;pointer-events:none;user-select:none;">
           <p style="color:#FF1744;font-size:clamp(12px,1.2vw,16px);letter-spacing:0.4em;text-transform:uppercase;margin-bottom:15px;font-family:sans-serif;font-weight:700;">our clients</p>
@@ -233,10 +232,11 @@
       fillRow('marquee-row-1', row1Images);
       fillRow('marquee-row-2', row2Images);
 
-      // Mark marquee as fully built
       marqueeSection.dataset.marqueeBuilt = '1';
+    }
 
-      // ── Populate Instagram Section with Elfsight Widget ────────────
+    // ── 4. Populate Instagram Section with Elfsight Widget ───────────────────
+    if (!instaSection.dataset.elfsightBuilt) {
       instaSection.innerHTML = `
         <div style="text-align:center; margin-bottom: 40px;">
           <span style="display:inline-block; padding: 5px 16px; background: rgba(226,0,1,0.1); border: 1px solid rgba(226,0,1,0.3); color: #e20001; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 20px; margin-bottom: 14px;">Instagram</span>
@@ -247,10 +247,8 @@
         </div>
       `;
 
-      // Mark as built so we never re-inject
       instaSection.dataset.elfsightBuilt = '1';
 
-      // Load Elfsight platform script — only once globally
       if (!document.querySelector('script[src*="elfsightcdn.com"]')) {
         const script = document.createElement('script');
         script.src = "https://elfsightcdn.com/platform.js";

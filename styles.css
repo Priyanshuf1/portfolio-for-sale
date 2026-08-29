@@ -53,6 +53,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 130px;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
@@ -62,6 +64,7 @@ body {
   color: var(--text);
   line-height: 1.5;
   overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* Typography elements */
@@ -1140,14 +1143,50 @@ footer.glb-footer {
   }
   .section-header { margin-bottom: 36px !important; text-align: center; }
 
-  /* Hide Desktop Floating Action Widgets on Mobile */
-  .glb-floating-btn-review,
-  .glb-floating-btn-book,
-  .glb-floating-btn-about,
-  #glbTriggerReview,
-  #glbBookACallFloating,
-  #glbAboutUsFloating {
-    display: none !important;
+  /* Sleek mobile-first floating pill buttons (Book a Call, About Us, Leave Review) */
+  html body .glb-floating-btn-review,
+  html body #glbTriggerReview {
+    display: inline-flex !important;
+    position: fixed !important;
+    bottom: 16px !important;
+    left: 16px !important;
+    right: auto !important;
+    font-size: clamp(10px, 3.2vw, 12px) !important;
+    padding: 8px 16px !important;
+    min-height: 40px !important;
+    border-radius: 25px !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
+    z-index: 9999 !important;
+  }
+  html body .glb-floating-btn-book,
+  html body #glbBookACallFloating,
+  html body #glbTriggerBook {
+    display: inline-flex !important;
+    position: fixed !important;
+    bottom: 64px !important;
+    right: 16px !important;
+    left: auto !important;
+    font-size: clamp(10px, 3.2vw, 12px) !important;
+    padding: 8px 16px !important;
+    min-height: 40px !important;
+    border-radius: 25px !important;
+    box-shadow: 0 4px 14px rgba(226, 0, 1, 0.25) !important;
+    z-index: 9999 !important;
+  }
+  html body .glb-floating-btn-about,
+  html body #glbAboutUsFloating,
+  html body #glbTriggerAbout {
+    display: inline-flex !important;
+    position: fixed !important;
+    bottom: 16px !important;
+    right: 16px !important;
+    left: auto !important;
+    font-size: clamp(10px, 3.2vw, 12px) !important;
+    padding: 8px 16px !important;
+    min-height: 40px !important;
+    border-radius: 25px !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
+    z-index: 9999 !important;
   }
 
   /* Header Mobile Bar */
