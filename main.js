@@ -274,10 +274,10 @@
       if (window.scrollY > 60) {
         header.style.padding = '8px 20px';
         header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.06)';
-      } else {
-        header.style.padding = '';
-        header.style.boxShadow = '';
       }
+    }, { passive: true });
+  }
+
   // ── MOBILE DRAWER MENU ────────────────══════════════════════════════════
   function initMobileDrawerMenu() {
     const toggle = document.getElementById('glbMenuToggle');
