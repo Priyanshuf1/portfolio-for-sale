@@ -8,42 +8,48 @@
   }
 
   function inject() {
-    // ── Determine insertion anchor: after FAQ or after company-details or fallback to before footer ──
-    var faqSec = document.getElementById('faq');
-    var companyWrapper = document.getElementById('glb-company-details-wrapper');
+    // ── Early exit if both sections already built — prevents CSS animation flicker ──
+    var existingMarquee = document.getElementById('glm-image-trail-section');
+    var existingInsta = document.getElementById('glm-instagram-feed-section');
+    if (existingMarquee && existingMarquee.dataset.marqueeBuilt &&
+        existingInsta && existingInsta.dataset.elfsightBuilt) {
+      return; // Both fully built — nothing to do
+    }
+
+    // ── Determine insertion anchor: before reviews section or before footer ──
     var reviewsSec = document.getElementById('glb-reviews-section');
     var footerEl = document.querySelector('footer.glb-footer') || document.querySelector('footer');
-
-    // We want order: ... FAQ → marquee (our clients) → instagram → reviews → footer
-    // Insert marquee right before glb-reviews-section if it exists, else before footer
     var insertAnchor = reviewsSec || footerEl;
     if (!insertAnchor) return;
 
-    // ── 1. Create or update the Recent Work Marquee Section ─────────────────
+    // ── 1. Create or position the Recent Work Marquee Section ─────────────────
     var marqueeSection = document.getElementById('glm-image-trail-section');
     if (!marqueeSection) {
       marqueeSection = document.createElement('section');
       marqueeSection.id = 'glm-image-trail-section';
     }
 
-    // Place marquee right before the anchor (reviews or footer)
+    // Place marquee right before the anchor only if not already there
     if (marqueeSection.nextSibling !== insertAnchor) {
       insertAnchor.parentNode.insertBefore(marqueeSection, insertAnchor);
     }
 
-    marqueeSection.style.cssText = [
-      'position:relative',
-      'width:100%',
-      'min-height:75vh',
-      'background:transparent !important',
-      'display:flex',
-      'flex-direction:column',
-      'align-items:center',
-      'justify-content:center',
-      'overflow:hidden',
-      'padding:60px 0 40px',
-      'z-index:8'
-    ].join(';');
+    // Only set styles once (avoid resetting CSS animation every interval!)
+    if (!marqueeSection.dataset.marqueeBuilt) {
+      marqueeSection.style.cssText = [
+        'position:relative',
+        'width:100%',
+        'min-height:75vh',
+        'background:transparent !important',
+        'display:flex',
+        'flex-direction:column',
+        'align-items:center',
+        'justify-content:center',
+        'overflow:hidden',
+        'padding:60px 0 40px',
+        'z-index:8'
+      ].join(';');
+    }
 
     // ── 2. Create or update the Instagram Feed Section ──────────────────────
     var instaSection = document.getElementById('glm-instagram-feed-section');
@@ -226,6 +232,9 @@
 
       fillRow('marquee-row-1', row1Images);
       fillRow('marquee-row-2', row2Images);
+
+      // Mark marquee as fully built
+      marqueeSection.dataset.marqueeBuilt = '1';
 
       // ── Populate Instagram Section with Elfsight Widget ────────────
       instaSection.innerHTML = `

@@ -210,104 +210,61 @@
     const cards = Array.from(section.querySelectorAll('.glb-skill-card'));
     if (!cards.length) return;
 
-    // Kill existing triggers on this section
+    // Kill any existing ScrollTriggers and timelines for this section
     ScrollTrigger.getAll().forEach(t => {
       if (t.trigger === section || cards.includes(t.trigger)) t.kill(true);
     });
     if (activeSkillsTimeline) { activeSkillsTimeline.kill(); activeSkillsTimeline = null; }
     gsap.killTweensOf(cards);
 
-    const isMobile = window.innerWidth < 901;
+    // Reset all cards to base state
+    cards.forEach(card => {
+      gsap.set(card, { clearProps: 'all' });
+      const fill = card.querySelector('.glb-skill-progress-fill');
+      const pct = card.querySelector('.glb-skill-percent');
+      if (fill) gsap.set(fill, { width: '0%' });
+      if (pct) pct.textContent = '0%';
+    });
 
-    if (isMobile) {
-      // Mobile: simple staggered fade-up per card
-      cards.forEach(card => {
-        gsap.set(card, { clearProps: 'all' });
-        const fill = card.querySelector('.glb-skill-progress-fill');
-        const pct = card.querySelector('.glb-skill-percent');
-        const level = parseInt(pct ? pct.dataset.level : 0);
-        let countObj = { val: 0 };
-        gsap.fromTo(card,
-          { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out',
-            scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play reset play reset',
-              onEnter: () => {
-                if (fill) gsap.to(fill, { width: `${level}%`, duration: 1.0, ease: 'power2.out' });
-                if (pct) gsap.fromTo(countObj, { val: 0 }, { val: level, duration: 1.0, ease: 'power2.out',
-                  onUpdate: () => { pct.textContent = Math.round(countObj.val) + '%'; }
-                });
-              },
-              onLeaveBack: () => {
-                if (fill) gsap.set(fill, { width: '0%' });
-                if (pct) pct.textContent = '0%';
-              }
-            }
-          }
-        );
-      });
-    } else {
-      // Desktop: Rafael Kurosawa-style stacking — each card scrolls in and stacks at top
-      const STACK_TOP = 130; // px from top where cards stack
-      const CARD_OFFSET = 10; // px offset per stacked card for depth illusion
-      const SCROLL_PER_CARD = 300; // px of scroll distance per card reveal
+    // Per-card scroll-reveal: each card fades up + progress bar counts when entering viewport
+    cards.forEach((card, i) => {
+      const fill = card.querySelector('.glb-skill-progress-fill');
+      const pct = card.querySelector('.glb-skill-percent');
+      const level = parseInt(pct ? pct.dataset.level : 0);
+      let countObj = { val: 0 };
 
-      // Reset all cards
-      cards.forEach((card, i) => {
-        gsap.set(card, {
-          position: 'sticky',
-          top: STACK_TOP + i * CARD_OFFSET,
-          zIndex: i + 1,
-          opacity: 0,
-          y: 80,
-          scale: 0.95,
-          clearProps: 'transform'
-        });
-        const fill = card.querySelector('.glb-skill-progress-fill');
-        const pct = card.querySelector('.glb-skill-percent');
-        if (fill) gsap.set(fill, { width: '0%' });
-        if (pct) pct.textContent = '0%';
-      });
-
-      // Set the container height to accommodate the full scroll distance
-      const grid = section.querySelector('.glb-skills-grid');
-      if (grid) {
-        grid.style.minHeight = `${cards.length * SCROLL_PER_CARD + 200}px`;
-      }
-
-      // Animate each card in as user scrolls into its scroll zone
-      activeSkillsTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 15%',
-          end: `+=${cards.length * SCROLL_PER_CARD}`,
-          scrub: 1.2,
-          pin: true,
-          anticipatePin: 1,
-        }
-      });
-
-      cards.forEach((card, i) => {
-        const fill = card.querySelector('.glb-skill-progress-fill');
-        const pct = card.querySelector('.glb-skill-percent');
-        const level = parseInt(pct ? pct.dataset.level : 0);
-        const startProgress = i / cards.length;
-
-        activeSkillsTimeline
-          .fromTo(card,
-            { opacity: 0, y: 80, scale: 0.94 },
-            { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: 'power2.out',
-              onStart: () => {
-                if (fill) gsap.to(fill, { width: `${level}%`, duration: 0.8, ease: 'power2.out' });
-                let countObj = { val: 0 };
-                if (pct) gsap.fromTo(countObj, { val: 0 }, { val: level, duration: 0.8, ease: 'power2.out',
+      gsap.fromTo(card,
+        { opacity: 0, y: 40, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.65,
+          delay: i * 0.05, // slight stagger
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 88%',
+            toggleActions: 'play reset play reset',
+            onEnter: () => {
+              if (fill) gsap.to(fill, { width: `${level}%`, duration: 1.1, ease: 'power2.out' });
+              if (pct) {
+                gsap.fromTo(countObj, { val: 0 }, {
+                  val: level,
+                  duration: 1.1,
+                  ease: 'power2.out',
                   onUpdate: () => { pct.textContent = Math.round(countObj.val) + '%'; }
                 });
               }
             },
-            startProgress
-          );
-      });
-    }
+            onLeaveBack: () => {
+              if (fill) gsap.set(fill, { width: '0%' });
+              if (pct) { pct.textContent = '0%'; countObj.val = 0; }
+            }
+          }
+        }
+      );
+    });
 
     ScrollTrigger.refresh();
   }
