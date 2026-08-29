@@ -1,15 +1,15 @@
 (function() {
-  // Skills & Capabilities Showcase - Gold Theme with Liquid Platinum Silver Buttons
+  // Skills & Capabilities Showcase - Warm Light Theme
   
   const styles = `
     .glb-skills-section {
       padding: 80px 5%;
       background: transparent;
-      color: white;
+      color: #111827;
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       position: relative;
       z-index: 10;
-      border-top: 1px solid rgba(226, 0, 1, 0.15);
+      border-top: 1px solid rgba(226, 0, 1, 0.1);
     }
     .glb-skills-inner {
       max-width: 1200px;
@@ -22,8 +22,8 @@
     .glb-skills-badge {
       display: inline-block;
       padding: 5px 14px;
-      background: rgba(226, 0, 1, 0.1);
-      border: 1px solid rgba(226, 0, 1, 0.35);
+      background: rgba(226, 0, 1, 0.05);
+      border: 1px solid rgba(226, 0, 1, 0.2);
       color: #e20001;
       font-size: 12px;
       font-weight: 600;
@@ -35,14 +35,12 @@
     .glb-skills-header h2 {
       font-size: clamp(2rem, 4vw, 3rem);
       margin: 0 0 10px;
-      background: linear-gradient(180deg, #ff9999 0%, #e20001 50%, #7f0001 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #111827;
       letter-spacing: -1px;
       font-weight: 700;
     }
     .glb-skills-header p {
-      color: #888888;
+      color: #4b5563;
       font-size: 1.05rem;
       max-width: 600px;
       margin: 0 auto;
@@ -58,9 +56,9 @@
     }
     .glb-skills-tab {
       padding: 9px 20px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #888888;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      color: #4b5563;
       border-radius: 24px;
       font-size: 13px;
       font-weight: 600;
@@ -68,14 +66,14 @@
       transition: all 0.25s ease;
     }
     .glb-skills-tab:hover {
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.25);
+      color: #e20001;
+      border-color: rgba(226, 0, 1, 0.2);
     }
     .glb-skills-tab.active {
-      background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 45%, #94A3B8 100%);
-      color: #0A0E27;
-      border-color: #ffffff;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
+      background: #e20001;
+      color: #ffffff;
+      border-color: #e20001;
+      box-shadow: 0 4px 15px rgba(226, 0, 1, 0.2);
     }
 
     .glb-skills-grid {
@@ -84,21 +82,22 @@
       gap: 22px;
     }
     .glb-skill-card {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #FFFDF0;
+      border: 1px solid rgba(226, 160, 0, 0.12);
       border-radius: 16px;
       padding: 24px;
       display: flex;
       flex-direction: column;
       gap: 14px;
       position: relative;
-      box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.08), 0 10px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
       transition: all 0.3s ease;
     }
     .glb-skill-card:hover {
-      border-color: rgba(226, 0, 1, 0.4);
-      background: rgba(26, 26, 26, 0.9);
-      box-shadow: inset 0px 1px 0px 0px rgba(226, 0, 1, 0.2), 0 15px 30px rgba(0, 0, 0, 0.6);
+      border-color: rgba(226, 0, 1, 0.25);
+      background: #FFF9E6;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(226, 0, 1, 0.05);
     }
     .glb-skill-top {
       display: flex;
@@ -109,8 +108,8 @@
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: rgba(226, 0, 1, 0.1);
-      border: 1px solid rgba(226, 0, 1, 0.25);
+      background: rgba(226, 0, 1, 0.05);
+      border: 1px solid rgba(226, 0, 1, 0.15);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -120,20 +119,20 @@
       font-size: 11px;
       font-weight: 600;
       color: #e20001;
-      background: rgba(226, 0, 1, 0.1);
+      background: rgba(226, 0, 1, 0.05);
       padding: 3px 9px;
       border-radius: 10px;
-      border: 1px solid rgba(226, 0, 1, 0.25);
+      border: 1px solid rgba(226, 0, 1, 0.15);
     }
     .glb-skill-title {
       font-size: 1.15rem;
       font-weight: 600;
       margin: 0;
-      color: #ffffff;
+      color: #111827;
     }
     .glb-skill-desc {
       font-size: 13.5px;
-      color: #888888;
+      color: #4b5563;
       line-height: 1.5;
       margin: 0;
       flex-grow: 1;
@@ -150,18 +149,18 @@
       justify-content: space-between;
       font-size: 11.5px;
       font-weight: 600;
-      color: #888888;
+      color: #6b7280;
     }
     .glb-skill-progress-bar {
       width: 100%;
       height: 5px;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.05);
       border-radius: 8px;
       overflow: hidden;
     }
     .glb-skill-progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #e20001, #ff3333);
+      background: linear-gradient(90deg, #e20001, #ff4d4d);
       border-radius: 8px;
       width: 0%;
       transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -176,7 +175,13 @@
     { title: "Social Media Growth", category: "marketing", icon: "📲", badge: "3x Organic Reach", desc: "Viral short-form video strategy, engagement, and multi-channel brand building.", level: 92 },
     { title: "Conversion Optimization", category: "marketing", icon: "📈", badge: "3x Lead Rate", desc: "A/B testing, user journey mapping, and conversion funnel engineering.", level: 95 },
     { title: "Analytics & Tracking", category: "development", icon: "📊", badge: "Data-Driven", desc: "GA4, Google Tag Manager, custom event tracking, and ROI attribution dashboards.", level: 90 },
-    { title: "Copywriting & Strategy", category: "design", icon: "✍️", badge: "High Converting", desc: "Persuasive sales copy, landing page messaging, and SEO editorial content.", level: 93 }
+    { title: "Copywriting & Strategy", category: "design", icon: "✍️", badge: "High Converting", desc: "Persuasive sales copy, landing page messaging, and SEO editorial content.", level: 93 },
+    
+    // Additional Max UI/UX Skills
+    { title: "Figma Design Systems", category: "design", icon: "💎", badge: "Pro Components", desc: "Reusable component libraries, variables, advanced auto-layout, and clickable high-fi prototypes.", level: 97 },
+    { title: "Motion Physics & GSAP", category: "design", icon: "🎬", badge: "60fps Smoothness", desc: "Custom cubic-bezier transitions, Lenis scroll integration, and fluid GSAP choreographies.", level: 94 },
+    { title: "User Research & Audit", category: "design", icon: "🔍", badge: "Heuristics Expert", desc: "Heatmaps, click maps, user journeys, behavioral heuristics, and usability testing.", level: 91 },
+    { title: "Growth Funnel Engineering", category: "marketing", icon: "🎯", badge: "High Convert", desc: "High-speed landing page architecture, CRM automations, lead captures, and A/B split-tests.", level: 96 }
   ];
 
   function renderSkills(filter = "all") {

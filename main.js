@@ -125,8 +125,6 @@
     console.log('[GLM Engine] Desktop hover-fine device detected: Loading visual flourish pipeline...');
 
     const flourishScripts = [
-      './three-bg.js',
-      './ambient-particles.js',
       './custom-cursor.js',
       './image-trail-section.js',
       './audio-system.js',
@@ -143,12 +141,77 @@
     });
   }
 
+  // ── 5. SMOOTH SCROLLING & MOTION ──────────────────────────────────────────
+  function initSmoothScrollAndAnimations() {
+    if (window.Lenis) {
+      console.log('[GLM Motion] Initializing Lenis Smooth Scroll...');
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // Connect ScrollTrigger to Lenis
+      if (window.ScrollTrigger) {
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+      }
+    }
+
+    if (window.gsap && window.ScrollTrigger) {
+      console.log('[GLM Motion] Registering GSAP ScrollTrigger Section Reveal Animations...');
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Animate Hero content immediately on load
+      gsap.from('#hero .badge-pill-red, #hero h1, #hero .hero-typewriter-wrap, #hero p, #hero .btn-primary', {
+        opacity: 0,
+        y: 35,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power2.out"
+      });
+
+      // Animate other sections on scroll
+      const revealSections = ['#about-me', '#projects', '#process', '#services', '#faq', '#glb-skills-section', '#glb-reviews-section', 'footer'];
+      revealSections.forEach(selector => {
+        const section = document.querySelector(selector);
+        if (!section) return;
+
+        const anims = section.querySelectorAll('.badge-pill-red, .badge-pill-gold, h2, .body-fluid, p, .btn-primary, .btn-secondary, .about-stat-card, .project-card, .process-step-row, .service-card-item, .faq-row, .glb-skill-card, .glb-review-card-premium, .footer-inner > *');
+        if (anims.length === 0) return;
+
+        gsap.from(anims, {
+          opacity: 0,
+          y: 40,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 85%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+    }
+  }
+
   // Run initializations
   function start() {
     initFAQAccordion();
     initHeroTypewriter();
     initScrollSpy();
     initDesktopFlourishes();
+    initSmoothScrollAndAnimations();
   }
 
   if (document.readyState === 'loading') {
