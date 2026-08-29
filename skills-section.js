@@ -1,5 +1,6 @@
 (function() {
   // Skills & Capabilities Showcase - Warm Light Theme
+  let activeSkillsTimeline = null;
   
   const styles = `
     .glb-skills-section {
@@ -196,42 +197,82 @@
 
     const isDesktop = window.innerWidth > 900 && !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    // Clean up any existing ScrollTrigger for this section/grid
+    // Clean up any existing ScrollTrigger and active animations
     ScrollTrigger.getAll().forEach(t => {
-      if (t.trigger === section || t.vars.trigger === section) {
+      if (t.trigger === section || t.trigger === grid || Array.from(cards).includes(t.trigger)) {
         t.kill(true);
       }
     });
+
+    if (activeSkillsTimeline) {
+      activeSkillsTimeline.kill();
+      activeSkillsTimeline = null;
+    }
+    gsap.killTweensOf(cards);
 
     if (!isDesktop) {
       section.classList.remove('stack-active');
       grid.style.height = '';
       cards.forEach(card => {
         gsap.set(card, { clearProps: 'all' });
+        const fill = card.querySelector('.glb-skill-progress-fill');
+        const pct = card.querySelector('.glb-skill-percent');
+        gsap.set(fill, { width: '0%' });
+        if (pct) pct.textContent = '0%';
       });
 
-      // Mobile reveal animation - plays every time we scroll up & down
-      gsap.fromTo(cards,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: grid,
-            start: 'top 92%',
-            toggleActions: 'play reset play reset'
+      // Mobile reveal animation - card-by-card on scroll
+      cards.forEach(card => {
+        const fill = card.querySelector('.glb-skill-progress-fill');
+        const pct = card.querySelector('.glb-skill-percent');
+        if (!fill || !pct) return;
+        const level = parseInt(pct.dataset.level || 0);
+
+        let countObj = { val: 0 };
+        gsap.fromTo(card,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 92%',
+              toggleActions: 'play reset play reset',
+              onEnter: () => {
+                gsap.to(fill, { width: `${level}%`, duration: 1.0, ease: 'power2.out' });
+                gsap.fromTo(countObj, { val: 0 }, {
+                  val: level,
+                  duration: 1.0,
+                  ease: 'power2.out',
+                  onUpdate: () => {
+                    pct.textContent = Math.round(countObj.val) + '%';
+                  }
+                });
+              },
+              onLeaveBack: () => {
+                gsap.set(fill, { width: '0%' });
+                pct.textContent = '0%';
+              }
+            }
           }
-        }
-      );
-      
+        );
+      });
+
       ScrollTrigger.refresh();
       return;
     }
 
     section.classList.add('stack-active');
+    
+    // Reset cards to initial desktop state (0% fills/pct)
+    cards.forEach(card => {
+      const fill = card.querySelector('.glb-skill-progress-fill');
+      const pct = card.querySelector('.glb-skill-percent');
+      gsap.set(fill, { width: '0%' });
+      if (pct) pct.textContent = '0%';
+    });
 
     // Set height of the stack block to hold cards
     const cardHeight = 280;
@@ -253,7 +294,7 @@
     });
 
     // Create the GSAP ScrollTrigger timeline to pin and stack cards sequentially
-    const tl = gsap.timeline({
+    activeSkillsTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: 'top 90px', // Pin offset to clear header
@@ -268,26 +309,53 @@
     cards.forEach((card, idx) => {
       if (idx === 0) {
         gsap.set(card, { yPercent: 0, opacity: 1, scale: 1 });
-        return;
+        const fill = card.querySelector('.glb-skill-progress-fill');
+        const pct = card.querySelector('.glb-skill-percent');
+        if (fill && pct) {
+          const level = parseInt(pct.dataset.level || 0);
+          gsap.set(fill, { width: `${level}%` });
+          pct.textContent = `${level}%`;
+        }
+      } else {
+        // Initial state of incoming card
+        gsap.set(card, { yPercent: 120, opacity: 0.1, scale: 0.95 });
+
+        // Slide in current card
+        activeSkillsTimeline.to(card, {
+          yPercent: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          ease: 'power1.out'
+        });
+
+        // Animate progress bar and count up percentage inside the timeline
+        const fill = card.querySelector('.glb-skill-progress-fill');
+        const pct = card.querySelector('.glb-skill-percent');
+        if (fill && pct) {
+          const level = parseInt(pct.dataset.level || 0);
+          let countObj = { val: 0 };
+          activeSkillsTimeline.to(fill, {
+            width: `${level}%`,
+            duration: 1,
+            ease: 'power1.out'
+          }, '<');
+          activeSkillsTimeline.to(countObj, {
+            val: level,
+            duration: 1,
+            ease: 'power1.out',
+            onUpdate: () => {
+              pct.textContent = Math.round(countObj.val) + '%';
+            }
+          }, '<');
+        }
       }
-
-      // Initial state of incoming card
-      gsap.set(card, { yPercent: 120, opacity: 0.1, scale: 0.95 });
-
-      // Slide in current card
-      tl.to(card, {
-        yPercent: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        ease: 'power1.out'
-      });
 
       // Stagger animation for background cards (push up and scale down)
       for (let j = 0; j < idx; j++) {
         const behind = cards[j];
         const depth = idx - j;
-        tl.to(behind, {
+        activeSkillsTimeline.to(behind, {
           y: -depth * 14,
           scale: 1 - depth * 0.035,
           opacity: Math.max(0.45, 1 - depth * 0.15),
@@ -297,7 +365,7 @@
       }
 
       // Brief pause where card stays active
-      tl.to({}, { duration: 0.35 });
+      activeSkillsTimeline.to({}, { duration: 0.35 });
     });
 
     // CRITICAL: Force recalculation of scroll coordinates
@@ -321,10 +389,10 @@
         <div class="glb-skill-progress-wrap">
           <div class="glb-skill-progress-label">
             <span>Proficiency</span>
-            <span>${s.level}%</span>
+            <span class="glb-skill-percent" data-level="${s.level}">0%</span>
           </div>
           <div class="glb-skill-progress-bar">
-            <div class="glb-skill-progress-fill" style="width: ${s.level}%;"></div>
+            <div class="glb-skill-progress-fill" style="width: 0%;" data-level="${s.level}"></div>
           </div>
         </div>
       </div>

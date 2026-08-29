@@ -88,41 +88,39 @@
 
   // ── 5. ANIMATED STAT COUNTER ─────────────────────────────────────────────
   function initStatCounters() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     const statNums = document.querySelectorAll('.about-stat-num');
-    if (!statNums.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const raw = el.textContent.trim();
-        const match = raw.match(/^(\d+)(\+?\s*[A-Za-z+\s]*)$/);
-        if (!match) return;
-        const target = parseInt(match[1]);
-        const suffix = match[2] || '';
-        const duration = 1800; // ms
-        const start = performance.now();
-
-        function tick(now) {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const current = Math.round(eased * target);
-          el.textContent = current + suffix;
-          if (progress < 1) {
-            requestAnimationFrame(tick);
-          } else {
-            el.textContent = raw;
-            const card = el.closest('.about-stat-card');
-            if (card) card.classList.add('counted');
+    statNums.forEach(el => {
+      const rawText = el.textContent.trim();
+      const match = rawText.match(/^(\d+)(\+?\s*[A-Za-z+\s]*)$/);
+      if (!match) return;
+      const targetVal = parseInt(match[1]);
+      const suffix = match[2] || '';
+      
+      let countObj = { val: 0 };
+      gsap.fromTo(countObj,
+        { val: 0 },
+        {
+          val: targetVal,
+          duration: 1.6,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 95%',
+            toggleActions: 'play reset play reset',
+            onLeaveBack: () => {
+              el.textContent = "0" + suffix;
+            }
+          },
+          onUpdate: () => {
+            el.textContent = Math.round(countObj.val) + suffix;
+          },
+          onComplete: () => {
+            el.textContent = rawText;
           }
         }
-        requestAnimationFrame(tick);
-        observer.unobserve(el);
-      });
-    }, { threshold: 0.5 });
-
-    statNums.forEach(el => observer.observe(el));
+      );
+    });
   }
 
   // ── 6. WORD-BY-WORD HEADING REVEAL ───────────────────────────────────────

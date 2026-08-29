@@ -631,15 +631,17 @@ nav.glb-nav-menu a.glb-nav-active {
   width: 100%;
   overflow: hidden;
   margin-top: 50px;
-  border-top: 1px solid rgba(0,0,0,0.03);
-  border-bottom: 1px solid rgba(0,0,0,0.03);
-  padding: 16px 0;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding: 20px 0;
+  background: rgba(0, 0, 0, 0.01);
 }
 
 .services-marquee-track {
   display: flex;
-  gap: 50px;
+  gap: 16px;
   width: max-content;
+  align-items: center;
   animation: servicesMarqueeScroll 25s linear infinite;
 }
 
@@ -650,11 +652,17 @@ nav.glb-nav-menu a.glb-nav-active {
 
 .services-marquee-item {
   flex-shrink: 0;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  color: #111111;
+  background: #FFFDF0;
+  border: 1px solid rgba(226, 160, 0, 0.2);
+  border-radius: 30px;
+  padding: 8px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  white-space: nowrap;
 }
 
 /* ── FAQ Section ── */
@@ -973,8 +981,15 @@ footer.glb-footer {
 @media (max-width: 767px) {
 
   /* Global */
-  .section-padding { padding: 56px 5% !important; }
-  .section-header { margin-bottom: 32px !important; text-align: center; }
+  .section-padding {
+    padding: 96px 6% !important;
+    min-height: 85vh;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    box-sizing: border-box;
+  }
+  .section-header { margin-bottom: 44px !important; text-align: center; }
 
   /* Header */
   header.glb-site-header {
@@ -998,7 +1013,16 @@ footer.glb-footer {
   nav.glb-nav-menu a.glb-nav-active { background: var(--primary); color: #fff !important; }
 
   /* Hero */
-  #hero { padding-top: 120px !important; padding-bottom: 52px !important; text-align: center; }
+  #hero {
+    padding-top: 140px !important;
+    padding-bottom: 100px !important;
+    min-height: 85vh;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    box-sizing: border-box;
+    text-align: center;
+  }
   .hero-inner { gap: 16px; max-width: 100%; }
   .hero-title-text { font-size: clamp(2.1rem,9.5vw,3rem) !important; letter-spacing: -0.8px; line-height: 1.1; }
   .hero-title-text br { display: none; }
