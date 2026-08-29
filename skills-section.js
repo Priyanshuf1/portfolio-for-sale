@@ -184,6 +184,104 @@
     { title: "Growth Funnel Engineering", category: "marketing", icon: "🎯", badge: "High Convert", desc: "High-speed landing page architecture, CRM automations, lead captures, and A/B split-tests.", level: 96 }
   ];
 
+  function initSkillsStackingAnimation() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    const section = document.getElementById('glb-skills-section');
+    if (!section) return;
+
+    const grid = document.getElementById('glbSkillsGrid');
+    const cards = section.querySelectorAll('.glb-skill-card');
+    if (!cards.length) return;
+
+    const isDesktop = window.innerWidth > 900;
+
+    // Clean up any existing ScrollTrigger for this section/grid
+    ScrollTrigger.getAll().forEach(t => {
+      if (t.trigger === section || t.vars.trigger === section) {
+        t.kill(true);
+      }
+    });
+
+    if (!isDesktop) {
+      section.classList.remove('stack-active');
+      grid.style.height = '';
+      cards.forEach(card => {
+        gsap.set(card, { clearProps: 'all' });
+      });
+      return;
+    }
+
+    section.classList.add('stack-active');
+
+    // Set height of the stack block to hold cards
+    const cardHeight = 280;
+    grid.style.height = `${cardHeight}px`;
+
+    // Position all cards directly on top of each other
+    cards.forEach((card, idx) => {
+      gsap.set(card, {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        width: '100%',
+        height: `${cardHeight}px`,
+        margin: '0 auto',
+        zIndex: idx + 10,
+        transformOrigin: 'center bottom'
+      });
+    });
+
+    // Create the GSAP ScrollTrigger timeline to pin and stack cards sequentially
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 90px', // Pin offset to clear header
+        end: () => `+=${cards.length * 300}`,
+        pin: true,
+        scrub: 0.5,
+        invalidateOnRefresh: true
+      }
+    });
+
+    // Animate each card stacking on top of the previous
+    cards.forEach((card, idx) => {
+      if (idx === 0) {
+        gsap.set(card, { yPercent: 0, opacity: 1, scale: 1 });
+        return;
+      }
+
+      // Initial state of incoming card
+      gsap.set(card, { yPercent: 120, opacity: 0.1, scale: 0.95 });
+
+      // Slide in current card
+      tl.to(card, {
+        yPercent: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: 'power1.out'
+      });
+
+      // Stagger animation for background cards (push up and scale down)
+      for (let j = 0; j < idx; j++) {
+        const behind = cards[j];
+        const depth = idx - j;
+        tl.to(behind, {
+          y: -depth * 14,
+          scale: 1 - depth * 0.035,
+          opacity: Math.max(0.45, 1 - depth * 0.15),
+          duration: 1,
+          ease: 'power1.out'
+        }, '<');
+      }
+
+      // Brief pause where card stays active
+      tl.to({}, { duration: 0.35 });
+    });
+  }
+
   function renderSkills(filter = "all") {
     const grid = document.getElementById("glbSkillsGrid");
     if (!grid) return;
@@ -209,6 +307,9 @@
         </div>
       </div>
     `).join('');
+
+    // Trigger card stacking calculations
+    setTimeout(initSkillsStackingAnimation, 60);
   }
 
   function injectSkillsSection() {
@@ -267,6 +368,9 @@
         if (window.rabtoPlayClickSFX) window.rabtoPlayClickSFX(750, 'sine', 0.08);
       });
     });
+
+    // Refresh layout on resize to adapt between grid and stack modes
+    window.addEventListener('resize', initSkillsStackingAnimation, { passive: true });
   }
 
   if (document.readyState === 'loading') {

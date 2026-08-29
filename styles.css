@@ -1187,7 +1187,7 @@ footer.glb-footer {
   opacity: 0.4;
 }
 
-/* ── Skill cards — Rafael horizontal sweep effect ── */
+/* ── Skill cards — Stacking layout on desktop & hover effects ── */
 .glb-skill-card {
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1195,6 +1195,25 @@ footer.glb-footer {
 }
 .glb-skill-card:hover {
   transform: translateY(-4px) scale(1.02) !important;
+}
+
+@media (min-width: 901px) {
+  .glb-skills-section.stack-active .glb-skills-inner {
+    max-width: 850px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .glb-skills-section.stack-active .glb-skills-grid {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .glb-skills-section.stack-active .glb-skill-card {
+    background: #FFFDF0;
+    border: 1px solid rgba(226, 160, 0, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  }
 }
 
 /* ── Section heading — underline sweep on scroll-in ── */
