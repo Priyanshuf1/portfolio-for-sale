@@ -161,7 +161,7 @@ console.error = function(...args) {
   /* Premium Mobile Layout Fixes */
   @media (max-width: 767px) {
     /* 1. Scale down logo header on mobile to prevent overflow & overlap */
-    .framer-1lcme9 {
+    html body .framer-1lcme9 {
       width: 160px !important;
       height: 48px !important;
       background: none !important;
