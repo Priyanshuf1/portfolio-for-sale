@@ -100,6 +100,22 @@
       transform: translateY(-3px);
       box-shadow: 0 10px 25px rgba(226, 0, 1, 0.05);
     }
+    @media (min-width: 901px) {
+      .glb-skills-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 30px !important;
+        max-width: 850px !important;
+        margin: 40px auto 0 !important;
+      }
+      .glb-skill-card {
+        position: sticky !important;
+        top: 130px !important;
+        width: 100% !important;
+        margin-bottom: 24px !important;
+      }
+    }
     .glb-skill-top {
       display: flex;
       justify-content: space-between;

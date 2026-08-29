@@ -52,9 +52,9 @@
 
   // ── 3. SCROLL SPY ────────────────────────────────────────────────────────
   function initScrollSpy() {
-    const navLinks = document.querySelectorAll('nav.glb-nav-menu a');
+    const navLinks = document.querySelectorAll('nav.glb-nav-menu a, .glb-drawer-link');
     const sections = [
-      '#hero','#about-me','#services','#projects','#process','#faq','#glb-location'
+      '#hero','#about-me','#services','#projects','#faq','#glb-location'
     ].map(s => document.querySelector(s)).filter(Boolean);
 
     function update() {
@@ -226,14 +226,14 @@
     );
 
     // ── RESTORE STAGGERED REVEALS FOR ALL OTHER ELEMENTS ──
-    const revealSections = ['#about-me', '#projects', '#process', '#services', '#faq', '#glb-skills-section', '#glb-reviews-section', '#glb-location', 'footer'];
+    const revealSections = ['#about-me', '#projects', '#services', '#faq', '#glb-skills-section', '#glb-reviews-section', '#glb-location', 'footer'];
     revealSections.forEach(selector => {
       const section = document.querySelector(selector);
       if (!section) return;
 
       // Select inner elements that should animate in smoothly on scroll (excluding .glb-skill-card to avoid clashes)
       const anims = section.querySelectorAll(
-        '.badge-pill-red, .badge-pill-gold, .badge-pill-red, .badge-pill-gold, .body-fluid, p, .btn-primary, .btn-secondary, .about-stat-card, .project-card, .process-step-row, .service-card-item, .faq-row, .glb-review-card-premium, .footer-inner > *, .process-img-wrap, .services-image-col, .glb-map-container-box, .glb-contact-card'
+        '.badge-pill-red, .badge-pill-gold, .badge-pill-red, .badge-pill-gold, .body-fluid, p, .btn-primary, .btn-secondary, .about-stat-card, .project-card, .service-card-item, .faq-row, .glb-review-card-premium, .footer-inner > *, .services-image-col, .glb-map-container-box, .glb-contact-card'
       );
       if (anims.length === 0) return;
 
@@ -278,11 +278,38 @@
         header.style.padding = '';
         header.style.boxShadow = '';
       }
-    }, { passive: true });
+  // ── MOBILE DRAWER MENU ────────────────══════════════════════════════════
+  function initMobileDrawerMenu() {
+    const toggle = document.getElementById('glbMenuToggle');
+    const drawer = document.getElementById('glbMobileDrawer');
+    const close = document.getElementById('glbDrawerClose');
+    const overlay = document.getElementById('glbDrawerOverlay');
+    const links = document.querySelectorAll('.glb-drawer-link');
+
+    if (!toggle || !drawer) return;
+
+    function openMenu() {
+      drawer.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      drawer.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', openMenu);
+    if (close) close.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
+    
+    links.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
   }
 
   // ── START ────────────────────────────────────────────────────────────────
   function start() {
+    initMobileDrawerMenu();
     initFAQAccordion();
     initHeroTypewriter();
     initScrollSpy();

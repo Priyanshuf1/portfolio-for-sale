@@ -199,7 +199,7 @@
 
   // ── 5. RUN ────────────────────────────────────────────────────────────────
   function run() { 
-    injectMarquee(); 
+    // injectMarquee(); // Disabled brand logo sliding marquee as requested
     replaceAboutLogoWith3DTiltCard(); 
   }
 

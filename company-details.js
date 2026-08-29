@@ -24,23 +24,23 @@
     }
     .glb-why-us-badge {
       display: inline-block;
-      padding: 5px 14px;
+      padding: 6px 16px;
       background: rgba(226, 0, 1, 0.1);
       border: 1px solid rgba(226, 0, 1, 0.35);
       color: #e20001;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 2px;
       text-transform: uppercase;
       border-radius: 20px;
       margin-bottom: 14px;
     }
     .glb-why-us-header h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(2.3rem, 5vw, 3.5rem) !important;
       margin: 0 0 10px;
-      background: linear-gradient(180deg, #e20001 0%, #990000 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #e20001 !important;
+      background: none !important;
+      -webkit-text-fill-color: #e20001 !important;
       letter-spacing: -1px;
       font-weight: 900;
     }
@@ -161,23 +161,23 @@
     }
     .glb-team-badge {
       display: inline-block;
-      padding: 5px 14px;
+      padding: 6px 16px;
       background: rgba(226, 0, 1, 0.1);
       border: 1px solid rgba(226, 0, 1, 0.35);
       color: #e20001;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 2px;
       text-transform: uppercase;
       border-radius: 20px;
       margin-bottom: 14px;
     }
     .glb-team-header h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(2.3rem, 5vw, 3.5rem) !important;
       margin: 0 0 10px;
-      background: linear-gradient(180deg, #e20001 0%, #990000 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #e20001 !important;
+      background: none !important;
+      -webkit-text-fill-color: #e20001 !important;
       letter-spacing: -1px;
       font-weight: 900;
     }

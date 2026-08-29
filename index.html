@@ -48,22 +48,73 @@
 
   <!-- ── Navigation Header ── -->
   <header class="glb-site-header">
-    <div class="glb-logo-container">
-      <a href="#hero" class="glb-logo-link">
-        <img src="./logo.png" alt="Global Logic Media Logo" class="glb-logo-img" style="height: 40px; width: auto; display: block; max-height: 40px; object-fit: contain;">
-      </a>
+    <div class="glb-header-container">
+      <div class="glb-logo-container">
+        <a href="#hero" class="glb-logo-link">
+          <img src="./logo.png" alt="Global Logic Media Logo" class="glb-logo-img">
+        </a>
+      </div>
+      
+      <!-- Desktop Navigation Menu (No Process link) -->
+      <nav class="glb-nav-menu">
+        <a href="#hero" class="glb-nav-active">Home</a>
+        <a href="#about-me">About</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Work</a>
+        <a href="#faq">FAQ</a>
+        <a href="./blog.html">Blog</a>
+        <a href="#contact">Contact us</a>
+      </nav>
+
+      <!-- Header Action Buttons (Call Button & Mobile Menu Toggle) -->
+      <div class="glb-header-actions">
+        <!-- Call Button -->
+        <a href="tel:+917570060896" class="glb-call-btn" title="Call Us">
+          <span class="glb-call-icon-wrap">
+            <svg class="glb-call-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </span>
+          <span class="glb-call-number">+91 75700 60896</span>
+        </a>
+        
+        <!-- Mobile Menu Toggle Button -->
+        <button class="glb-menu-toggle" id="glbMenuToggle" aria-label="Toggle Menu">
+          <span class="glb-menu-bar"></span>
+          <span class="glb-menu-bar"></span>
+          <span class="glb-menu-bar"></span>
+        </button>
+      </div>
     </div>
-    <nav class="glb-nav-menu">
-      <div><a href="#hero" class="glb-nav-active">Home</a></div>
-      <div><a href="#about-me">About</a></div>
-      <div><a href="#services">Services</a></div>
-      <div><a href="#projects">Work</a></div>
-      <div><a href="#process">Process</a></div>
-      <div><a href="#faq">FAQ</a></div>
-      <div><a href="./blog.html">Blog</a></div>
-      <div><a href="#contact">Contact us</a></div>
-    </nav>
   </header>
+
+  <!-- Mobile Drawer Menu (Slide-out Overlay) -->
+  <div class="glb-mobile-drawer" id="glbMobileDrawer">
+    <div class="glb-drawer-overlay" id="glbDrawerOverlay"></div>
+    <div class="glb-drawer-content">
+      <div class="glb-drawer-header">
+        <img src="./logo.png" alt="Global Logic Media Logo" class="glb-drawer-logo">
+        <button class="glb-drawer-close" id="glbDrawerClose" aria-label="Close Menu">&times;</button>
+      </div>
+      <nav class="glb-drawer-nav">
+        <a href="#hero" class="glb-drawer-link">Home</a>
+        <a href="#about-me" class="glb-drawer-link">About</a>
+        <a href="#services" class="glb-drawer-link">Services</a>
+        <a href="#projects" class="glb-drawer-link">Work</a>
+        <a href="#faq" class="glb-drawer-link">FAQ</a>
+        <a href="./blog.html" class="glb-drawer-link">Blog</a>
+        <a href="#contact" class="glb-drawer-link">Contact us</a>
+      </nav>
+      <div class="glb-drawer-footer">
+        <a href="tel:+917570060896" class="glb-drawer-call-btn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          Call Us Now
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- ── Hero Section ── -->
   <section id="hero" class="section-padding">
@@ -145,7 +196,7 @@
           </div>
           <div class="about-stats-grid">
             <div class="about-stat-card">
-              <span class="about-stat-num">7+ Yrs</span>
+              <span class="about-stat-num">3+ Yrs</span>
               <span class="about-stat-label">Marketing & Dev Experience</span>
             </div>
             <div class="about-stat-card">
@@ -187,55 +238,7 @@
     </div>
   </section>
 
-  <!-- ── Process Section ── -->
-  <section id="process" class="section-padding">
-    <div class="section-inner">
-      <div class="process-grid">
-        <div class="about-content-col">
-          <span class="badge-pill-red" style="align-self: flex-start;">Design Process</span>
-          <h2 class="h2-fluid">Simplifying Digitally,<br>Amplifying Results</h2>
-          <p class="body-fluid" style="color: var(--text-muted);">
-            At Global Logic Media, we believe in clear strategy and execution. We offer a diverse range of 360-degree digital marketing solutions tailored to your business.
-          </p>
-          
-          <div class="process-steps-wrap">
-            <div class="process-step-row">
-              <span class="process-step-num">1</span>
-              <div class="process-step-info">
-                <span class="process-step-title">Define Your Vision</span>
-                <p class="body-fluid" style="font-size: 14.5px; color: var(--text-muted);">Find the perfect plan tailored to your needs, offering the right balance of features, flexibility, and value to help you achieve your goals effortlessly.</p>
-              </div>
-            </div>
-            
-            <div class="process-step-row">
-              <span class="process-step-num">2</span>
-              <div class="process-step-info">
-                <span class="process-step-title">Submit Your Request</span>
-                <p class="body-fluid" style="font-size: 14.5px; color: var(--text-muted);">Easily submit your design requirements through our private design portal, ensuring a seamless process where your vision is understood and refined.</p>
-              </div>
-            </div>
-            
-            <div class="process-step-row">
-              <span class="process-step-num">3</span>
-              <div class="process-step-info">
-                <span class="process-step-title">Project Delivered</span>
-                <p class="body-fluid" style="font-size: 14.5px; color: var(--text-muted);">As a dedicated agency, we ensure your project is completed with precision and delivered on time, exceeding expectations.</p>
-              </div>
-            </div>
-          </div>
-          
-          <div style="margin-top: 10px; display: flex; gap: 16px; flex-wrap: wrap;">
-            <button class="btn-secondary" onclick="document.getElementById('glbTriggerBook').click();">Book a Free Call</button>
-            <a href="#projects" class="btn-primary">See Projects</a>
-          </div>
-        </div>
-        
-        <div class="process-img-wrap">
-          <img src="./process_graphics.jpg" alt="Design process graphics illustration">
-        </div>
-      </div>
-    </div>
-  </section>
+
 
   <!-- ── Services Section ── -->
   <section id="services" class="section-padding">

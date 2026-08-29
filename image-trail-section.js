@@ -8,27 +8,28 @@
   }
 
   function inject() {
-    var recentWorkEl = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
-    var projectsEl = document.querySelector('[data-framer-name="Projects"]') || document.querySelector('.framer-1mm21uq') || document.getElementById('projects');
+    var teamSec = document.getElementById('glb-meet-team');
+    var fallbackSec = document.getElementById('about-me');
+    var insertTarget = teamSec || fallbackSec;
     
-    if (projectsEl) {
-      projectsEl.style.display = 'none';
-      projectsEl.style.visibility = 'hidden';
-      projectsEl.style.height = '0';
-      projectsEl.style.overflow = 'hidden';
-      projectsEl.style.padding = '0';
-      projectsEl.style.margin = '0';
-    }
-
-    if (!recentWorkEl && !projectsEl) return;
-    var insertTarget = recentWorkEl || projectsEl;
+    if (!insertTarget) return;
 
     // ── 1. Create or update the Recent Work Marquee Section ─────────────────
     var marqueeSection = document.getElementById('glm-image-trail-section');
     if (!marqueeSection) {
       marqueeSection = document.createElement('section');
       marqueeSection.id = 'glm-image-trail-section';
-      insertTarget.parentNode.insertBefore(marqueeSection, insertTarget.nextSibling);
+    }
+
+    // Insert marqueeSection relative to target
+    if (insertTarget === teamSec) {
+      if (marqueeSection.nextSibling !== teamSec) {
+        teamSec.parentNode.insertBefore(marqueeSection, teamSec);
+      }
+    } else {
+      if (marqueeSection.previousSibling !== fallbackSec) {
+        fallbackSec.parentNode.insertBefore(marqueeSection, fallbackSec.nextSibling);
+      }
     }
 
     marqueeSection.style.cssText = [
@@ -51,6 +52,9 @@
       instaSection = document.createElement('section');
       instaSection.id = 'glm-instagram-feed-section';
       instaSection.className = 'glm-insta-section';
+    }
+
+    if (marqueeSection.nextSibling !== instaSection) {
       marqueeSection.parentNode.insertBefore(instaSection, marqueeSection.nextSibling);
     }
 
@@ -222,7 +226,7 @@
       // ── Populate Marquee Section HTML ─────────────────────────────
       marqueeSection.innerHTML = `
         <div style="text-align:center;pointer-events:none;user-select:none;">
-          <p style="color:#FF1744;font-size:clamp(12px,1.2vw,16px);letter-spacing:0.4em;text-transform:uppercase;margin-bottom:15px;font-family:sans-serif;font-weight:700;">Recent Work</p>
+          <p style="color:#FF1744;font-size:clamp(12px,1.2vw,16px);letter-spacing:0.4em;text-transform:uppercase;margin-bottom:15px;font-family:sans-serif;font-weight:700;">our clients</p>
           <h2 style="color:#ffffff;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.1;font-family:sans-serif;margin:0;">Proven Marketing Results</h2>
         </div>
         <div class="glm-marquee-wrap">
@@ -265,183 +269,23 @@
 
       // ── Populate Bento Instagram Section HTML ──────────────────────
       instaSection.innerHTML = `
-    <!-- BG Gradient Blobs -->
-    <div class="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden opacity-20 pointer-events-none">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-600/20 blur-[120px] rounded-full"></div>
-    </div>
-
-    <div class="max-w-7xl mx-auto px-6 py-12">
-        
-        <!-- SECTION: PROFILE HEADER -->
-        <header class="flex flex-col md:flex-row items-center justify-between mb-16 gap-8">
-            <div class="flex items-center gap-8">
-                <div class="story-ring group">
-                    <div class="story-inner">
-                        <img src="./logo.png" class="w-32 h-32 rounded-[17px] object-cover" alt="Profile">
-                    </div>
-                </div>
-                <div>
-                    <h1 class="text-4xl font-heading font-bold mb-2 flex items-center gap-2">
-                        @globallogicmedia 
-                        <i data-lucide="check-circle" class="w-6 h-6 text-blue-400 fill-blue-400/20"></i>
-                    </h1>
-                    <p class="text-gray-400 text-lg mb-4 max-w-md">Digital Curator & Visual Storyteller. Lucknow's Premier Branding & Performance Agency. ⚡️</p>
-                    <div class="flex gap-6 text-sm">
-                        <span><b class="text-white">65</b> Posts</span>
-                        <span><b class="text-white">12.5k</b> Followers</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex gap-4">
-                <a href="https://www.instagram.com/globallogicmedia/" target="_blank" class="bg-white text-black px-8 py-3 rounded-2xl font-bold hover:scale-105 transition-transform flex items-center justify-center">Follow</a>
-                <a href="https://www.instagram.com/globallogicmedia/" target="_blank" class="glass-card px-6 py-3 rounded-2xl font-bold flex items-center gap-2">
-                    <i data-lucide="send" class="w-4 h-4"></i> Message
-                </a>
-            </div>
-        </header>
-
-        <!-- SECTION: STORIES -->
-        <div class="flex gap-8 mb-16 overflow-x-auto pb-4 no-scrollbar">
-            <!-- Story Highlight 1 -->
-            <div class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group">
-                <div class="w-20 h-20 rounded-[24px] border-2 border-zinc-800 p-1 group-hover:border-orange-500 transition-all">
-                    <img src="./work1.png" class="w-full h-full object-cover rounded-[18px]">
-                </div>
-                <span class="text-xs font-medium text-zinc-500 group-hover:text-white transition-colors">Process</span>
-            </div>
-            <!-- Story Highlight 2 -->
-            <div class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group">
-                <div class="w-20 h-20 rounded-[24px] border-2 border-zinc-800 p-1 group-hover:border-orange-500 transition-all">
-                    <img src="./work2.png" class="w-full h-full object-cover rounded-[18px]">
-                </div>
-                <span class="text-xs font-medium text-zinc-500 group-hover:text-white transition-colors">Lifestyle</span>
-            </div>
-            <!-- Story Highlight 3 -->
-            <div class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group">
-                <div class="w-20 h-20 rounded-[24px] border-2 border-zinc-800 p-1 group-hover:border-orange-500 transition-all">
-                    <img src="./work3.png" class="w-full h-full object-cover rounded-[18px]">
-                </div>
-                <span class="text-xs font-medium text-zinc-500 group-hover:text-white transition-colors">Designs</span>
-            </div>
-            <!-- Story Highlight 4 -->
-            <div class="flex flex-col items-center gap-3 shrink-0 cursor-pointer group">
-                <div class="w-20 h-20 rounded-[24px] border-2 border-zinc-800 p-1 group-hover:border-orange-500 transition-all">
-                    <img src="./work4.png" class="w-full h-full object-cover rounded-[18px]">
-                </div>
-                <span class="text-xs font-medium text-zinc-500 group-hover:text-white transition-colors">Vibes</span>
-            </div>
+        <div style="text-align:center; margin-bottom: 40px; padding: 0 5%;">
+          <span class="badge-pill-red" style="display:inline-block; margin-bottom: 15px;">Instagram</span>
+          <h2 class="h2-fluid" style="margin: 0; font-weight: 900; color: #111827;">Follow Our Journey</h2>
         </div>
-
-        <!-- SECTION: BENTO FEED (Instagram 3-Column Square Grid) -->
-        <div class="bento-grid" id="insta-feed">
-            <!-- Post 1 -->
-            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work1.png', 'The evolution of digital workspace in 2026. #minimalism #workspace')">
-                <img src="./work1.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
-                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
-                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 2.4k</span>
-                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 120</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Post 2 -->
-            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work2.png', 'Vinca Unisex Salon creative visual campaigns.')">
-                <img src="./work2.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
-                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
-                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 1.8k</span>
-                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 85</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Post 3 -->
-            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work3.png', 'Deep ROAS optimization for meta ads setups.')">
-                <img src="./work3.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
-                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
-                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 3.1k</span>
-                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 142</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Post 4 -->
-            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work4.png', 'Premium brand identity guidelines.')">
-                <img src="./work4.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
-                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
-                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 1.2k</span>
-                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 54</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Post 5 -->
-            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./ss11.png', 'Crisp social media flyer assets for Spicy Affair Lucknow.')">
-                <img src="./ss11.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
-                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
-                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 950</span>
-                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 32</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Post 6 -->
-            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./ss15.png', 'Bold brand identities built from scratch.')">
-                <img src="./ss15.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
-                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
-                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 2.8k</span>
-                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 110</span>
-                    </div>
-                </div>
-            </div>
+        <div class="max-w-7xl mx-auto px-6" style="margin-top: 20px; min-height: 350px;">
+          <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
+          <div class="elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40" data-elfsight-app-lazy></div>
         </div>
-
-        <!-- FOOTER: CTA -->
-        <footer class="mt-20 text-center py-10 border-t border-zinc-900">
-            <p class="text-zinc-500 mb-4">Want to see more?</p>
-            <a href="https://www.instagram.com/globallogicmedia/" target="_blank" class="inline-flex items-center gap-2 text-xl font-heading font-bold hover:text-orange-500 transition-colors">
-                VIEW FULL PROFILE <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
-            </a>
-        </footer>
-    </div>
-
-    <!-- LIGHTBOX / MODAL (Hidden by default) -->
-    <div id="post-modal" class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
-        <button onclick="window.closeModal()" class="absolute top-10 right-10 text-white bg-white/10 hover:bg-white/20 border border-white/20 w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-all z-[110]" aria-label="Close">
-            <span style="font-size: 28px; font-weight: 300; font-family: system-ui, sans-serif; line-height: 1; margin-top: -2px;">&times;</span>
-        </button>
-        <div id="modal-grid" class="max-w-5xl w-full grid md:grid-cols-2 bg-zinc-900 rounded-[30px] overflow-hidden transition-all duration-300">
-            <div class="bg-black flex items-center justify-center">
-                <img id="modal-img" src="" class="max-h-[80vh] w-full object-contain">
-            </div>
-            <div id="modal-sidebar" class="p-8 flex flex-col justify-between bg-zinc-900">
-                <div>
-                    <div class="flex items-center gap-3 mb-6">
-                        <img src="./logo.png" class="w-10 h-10 rounded-full">
-                        <span class="font-bold">globallogicmedia</span>
-                    </div>
-                    <p id="modal-caption" class="text-zinc-300 leading-relaxed"></p>
-                </div>
-                <div class="pt-6 border-t border-zinc-800">
-                    <a id="modal-link" href="https://www.instagram.com/globallogicmedia/" target="_blank" class="w-full bg-white text-black py-4 rounded-2xl font-bold flex items-center justify-center gap-2">
-                        View Original Post <i data-lucide="external-link" class="w-4 h-4"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
       `;
 
-      if (window.lucide) window.lucide.createIcons();
-      setupLightbox();
-      apply3DTiltEffect();
-      loadInstagramFeed();
+      // Load Elfsight platform script programmatically
+      if (!document.querySelector('script[src*="elfsightcdn.com"]')) {
+        const script = document.createElement('script');
+        script.src = "https://elfsightcdn.com/platform.js";
+        script.async = true;
+        document.body.appendChild(script);
+      }
     }
   }
 
