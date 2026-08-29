@@ -6,9 +6,6 @@ __pycache__/
 # Dev-only scratch workspace
 scratch/
 
-# Screenshot artifacts
-ss*.png
-
 # Dev and patch scripts
 cdp_screenshot.js
 customize.js

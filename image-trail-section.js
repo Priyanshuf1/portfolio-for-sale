@@ -175,19 +175,27 @@
     padding: 2px;
   }
 
-  /* Bento Grid Customization */
+  /* Instagram Profile-style 3-Column Square Grid Customization */
   .bento-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 240px;
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 935px;
+    margin: 0 auto;
   }
-  .bento-item-large { grid-column: span 2; grid-row: span 2; }
-  .bento-item-tall { grid-row: span 2; }
+  .bento-grid > div {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
 
   @media (max-width: 768px) {
-    .bento-grid { grid-template-columns: repeat(2, 1fr); }
-    .bento-item-large { grid-column: span 2; grid-row: span 1; }
+    .bento-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px; /* tighter spacing on mobile, just like real instagram app */
+    }
     
     .glm-marquee-wrap {
       margin-top: 15px;
@@ -197,8 +205,8 @@
       gap: 16px;
     }
     .glm-marquee-item {
-      width: 220px;
-      height: 150px;
+      width: 200px;
+      height: 140px;
       border-radius: 12px;
       transform: translateY(30px) scale(0.95);
     }
@@ -325,44 +333,72 @@
             </div>
         </div>
 
-        <!-- SECTION: BENTO FEED -->
+        <!-- SECTION: BENTO FEED (Instagram 3-Column Square Grid) -->
         <div class="bento-grid" id="insta-feed">
-            <!-- Large Featured Post -->
-            <div class="bento-item-large glass-card rounded-[40px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work1.png', 'The evolution of digital workspace in 2026. #minimalism #workspace')">
-                <img src="./work1.png" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-8 flex flex-col justify-end">
-                    <div class="flex gap-4 mb-2">
-                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-5 h-5 fill-white"></i> 2.4k</span>
-                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-5 h-5 fill-white"></i> 120</span>
+            <!-- Post 1 -->
+            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work1.png', 'The evolution of digital workspace in 2026. #minimalism #workspace')">
+                <img src="./work1.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
+                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 2.4k</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 120</span>
                     </div>
-                    <p class="text-sm line-clamp-2">The evolution of digital workspace in 2026. #minimalism #workspace</p>
                 </div>
             </div>
 
-            <!-- Tall Post (Reel/Video) -->
-            <div class="bento-item-tall glass-card rounded-[40px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work2.png', 'Vinca Unisex Salon creative visual campaigns.')">
-                <div class="absolute top-5 right-5 z-10 bg-black/20 backdrop-blur-md p-2 rounded-full">
-                    <i data-lucide="play" class="w-4 h-4 fill-white"></i>
-                </div>
+            <!-- Post 2 -->
+            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work2.png', 'Vinca Unisex Salon creative visual campaigns.')">
                 <img src="./work2.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            </div>
-
-            <!-- Square Post -->
-            <div class="glass-card rounded-[40px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work3.png', 'Deep ROAS optimization for meta ads setups.')">
-                <img src="./work3.png" class="w-full h-full object-cover">
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-black/40 transition-opacity">
-                    <i data-lucide="instagram" class="w-8 h-8 text-white"></i>
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
+                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 1.8k</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 85</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Square Post 2 -->
-            <div class="glass-card rounded-[40px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./ss11.png', 'Crisp social media flyer assets for Spicy Affair Lucknow.')">
-                <img src="./ss11.png" class="w-full h-full object-cover">
+            <!-- Post 3 -->
+            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work3.png', 'Deep ROAS optimization for meta ads setups.')">
+                <img src="./work3.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
+                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 3.1k</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 142</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Square Post 3 -->
-            <div class="glass-card rounded-[40px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./ss15.png', 'Bold brand identities built from scratch.')">
-                <img src="./ss15.png" class="w-full h-full object-cover">
+            <!-- Post 4 -->
+            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./work4.png', 'Premium brand identity guidelines.')">
+                <img src="./work4.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
+                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 1.2k</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 54</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 5 -->
+            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./ss11.png', 'Crisp social media flyer assets for Spicy Affair Lucknow.')">
+                <img src="./ss11.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
+                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 950</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 32</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 6 -->
+            <div class="glass-card rounded-[8px] md:rounded-[16px] overflow-hidden group relative cursor-pointer" onclick="window.glmShowLightbox('./ss15.png', 'Bold brand identities built from scratch.')">
+                <img src="./ss15.png" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-2">
+                    <div class="flex gap-4 text-white text-xs md:text-sm font-semibold">
+                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-4 h-4 fill-white"></i> 2.8k</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-4 h-4 fill-white"></i> 110</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -530,7 +566,7 @@
 
   function updateBentoFeed(posts) {
     const items = document.querySelectorAll('#insta-feed > div');
-    posts.slice(0, 5).forEach((p, idx) => {
+    posts.slice(0, 6).forEach((p, idx) => {
       if (idx >= items.length) return;
       const item = items[idx];
       const img = item.querySelector('img');

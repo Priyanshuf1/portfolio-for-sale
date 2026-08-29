@@ -76,7 +76,7 @@
   function initDesktopFlourishes() {
     const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     if (!isDesktop) return;
-    ['./custom-cursor.js','./image-trail-section.js','./audio-system.js',
+    ['./custom-cursor.js','./audio-system.js',
      './three-logo-interactive.js','./rabto-fx-engine.js','./bg-enhancer.js'
     ].forEach(src => {
       const s = document.createElement('script');
@@ -176,7 +176,7 @@
         scrollTrigger: {
           trigger: h,
           start: 'top 85%',
-          toggleActions: 'play none none none'
+          toggleActions: 'play reset play reset'
         }
       });
     });
@@ -233,9 +233,9 @@
       const section = document.querySelector(selector);
       if (!section) return;
 
-      // Select inner elements that should animate in smoothly on scroll
+      // Select inner elements that should animate in smoothly on scroll (excluding .glb-skill-card to avoid clashes)
       const anims = section.querySelectorAll(
-        '.badge-pill-red, .badge-pill-gold, .badge-pill-red, .badge-pill-gold, .body-fluid, p, .btn-primary, .btn-secondary, .about-stat-card, .project-card, .process-step-row, .service-card-item, .faq-row, .glb-skill-card, .glb-review-card-premium, .footer-inner > *, .process-img-wrap, .services-image-col, .glb-map-container-box, .glb-contact-card'
+        '.badge-pill-red, .badge-pill-gold, .badge-pill-red, .badge-pill-gold, .body-fluid, p, .btn-primary, .btn-secondary, .about-stat-card, .project-card, .process-step-row, .service-card-item, .faq-row, .glb-review-card-premium, .footer-inner > *, .process-img-wrap, .services-image-col, .glb-map-container-box, .glb-contact-card'
       );
       if (anims.length === 0) return;
 
@@ -250,7 +250,7 @@
           scrollTrigger: {
             trigger: section,
             start: isMobile ? 'top 90%' : 'top 82%',
-            toggleActions: 'play none none none'
+            toggleActions: 'play reset play reset'
           }
         }
       );
@@ -263,7 +263,7 @@
       gsap.fromTo(logoCard,
         { opacity: 0, scale: 0.93 },
         { opacity: 1, scale: 1, duration: 0.85, ease: 'power2.out',
-          scrollTrigger: { trigger: logoCard, start: isMobile ? 'top 92%' : 'top 85%', toggleActions: 'play none none none' } }
+          scrollTrigger: { trigger: logoCard, start: isMobile ? 'top 92%' : 'top 85%', toggleActions: 'play reset play reset' } }
       );
     }
   }
