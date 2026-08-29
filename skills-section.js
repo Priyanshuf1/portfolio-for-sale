@@ -1,5 +1,5 @@
 (function() {
-  // Skills & Capabilities Showcase - Warm Light Theme
+  // Skills & Capabilities Showcase - Category Wise with Sliding Motion
   let activeSkillsTimeline = null;
   
   const styles = `
@@ -52,12 +52,17 @@
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
       flex-wrap: wrap;
+      position: sticky;
+      top: 90px;
+      z-index: 20;
     }
     .glb-skills-tab {
       padding: 9px 20px;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(0, 0, 0, 0.08);
       color: #4b5563;
       border-radius: 24px;
@@ -65,6 +70,7 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.25s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
     .glb-skills-tab:hover {
       color: #e20001;
@@ -77,10 +83,35 @@
       box-shadow: 0 4px 15px rgba(226, 0, 1, 0.2);
     }
 
+    .glb-skills-category-group {
+      margin-bottom: 60px;
+      width: 100%;
+    }
+    .glb-skills-category-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .glb-skills-category-title {
+      font-size: clamp(1.25rem, 4vw, 1.65rem);
+      font-weight: 800;
+      color: #111827;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .glb-skills-category-line {
+      flex-grow: 1;
+      height: 1px;
+      background: rgba(226, 0, 1, 0.15);
+    }
+
     .glb-skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 22px;
+      gap: 24px;
+      width: 100%;
     }
     .glb-skill-card {
       background: #FFFDF0;
@@ -92,12 +123,12 @@
       gap: 14px;
       position: relative;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-      transition: all 0.3s ease;
+      transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     }
     .glb-skill-card:hover {
       border-color: rgba(226, 0, 1, 0.25);
       background: #FFF9E6;
-      transform: translateY(-3px);
+      transform: translateY(-4px);
       box-shadow: 0 10px 25px rgba(226, 0, 1, 0.05);
     }
     .glb-skill-top {
@@ -166,6 +197,18 @@
       width: 0%;
       transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
+    @media (max-width: 768px) {
+      .glb-skills-tabs {
+        top: 70px;
+      }
+      .glb-skills-category-group {
+        margin-bottom: 40px;
+      }
+      .glb-skills-grid {
+        gap: 16px;
+      }
+    }
   `;
 
   const skillsData = [
@@ -176,8 +219,6 @@
     { title: "Social Media Growth", category: "marketing", icon: "📲", badge: "3x Organic Reach", desc: "Viral short-form video strategy, engagement, and multi-channel brand building.", level: 92 },
     { title: "Analytics & Tracking", category: "development", icon: "📊", badge: "Data-Driven", desc: "GA4, Google Tag Manager, custom event tracking, and ROI attribution dashboards.", level: 90 },
     { title: "Copywriting & Strategy", category: "design", icon: "✍️", badge: "High Converting", desc: "Persuasive sales copy, landing page messaging, and SEO editorial content.", level: 93 },
-    
-    // Additional Max UI/UX Skills
     { title: "Figma Design Systems", category: "design", icon: "💎", badge: "Pro Components", desc: "Reusable component libraries, variables, advanced auto-layout, and clickable high-fi prototypes.", level: 97 },
     { title: "Shoot & Editing", category: "design", icon: "🎬", badge: "Production Pro", desc: "Professional commercial shoots, post-production video editing, sound design, and color grading.", level: 94 },
     { title: "User Research & Audit", category: "design", icon: "🔍", badge: "Heuristics Expert", desc: "Heatmaps, click maps, user journeys, behavioral heuristics, and usability testing.", level: 91 },
@@ -190,102 +231,149 @@
     const section = document.getElementById('glb-skills-section');
     if (!section) return;
 
-    const grid = document.getElementById('glbSkillsGrid');
-    const cards = Array.from(section.querySelectorAll('.glb-skill-card'));
-    if (!cards.length) return;
-
-    // Clean up any existing ScrollTriggers and active animations for this section
+    // Clean up any existing ScrollTriggers inside our capabilities section
     ScrollTrigger.getAll().forEach(t => {
-      if (t.trigger === section || t.trigger === grid || cards.includes(t.trigger)) {
+      if (t.trigger === section || (t.trigger && t.trigger.closest && t.trigger.closest('#glb-skills-section'))) {
         t.kill(true);
       }
     });
 
-    if (activeSkillsTimeline) {
-      activeSkillsTimeline.kill();
-      activeSkillsTimeline = null;
-    }
-    gsap.killTweensOf(cards);
+    const groups = section.querySelectorAll('.glb-skills-category-group');
+    groups.forEach(group => {
+      const headerTitle = group.querySelector('.glb-skills-category-title');
+      const headerLine = group.querySelector('.glb-skills-category-line');
+      const cards = Array.from(group.querySelectorAll('.glb-skill-card'));
 
-    // Reset layout height and styles
-    grid.style.minHeight = '';
-    grid.style.height = '';
-
-    // Reveal cards individually as the scroll reaches each card's real position in flow
-    cards.forEach(card => {
-      const fill = card.querySelector('.glb-skill-progress-fill');
-      const pct = card.querySelector('.glb-skill-percent');
-      if (!fill || !pct) return;
-      const level = parseInt(pct.dataset.level || 0);
-
-      // Reset width
-      gsap.set(fill, { width: '0%' });
-      pct.textContent = '0%';
-
-      let countObj = { val: 0 };
-      gsap.fromTo(card,
-        { opacity: 0, y: 35, scale: 0.96 },
+      // Slide in category title
+      gsap.fromTo(headerTitle,
+        { opacity: 0, x: -35 },
         {
           opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.5,
+          x: 0,
+          duration: 0.6,
           ease: 'power2.out',
           scrollTrigger: {
-            trigger: card,
+            trigger: headerTitle,
             start: 'top 92%',
-            toggleActions: 'play reset play reset',
-            onEnter: () => {
-              gsap.to(fill, { width: `${level}%`, duration: 1.0, ease: 'power2.out' });
-              gsap.fromTo(countObj, { val: 0 }, {
-                val: level,
-                duration: 1.0,
-                ease: 'power2.out',
-                onUpdate: () => {
-                  pct.textContent = Math.round(countObj.val) + '%';
-                }
-              });
-            },
-            onLeaveBack: () => {
-              gsap.set(fill, { width: '0%' });
-              pct.textContent = '0%';
-            }
+            toggleActions: 'play none none none'
           }
         }
       );
+
+      // Grow category line
+      gsap.fromTo(headerLine,
+        { scaleX: 0, transformOrigin: 'left center' },
+        {
+          scaleX: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: headerTitle,
+            start: 'top 92%',
+            toggleActions: 'play none none none'
+          }
+        }
+      );
+
+      // Stagger and slide cards in from alternate directions (left vs right)
+      cards.forEach((card, index) => {
+        const fill = card.querySelector('.glb-skill-progress-fill');
+        const pct = card.querySelector('.glb-skill-percent');
+        const level = parseInt(pct ? pct.dataset.level : 0);
+
+        gsap.set(fill, { width: '0%' });
+        if (pct) pct.textContent = '0%';
+
+        let countObj = { val: 0 };
+        const slideDirection = index % 2 === 0 ? -30 : 30; // Alternate left/right slide
+
+        gsap.fromTo(card,
+          { opacity: 0, y: 35, x: slideDirection },
+          {
+            opacity: 1,
+            y: 0,
+            x: 0,
+            duration: 0.65,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 92%',
+              toggleActions: 'play reset play reset',
+              onEnter: () => {
+                // Animate progress bar fill
+                gsap.to(fill, { width: `${level}%`, duration: 1.1, ease: 'power2.out' });
+                // Count up text percentage
+                gsap.fromTo(countObj, { val: 0 }, {
+                  val: level,
+                  duration: 1.1,
+                  ease: 'power2.out',
+                  onUpdate: () => {
+                    if (pct) pct.textContent = Math.round(countObj.val) + '%';
+                  }
+                });
+              },
+              onLeaveBack: () => {
+                gsap.set(fill, { width: '0%' });
+                if (pct) pct.textContent = '0%';
+                countObj.val = 0;
+              }
+            }
+          }
+        );
+      });
     });
 
-    // Force recalculation of scroll coordinates
     ScrollTrigger.refresh();
   }
 
-  function renderSkills(filter = "all") {
+  function renderSkills() {
     const grid = document.getElementById("glbSkillsGrid");
     if (!grid) return;
 
-    const filtered = filter === "all" ? skillsData : skillsData.filter(s => s.category === filter);
+    const categories = {
+      marketing: { title: "Digital Marketing", data: skillsData.filter(s => s.category === "marketing") },
+      development: { title: "Web Development", data: skillsData.filter(s => s.category === "development") },
+      design: { title: "UI/UX & Design", data: skillsData.filter(s => s.category === "design") }
+    };
 
-    grid.innerHTML = filtered.map(s => `
-      <div class="glb-skill-card" data-category="${s.category}">
-        <div class="glb-skill-top">
-          <div class="glb-skill-icon">${s.icon}</div>
-          <span class="glb-skill-badge-tag">${s.badge}</span>
-        </div>
-        <h3 class="glb-skill-title">${s.title}</h3>
-        <p class="glb-skill-desc">${s.desc}</p>
-        <div class="glb-skill-progress-wrap">
-          <div class="glb-skill-progress-label">
-            <span>Proficiency</span>
-            <span class="glb-skill-percent" data-level="${s.level}">0%</span>
+    let html = '';
+    
+    Object.keys(categories).forEach(catKey => {
+      const cat = categories[catKey];
+      html += `
+        <div class="glb-skills-category-group" id="skills-cat-${catKey}">
+          <div class="glb-skills-category-header">
+            <h3 class="glb-skills-category-title">${cat.title}</h3>
+            <div class="glb-skills-category-line"></div>
           </div>
-          <div class="glb-skill-progress-bar">
-            <div class="glb-skill-progress-fill" style="width: 0%;" data-level="${s.level}"></div>
+          <div class="glb-skills-grid">
+            ${cat.data.map(s => `
+              <div class="glb-skill-card" data-category="${s.category}">
+                <div class="glb-skill-top">
+                  <div class="glb-skill-icon">${s.icon}</div>
+                  <span class="glb-skill-badge-tag">${s.badge}</span>
+                </div>
+                <h3 class="glb-skill-title">${s.title}</h3>
+                <p class="glb-skill-desc">${s.desc}</p>
+                <div class="glb-skill-progress-wrap">
+                  <div class="glb-skill-progress-label">
+                    <span>Proficiency</span>
+                    <span class="glb-skill-percent" data-level="${s.level}">0%</span>
+                  </div>
+                  <div class="glb-skill-progress-bar">
+                    <div class="glb-skill-progress-fill" style="width: 0%;" data-level="${s.level}"></div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
           </div>
         </div>
-      </div>
-    `).join('');
+      `;
+    });
 
-    // Trigger card reveal animation
+    grid.innerHTML = html;
+
+    // Trigger animations
     setTimeout(initSkillsStackingAnimation, 60);
   }
 
@@ -295,7 +383,7 @@
         <div class="glb-skills-inner">
           <div class="glb-skills-header">
             <span class="glb-skills-badge">OUR CAPABILITIES</span>
-            <h2>Skills & Digital Expertise</h2>
+            <h2 class="h2-fluid">Skills & Digital Expertise</h2>
             <p>High-performance marketing, cutting-edge web engineering, and award-winning design.</p>
           </div>
 
@@ -306,7 +394,7 @@
             <button class="glb-skills-tab" data-filter="design">UI/UX & Design</button>
           </div>
 
-          <div class="glb-skills-grid" id="glbSkillsGrid"></div>
+          <div id="glbSkillsGrid"></div>
         </div>
       </div>
     `;
@@ -322,23 +410,37 @@
       styleEl.innerHTML = styles;
       document.head.appendChild(styleEl);
 
-      renderSkills('all');
+      renderSkills();
 
       // Bind tabs once when section is created
       setTimeout(() => {
         document.querySelectorAll('.glb-skills-tab').forEach(tab => {
-          tab.addEventListener('click', () => {
+          tab.addEventListener('click', (e) => {
+            e.preventDefault();
             document.querySelectorAll('.glb-skills-tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
-            renderSkills(tab.dataset.filter);
+
+            const filter = tab.dataset.filter;
+            let targetEl = null;
+            if (filter === 'all') {
+              targetEl = document.getElementById('glb-skills-section');
+            } else {
+              targetEl = document.getElementById('skills-cat-' + filter);
+            }
+            
+            if (targetEl) {
+              const yOffset = -120; // Clear the sticky header
+              const y = targetEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
+              window.scrollTo({ top: y, behavior: 'smooth' });
+            }
             if (window.rabtoPlayClickSFX) window.rabtoPlayClickSFX(750, 'sine', 0.08);
           });
         });
-      }, 50);
+      }, 80);
     } else {
       const grid = document.getElementById('glbSkillsGrid');
       if (grid && grid.children.length === 0) {
-        renderSkills('all');
+        renderSkills();
       }
     }
 

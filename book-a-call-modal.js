@@ -4,7 +4,7 @@
     .glb-floating-btn-book {
       position: fixed;
       bottom: 30px;
-      right: 170px;
+      right: 260px;
       z-index: 9998;
       background: linear-gradient(135deg, #e20001, #a30000);
       color: #ffffff;

@@ -244,9 +244,9 @@
 
       instaSection.dataset.elfsightBuilt = '1';
 
-      if (!document.querySelector('script[src*="elfsightcdn.com"]')) {
+      if (!document.querySelector('script[src*="elfsight.com"]')) {
         const script = document.createElement('script');
-        script.src = "https://elfsightcdn.com/platform.js";
+        script.src = "https://static.elfsight.com/platform/platform.js";
         script.async = true;
         document.head.appendChild(script);
       }

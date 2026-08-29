@@ -235,7 +235,7 @@ header.glb-site-header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 52px;
+  height: 64px;
   padding: 0 16px;
   box-sizing: border-box;
 }
@@ -252,7 +252,7 @@ header.glb-site-header {
 }
 
 .glb-logo-img {
-  height: 38px;
+  height: 48px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -1192,11 +1192,11 @@ footer.glb-footer {
     border-radius: 24px !important;
   }
   .glb-header-container {
-    height: 54px !important;
+    height: 58px !important;
     padding: 0 16px !important;
   }
   .glb-logo-img {
-    height: 38px !important;
+    height: 42px !important;
     width: auto !important;
   }
   .glb-call-btn {
