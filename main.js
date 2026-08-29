@@ -200,19 +200,24 @@
       });
     }
 
-    // Lenis smooth scroll
-    if (window.Lenis) {
-      const lenis = new Lenis({
+    // Lenis smooth scroll - prevent duplicate instances
+    if (window.Lenis && !window.lenisInstance) {
+      window.lenisInstance = new Lenis({
         duration: 1.1,
         easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         wheelMultiplier: 0.85,
         touchMultiplier: 1.5
       });
-      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+      function raf(time) { 
+        if (window.lenisInstance) window.lenisInstance.raf(time); 
+        requestAnimationFrame(raf); 
+      }
       requestAnimationFrame(raf);
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add(time => lenis.raf(time * 1000));
+      window.lenisInstance.on('scroll', () => ScrollTrigger.update());
+      gsap.ticker.add(time => {
+        if (window.lenisInstance) window.lenisInstance.raf(time * 1000);
+      });
       gsap.ticker.lagSmoothing(0);
     }
 
@@ -255,6 +260,8 @@
         }
       );
     });
+
+    ScrollTrigger.refresh();
 
     // ── EXTRA REVEAL ANIMATIONS FOR GRAPHIC CONTAINERS ──
     // About 3D logo
@@ -325,16 +332,19 @@
     setTimeout(() => {
       initHeadingWordReveals();
       initAnimations();
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
     }, 450);
 
     setTimeout(() => {
       initHeadingWordReveals();
       initAnimations();
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
     }, 950);
 
     setTimeout(() => {
       initHeadingWordReveals();
       initAnimations();
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
     }, 1800);
   }
 
