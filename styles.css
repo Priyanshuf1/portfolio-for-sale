@@ -1143,8 +1143,11 @@ footer.glb-footer {
   /* Header mobile overrides */
   header.glb-site-header {
     top: 8px !important;
-    width: calc(100% - 16px) !important;
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
     max-width: none !important;
+    transform: none !important;
     padding: 0 !important;
     border-radius: 24px !important;
   }
