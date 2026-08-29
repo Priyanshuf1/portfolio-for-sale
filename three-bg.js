@@ -1,8 +1,8 @@
 (function() {
-  const styles = `
+    const styles = `
     html, body, html body {
-      background-color: transparent !important;
-      background: transparent !important;
+      background-color: #ffffff !important;
+      background: #ffffff !important;
       color: #1f2937 !important;
     }
 
@@ -248,35 +248,47 @@
 
   // 3. Initialize Vanta Topology Background Scene
   function initVantaTopology() {
-    if (document.getElementById('vanta-bg-container')) return;
-
-    // Create background container wrapper
-    const bgContainer = document.createElement('div');
-    bgContainer.id = 'vanta-bg-container';
-    
-    // Insert behind everything
-    document.body.insertBefore(bgContainer, document.body.firstChild);
+    let bgContainer = document.getElementById('vanta-bg-container');
+    if (!bgContainer) {
+      bgContainer = document.createElement('div');
+      bgContainer.id = 'vanta-bg-container';
+      // Force inline style sizes to prevent 0px dimensions race condition during Vanta init
+      bgContainer.style.cssText = 'position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; pointer-events: none !important; z-index: -1 !important; display: block !important; background-color: #ffffff !important;';
+      document.body.insertBefore(bgContainer, document.body.firstChild);
+    }
 
     let vantaEffect = null;
+    let attempts = 0;
     function startVanta() {
       if (window.VANTA && window.VANTA.TOPOLOGY) {
-        vantaEffect = window.VANTA.TOPOLOGY({
-          el: "#vanta-bg-container",
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          scale: 3.50,               // Spacious grid for fewer lines (fewer lines)
-          scaleMobile: 5.50,         // Spacious grid on mobile
-          color: 0x4b5563,           // Premium Monochrome color (Charcoal #4b5563)
-          backgroundColor: 0xffffff  // Solid White background
-        });
-        console.log('[Vanta] ✅ Topology monochrome lines initialized successfully');
-        
-        // Initial trigger for opacity setup
-        updateCanvasOpacities();
-      } else {
+        try {
+          vantaEffect = window.VANTA.TOPOLOGY({
+            el: "#vanta-bg-container",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: window.innerHeight || 600,
+            minWidth: window.innerWidth || 800,
+            scale: 3.50,
+            scaleMobile: 5.50,
+            color: 0x4b5563,
+            backgroundColor: 0xffffff
+          });
+          console.log('[Vanta] ✅ Topology monochrome lines initialized successfully');
+          
+          // Force resize and recalibration after browser paints to guarantee covering full viewport
+          setTimeout(() => {
+            if (vantaEffect && typeof vantaEffect.resize === 'function') {
+              vantaEffect.resize();
+            }
+          }, 100);
+          
+          updateCanvasOpacities();
+        } catch (err) {
+          console.error('[Vanta] Initialization error:', err);
+        }
+      } else if (attempts < 50) {
+        attempts++;
         setTimeout(startVanta, 100);
       }
     }
