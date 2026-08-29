@@ -2,12 +2,12 @@
   const styles = `
     .glb-location-section {
       padding: 90px 5%;
-      background: transparent;
-      color: white;
+      background: #ffffff;
+      color: #111827;
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       position: relative;
       z-index: 10;
-      border-top: 1px solid rgba(226, 0, 1, 0.15);
+      border-top: 1px solid rgba(0,0,0,0.06);
     }
     .glb-location-inner {
       max-width: 1240px;
@@ -20,8 +20,8 @@
     .glb-location-badge {
       display: inline-block;
       padding: 6px 16px;
-      background: rgba(226, 0, 1, 0.1);
-      border: 1px solid rgba(226, 0, 1, 0.3);
+      background: rgba(226, 0, 1, 0.08);
+      border: 1px solid rgba(226, 0, 1, 0.2);
       color: #e20001;
       font-size: 12px;
       font-weight: 700;
@@ -31,19 +31,16 @@
       margin-bottom: 12px;
     }
     .glb-location-header h2 {
-      font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
       margin: 0 0 12px;
-      background: linear-gradient(180deg, #ff9999 0%, #e20001 50%, #7f0001 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -1px;
-      font-weight: 700;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+      color: #111827;
+      letter-spacing: -0.5px;
+      font-weight: 800;
     }
     .glb-location-header p {
-      color: #A1A1AA;
-      font-size: 1.1rem;
-      max-width: 620px;
+      color: #6b7280;
+      font-size: 1.05rem;
+      max-width: 580px;
       margin: 0 auto;
       line-height: 1.6;
     }
@@ -62,8 +59,8 @@
       gap: 16px;
     }
     .glb-contact-card {
-      background: transparent;
-      border: 1px solid rgba(226, 0, 1,0.15);
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.07);
       border-radius: 16px;
       padding: 20px 24px;
       display: flex;
@@ -73,15 +70,16 @@
       transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
     .glb-contact-card:hover {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(226, 0, 1,0.5);
+      background: #fafafa;
+      border-color: rgba(226, 0, 1, 0.3);
+      box-shadow: 0 4px 16px rgba(226,0,1,0.05);
     }
     .glb-contact-card-left { display: flex; align-items: center; gap: 16px; }
     .glb-contact-card-icon {
       width: 48px; height: 48px;
       border-radius: 12px;
-      background: rgba(226, 0, 1,0.12);
-      border: 1px solid rgba(226, 0, 1,0.3);
+      background: rgba(226, 0, 1, 0.07);
+      border: 1px solid rgba(226, 0, 1, 0.15);
       display: flex; justify-content: center; align-items: center;
       font-size: 20px; flex-shrink: 0;
     }
@@ -90,18 +88,17 @@
       font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
       color: #e20001; font-weight: 700;
     }
-    .glb-contact-card-val { color: #fff; font-size: 0.95rem; font-weight: 500; line-height: 1.4; }
+    .glb-contact-card-val { color: #111827; font-size: 0.95rem; font-weight: 500; line-height: 1.4; }
     .glb-contact-card-action {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 8px 16px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.15);
-      color: #fff; border-radius: 8px; font-size: 13px; font-weight: 600;
+      background: rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.1);
+      color: #374151; border-radius: 8px; font-size: 13px; font-weight: 600;
       text-decoration: none; white-space: nowrap; transition: all 0.2s;
     }
     .glb-contact-card:hover .glb-contact-card-action {
-      background: linear-gradient(135deg,#FFFFFF 0%,#E2E8F0 45%,#94A3B8 100%);
-      color: #0A0E27; border-color: transparent; font-weight: 700;
+      background: #e20001; color: #ffffff; border-color: #e20001;
     }
 
     /* Map Box Container */
@@ -109,10 +106,10 @@
       position: relative;
       min-height: 460px;
       border-radius: 20px;
-      border: 1px solid rgba(226, 0, 1,0.35);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 35px rgba(226, 0, 1,0.2);
+      border: 1px solid rgba(226, 0, 1,0.2);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 0 20px rgba(226, 0, 1,0.06);
       overflow: hidden;
-      background: #0D111A;
+      background: #f9f9f9;
     }
 
     .glb-map-floating-badge {
@@ -137,12 +134,11 @@
       100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(226, 0, 1,0); }
     }
 
-    /* Live Google Maps Iframe with dark filter */
+    /* Live Google Maps Iframe */
     .glb-map-iframe-element {
       width: 100%; height: 100%; min-height: 460px;
       border: 0; display: block;
       position: relative; z-index: 1;
-      filter: invert(90%) hue-rotate(180deg) grayscale(70%) contrast(110%);
     }
 
     .glb-map-direct-btn {
@@ -157,8 +153,8 @@
     .glb-map-direct-btn:hover { background: #e20001; color: #0A0E27; box-shadow: 0 0 25px rgba(226, 0, 1,0.6); }
   `;
 
-  // Official Live Google Maps Embed URL pointing exactly to Gomti Nagar, Lucknow UP
-  const mapSrc = 'https://maps.google.com/maps?q=26.8448,80.9683&z=15&output=embed';
+  // Proper Google Maps Embed URL for Gomti Nagar, Lucknow
+  const mapSrc = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.345929948543!2d80.96551751503878!3d26.844838983185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39995890f8218c79%3A0x2df3c0c62b6e6fca!2sGomti%20Nagar%2C%20Lucknow%2C%20Uttar%20Pradesh%20226010!5e0!3m2!1sen!2sin!4v1693000000000!5m2!1sen!2sin';
 
   const html = `
     <div class="glb-location-section">
