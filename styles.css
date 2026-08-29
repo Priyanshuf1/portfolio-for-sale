@@ -1126,3 +1126,162 @@ footer.glb-footer {
   .reveal-up, .reveal-left, .reveal-right, .reveal-scale { opacity: 1 !important; transform: none !important; }
   * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   RAFAEL-INSPIRED PREMIUM ANIMATION LAYER
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Word-by-word text reveal (heading overflow clip) ── */
+.glm-word-reveal {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.glm-word-inner {
+  display: inline-block;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+/* ── Stat counter cards — premium number display ── */
+.about-stat-card {
+  position: relative;
+  overflow: hidden;
+}
+.about-stat-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.about-stat-card.counted::before {
+  width: 100%;
+}
+.about-stat-num {
+  font-family: 'Satoshi', 'Inter', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -1.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── FAQ rows: always visible, never opacity 0 ── */
+.faq-row {
+  opacity: 1 !important;
+  transform: none;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.faq-row.animating {
+  /* Only during GSAP animation allow transform */
+  opacity: 0.4;
+}
+
+/* ── Skill cards — Rafael horizontal sweep effect ── */
+.glb-skill-card {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease !important;
+}
+.glb-skill-card:hover {
+  transform: translateY(-4px) scale(1.02) !important;
+}
+
+/* ── Section heading — underline sweep on scroll-in ── */
+.glm-heading-sweep {
+  position: relative;
+  display: inline-block;
+}
+.glm-heading-sweep::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+}
+.glm-heading-sweep.in-view::after {
+  width: 100%;
+}
+
+/* ── Scroll progress indicator line (top of page) ── */
+#glm-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  background: var(--primary);
+  z-index: 99999;
+  transform-origin: left;
+  transform: scaleX(0);
+  box-shadow: 0 0 8px rgba(226,0,1,0.5);
+  pointer-events: none;
+}
+
+/* ── Hero section animated gradient badge ── */
+.badge-pill-red {
+  position: relative;
+  overflow: hidden;
+}
+.badge-pill-red::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: badgeSheen 3s ease infinite 1.5s;
+}
+@keyframes badgeSheen {
+  0%   { left: -100%; }
+  50%  { left: 150%; }
+  100% { left: 150%; }
+}
+
+/* ── Horizontal text marquee on hero (like Rafael KUROSAWA) ── */
+.glm-marquee-text-row {
+  overflow: hidden;
+  white-space: nowrap;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding: 14px 0;
+}
+.glm-marquee-text-track {
+  display: inline-flex;
+  gap: 60px;
+  animation: glmTextMarquee 20s linear infinite;
+}
+.glm-marquee-text-track span {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+@keyframes glmTextMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Reduced motion override for animation layer ── */
+@media (prefers-reduced-motion: reduce) {
+  .glm-word-inner { transform: none !important; opacity: 1 !important; }
+  .glm-marquee-text-track { animation: none; }
+  .badge-pill-red::after { animation: none; }
+  #glm-scroll-progress { display: none; }
+}
+
