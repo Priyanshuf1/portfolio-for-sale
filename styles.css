@@ -1317,31 +1317,116 @@ footer.glb-footer {
   .about-visual-col { width: 100%; border-radius: 20px; overflow: hidden; }
   .about-tags-row { justify-content: center; }
 
-  #services { padding: 56px 5% !important; }
-  .services-grid-wrap {
-    display: flex !important;
-    flex-direction: column-reverse !important;
-    gap: 28px !important;
-  }
-  #services .process-img-wrap {
-    max-height: 220px !important;
-    border-radius: 16px !important;
+  /* Design Services Section — Strict Mobile Left-Aligned & Contained UI */
+  #services {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 48px 16px !important;
+    box-sizing: border-box !important;
     overflow: hidden !important;
   }
+  #services .section-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+  #services .services-grid-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    gap: 24px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+  #services .about-content-col {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    gap: 16px !important;
+  }
+  #services h2,
+  #services p,
+  #services .badge-pill-red {
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    align-self: flex-start !important;
+  }
+  #services .process-img-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 180px !important;
+    max-height: 180px !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
   #services .process-img-wrap img {
+    width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
+    object-position: center !important;
   }
-  .services-cards-col { grid-template-columns: 1fr !important; gap: 16px; }
-  .service-card-item {
-    padding: 22px 20px;
-    border-radius: 20px;
-    background: #ffffff;
-    border: 1px solid rgba(226, 0, 1, 0.12);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+  #services .services-cards-col {
+    width: 100% !important;
+    max-width: 100% !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
   }
-  .service-card-title { font-size: clamp(1.1rem, 4.5vw, 1.3rem); font-weight: 800; }
-  .service-card-desc { font-size: clamp(0.9rem, 3.8vw, 0.98rem); color: #374151; }
+  #services .service-card-item {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 16px 14px !important;
+    border-radius: 16px !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(226, 0, 1, 0.12) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    text-align: left !important;
+  }
+  #services .service-card-title {
+    font-size: clamp(1.05rem, 4.2vw, 1.2rem) !important;
+    font-weight: 800 !important;
+    text-align: left !important;
+    display: block !important;
+  }
+  #services .service-card-desc {
+    font-size: clamp(0.85rem, 3.6vw, 0.94rem) !important;
+    color: #374151 !important;
+    text-align: left !important;
+    margin-top: 4px !important;
+  }
+  #services .about-content-col > div[style*="display: flex"] {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    margin-top: 8px !important;
+    align-items: flex-start !important;
+  }
+  #services .btn-primary,
+  #services .btn-secondary {
+    width: 100% !important;
+    max-width: 290px !important;
+    margin: 0 !important;
+    text-align: center !important;
+    min-height: 48px !important;
+    padding: 12px 20px !important;
+  }
 
   /* Sliding Capability Badges — Encapsulated Stylish Boxes */
   .services-marquee-strip { margin-top: 32px !important; padding: 14px 0 !important; }
