@@ -1155,7 +1155,13 @@ footer.glb-footer {
     height: 32px !important;
   }
   .glb-call-btn {
-    padding: 8px !important;
+    padding: 8px 12px !important;
+  }
+  .glb-call-number {
+    display: none !important;
+  }
+  .glb-menu-toggle {
+    display: flex !important;
   }
   nav.glb-nav-menu {
     display: none !important;
