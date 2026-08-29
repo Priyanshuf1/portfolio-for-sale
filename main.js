@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
 
   // ── 1. FAQ ACCORDION LOGIC ────────────────────────────────────────────────
   function initFAQAccordion() {
@@ -293,6 +293,22 @@
     initHeadingWordReveals();
     initAnimations();
     initHeaderShrink();
+
+    // Re-trigger layout captures after dynamic script injection delays (300ms, 800ms, 1500ms)
+    setTimeout(() => {
+      initHeadingWordReveals();
+      initAnimations();
+    }, 450);
+
+    setTimeout(() => {
+      initHeadingWordReveals();
+      initAnimations();
+    }, 950);
+
+    setTimeout(() => {
+      initHeadingWordReveals();
+      initAnimations();
+    }, 1800);
   }
 
   if (document.readyState === 'loading') {
