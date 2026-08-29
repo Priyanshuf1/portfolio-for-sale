@@ -1140,6 +1140,16 @@ footer.glb-footer {
   }
   .section-header { margin-bottom: 36px !important; text-align: center; }
 
+  /* Hide Desktop Floating Action Widgets on Mobile */
+  .glb-floating-btn-review,
+  .glb-floating-btn-book,
+  .glb-floating-btn-about,
+  #glbTriggerReview,
+  #glbBookACallFloating,
+  #glbAboutUsFloating {
+    display: none !important;
+  }
+
   /* Header Mobile Bar */
   header.glb-site-header {
     top: 8px !important;
@@ -1180,6 +1190,21 @@ footer.glb-footer {
     display: none !important;
   }
 
+  /* Mobile Drawer — Sleek Phone Sheet Card */
+  .glb-drawer-content {
+    width: 88vw !important;
+    max-width: 360px !important;
+    border-top-left-radius: 28px !important;
+    border-bottom-left-radius: 28px !important;
+    padding: 28px 24px !important;
+    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.25) !important;
+  }
+  .glb-drawer-link {
+    font-size: 1.1rem !important;
+    font-weight: 800 !important;
+    padding: 12px 0 !important;
+  }
+
   /* Hero Mobile Layout — Zoomed & Punchy */
   #hero {
     padding-top: 104px !important;
@@ -1205,7 +1230,7 @@ footer.glb-footer {
     padding: 15px 24px !important;
     min-height: 52px !important;
     font-size: clamp(0.98rem, 4.2vw, 1.1rem) !important;
-    font-weight: 800 !weight;
+    font-weight: 800;
     border-radius: 35px !important;
     justify-content: center;
     display: inline-flex;
@@ -1239,8 +1264,13 @@ footer.glb-footer {
   .about-visual-col { width: 100%; border-radius: 20px; overflow: hidden; }
   .about-tags-row { justify-content: center; }
 
-  /* Service Cards — Elevated Card Styling */
-  .services-grid-wrap { grid-template-columns: 1fr !important; gap: 28px !important; }
+  /* Design Services Section — Phone Layout Order (Text & Cards First, Image Below) */
+  #services { padding: 56px 5% !important; }
+  .services-grid-wrap {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+    gap: 28px !important;
+  }
   .services-cards-col { grid-template-columns: 1fr !important; gap: 16px; }
   .service-card-item {
     padding: 22px 20px;
@@ -1251,6 +1281,64 @@ footer.glb-footer {
   }
   .service-card-title { font-size: clamp(1.1rem, 4.5vw, 1.3rem); font-weight: 800; }
   .service-card-desc { font-size: clamp(0.9rem, 3.8vw, 0.98rem); color: #374151; }
+
+  /* Sliding Capability Badges — Encapsulated Stylish Boxes */
+  .services-marquee-strip { margin-top: 32px !important; padding: 14px 0 !important; }
+  .services-marquee-item {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    color: #e20001 !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(226, 0, 1, 0.25) !important;
+    border-radius: 24px !important;
+    padding: 10px 18px !important;
+    box-shadow: 0 4px 14px rgba(226, 0, 1, 0.08) !important;
+  }
+
+  /* Why Choose Us & Meet Team Sections — Phone Light Theme Formatting */
+  .glb-additional-details { color: #111827 !important; }
+  .glb-why-us-section, .glb-team-section { padding: 56px 5% !important; }
+  .glb-why-us-header h2, .glb-team-header h2 { font-size: clamp(1.75rem, 7.5vw, 2.3rem) !important; color: #e20001 !important; }
+  .glb-why-us-header p, .glb-team-header p { color: #4b5563 !important; font-size: clamp(0.92rem, 3.8vw, 1rem) !important; }
+  
+  .glb-comparison-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .glb-comparison-card.others {
+    background: #f9fafb !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 20px !important;
+    padding: 24px 20px !important;
+  }
+  .glb-comparison-card.others .glb-comp-title { color: #111827 !important; font-weight: 800 !important; }
+  .glb-comparison-card.others .glb-comp-item { color: #4b5563 !important; }
+  
+  .glb-comparison-card.glm {
+    background: #FFFDF0 !important;
+    border: 1px solid rgba(226, 0, 1, 0.3) !important;
+    border-radius: 20px !important;
+    padding: 24px 20px !important;
+    box-shadow: 0 6px 20px rgba(226, 0, 1, 0.06) !important;
+  }
+  .glb-comparison-card.glm .glb-comp-title {
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    color: #e20001 !important;
+    font-weight: 900 !important;
+  }
+  .glb-comparison-card.glm .glb-comp-item { color: #111827 !important; }
+
+  .glb-team-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .glb-team-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(226, 0, 1, 0.12) !important;
+    border-radius: 20px !important;
+    padding: 22px 18px !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04) !important;
+  }
+  .glb-team-name { color: #111827 !important; font-weight: 800 !important; }
+  .glb-team-role { color: #e20001 !important; font-weight: 700 !important; }
+  .glb-team-bio { color: #4b5563 !important; }
 
   /* Process Steps Card Bounded Styling */
   .process-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
