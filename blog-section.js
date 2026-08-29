@@ -33,7 +33,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -1px;
-      font-weight: 700;
+      font-weight: 900;
     }
     .glb-home-blogs-header p {
       color: #666;
