@@ -87,7 +87,7 @@ console.error = function(...args) {
   origError.apply(console, args);
 };
 </script>
-<style>
+<style id="glb-main-custom-styles">
   /* Hide old testimonials section */
   #testimonials, section[data-framer-name="testimonials"], .framer-izep5p { display: none !important; }
   
@@ -172,7 +172,8 @@ console.error = function(...args) {
     /* 2. Collapse automatic empty height/spacing from Framer container elements */
     .framer-povseb, .framer-OLpjL {
       height: auto !important;
-      min-height: 0 !important;
+      min-height: 100vh !important;
+      overflow: visible !important;
     }
     /* 3. Tighten section spacing to eliminate massive blank page gaps */
     #hero, #about-me, #process, #services, #faq,
@@ -493,13 +494,42 @@ console.error = function(...args) {
     transform: translateY(-3px) !important;
   }
 </style>\n`;
-if (html.includes('kill-service-workers')) {
-    const mainScriptMatch = hideStyle.match(/<script id="kill-service-workers">[\s\S]*?<\/script>/gi);
+// Extract the parts of hideStyle dynamically
+const mainScriptMatch = hideStyle.match(/<script id="kill-service-workers">[\s\S]*?<\/script>/gi);
+const mainStyleMatch = hideStyle.match(/<style id="glb-main-custom-styles">[\s\S]*?<\/style>/gi);
+
+// Inject meta tags if not already present
+if (!html.includes('http-equiv="Cache-Control"')) {
+    const metaMatch = hideStyle.match(/<!--[\s\S]*?-->\n<meta[\s\S]*?<meta http-equiv="Expires" content="0">/gi);
+    if (metaMatch) {
+        html = html.replace('<head>', '<head>\n' + metaMatch[0]);
+    } else {
+        const lines = hideStyle.trim().split('\n');
+        const metaBlock = lines.slice(0, 4).join('\n');
+        html = html.replace('<head>', '<head>\n' + metaBlock);
+    }
+}
+
+// Inject/update script
+if (html.includes('id="kill-service-workers"')) {
     if (mainScriptMatch) {
         html = html.replace(/<script id="kill-service-workers">[\s\S]*?<\/script>/gi, mainScriptMatch[0]);
     }
 } else {
-    html = html.replace('<head>', '<head>\n' + hideStyle);
+    if (mainScriptMatch) {
+        html = html.replace('<head>', '<head>\n' + mainScriptMatch[0]);
+    }
+}
+
+// Inject/update style
+if (html.includes('id="glb-main-custom-styles"')) {
+    if (mainStyleMatch) {
+        html = html.replace(/<style id="glb-main-custom-styles">[\s\S]*?<\/style>/gi, mainStyleMatch[0]);
+    }
+} else {
+    if (mainStyleMatch) {
+        html = html.replace('<head>', '<head>\n' + mainStyleMatch[0]);
+    }
 }
 
 // Inject Firebase init before other custom scripts
