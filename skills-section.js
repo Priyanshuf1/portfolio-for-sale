@@ -255,7 +255,7 @@
           scrollTrigger: {
             trigger: headerTitle,
             start: 'top 92%',
-            toggleActions: 'play none none none'
+            toggleActions: 'play reset play reset'
           }
         }
       );
@@ -270,7 +270,7 @@
           scrollTrigger: {
             trigger: headerTitle,
             start: 'top 92%',
-            toggleActions: 'play none none none'
+            toggleActions: 'play reset play reset'
           }
         }
       );
