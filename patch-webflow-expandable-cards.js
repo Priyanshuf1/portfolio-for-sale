@@ -15,11 +15,17 @@ filesToPatch.forEach(relPath => {
 
   let content = fs.readFileSync(filePath, 'utf8');
 
-  // Replace Recent Works project card Framer image hashes with work1.png through work4.png
-  content = content.replace(/https:\/\/framerusercontent\.com\/images\/(bed888CTflXNK3KFX1R7VhRMtE|GkhJfmw17Q5eehve51WR25Ijjnk|RYRvZnstUexQMOl8zRyrvDfDT0)\.[a-zA-Z0-9_\-\?&=.]+/g, './work1.png');
-  content = content.replace(/https:\/\/framerusercontent\.com\/images\/(JGI1jOpxUUfW0IRfPmx7eMGhc|En1SV0rP485Zf5WOrpnHl3Nz658)\.[a-zA-Z0-9_\-\?&=.]+/g, './work2.png');
-  content = content.replace(/https:\/\/framerusercontent\.com\/images\/(fsFDlU7CKq0E96MXMN9fUXrNw|W7bXB4tsou7l5mHYU8sze3sBeg)\.[a-zA-Z0-9_\-\?&=.]+/g, './work3.png');
-  content = content.replace(/https:\/\/framerusercontent\.com\/images\/(jlIAaI4caPj3oVLaxetMd2RvY|MM7F7DNjn9gGQjHqbiowegENsRY)\.[a-zA-Z0-9_\-\?&=.]+/g, './work4.png');
+  // Replace Recent Works project card Framer image hashes with work1.webp through work4.webp
+  content = content.replace(/https:\/\/framerusercontent\.com\/images\/(bed888CTflXNK3KFX1R7VhRMtE|GkhJfmw17Q5eehve51WR25Ijjnk|RYRvZnstUexQMOl8zRyrvDfDT0)\.[a-zA-Z0-9_\-\?&=.]+/g, './work1.webp');
+  content = content.replace(/https:\/\/framerusercontent\.com\/images\/(JGI1jOpxUUfW0IRfPmx7eMGhc|En1SV0rP485Zf5WOrpnHl3Nz658)\.[a-zA-Z0-9_\-\?&=.]+/g, './work2.webp');
+  content = content.replace(/https:\/\/framerusercontent\.com\/images\/(fsFDlU7CKq0E96MXMN9fUXrNw|W7bXB4tsou7l5mHYU8sze3sBeg)\.[a-zA-Z0-9_\-\?&=.]+/g, './work3.webp');
+  content = content.replace(/https:\/\/framerusercontent\.com\/images\/(jlIAaI4caPj3oVLaxetMd2RvY|MM7F7DNjn9gGQjHqbiowegENsRY)\.[a-zA-Z0-9_\-\?&=.]+/g, './work4.webp');
+
+  // Convert already patched png references from previous runs to webp
+  content = content.replace(/work1\.png/g, 'work1.webp');
+  content = content.replace(/work2\.png/g, 'work2.webp');
+  content = content.replace(/work3\.png/g, 'work3.webp');
+  content = content.replace(/work4\.png/g, 'work4.webp');
 
   // Disable Behance redirection links on project cards
   content = content.replace(/https:\/\/www\.behance\.net[^"'\s`<>)]*/g, 'javascript:void(0)');
@@ -38,7 +44,7 @@ if (carouselStart !== -1) {
   const carouselEnd = html.indexOf('</section>', carouselStart);
   let carouselHtml = html.substring(carouselStart, carouselEnd);
 
-  const workImgs = ['./work1.png', './work2.png', './work3.png', './work4.png'];
+  const workImgs = ['./work1.webp', './work2.webp', './work3.webp', './work4.webp'];
 
   let count = 0;
   carouselHtml = carouselHtml.replace(/<img[^>]+>/g, (imgTag) => {
@@ -46,6 +52,12 @@ if (carouselStart !== -1) {
     count++;
     let newTag = imgTag.replace(/src="[^"]*"/, `src="${targetSrc}"`);
     newTag = newTag.replace(/srcset="[^"]*"/, `srcset="${targetSrc}"`);
+    if (!newTag.includes('loading=')) {
+      newTag = newTag.replace('<img', '<img loading="lazy"');
+    }
+    if (!newTag.includes('width=')) {
+      newTag = newTag.replace('<img', '<img width="600" height="460"');
+    }
     return newTag;
   });
 

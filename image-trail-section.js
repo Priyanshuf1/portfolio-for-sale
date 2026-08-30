@@ -416,18 +416,38 @@
     }
   }
 
-  /* Force Elfsight free widget badge/logo removal */
-  a[href*="elfsight.com"],
-  a[class*="eapps-link"],
-  [class*="LogoContainer"],
-  [class*="Logo__Container"],
-  [class*="BadgeContainer"] {
-    display: none !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    width: 0 !important;
+  /* Custom Reel Carousel styles */
+  .reel-card {
+    position: absolute;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
+    background: #000;
+    transition: width 0.38s cubic-bezier(0.25, 1, 0.5, 1), 
+                height 0.38s cubic-bezier(0.25, 1, 0.5, 1), 
+                transform 0.38s cubic-bezier(0.25, 1, 0.5, 1), 
+                opacity 0.38s cubic-bezier(0.25, 1, 0.5, 1), 
+                z-index 0.38s step-end;
+    will-change: transform, opacity;
+  }
+  .reel-card a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .reel-card img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+  }
+  .reel-dot {
+    height: 12px;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
   }
 </style>
 `;
@@ -477,12 +497,12 @@
       marqueeSection.dataset.marqueeBuilt = '1';
     }
 
-    // ── 4. Populate Instagram Section with Elfsight Widget ───────────────────
+    // ── 4. Populate Instagram Section with Custom Reels Carousel ───────────────
     if (!instaSection.dataset.elfsightBuilt) {
       instaSection.innerHTML = `
         <div style="text-align:center; margin-bottom: 40px;">
-          <span style="display:inline-block; padding: 5px 16px; background: rgba(226,0,1,0.1); border: 1px solid rgba(226,0,1,0.3); color: #e20001; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 20px; margin-bottom: 14px;">Instagram</span>
-          <h2 style="margin: 0; font-weight: 900; color: #111827; font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 30px;">Follow Our Journey</h2>
+          <span style="display:inline-block; padding: 5px 16px; background: rgba(226,0,1,0.1); border: 1px solid rgba(226,0,1,0.3); color: #e20001; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 20px; margin-bottom: 14px;">Social Presence</span>
+          <h2 style="margin: 0; font-weight: 900; color: #111827; font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 30px;">Trusted by 130k+ People</h2>
         </div>
 
         <!-- Integrated Instagram Profile Header -->
@@ -525,161 +545,211 @@
           </div>
         </div>
 
-        <div style="max-width: 1100px; margin: 0 auto; min-height: 300px; padding: 0 8px;">
-          <div class="elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40"></div>
+        <div class="relative flex flex-col items-center justify-center w-full" style="max-width: 1400px; margin: 0 auto; padding-top: 10px;">
+            <div id="reel-carousel" class="relative flex items-center justify-center w-full" style="height: 440px; overflow: visible;">
+                <!-- Reel cards will be positioned by JS -->
+            </div>
+            <!-- Carousel Controls -->
+            <div class="flex items-center justify-center gap-6 mt-8 z-50">
+                <button id="reel-prev" class="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition shadow-sm border border-gray-200" style="cursor:pointer; font-size:18px; font-weight:bold;" aria-label="Previous">←</button>
+                <div id="reel-dots" class="flex justify-center items-center gap-3"></div>
+                <button id="reel-next" class="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 transition shadow-sm border border-gray-200" style="cursor:pointer; font-size:18px; font-weight:bold;" aria-label="Next">→</button>
+            </div>
         </div>
       `;
 
       instaSection.dataset.elfsightBuilt = '1';
 
-      // Load the Elfsight platform script if not yet loaded
-      if (!document.querySelector('script[src*="elfsight.com"]')) {
-        const script = document.createElement('script');
-        script.src = "https://static.elfsight.com/platform/platform.js";
-        script.async = true;
-        document.head.appendChild(script);
+      var reels = [
+        { shortcode: 'DcK1rodslR7', link: 'https://www.instagram.com/reel/DcK1rodslR7/' },
+        { shortcode: 'DcETc2yJ8dx', link: 'https://www.instagram.com/reel/DcETc2yJ8dx/' },
+        { shortcode: 'Db8h5OqJeZB', link: 'https://www.instagram.com/reel/Db8h5OqJeZB/' },
+        { shortcode: 'Db3CctrMNxA', link: 'https://www.instagram.com/reel/Db3CctrMNxA/' },
+        { shortcode: 'DbfIbFdsb4b', link: 'https://www.instagram.com/reel/DbfIbFdsb4b/' },
+        { shortcode: 'DaaovABJmtz', link: 'https://www.instagram.com/reel/DaaovABJmtz/' },
+        { shortcode: 'DZK-QPopOEP', link: 'https://www.instagram.com/reel/DZK-QPopOEP/' },
+        { shortcode: 'DYCeYHmhCh_', link: 'https://www.instagram.com/reel/DYCeYHmhCh_/' },
+        { shortcode: 'DX_58uVMu9b', link: 'https://www.instagram.com/reel/DX_58uVMu9b/' },
+        { shortcode: 'DRJb4qukxA5', link: 'https://www.instagram.com/reel/DRJb4qukxA5/' },
+        { shortcode: 'DNAng99T_jL', link: 'https://www.instagram.com/reel/DNAng99T_jL/' }
+      ];
+
+      var carousel = document.getElementById('reel-carousel');
+      var dotsContainer = document.getElementById('reel-dots');
+      var currentReel = 0;
+      var total = reels.length;
+
+      reels.forEach(function(reel, i) {
+          var card = document.createElement('div');
+          card.className = 'reel-card';
+          card.style.cssText = 'user-select:none; touch-action:pan-y;';
+          card.innerHTML = `
+              <a href="${reel.link}" target="_blank" rel="noopener noreferrer">
+                  <img alt="Instagram Reel ${i+1}" loading="lazy" class="pointer-events-none"
+                       src="https://www.instagram.com/p/${reel.shortcode}/media/?size=l"
+                       onerror="this.src='./logo_icon.png'">
+                  <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%); pointer-events:none; z-index:2;"></div>
+                  <div style="position:absolute; bottom:16px; left:16px; right:16px; color:#fff; font-size:12px; font-weight:600; display:flex; align-items:center; gap:6px; z-index:3; pointer-events:none;">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="white" style="opacity:0.9"><path d="M8 5v14l11-7z"/></svg>
+                    <span>Play Reel</span>
+                  </div>
+              </a>
+          `;
+          carousel.appendChild(card);
+      });
+
+      reels.forEach(function(_, i) {
+          var dot = document.createElement('button');
+          dot.className = 'reel-dot';
+          dot.style.cssText = 'height:12px; border-radius:9999px; transition:all 0.3s ease; border:none; padding:0; cursor:pointer;';
+          dot.setAttribute('aria-label', 'Go to reel ' + (i+1));
+          dot.addEventListener('click', function() { goToReel(i); });
+          dotsContainer.appendChild(dot);
+      });
+
+      function updateReelPositions() {
+          var cards = carousel.querySelectorAll('.reel-card');
+          cards.forEach(function(card, i) {
+              var offset = i - currentReel;
+              
+              if (offset < -Math.floor(total / 2)) {
+                  offset += total;
+              } else if (offset > Math.floor(total / 2)) {
+                  offset -= total;
+              }
+              
+              if (offset === 0) {
+                  card.style.width = '240px';
+                  card.style.height = '400px';
+                  card.style.opacity = '1';
+                  card.style.zIndex = '50';
+                  card.style.transform = 'translate3d(-50%, -50%, 0) scale3d(1, 1, 1)';
+                  card.style.left = '50%';
+                  card.style.top = '50%';
+                  card.style.pointerEvents = 'auto';
+              } else if (offset === 1) {
+                  card.style.width = '200px';
+                  card.style.height = '330px';
+                  card.style.opacity = '0.82';
+                  card.style.zIndex = '40';
+                  card.style.transform = 'translate3d(calc(120px - 50%), -50%, 0) scale3d(0.9, 0.9, 1)';
+                  card.style.left = '50%';
+                  card.style.top = '50%';
+                  card.style.pointerEvents = 'none';
+              } else if (offset === -1) {
+                  card.style.width = '200px';
+                  card.style.height = '330px';
+                  card.style.opacity = '0.82';
+                  card.style.zIndex = '40';
+                  card.style.transform = 'translate3d(calc(-100% - 120px), -50%, 0) scale3d(0.9, 0.9, 1)';
+                  card.style.left = '50%';
+                  card.style.top = '50%';
+                  card.style.pointerEvents = 'none';
+              } else if (offset === 2) {
+                  card.style.width = '175px';
+                  card.style.height = '290px';
+                  card.style.opacity = '0.5';
+                  card.style.zIndex = '30';
+                  card.style.transform = 'translate3d(calc(240px - 50%), -50%, 0) scale3d(0.8, 0.8, 1)';
+                  card.style.left = '50%';
+                  card.style.top = '50%';
+                  card.style.pointerEvents = 'none';
+              } else if (offset === -2) {
+                  card.style.width = '175px';
+                  card.style.height = '290px';
+                  card.style.opacity = '0.5';
+                  card.style.zIndex = '30';
+                  card.style.transform = 'translate3d(calc(-100% - 240px), -50%, 0) scale3d(0.8, 0.8, 1)';
+                  card.style.left = '50%';
+                  card.style.top = '50%';
+                  card.style.pointerEvents = 'none';
+              } else {
+                  card.style.width = '175px';
+                  card.style.height = '290px';
+                  card.style.opacity = '0';
+                  card.style.zIndex = '0';
+                  card.style.transform = 'translate3d(' + (offset > 0 ? 'calc(380px - 50%)' : 'calc(-100% - 380px)') + ', -50%, 0) scale3d(0.6, 0.6, 1)';
+                  card.style.left = '50%';
+                  card.style.top = '50%';
+                  card.style.pointerEvents = 'none';
+              }
+          });
+
+          var dots = dotsContainer.querySelectorAll('button');
+          dots.forEach(function(dot, i) {
+              if (i === currentReel) {
+                  dot.style.width = '32px';
+                  dot.style.background = '#e20001';
+              } else {
+                  dot.style.width = '12px';
+                  dot.style.background = '#d1d5db';
+              }
+          });
       }
 
-      // ── Shadow DOM Style Injector ──────────────────────────────────────────
-      // Watches for the Elfsight shadow root to mount, then injects mobile CSS
-      // to force a 2-column grid instead of a carousel/slider on small screens.
-      (function watchElfsightShadow() {
-        var STYLE_ID = 'glm-elfsight-mobile-fix';
-        var injected = false;
+      function goToReel(idx) {
+          currentReel = idx;
+          updateReelPositions();
+      }
 
-        function cleanWatermarks(shadowRoot) {
-          if (!shadowRoot) return;
-          var elfsightLinks = shadowRoot.querySelectorAll('a[href*="elfsight.com"], [class*="Branding"], [class*="Logo"], [class*="Badge"], a[class*="eapps-link"]');
-          elfsightLinks.forEach(function(link) {
-            link.style.setProperty('display', 'none', 'important');
-            link.style.setProperty('opacity', '0', 'important');
-            link.style.setProperty('visibility', 'hidden', 'important');
-            link.style.setProperty('height', '0', 'important');
-            link.style.setProperty('width', '0', 'important');
-            link.style.setProperty('pointer-events', 'none', 'important');
-            link.remove();
-          });
-        }
+      document.getElementById('reel-prev').addEventListener('click', function() {
+          currentReel = (currentReel - 1 + total) % total;
+          updateReelPositions();
+      });
 
-        function injectStyles(shadowRoot) {
-          cleanWatermarks(shadowRoot);
-          if (shadowRoot.getElementById(STYLE_ID)) return;
-          var style = document.createElement('style');
-          style.id = STYLE_ID;
-          style.textContent = `
-            @media (max-width: 600px) {
+      document.getElementById('reel-next').addEventListener('click', function() {
+          currentReel = (currentReel + 1) % total;
+          updateReelPositions();
+      });
 
-              /* 1. Force grid container to wrap into 2 columns */
-              .es-grid-layout,
-              [class*="Grid__GridContainer"],
-              [class*="Grid__StyledGridLayout"],
-              [class*="Layout__LayoutContent"] {
-                display: flex !important;
-                flex-wrap: wrap !important;
-                overflow: visible !important;
-                width: 100% !important;
-                height: auto !important;
-                min-height: 0 !important;
-                transform: none !important;
-                transition: none !important;
-                gap: 8px !important;
-                padding: 4px !important;
-              }
+      var startX = 0;
+      var endX = 0;
+      carousel.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+      }, { passive: true });
 
-              /* 2. Each post card — exactly 2 per row */
-              .es-grid-layout > *,
-              [class*="Grid__GridContainer"] > *,
-              [class*="Grid__StyledGridLayout"] > * {
-                flex: 0 0 calc(50% - 6px) !important;
-                max-width: calc(50% - 6px) !important;
-                width: calc(50% - 6px) !important;
-                box-sizing: border-box !important;
-                margin: 0 !important;
-              }
+      carousel.addEventListener('touchmove', function(e) {
+        endX = e.touches[0].clientX;
+      }, { passive: true });
 
-              /* 3. Make card images square and fill */
-              .es-card-container,
-              [class*="InstagramCardContainer__Card"],
-              [class*="es-card-1-container"] {
-                border-radius: 10px !important;
-                overflow: hidden !important;
-                aspect-ratio: 1 !important;
-                cursor: pointer !important;
-              }
-
-              /* 4. Hide slider arrows, dots, nav */
-              [class*="Arrow"],
-              [class*="arrow"],
-              [class*="Bullet"],
-              [class*="bullet"],
-              [class*="Dots"],
-              [class*="dots"],
-              [class*="Pagination"],
-              [class*="pagination"] {
-                display: none !important;
-              }
-
-              /* 5. Remove any slider translate/clip */
-              [class*="Slider"],
-              [class*="slider"],
-              [class*="Carousel"],
-              [class*="carousel"],
-              [class*="Track"],
-              [class*="track"],
-              [class*="Viewport"],
-              [class*="viewport"] {
-                display: flex !important;
-                flex-wrap: wrap !important;
-                overflow: visible !important;
-                transform: none !important;
-                width: 100% !important;
-                height: auto !important;
-              }
-            }
-
-            /* Hide Elfsight branding / watermark on all screens */
-            a[href*="elfsight.com"],
-            [class*="PoweredBy"],
-            [class*="poweredby"],
-            [class*="BrandingContainer"],
-            [class*="LogoContainer"],
-            [class*="eapps-link"] {
-              display: none !important;
-              visibility: hidden !important;
-              height: 0 !important;
-              width: 0 !important;
-              overflow: hidden !important;
-              pointer-events: none !important;
-            }
-          `;
-          shadowRoot.appendChild(style);
-          console.log('[Elfsight] Mobile 2-col grid CSS injected into shadow DOM');
-          injected = true;
-        }
-
-        function tryInject() {
-          var embedRoot = document.querySelector('.es-embed-root');
-          if (embedRoot && embedRoot.shadowRoot) {
-            cleanWatermarks(embedRoot.shadowRoot);
-            injectStyles(embedRoot.shadowRoot);
-            if (!injected) return;
-            var observer = new MutationObserver(function() {
-              cleanWatermarks(embedRoot.shadowRoot);
-              injectStyles(embedRoot.shadowRoot);
-            });
-            observer.observe(embedRoot.shadowRoot, { childList: true, subtree: true });
+      carousel.addEventListener('touchend', function() {
+        var diff = startX - endX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) {
+            currentReel = (currentReel + 1) % total;
+          } else {
+            currentReel = (currentReel - 1 + total) % total;
           }
+          updateReelPositions();
         }
+      }, { passive: true });
 
-        // Poll until shadow root appears (widget loads async)
-        var poll = setInterval(function() {
-          tryInject();
-          if (injected) clearInterval(poll);
-        }, 300);
+      var rotationTimer = null;
+      function startAutoRotation() {
+        stopAutoRotation();
+        rotationTimer = setInterval(function() {
+          currentReel = (currentReel + 1) % total;
+          updateReelPositions();
+        }, 4500);
+      }
+      function stopAutoRotation() {
+        if (rotationTimer) clearInterval(rotationTimer);
+      }
 
-        // Stop polling after 15 seconds regardless
-        setTimeout(function() { clearInterval(poll); }, 15000);
-      })();
+      carousel.addEventListener('mouseenter', stopAutoRotation, { passive: true });
+      carousel.addEventListener('mouseleave', startAutoRotation, { passive: true });
+
+      document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+          startAutoRotation();
+        } else {
+          stopAutoRotation();
+        }
+      }, { passive: true });
+
+      updateReelPositions();
+      startAutoRotation();
+    }
 
 
 

@@ -1,7 +1,7 @@
 (function() {
-  const isMobile = window.innerWidth <= 809 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  const hasHoverPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (isMobile || prefersReduced) return;
+  if (!hasHoverPointer || prefersReduced) return;
 
   const styles = `
     body { cursor: default; }
@@ -11,9 +11,9 @@
       width: 6px; height: 6px;
       background: #FFFFFF; border-radius: 50%;
       pointer-events: none; z-index: 99999;
-      transform: translate(-50%, -50%);
+      will-change: transform;
       box-shadow: 0 0 12px rgba(255,255,255,0.9);
-      transition: transform 0.15s ease-out, opacity 0.2s ease;
+      transition: opacity 0.2s ease;
     }
     #rabto-cursor-ring {
       position: fixed; top: 0; left: 0;
@@ -21,7 +21,7 @@
       border: 1px solid rgba(255,255,255,0.4);
       border-radius: 50%;
       pointer-events: none; z-index: 99998;
-      transform: translate(-50%, -50%);
+      will-change: transform;
       transition: width 0.3s ease, height 0.3s ease, opacity 0.2s ease, border-color 0.3s ease;
       box-shadow: 0 0 15px rgba(255,255,255,0.1);
     }
@@ -32,11 +32,8 @@
       box-shadow: 0 0 25px rgba(255,255,255,0.3);
     }
     body.rabto-hovering #rabto-cursor-dot {
-      transform: translate(-50%,-50%) scale(1.4);
+      width: 8px; height: 8px;
       box-shadow: 0 0 15px #FFFFFF;
-    }
-    body.rabto-clicking #rabto-cursor-ring {
-      transform: translate(-50%,-50%) scale(0.75);
     }
   `;
 
@@ -55,18 +52,29 @@
   let mouseX = -100, mouseY = -100;
   let ringX = -100, ringY = -100;
 
+  let ticking = false;
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    dot.style.left = `${mouseX}px`;
-    dot.style.top = `${mouseY}px`;
-  });
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const isHovering = document.body.classList.contains('rabto-hovering');
+        const dotOffset = isHovering ? 4 : 3;
+        dot.style.transform = `translate3d(${mouseX - dotOffset}px, ${mouseY - dotOffset}px, 0)`;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
 
   function animateRing() {
     ringX += (mouseX - ringX) * 0.18;
     ringY += (mouseY - ringY) * 0.18;
-    ring.style.left = `${ringX}px`;
-    ring.style.top = `${ringY}px`;
+    const isHovering = document.body.classList.contains('rabto-hovering');
+    const isClicking = document.body.classList.contains('rabto-clicking');
+    const offset = isHovering ? 26 : 16;
+    let scaleStr = isClicking ? ' scale3d(0.75, 0.75, 1)' : '';
+    ring.style.transform = `translate3d(${ringX - offset}px, ${ringY - offset}px, 0)${scaleStr}`;
     requestAnimationFrame(animateRing);
   }
   animateRing();

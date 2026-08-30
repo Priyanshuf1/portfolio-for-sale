@@ -1,8 +1,8 @@
 (function() {
   // Destinyland-Style Interactive Constellation & Node-Link Background Animation (Brand Red Accents)
+  const hasHoverPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isMobile = window.innerWidth <= 767 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-  if (prefersReduced || isMobile) return;
+  if (!hasHoverPointer || prefersReduced) return;
 
   const canvas = document.createElement('canvas');
   canvas.id = 'rabto-ambient-canvas';
@@ -13,10 +13,14 @@
   let width = canvas.width = window.innerWidth;
   let height = canvas.height = window.innerHeight;
 
+  let resizeTimeout;
   window.addEventListener('resize', () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-  });
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }, 150);
+  }, { passive: true });
 
   // Track Mouse Position for Destinyland-style interactivity
   const mouse = {
@@ -28,12 +32,12 @@
   window.addEventListener('mousemove', (e) => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
-  });
+  }, { passive: true });
 
   window.addEventListener('mouseleave', () => {
     mouse.x = -1000;
     mouse.y = -1000;
-  });
+  }, { passive: true });
 
   // Click to spawn dynamic constellation nodes
   window.addEventListener('click', (e) => {
@@ -175,7 +179,36 @@
       particles[i].draw();
     }
 
-    requestAnimationFrame(animate);
+    if (isRunning) {
+      requestAnimationFrame(animate);
+    }
+  }
+
+  let isCanvasVisible = true;
+  let isTabActive = true;
+  let isRunning = true;
+
+  if (typeof IntersectionObserver !== 'undefined') {
+    const observer = new IntersectionObserver((entries) => {
+      isCanvasVisible = entries[0].isIntersecting;
+      toggleAnimationLoop();
+    }, { threshold: 0 });
+    observer.observe(canvas);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    isTabActive = document.visibilityState === 'visible';
+    toggleAnimationLoop();
+  }, { passive: true });
+
+  function toggleAnimationLoop() {
+    const shouldRun = isCanvasVisible && isTabActive;
+    if (shouldRun && !isRunning) {
+      isRunning = true;
+      requestAnimationFrame(animate);
+    } else if (!shouldRun && isRunning) {
+      isRunning = false;
+    }
   }
 
   animate();

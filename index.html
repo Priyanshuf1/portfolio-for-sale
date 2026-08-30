@@ -30,9 +30,9 @@
   }
 
   /* Premium Hover lift, shadow, and scale for generated 3D section graphics */
-  img[src*="process_graphics.jpg"],
-  img[src*="faq_graphics.jpg"],
-  img[src*="services_graphics.jpg"] {
+  img[src*="process_graphics"],
+  img[src*="faq_graphics"],
+  img[src*="services_graphics"] {
     object-fit: cover !important;
     border-radius: 16px !important;
     box-shadow: 0 10px 30px rgba(0,0,0,0.04), 0 1px 8px rgba(0,0,0,0.02) !important;
@@ -40,13 +40,13 @@
     padding: 0 !important;
     box-sizing: border-box !important;
   }
-  img[src*="process_graphics.jpg"] { background-color: transparent !important; }
-  img[src*="faq_graphics.jpg"] { background-color: transparent !important; }
-  img[src*="services_graphics.jpg"] { background-color: transparent !important; }
+  img[src*="process_graphics"] { background-color: transparent !important; }
+  img[src*="faq_graphics"] { background-color: transparent !important; }
+  img[src*="services_graphics"] { background-color: transparent !important; }
   
-  img[src*="process_graphics.jpg"]:hover,
-  img[src*="faq_graphics.jpg"]:hover,
-  img[src*="services_graphics.jpg"]:hover {
+  img[src*="process_graphics"]:hover,
+  img[src*="faq_graphics"]:hover,
+  img[src*="services_graphics"]:hover {
     transform: scale(1.025) translateY(-4px) !important;
     box-shadow: 0 20px 40px rgba(226, 0, 1, 0.08), 0 1px 12px rgba(226, 0, 1, 0.04) !important;
   }
@@ -483,7 +483,6 @@
   <!-- Firebase Compat SDKs (used by functional modules) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-  <script src="https://static.elfsight.com/platform/platform.js" async></script>
 
 <script>
   window.tailwind = {
@@ -751,7 +750,7 @@
     <div class="section-inner">
       <div class="services-grid-wrap">
         <div class="process-img-wrap">
-          <img src="./services_graphics.jpg" alt="Services capabilities graphics illustration">
+          <img src="./services_graphics.webp" alt="Services capabilities graphics illustration">
         </div>
         
         <div class="about-content-col">
@@ -957,17 +956,8 @@
       </div>
   </section>
 
-  <!-- ── Instagram Feed Section (Elfsight Embed) ── -->
-  <section id="glm-instagram-feed-section" class="glm-insta-section">
-    <div style="text-align:center; margin-bottom: 40px;">
-      <span style="display:inline-block; padding: 5px 16px; background: rgba(226,0,1,0.1); border: 1px solid rgba(226,0,1,0.3); color: #e20001; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 20px; margin-bottom: 14px;">Instagram</span>
-      <h2 style="margin: 0; font-weight: 900; color: #111827; font-size: clamp(1.8rem, 4vw, 2.8rem);">Follow Our Journey</h2>
-    </div>
-    <div style="max-width: 1100px; margin: 0 auto; min-height: 400px;">
-      <!-- Elfsight Instagram Feed | Untitled Instagram Feed -->
-      <div class="elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40"></div>
-    </div>
-  </section>
+  <!-- ── Instagram Reels Carousel Section ── -->
+  <section id="glm-instagram-feed-section" class="glm-insta-section"></section>
 
   <!-- ── Functional Modules & Database Scripts ── -->
   <script src="firebase-init.js"></script>
@@ -986,14 +976,16 @@
   <script src="image-trail-section.js?v=1.7"></script>
   <script src="main.js?v=1.2"></script>
 
-<script src="./ambient-particles.js?v=1788085925781"></script>
-<script src="./audio-system.js?v=1788085925781"></script>
-<script src="./svg-decorations.js?v=1788085925781"></script>
-<script src="./rabto-fx-engine.js?v=1788085925781"></script>
-<script src="./bg-enhancer.js?v=1788085925781"></script>
-<script src="./global-logic-replacer.js?v=1788085925781"></script>
-<script src="./three-bg.js?v=1788085925781"></script>
-<script src="./custom-cursor.js?v=1788085925781"></script>
+<script src="./ambient-particles.js?v=1788087398023"></script>
+<script src="./audio-system.js?v=1788087398023"></script>
+<script src="./svg-decorations.js?v=1788087398023"></script>
+<script src="./rabto-fx-engine.js?v=1788087398023"></script>
+<script src="./bg-enhancer.js?v=1788087398023"></script>
+<script src="./global-logic-replacer.js?v=1788087398023"></script>
+<script src="./three-bg.js?v=1788087398023"></script>
+<script src="./custom-cursor.js?v=1788087398023"></script>
+
+
 
 
 
@@ -1140,6 +1132,8 @@
   }, 100);
 })();
 </script>
+
+
 
 
 

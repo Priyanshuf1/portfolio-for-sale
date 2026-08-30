@@ -116,9 +116,9 @@ console.error = function(...args) {
   }
 
   /* Premium Hover lift, shadow, and scale for generated 3D section graphics */
-  img[src*="process_graphics.jpg"],
-  img[src*="faq_graphics.jpg"],
-  img[src*="services_graphics.jpg"] {
+  img[src*="process_graphics"],
+  img[src*="faq_graphics"],
+  img[src*="services_graphics"] {
     object-fit: cover !important;
     border-radius: 16px !important;
     box-shadow: 0 10px 30px rgba(0,0,0,0.04), 0 1px 8px rgba(0,0,0,0.02) !important;
@@ -126,13 +126,13 @@ console.error = function(...args) {
     padding: 0 !important;
     box-sizing: border-box !important;
   }
-  img[src*="process_graphics.jpg"] { background-color: transparent !important; }
-  img[src*="faq_graphics.jpg"] { background-color: transparent !important; }
-  img[src*="services_graphics.jpg"] { background-color: transparent !important; }
+  img[src*="process_graphics"] { background-color: transparent !important; }
+  img[src*="faq_graphics"] { background-color: transparent !important; }
+  img[src*="services_graphics"] { background-color: transparent !important; }
   
-  img[src*="process_graphics.jpg"]:hover,
-  img[src*="faq_graphics.jpg"]:hover,
-  img[src*="services_graphics.jpg"]:hover {
+  img[src*="process_graphics"]:hover,
+  img[src*="faq_graphics"]:hover,
+  img[src*="services_graphics"]:hover {
     transform: scale(1.025) translateY(-4px) !important;
     box-shadow: 0 20px 40px rgba(226, 0, 1, 0.08), 0 1px 12px rgba(226, 0, 1, 0.04) !important;
   }

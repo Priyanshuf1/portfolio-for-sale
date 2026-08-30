@@ -127,8 +127,8 @@
 
   // Ultra-Smooth Lerp Physics Engine for 3D Tilt
   function applyCardTiltFX() {
-    const isMobile = window.innerWidth <= 767 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-    if (isMobile) return;
+    const hasHoverPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!hasHoverPointer) return;
 
     const cards = document.querySelectorAll(
       '.glb-skill-card, .glb-home-blog-card, .glb-review-card-premium, .glb-contact-card, .glb-map-container-box, .glb-map-tilt-wrapper'

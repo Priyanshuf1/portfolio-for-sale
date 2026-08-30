@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 const path = require('path');
 
 console.log('=== Patching Section Images (FAQ, Process, Services) ===');
@@ -22,16 +22,16 @@ filesToPatch.forEach(relPath => {
   content = content.replace(/\.\/faq_graphics\.jpg[a-zA-Z0-9_\-\?&=.;]*/g, './faq_graphics.jpg');
 
   // Process
-  content = content.replace(/https:\/\/framerusercontent\.com\/images\/djbcRHCD89IflJ1okJAa1J65cuM\.[a-zA-Z0-9_\-\?&=.]+/g, './process_graphics.jpg');
-  content = content.replace(/djbcRHCD89IflJ1okJAa1J65cuM\.png/g, 'process_graphics.jpg');
-  content = content.replace(/\.\/process_flow\.png/g, './process_graphics.jpg');
-  content = content.replace(/\.\/process_graphics\.jpg[a-zA-Z0-9_\-\?&=.;]*/g, './process_graphics.jpg');
+  content = content.replace(/https:\/\/framerusercontent\.com\/images\/djbcRHCD89IflJ1okJAa1J65cuM\.[a-zA-Z0-9_\-\?&=.]+/g, './process_graphics.webp');
+  content = content.replace(/djbcRHCD89IflJ1okJAa1J65cuM\.png/g, 'process_graphics.webp');
+  content = content.replace(/process_flow\.png/g, 'process_graphics.webp');
+  content = content.replace(/process_graphics\.jpg/g, 'process_graphics.webp');
 
   // Services
-  content = content.replace(/https:\/\/framerusercontent\.com\/images\/p6Im6dfknHAI0ig4NqDcO4WNpc\.[a-zA-Z0-9_\-\?&=.]+/g, './services_graphics.jpg');
-  content = content.replace(/p6Im6dfknHAI0ig4NqDcO4WNpc\.jpg/g, 'services_graphics.jpg');
-  content = content.replace(/\.\/services_tablet\.png/g, './services_graphics.jpg');
-  content = content.replace(/\.\/services_graphics\.jpg[a-zA-Z0-9_\-\?&=.;]*/g, './services_graphics.jpg');
+  content = content.replace(/https:\/\/framerusercontent\.com\/images\/p6Im6dfknHAI0ig4NqDcO4WNpc\.[a-zA-Z0-9_\-\?&=.]+/g, './services_graphics.webp');
+  content = content.replace(/p6Im6dfknHAI0ig4NqDcO4WNpc\.jpg/g, 'services_graphics.webp');
+  content = content.replace(/services_tablet\.png/g, 'services_graphics.webp');
+  content = content.replace(/services_graphics\.jpg/g, 'services_graphics.webp');
 
   fs.writeFileSync(filePath, content);
   console.log(`Updated section images to clean 3D graphics paths in: ${relPath}`);
