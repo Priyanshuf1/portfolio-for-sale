@@ -726,6 +726,126 @@
     });
   }
 
+  // Inject custom layout styles inside the Shadow DOM to force mobile 2-column layout and show exactly 4 posts on load
+  function injectShadowDOMStyles() {
+    const embedRoot = document.querySelector('.es-embed-root');
+    if (embedRoot && embedRoot.shadowRoot) {
+      const existingStyle = embedRoot.shadowRoot.getElementById('glm-shadow-mobile-fix');
+      if (!existingStyle) {
+        const style = document.createElement('style');
+        style.id = 'glm-shadow-mobile-fix';
+        style.textContent = `
+          /* Mobile Overrides */
+          @media (max-width: 600px) {
+            /* 1. Force the Carousel/Grid layout container to display as flex wrap */
+            div[class*="PostsGrid__Container"],
+            div[class*="PostsGrid__Grid"],
+            [class*="GridContainer"],
+            [class*="InstagramFeed__Grid"],
+            [class*="eapps-instagram-feed-posts-grid"],
+            [class*="SliderViewport"],
+            [class*="CarouselViewport"],
+            [class*="SliderTrack"],
+            [class*="CarouselTrack"],
+            [class*="SliderContainer"],
+            [class*="CarouselContainer"] {
+              display: flex !important;
+              flex-wrap: wrap !important;
+              overflow: visible !important;
+              width: 100% !important;
+              height: auto !important;
+              min-height: 250px !important;
+              transform: none !important;
+              transition: none !important;
+            }
+            
+            /* 2. Style individual items to show 2 per row */
+            [class*="SliderItem"],
+            [class*="CarouselItem"],
+            [class*="PostsGrid__Item"],
+            [class*="InstagramFeed__PostItem"],
+            [class*="PostItem"],
+            [class*="GridItem"],
+            [class*="posts-item"],
+            [class*="eapps-instagram-feed-posts-item"] {
+              display: none !important; /* Hide other posts by default */
+              width: 47% !important;
+              max-width: 47% !important;
+              flex: 0 0 47% !important;
+              margin: 1.5% 1.5% !important;
+              height: auto !important;
+              opacity: 1 !important;
+              visibility: visible !important;
+              box-sizing: border-box !important;
+            }
+            
+            /* 3. Force exactly the first 4 posts to display initially */
+            [class*="SliderItem"]:nth-child(1),
+            [class*="SliderItem"]:nth-child(2),
+            [class*="SliderItem"]:nth-child(3),
+            [class*="SliderItem"]:nth-child(4),
+            [class*="CarouselItem"]:nth-child(1),
+            [class*="CarouselItem"]:nth-child(2),
+            [class*="CarouselItem"]:nth-child(3),
+            [class*="CarouselItem"]:nth-child(4),
+            [class*="PostsGrid__Item"]:nth-child(1),
+            [class*="PostsGrid__Item"]:nth-child(2),
+            [class*="PostsGrid__Item"]:nth-child(3),
+            [class*="PostsGrid__Item"]:nth-child(4),
+            [class*="posts-item"]:nth-child(1),
+            [class*="posts-item"]:nth-child(2),
+            [class*="posts-item"]:nth-child(3),
+            [class*="posts-item"]:nth-child(4),
+            [class*="eapps-instagram-feed-posts-item"]:nth-child(1),
+            [class*="eapps-instagram-feed-posts-item"]:nth-child(2),
+            [class*="eapps-instagram-feed-posts-item"]:nth-child(3),
+            [class*="eapps-instagram-feed-posts-item"]:nth-child(4) {
+              display: block !important;
+            }
+
+            /* 4. If expanded, display all items */
+            .elfsight-expanded [class*="SliderItem"],
+            .elfsight-expanded [class*="CarouselItem"],
+            .elfsight-expanded [class*="PostsGrid__Item"],
+            .elfsight-expanded [class*="InstagramFeed__PostItem"],
+            .elfsight-expanded [class*="PostItem"],
+            .elfsight-expanded [class*="GridItem"],
+            .elfsight-expanded [class*="posts-item"],
+            .elfsight-expanded [class*="eapps-instagram-feed-posts-item"] {
+              display: block !important;
+            }
+
+            /* Hide slider dots/pagination and arrows */
+            [class*="ArrowContainer"],
+            [class*="NavigationArrow"],
+            [class*="Arrow__Container"],
+            [class*="Bullet"],
+            [class*="Pagination"] {
+              display: none !important;
+            }
+          }
+          
+          /* Hide Elfsight watermark container */
+          a[href*="elfsight.com"],
+          a[class*="eapps-link"],
+          [class*="LogoContainer"],
+          [class*="Logo__Container"],
+          [class*="BadgeContainer"],
+          [class*="BrandingContainer"] {
+            display: none !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            width: 0 !important;
+          }
+        `;
+        embedRoot.shadowRoot.appendChild(style);
+        console.log('[ShadowDOM] Custom layout and watermark rules successfully injected.');
+      }
+    }
+  }
+
   function checkAndInject() {
     var recentWorkEl = document.querySelector('[data-framer-name="about me section"]') || document.getElementById('about-me');
     var projectsEl = document.querySelector('[data-framer-name="Projects"]') || document.querySelector('.framer-1mm21uq') || document.getElementById('projects');
@@ -734,7 +854,23 @@
     
     inject();
     removeInstagramNavLinks();
+    injectShadowDOMStyles();
   }
+
+  // Monitor clicks on the "See More Posts" button to toggle the expansion class inside shadow DOM
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[class*="Button__Control"], [class*="ButtonControl"], [class*="load-more"], [class*="LoadMore"], [class*="Button__Container"]');
+    if (btn) {
+      const root = document.querySelector('.es-embed-root');
+      if (root && root.shadowRoot) {
+        const container = root.shadowRoot.querySelector('[class*="PostsGrid__Container"], [class*="SliderViewport"], [class*="CarouselViewport"]');
+        if (container) {
+          container.classList.add('elfsight-expanded');
+          console.log('[ShadowDOM] Expanded Instagram feed layout.');
+        }
+      }
+    }
+  }, { capture: true });
 
   // Initialize checks
   if (document.readyState === 'loading') {
