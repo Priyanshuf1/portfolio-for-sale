@@ -7,42 +7,47 @@
     <meta http-equiv="Expires" content="0">
     
     <script id="kill-service-workers">
-      let brandTitle = "Global Logic Media | Blog";
-      const titleObserver = new MutationObserver(function() {
-        if (document.title !== brandTitle) {
-          document.title = brandTitle;
-        }
-      });
-      function initTitleLock() {
-        const titleEl = document.querySelector('title');
-        if (titleEl) {
-          brandTitle = titleEl.textContent;
-          document.title = brandTitle;
-          titleObserver.observe(titleEl, { characterData: true, childList: true });
-        }
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initTitleLock);
-      } else {
-        initTitleLock();
-      }
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function(registrations) {
-          for (let registration of registrations) {
-            registration.unregister().then(function() {
-              window.location.reload(true);
-            });
-          }
+  // Force document title to brand name and protect from Framer runtime overrides
+  let brandTitle = "Global Logic Media";
+  const titleObserver = new MutationObserver(function() {
+    if (document.title !== brandTitle) {
+      document.title = brandTitle;
+    }
+  });
+
+  function initTitleLock() {
+    const titleEl = document.querySelector('title');
+    if (titleEl) {
+      brandTitle = titleEl.textContent;
+      document.title = brandTitle;
+      titleObserver.observe(titleEl, { characterData: true, childList: true });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTitleLock);
+  } else {
+    initTitleLock();
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for (let registration of registrations) {
+        registration.unregister().then(function() {
+          console.log('Stale service worker unregistered!');
+          window.location.reload(true);
         });
       }
-      if ('caches' in window) {
-        caches.keys().then(function(names) {
-          for (let name of names) {
-            caches.delete(name);
-          }
-        });
+    });
+  }
+  if ('caches' in window) {
+    caches.keys().then(function(names) {
+      for (let name of names) {
+        caches.delete(name);
       }
-    </script>
+    });
+  }
+</script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">

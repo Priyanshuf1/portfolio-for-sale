@@ -200,7 +200,7 @@ console.error = function(...args) {
       padding-bottom: 40px !important;
     }
     /* 4. Fix custom sections spacing */
-    #glm-image-trail-section {
+    #projects {
       min-height: auto !important;
       padding: 40px 0 20px !important;
     }
@@ -580,7 +580,7 @@ const scrollSpyScript = `
   const sections = [
     { id: '#hero', name: 'Home' },
     { id: '#about-me', name: 'About' },
-    { id: '#glm-image-trail-section', name: 'About' },
+    { id: '#projects', name: 'About' },
     { id: '#glm-instagram-feed-section', name: 'About' },
     { id: '#process', name: 'Services' },
     { id: '#services', name: 'Services' },

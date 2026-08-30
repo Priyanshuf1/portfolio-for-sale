@@ -9,7 +9,7 @@
 
   function inject() {
     // ── Early exit if both sections already built — prevents CSS animation flicker ──
-    var existingMarquee = document.getElementById('glm-image-trail-section');
+    var existingMarquee = document.getElementById('projects');
     var existingInsta = document.getElementById('glm-instagram-feed-section');
     if (existingMarquee && existingMarquee.dataset.marqueeBuilt &&
         existingInsta && existingInsta.dataset.elfsightBuilt) {
@@ -24,10 +24,10 @@
     if (!insertAnchor) return;
 
     // ── 1. Create or position the Recent Work Marquee Section ─────────────────
-    var marqueeSection = document.getElementById('glm-image-trail-section');
+    var marqueeSection = document.getElementById('projects');
     if (!marqueeSection) {
       marqueeSection = document.createElement('section');
-      marqueeSection.id = 'glm-image-trail-section';
+      marqueeSection.id = 'projects';
     }
 
     // Place marquee right before the anchor only if not already there
