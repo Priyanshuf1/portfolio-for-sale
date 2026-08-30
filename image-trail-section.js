@@ -667,11 +667,11 @@
             }
           </style>
           <div id="glm-native-feed">
-            <!-- 6 skeleton placeholder tiles shown while posts load -->
+            <!-- 6 tiles: first 4 visible on mobile (2x2), last 2 hidden until See More -->
             <div class="glm-native-post glm-skeleton" data-index="0"></div>
             <div class="glm-native-post glm-skeleton" data-index="1"></div>
             <div class="glm-native-post glm-skeleton" data-index="2"></div>
-            <div class="glm-native-post glm-skeleton glm-hidden-mobile" data-index="3"></div>
+            <div class="glm-native-post glm-skeleton" data-index="3"></div>
             <div class="glm-native-post glm-skeleton glm-hidden-mobile" data-index="4"></div>
             <div class="glm-native-post glm-skeleton glm-hidden-mobile" data-index="5"></div>
           </div>
