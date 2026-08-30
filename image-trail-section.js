@@ -515,7 +515,7 @@
         </div>
 
         <div style="max-width: 1100px; margin: 0 auto; min-height: 400px;">
-          <div class="elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40" data-elfsight-app-lazy></div>
+          <div class="elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40"></div>
         </div>
       `;
 

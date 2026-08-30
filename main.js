@@ -316,12 +316,42 @@
     });
   }
 
+  // ── HASH LINK SMOOTH SCROLL (Delegated) ──
+  function initHashLinkScroll() {
+    document.addEventListener('click', function(e) {
+      const anchor = e.target.closest('a[href^="#"]');
+      if (!anchor) return;
+      
+      const href = anchor.getAttribute('href');
+      if (!href || href === '#') return;
+      
+      const targetEl = document.querySelector(href);
+      if (targetEl) {
+        e.preventDefault();
+        if (window.lenisInstance) {
+          window.lenisInstance.scrollTo(targetEl, { offset: -20 });
+        } else {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        // Close mobile menu drawer if open
+        const drawer = document.getElementById('glbMobileDrawer');
+        if (drawer && drawer.classList.contains('active')) {
+          drawer.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+        // Update URL hash without browser jump
+        history.pushState(null, null, href);
+      }
+    });
+  }
+
   // ── START ────────────────────────────────────────────────────────────────
   function start() {
     initMobileDrawerMenu();
     initFAQAccordion();
     initHeroTypewriter();
     initScrollSpy();
+    initHashLinkScroll();
     initDesktopFlourishes();
     initStatCounters();
     initHeadingWordReveals();
