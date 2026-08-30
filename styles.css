@@ -1784,3 +1784,18 @@ footer.glb-footer {
   #glm-scroll-progress { display: none; }
 }
 
+/* Hide Elfsight Logo/Branding Link Watermark */
+a[href*="elfsight.com"], 
+a[class*="elfsight"], 
+div[class*="elfsight-app"] > a, 
+div[class*="elfsight-app"] a[target="_blank"],
+[class*="elfsight-app"] [class*="WidgetTitle"],
+[class*="elfsight-app"] [class*="BrandingContainer"] {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  width: 0 !important;
+}
+

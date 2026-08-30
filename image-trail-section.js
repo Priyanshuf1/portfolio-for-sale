@@ -99,18 +99,21 @@
     animation-play-state: paused;
   }
   .glm-marquee-item {
-    width: 290px;
-    height: 200px;
+    width: 260px;
+    height: 110px;
     flex-shrink: 0;
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: rgba(13, 13, 17, 0.75);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.07);
+    background: #ffffff;
+    cursor: default;
     position: relative;
     transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 24px;
+    box-sizing: border-box;
     
     /* Staggered entrance initial state */
     opacity: 0;
@@ -123,13 +126,13 @@
   }
   .glm-marquee-item:hover {
     border-color: #FF1744;
-    box-shadow: 0 12px 30px rgba(255, 23, 68, 0.25);
+    box-shadow: 0 8px 20px rgba(255, 23, 68, 0.12);
   }
   .glm-marquee-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    opacity: 0.85;
+    object-fit: contain;
+    opacity: 0.95;
     transition: opacity 0.4s ease;
     pointer-events: none;
   }
@@ -163,6 +166,186 @@
     width: 100%;
   }
 
+  /* Live Instagram Profile Card Mockup */
+  .glm-insta-profile-card {
+    max-width: 620px;
+    margin: 0 auto 35px;
+    background: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 32px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #f5f5f5;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    box-sizing: border-box;
+  }
+  @media (max-width: 600px) {
+    .glm-insta-profile-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 24px;
+      gap: 20px;
+    }
+  }
+  .glm-insta-avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+  .glm-insta-avatar-inner {
+    width: 105px;
+    height: 105px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .glm-insta-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #000;
+    border: 3px solid #000;
+    box-sizing: border-box;
+  }
+  .glm-insta-info {
+    flex-grow: 1;
+    width: 100%;
+  }
+  .glm-insta-header-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  @media (max-width: 600px) {
+    .glm-insta-header-row {
+      justify-content: center;
+    }
+  }
+  .glm-insta-username {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+  }
+  .glm-insta-dots {
+    font-size: 16px;
+    color: #a8a8a8;
+    cursor: pointer;
+    user-select: none;
+  }
+  .glm-insta-subtitle {
+    font-size: 11px;
+    font-weight: 700;
+    color: #f5f5f5;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    text-align: left;
+    line-height: 1.4;
+  }
+  @media (max-width: 600px) {
+    .glm-insta-subtitle {
+      text-align: center;
+    }
+  }
+  .glm-insta-stats {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+  }
+  @media (max-width: 600px) {
+    .glm-insta-stats {
+      justify-content: center;
+    }
+  }
+  .glm-insta-stat-val {
+    font-weight: 700;
+  }
+  .glm-insta-bio-cat {
+    font-size: 13.5px;
+    color: #a8a8a8;
+    margin-bottom: 8px;
+    text-align: left;
+  }
+  @media (max-width: 600px) {
+    .glm-insta-bio-cat {
+      text-align: center;
+    }
+  }
+  .glm-insta-bio-list {
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    text-align: left;
+  }
+  .glm-insta-bio-item {
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .glm-insta-links {
+    font-size: 13.5px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .glm-insta-link-a {
+    color: #e0f1ff;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+  }
+  .glm-insta-link-a:hover {
+    color: #a8d5ff;
+    text-decoration: underline;
+  }
+  .glm-insta-followed-by {
+    font-size: 12px;
+    color: #a8a8a8;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 14px;
+    text-align: left;
+  }
+  @media (max-width: 600px) {
+    .glm-insta-followed-by {
+      justify-content: center;
+    }
+  }
+  .glm-insta-followed-avatars {
+    display: flex;
+    position: relative;
+    width: 32px;
+    height: 20px;
+  }
+  .glm-insta-followed-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    position: absolute;
+    top: 0;
+  }
+  .glm-insta-followed-avatar:nth-child(1) { left: 0; z-index: 2; }
+  .glm-insta-followed-avatar:nth-child(2) { left: 12px; z-index: 1; }
+
   @media (max-width: 768px) {
     .glm-marquee-wrap {
       margin-top: 15px;
@@ -172,9 +355,10 @@
       gap: 16px;
     }
     .glm-marquee-item {
-      width: 200px;
-      height: 140px;
+      width: 190px;
+      height: 90px;
       border-radius: 12px;
+      padding: 10px 16px;
       transform: translateY(30px) scale(0.95);
     }
   }
@@ -201,8 +385,16 @@
       `;
 
       var row2Images = [
-        './ss9.png', './ss10.png', './ss11.png', './ss12.png',
-        './ss13.png', './ss14.png', './ss15.png', './ss16.png'
+        './brand_b_luxury.jpeg',
+        './brand_book_digital.jpeg',
+        './brand_cs_ec.jpeg',
+        './brand_krazy_cakes.jpeg',
+        './brand_kurti_kahaanii.jpeg',
+        './brand_om_group.jpeg',
+        './brand_tabs19.jpeg',
+        './brand_b_luxury2.jpeg',
+        './brand_home_archs.png',
+        './brand_forever_treasures.png'
       ];
 
       function fillRow(rowElId, images) {
@@ -210,8 +402,8 @@
         if (!row) return;
         var doubled = images.concat(images);
         row.innerHTML = doubled.map(src => `
-          <div class="glm-marquee-item" onclick="window.glmShowLightbox('${src}')">
-            <img src="${src}" alt="Portfolio Proof" loading="lazy">
+          <div class="glm-marquee-item">
+            <img src="${src}" alt="Client Logo" loading="lazy">
           </div>
         `).join('');
 
@@ -235,8 +427,56 @@
       instaSection.innerHTML = `
         <div style="text-align:center; margin-bottom: 40px;">
           <span style="display:inline-block; padding: 5px 16px; background: rgba(226,0,1,0.1); border: 1px solid rgba(226,0,1,0.3); color: #e20001; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 20px; margin-bottom: 14px;">Instagram</span>
-          <h2 style="margin: 0; font-weight: 900; color: #111827; font-size: clamp(1.8rem, 4vw, 2.8rem);">Follow Our Journey</h2>
+          <h2 style="margin: 0; font-weight: 900; color: #111827; font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 30px;">Follow Our Journey</h2>
         </div>
+
+        <!-- Live Instagram Profile Card Mockup -->
+        <div class="glm-insta-profile-card">
+          <div class="glm-insta-avatar-wrap">
+            <div class="glm-insta-avatar-inner">
+              <img src="./logo_icon.png" alt="globallogicmedia" class="glm-insta-avatar">
+            </div>
+          </div>
+          <div class="glm-insta-info">
+            <div class="glm-insta-header-row">
+              <span class="glm-insta-username">globallogicmedia</span>
+              <span style="display:inline-flex; align-items:center; color:#3897f0; width:18px; height:18px;" title="Verified">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.003 2.001c-5.522 0-9.99 4.47-9.99 9.99 0 5.523 4.468 9.99 9.99 9.99 5.523 0 9.99-4.467 9.99-9.99 0-5.52-4.467-9.99-9.99-9.99zm4.218 8.219l-4.72 4.81a1.004 1.004 0 0 1-1.42 0l-2.29-2.3a1.004 1.004 0 0 1 1.42-1.42l1.58 1.58 4.01-4.09a1.004 1.004 0 0 1 1.42 1.42z"/></svg>
+              </span>
+              <span class="glm-insta-dots">&bull;&bull;&bull;</span>
+            </div>
+            <div class="glm-insta-subtitle">DIGITAL MARKETING | SMM | SEO | WEBSITE DESIGN | LOCAL SEO</div>
+            <div class="glm-insta-stats">
+              <div><span class="glm-insta-stat-val">18</span> posts</div>
+              <div><span class="glm-insta-stat-val">411</span> followers</div>
+              <div><span class="glm-insta-stat-val">49</span> following</div>
+            </div>
+            <div class="glm-insta-bio-cat">AI creator</div>
+            <div class="glm-insta-bio-list">
+              <div class="glm-insta-bio-item">📍 Digital Marketing Agency in Lucknow</div>
+              <div class="glm-insta-bio-item">🚀 Google Ads | SEO | SMM | Branding</div>
+              <div class="glm-insta-bio-item">🔗 100% Result-Driven Growth Strategies</div>
+              <div class="glm-insta-bio-item">📞 Book... <span style="color:#a8a8a8; cursor:pointer;">more</span></div>
+            </div>
+            <div class="glm-insta-links">
+              <a href="https://drive.google.com/drive/folders/1Ro16MKC8SEwVv6H4O4IFgdc80YhrZRg4" target="_blank" rel="noopener noreferrer" class="glm-insta-link-a">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                drive.google.com/drive/folders/1Ro16MKC8SEwVv6H4O4IFgdc80YhrZRg4...
+              </a>
+              <a href="https://threads.net/@globallogicmedia" target="_blank" rel="noopener noreferrer" class="glm-insta-link-a" style="color: #a8a8a8; font-weight: 500;">
+                <span style="font-size:15px; font-weight:700;">@</span> globallogicmedia
+              </a>
+            </div>
+            <div class="glm-insta-followed-by">
+              <div class="glm-insta-followed-avatars">
+                <div class="glm-insta-followed-avatar" style="background:#555; display:flex; justify-content:center; align-items:center; font-size:8px; font-weight:700; color:#fff;">S</div>
+                <div class="glm-insta-followed-avatar" style="background:#888; display:flex; justify-content:center; align-items:center; font-size:8px; font-weight:700; color:#fff;">S</div>
+              </div>
+              <span>Followed by <strong>shrey__9038</strong> and <strong>shrey_9038</strong></span>
+            </div>
+          </div>
+        </div>
+
         <div style="max-width: 1100px; margin: 0 auto; min-height: 400px;">
           <div class="elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40" data-elfsight-app-lazy></div>
         </div>

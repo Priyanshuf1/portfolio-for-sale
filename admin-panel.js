@@ -60,7 +60,7 @@
       overflow-y: auto;
       padding: 35px;
       position: relative;
-      color: white;
+      color: #ffffff !important;
       font-family: 'Inter', system-ui, sans-serif;
     }
     .glb-admin-close {
@@ -226,14 +226,14 @@
     }
     .glb-form-group input, .glb-form-group textarea, .glb-form-group select {
       width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff;
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #ffffff !important;
       font-size: 15px; font-family: inherit; outline: none; box-sizing: border-box;
       transition: border-color 0.2s;
     }
     .glb-form-group input:focus, .glb-form-group textarea:focus, .glb-form-group select:focus {
       border-color: #4ade80;
     }
-    .glb-form-group select option { background: #1a1a1a; }
+    .glb-form-group select option { background: #1a1a1a; color: #ffffff !important; }
     .glb-admin-submit {
       width: 100%; padding: 14px; background: #4ade80; color: #111;
       border: none; border-radius: 8px; cursor: pointer; font-weight: 700;
@@ -257,11 +257,11 @@
           <div style="width: 100%; display: flex; flex-direction: column; gap: 12px;">
             <div style="text-align: left; width: 100%;">
               <label style="font-size: 11px; text-transform: uppercase; color: #9ca3af; font-weight: 600; display: block; margin-bottom: 4px;">Admin ID</label>
-              <input type="text" id="glbAdminIdInput" placeholder="Enter Admin ID..." style="width: 100%; padding: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; outline: none; font-size: 14px; box-sizing: border-box;">
+              <input type="text" id="glbAdminIdInput" placeholder="Enter Admin ID..." style="width: 100%; padding: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #ffffff !important; outline: none; font-size: 14px; box-sizing: border-box;">
             </div>
             <div style="text-align: left; width: 100%;">
               <label style="font-size: 11px; text-transform: uppercase; color: #9ca3af; font-weight: 600; display: block; margin-bottom: 4px;">Password</label>
-              <input type="password" id="glbPasswordInput" placeholder="Enter password..." autocomplete="current-password" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; outline: none; font-size: 14px; box-sizing: border-box;">
+              <input type="password" id="glbPasswordInput" placeholder="Enter password..." autocomplete="current-password" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #ffffff !important; outline: none; font-size: 14px; box-sizing: border-box;">
             </div>
             <button class="glb-password-submit" id="glbPasswordSubmit" style="width: 100%; padding: 12px; background: #ffffff; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; transition: background 0.2s; margin-top: 8px;">Sign In</button>
           </div>
