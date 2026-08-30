@@ -199,7 +199,7 @@
         scrollTrigger: {
           trigger: section,
           start: isMobile ? 'top 92%' : 'top 85%',
-          toggleActions: 'play none none none' // Play once on enter, do not reverse or reset
+          toggleActions: 'play reset play reset' // Replay animations on scroll up and down
         }
       });
     });
