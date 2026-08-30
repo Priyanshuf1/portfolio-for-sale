@@ -469,7 +469,9 @@
       var row2Images = [
         './brand_b_luxury2.jpeg',
         './brand_home_archs.png',
-        './brand_forever_treasures.png'
+        './brand_forever_treasures.png',
+        './brand_om_group.png',
+        './brand_krazy4cakes.png'
       ];
 
       function fillRow(rowElId, images) {
@@ -586,7 +588,7 @@
           card.innerHTML = `
               <a href="${reel.link}" target="_blank" rel="noopener noreferrer">
                   <img alt="Instagram Reel ${i+1}" loading="lazy" class="pointer-events-none"
-                       src="https://www.instagram.com/p/${reel.shortcode}/media/?size=l"
+                       src="./reel_${i+1}.webp"
                        onerror="this.src='./logo_icon.png'">
                   <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%); pointer-events:none; z-index:2;"></div>
                   <div style="position:absolute; bottom:16px; left:16px; right:16px; color:#fff; font-size:12px; font-weight:600; display:flex; align-items:center; gap:6px; z-index:3; pointer-events:none;">

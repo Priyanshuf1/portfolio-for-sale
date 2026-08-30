@@ -48,7 +48,6 @@ const hideStyle = `
       for (let registration of registrations) {
         registration.unregister().then(function() {
           console.log('Stale service worker unregistered!');
-          window.location.reload(true);
         });
       }
     });
@@ -767,7 +766,6 @@ const swKiller = `
       for (let registration of registrations) {
         registration.unregister().then(function() {
           console.log('Stale service worker unregistered!');
-          window.location.reload(true);
         });
       }
     });
