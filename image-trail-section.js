@@ -438,9 +438,8 @@
     // ── 3. Populate Marquee Section HTML (Uncoupled from Instagram Check) ─────
     if (!marqueeSection.dataset.marqueeBuilt) {
       marqueeSection.innerHTML = `
-        <div style="text-align:center;pointer-events:none;user-select:none;">
-          <p style="color:#FF1744;font-size:clamp(12px,1.2vw,16px);letter-spacing:0.4em;text-transform:uppercase;margin-bottom:15px;font-family:sans-serif;font-weight:700;">our clients</p>
-          <h2 style="color:#ffffff;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.1;font-family:sans-serif;margin:0;">Proven Marketing Results</h2>
+        <div style="text-align:center;pointer-events:none;user-select:none;margin-bottom:30px;">
+          <h2 style="color:#ffffff;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.1;font-family:sans-serif;margin:0;text-transform:uppercase;letter-spacing:0.15em;">our clients</h2>
         </div>
         <div class="glm-marquee-wrap">
           <div class="glm-marquee-row right" id="marquee-row-2"></div>
@@ -448,13 +447,6 @@
       `;
 
       var row2Images = [
-        './brand_b_luxury.jpeg',
-        './brand_book_digital.jpeg',
-        './brand_cs_ec.jpeg',
-        './brand_krazy_cakes.jpeg',
-        './brand_kurti_kahaanii.jpeg',
-        './brand_om_group.jpeg',
-        './brand_tabs19.jpeg',
         './brand_b_luxury2.jpeg',
         './brand_home_archs.png',
         './brand_forever_treasures.png'

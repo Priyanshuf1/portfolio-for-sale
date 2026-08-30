@@ -212,17 +212,14 @@
   `;
 
   const skillsData = [
-    { title: "SEO & Search Dominance", category: "marketing", icon: "🚀", badge: "98% Mastery", desc: "Technical audits, keyword strategy, and backlink authority to secure #1 rankings.", level: 98 },
-    { title: "High-ROI Meta & Google Ads", category: "marketing", icon: "💰", badge: "4.2x ROAS", desc: "Precision PPC campaigns, audience retargeting, and high-conversion ad copy.", level: 95 },
-    { title: "Custom Web Architecture", category: "development", icon: "⚡", badge: "100/100 Speed", desc: "Next.js, Vite React, Framer, and custom ultra-fast web development.", level: 96 },
-    { title: "UI/UX & Brand Design", category: "design", icon: "🎨", badge: "Awwwards Standard", desc: "Figma design systems, glassmorphism, 3D interactive layouts, and brand identity.", level: 94 },
-    { title: "Social Media Growth", category: "marketing", icon: "📲", badge: "3x Organic Reach", desc: "Viral short-form video strategy, engagement, and multi-channel brand building.", level: 92 },
-    { title: "Analytics & Tracking", category: "development", icon: "📊", badge: "Data-Driven", desc: "GA4, Google Tag Manager, custom event tracking, and ROI attribution dashboards.", level: 90 },
-    { title: "Copywriting & Strategy", category: "design", icon: "✍️", badge: "High Converting", desc: "Persuasive sales copy, landing page messaging, and SEO editorial content.", level: 93 },
-    { title: "Figma Design Systems", category: "design", icon: "💎", badge: "Pro Components", desc: "Reusable component libraries, variables, advanced auto-layout, and clickable high-fi prototypes.", level: 97 },
-    { title: "Shoot & Editing", category: "design", icon: "🎬", badge: "Production Pro", desc: "Professional commercial shoots, post-production video editing, sound design, and color grading.", level: 94 },
-    { title: "User Research & Audit", category: "design", icon: "🔍", badge: "Heuristics Expert", desc: "Heatmaps, click maps, user journeys, behavioral heuristics, and usability testing.", level: 91 },
-    { title: "Growth Funnel Engineering", category: "marketing", icon: "🎯", badge: "High Convert", desc: "High-speed landing page architecture, CRM automations, lead captures, and A/B split-tests.", level: 96 }
+    { title: "SEO", category: "skills", icon: "🚀", badge: "98% Mastery", desc: "Technical audits, keyword strategy, and backlink authority to secure #1 search engine rankings.", level: 98 },
+    { title: "ROI", category: "skills", icon: "💰", badge: "4.2x ROAS", desc: "Precision PPC campaigns, audience retargeting, and high-conversion ad copy on Google & Meta.", level: 95 },
+    { title: "Social Media Marketing", category: "skills", icon: "📲", badge: "3x Organic Reach", desc: "Viral short-form video strategy, engagement, and multi-channel brand building.", level: 92 },
+    { title: "Website Design & Development", category: "skills", icon: "⚡", badge: "100/100 Speed", desc: "Next.js, Vite React, Framer, and custom ultra-fast web development.", level: 96 },
+    { title: "UI/UX Design", category: "skills", icon: "🎨", badge: "Premium Standard", desc: "Figma design systems, glassmorphism, 3D interactive layouts, and user experience.", level: 94 },
+    { title: "Shoot & Editing", category: "skills", icon: "🎬", badge: "Production Pro", desc: "Professional commercial shoots, post-production video editing, sound design, and color grading.", level: 94 },
+    { title: "Graphic Design", category: "skills", icon: "💎", badge: "Visual Expert", desc: "Eye-catching social creatives, vector assets, company branding, and marketing collateral.", level: 93 },
+    { title: "App Development", category: "skills", icon: "📱", badge: "iOS & Android", desc: "Cross-platform mobile apps using React Native, Flutter, and high-performance native integrations.", level: 91 }
   ];
 
   function initSkillsStackingAnimation() {
@@ -244,36 +241,40 @@
       const headerLine = group.querySelector('.glb-skills-category-line');
       const cards = Array.from(group.querySelectorAll('.glb-skill-card'));
 
-      // Slide in category title
-      gsap.fromTo(headerTitle,
-        { opacity: 0, x: -35 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: headerTitle,
-            start: 'top 92%',
-            toggleActions: 'play none play none'
+      // Slide in category title if present
+      if (headerTitle) {
+        gsap.fromTo(headerTitle,
+          { opacity: 0, x: -35 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: headerTitle,
+              start: 'top 92%',
+              toggleActions: 'play none play none'
+            }
           }
-        }
-      );
+        );
+      }
 
-      // Grow category line
-      gsap.fromTo(headerLine,
-        { scaleX: 0, transformOrigin: 'left center' },
-        {
-          scaleX: 1,
-          duration: 0.8,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: headerTitle,
-            start: 'top 92%',
-            toggleActions: 'play none play none'
+      // Grow category line if present
+      if (headerLine && headerTitle) {
+        gsap.fromTo(headerLine,
+          { scaleX: 0, transformOrigin: 'left center' },
+          {
+            scaleX: 1,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: headerTitle,
+              start: 'top 92%',
+              toggleActions: 'play none play none'
+            }
           }
-        }
-      );
+        );
+      }
 
       // Stagger and slide cards in from alternate directions (left vs right)
       cards.forEach((card, index) => {
@@ -330,46 +331,31 @@
     const grid = document.getElementById("glbSkillsGrid");
     if (!grid) return;
 
-    const categories = {
-      marketing: { title: "Digital Marketing", data: skillsData.filter(s => s.category === "marketing") },
-      development: { title: "Web Development", data: skillsData.filter(s => s.category === "development") },
-      design: { title: "UI/UX & Design", data: skillsData.filter(s => s.category === "design") }
-    };
-
-    let html = '';
-    
-    Object.keys(categories).forEach(catKey => {
-      const cat = categories[catKey];
-      html += `
-        <div class="glb-skills-category-group" id="skills-cat-${catKey}">
-          <div class="glb-skills-category-header">
-            <h3 class="glb-skills-category-title">${cat.title}</h3>
-            <div class="glb-skills-category-line"></div>
-          </div>
-          <div class="glb-skills-grid">
-            ${cat.data.map(s => `
-              <div class="glb-skill-card" data-category="${s.category}">
-                <div class="glb-skill-top">
-                  <div class="glb-skill-icon">${s.icon}</div>
-                  <span class="glb-skill-badge-tag">${s.badge}</span>
+    let html = `
+      <div class="glb-skills-category-group" id="skills-cat-all">
+        <div class="glb-skills-grid">
+          ${skillsData.map(s => `
+            <div class="glb-skill-card" data-category="skills">
+              <div class="glb-skill-top">
+                <div class="glb-skill-icon">${s.icon}</div>
+                <span class="glb-skill-badge-tag">${s.badge}</span>
+              </div>
+              <h3 class="glb-skill-title">${s.title}</h3>
+              <p class="glb-skill-desc">${s.desc}</p>
+              <div class="glb-skill-progress-wrap">
+                <div class="glb-skill-progress-label">
+                  <span>Proficiency</span>
+                  <span class="glb-skill-percent" data-level="${s.level}">0%</span>
                 </div>
-                <h3 class="glb-skill-title">${s.title}</h3>
-                <p class="glb-skill-desc">${s.desc}</p>
-                <div class="glb-skill-progress-wrap">
-                  <div class="glb-skill-progress-label">
-                    <span>Proficiency</span>
-                    <span class="glb-skill-percent" data-level="${s.level}">0%</span>
-                  </div>
-                  <div class="glb-skill-progress-bar">
-                    <div class="glb-skill-progress-fill" style="width: 0%;" data-level="${s.level}"></div>
-                  </div>
+                <div class="glb-skill-progress-bar">
+                  <div class="glb-skill-progress-fill" style="width: 0%;" data-level="${s.level}"></div>
                 </div>
               </div>
-            `).join('')}
-          </div>
+            </div>
+          `).join('')}
         </div>
-      `;
-    });
+      </div>
+    `;
 
     grid.innerHTML = html;
 
@@ -381,17 +367,8 @@
     const html = `
       <div class="glb-skills-section" id="glb-skills-section">
         <div class="glb-skills-inner">
-          <div class="glb-skills-header">
-            <span class="glb-skills-badge">OUR CAPABILITIES</span>
-            <h2 class="h2-fluid">Skills & Digital Expertise</h2>
-            <p>High-performance marketing, cutting-edge web engineering, and award-winning design.</p>
-          </div>
-
-          <div class="glb-skills-tabs">
-            <button class="glb-skills-tab active" data-filter="all">All Skills</button>
-            <button class="glb-skills-tab" data-filter="marketing">Digital Marketing</button>
-            <button class="glb-skills-tab" data-filter="development">Web Development</button>
-            <button class="glb-skills-tab" data-filter="design">UI/UX & Design</button>
+          <div class="glb-skills-header" style="margin-bottom: 50px;">
+            <h2 class="h2-fluid" style="text-transform: uppercase; letter-spacing: 0.15em; font-weight: 900;">Skills</h2>
           </div>
 
           <div id="glbSkillsGrid"></div>
@@ -411,32 +388,6 @@
       document.head.appendChild(styleEl);
 
       renderSkills();
-
-      // Bind tabs once when section is created
-      setTimeout(() => {
-        document.querySelectorAll('.glb-skills-tab').forEach(tab => {
-          tab.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.querySelectorAll('.glb-skills-tab').forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-
-            const filter = tab.dataset.filter;
-            let targetEl = null;
-            if (filter === 'all') {
-              targetEl = document.getElementById('glb-skills-section');
-            } else {
-              targetEl = document.getElementById('skills-cat-' + filter);
-            }
-            
-            if (targetEl) {
-              const yOffset = -120; // Clear the sticky header
-              const y = targetEl.getBoundingClientRect().top + window.pageYOffset + yOffset;
-              window.scrollTo({ top: y, behavior: 'smooth' });
-            }
-            if (window.rabtoPlayClickSFX) window.rabtoPlayClickSFX(750, 'sine', 0.08);
-          });
-        });
-      }, 80);
     } else {
       const grid = document.getElementById('glbSkillsGrid');
       if (grid && grid.children.length === 0) {
