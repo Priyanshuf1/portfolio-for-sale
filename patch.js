@@ -139,8 +139,7 @@ console.error = function(...args) {
 
   /* Instantly hide original template sections to prevent flash of unstyled content */
   [data-framer-name="Projects"],
-  .framer-1mm21uq,
-  #projects {
+  .framer-1mm21uq {
     display: none !important;
     opacity: 0 !important;
     height: 0 !important;
