@@ -502,9 +502,8 @@
     // ── 4. Populate Instagram Section with Custom Reels Carousel ───────────────
     if (!instaSection.dataset.elfsightBuilt) {
       instaSection.innerHTML = `
-        <div style="text-align:center; margin-bottom: 40px;">
-          <span style="display:inline-block; padding: 5px 16px; background: rgba(226,0,1,0.1); border: 1px solid rgba(226,0,1,0.3); color: #e20001; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 20px; margin-bottom: 14px;">Social Presence</span>
-          <h2 style="margin: 0; font-weight: 900; color: #111827; font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 30px;">Trusted by 130k+ People</h2>
+        <div style="text-align:center; margin-bottom: 25px;">
+          <span style="display:inline-block; padding: 5px 16px; background: rgba(226,0,1,0.1); border: 1px solid rgba(226,0,1,0.3); color: #e20001; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 20px;">Social Presence</span>
         </div>
 
         <!-- Integrated Instagram Profile Header -->
