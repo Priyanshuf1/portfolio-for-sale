@@ -170,12 +170,12 @@
   .glm-insta-profile-card {
     max-width: 620px;
     margin: 0 auto 35px;
-    background: #000000;
+    background: #000000 !important;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 32px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #f5f5f5;
+    color: #f5f5f5 !important;
     display: flex;
     gap: 30px;
     align-items: flex-start;
@@ -234,17 +234,18 @@
     font-size: 20px;
     font-weight: 600;
     letter-spacing: -0.2px;
+    color: #f5f5f5 !important;
   }
   .glm-insta-dots {
     font-size: 16px;
-    color: #a8a8a8;
+    color: #a8a8a8 !important;
     cursor: pointer;
     user-select: none;
   }
   .glm-insta-subtitle {
     font-size: 11px;
     font-weight: 700;
-    color: #f5f5f5;
+    color: #f5f5f5 !important;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 12px;
@@ -261,6 +262,7 @@
     gap: 24px;
     margin-bottom: 16px;
     font-size: 14.5px;
+    color: #f5f5f5 !important;
   }
   @media (max-width: 600px) {
     .glm-insta-stats {
@@ -269,10 +271,11 @@
   }
   .glm-insta-stat-val {
     font-weight: 700;
+    color: #f5f5f5 !important;
   }
   .glm-insta-bio-cat {
     font-size: 13.5px;
-    color: #a8a8a8;
+    color: #a8a8a8 !important;
     margin-bottom: 8px;
     text-align: left;
   }
@@ -286,12 +289,14 @@
     line-height: 1.6;
     margin-bottom: 16px;
     text-align: left;
+    color: #f5f5f5 !important;
   }
   .glm-insta-bio-item {
     margin-bottom: 6px;
     display: flex;
     align-items: center;
     gap: 8px;
+    color: #f5f5f5 !important;
   }
   .glm-insta-links {
     font-size: 13.5px;
@@ -302,7 +307,7 @@
     margin-bottom: 16px;
   }
   .glm-insta-link-a {
-    color: #e0f1ff;
+    color: #e0f1ff !important;
     text-decoration: none;
     font-weight: 600;
     display: inline-flex;
@@ -311,12 +316,12 @@
     transition: color 0.2s;
   }
   .glm-insta-link-a:hover {
-    color: #a8d5ff;
+    color: #a8d5ff !important;
     text-decoration: underline;
   }
   .glm-insta-followed-by {
     font-size: 12px;
-    color: #a8a8a8;
+    color: #a8a8a8 !important;
     display: flex;
     align-items: center;
     gap: 10px;
