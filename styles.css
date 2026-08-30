@@ -1801,16 +1801,25 @@ div[class*="elfsight-app"] a[target="_blank"],
 
 /* Force Elfsight posts to show at least 2 videos first on mobile */
 @media (max-width: 600px) {
+  /* Prevent app wrapper itself from collapsing to zero height */
+  .elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40,
+  .elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40 > div,
+  .elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40 iframe {
+    min-height: 480px !important;
+    display: block !important;
+    height: auto !important;
+  }
   /* Prevent grid from collapsing to zero height */
   div[class*="PostsGrid__Container"],
   div[class*="PostsGrid__Grid"],
   [class*="GridContainer"],
-  [class*="InstagramFeed__Grid"] {
+  [class*="InstagramFeed__Grid"],
+  [class*="eapps-instagram-feed-posts-grid"] {
     display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
     gap: 10px !important;
     height: auto !important;
-    min-height: 200px !important;
+    min-height: 380px !important;
   }
   /* Force the first 2 items to always display */
   [class*="PostsGrid__Item"]:nth-child(1),
