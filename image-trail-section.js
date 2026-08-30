@@ -360,6 +360,7 @@
 
   /* Mobile Instagram Layout Overrides & Watermark Cleanup */
   @media (max-width: 600px) {
+    /* Prevent app wrapper itself from collapsing to zero height */
     .elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40,
     .elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40 > div,
     .elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40 iframe {
@@ -367,33 +368,51 @@
       display: block !important;
       height: auto !important;
     }
-    /* Force grid list items container to have layout */
+    /* Force grid/slider containers to flex-wrap and remain visible */
+    [class*="SliderViewport"],
+    [class*="CarouselViewport"],
+    [class*="SliderTrack"],
+    [class*="CarouselTrack"],
+    [class*="SliderContainer"],
+    [class*="CarouselContainer"],
     div[class*="PostsGrid__Container"],
     div[class*="PostsGrid__Grid"],
     [class*="GridContainer"],
     [class*="InstagramFeed__Grid"],
     [class*="eapps-instagram-feed-posts-grid"] {
-      display: grid !important;
-      grid-template-columns: repeat(2, 1fr) !important;
-      gap: 10px !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      overflow: visible !important;
+      width: 100% !important;
       height: auto !important;
-      min-height: 380px !important;
+      min-height: 250px !important;
+      transform: none !important;
+      transition: none !important;
     }
-    /* Force the first 2 items to always display */
-    [class*="PostsGrid__Item"]:nth-child(1),
-    [class*="PostsGrid__Item"]:nth-child(2),
-    [class*="InstagramFeed__PostItem"]:nth-child(1),
-    [class*="InstagramFeed__PostItem"]:nth-child(2),
-    [class*="PostItem"]:nth-child(1),
-    [class*="PostItem"]:nth-child(2),
-    [class*="GridItem"]:nth-child(1),
-    [class*="GridItem"]:nth-child(2),
-    [class*="eapps-instagram-feed-posts-item"]:nth-child(1),
-    [class*="eapps-instagram-feed-posts-item"]:nth-child(2) {
+    /* Force individual slide items to display side-by-side (2 columns) */
+    [class*="SliderItem"],
+    [class*="CarouselItem"],
+    [class*="PostsGrid__Item"],
+    [class*="InstagramFeed__PostItem"],
+    [class*="PostItem"],
+    [class*="GridItem"],
+    [class*="eapps-instagram-feed-posts-item"] {
       display: block !important;
+      width: 48% !important;
+      max-width: 48% !important;
+      flex: 0 0 48% !important;
+      margin: 1% !important;
+      height: auto !important;
       opacity: 1 !important;
       visibility: visible !important;
-      height: auto !important;
+    }
+    /* Hide navigation arrows/dots that might clash */
+    [class*="ArrowContainer"],
+    [class*="NavigationArrow"],
+    [class*="Arrow__Container"],
+    [class*="Bullet"],
+    [class*="Pagination"] {
+      display: none !important;
     }
   }
 
