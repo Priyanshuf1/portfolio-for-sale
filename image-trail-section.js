@@ -167,7 +167,7 @@
   }
 
   /* Live Instagram Profile Card Mockup */
-  .glm-insta-profile-card {
+  #glm-instagram-feed-section .glm-insta-profile-card {
     max-width: 620px;
     margin: 0 auto 35px;
     background: #000000 !important;
@@ -183,7 +183,7 @@
     box-sizing: border-box;
   }
   @media (max-width: 600px) {
-    .glm-insta-profile-card {
+    #glm-instagram-feed-section .glm-insta-profile-card {
       flex-direction: column;
       align-items: center;
       text-align: center;
@@ -230,19 +230,19 @@
       justify-content: center;
     }
   }
-  .glm-insta-username {
+  #glm-instagram-feed-section .glm-insta-username {
     font-size: 20px;
     font-weight: 600;
     letter-spacing: -0.2px;
     color: #f5f5f5 !important;
   }
-  .glm-insta-dots {
+  #glm-instagram-feed-section .glm-insta-dots {
     font-size: 16px;
     color: #a8a8a8 !important;
     cursor: pointer;
     user-select: none;
   }
-  .glm-insta-subtitle {
+  #glm-instagram-feed-section .glm-insta-subtitle {
     font-size: 11px;
     font-weight: 700;
     color: #f5f5f5 !important;
@@ -253,11 +253,11 @@
     line-height: 1.4;
   }
   @media (max-width: 600px) {
-    .glm-insta-subtitle {
+    #glm-instagram-feed-section .glm-insta-subtitle {
       text-align: center;
     }
   }
-  .glm-insta-stats {
+  #glm-instagram-feed-section .glm-insta-stats {
     display: flex;
     gap: 24px;
     margin-bottom: 16px;
@@ -265,33 +265,33 @@
     color: #f5f5f5 !important;
   }
   @media (max-width: 600px) {
-    .glm-insta-stats {
+    #glm-instagram-feed-section .glm-insta-stats {
       justify-content: center;
     }
   }
-  .glm-insta-stat-val {
+  #glm-instagram-feed-section .glm-insta-stat-val {
     font-weight: 700;
     color: #f5f5f5 !important;
   }
-  .glm-insta-bio-cat {
+  #glm-instagram-feed-section .glm-insta-bio-cat {
     font-size: 13.5px;
     color: #a8a8a8 !important;
     margin-bottom: 8px;
     text-align: left;
   }
   @media (max-width: 600px) {
-    .glm-insta-bio-cat {
+    #glm-instagram-feed-section .glm-insta-bio-cat {
       text-align: center;
     }
   }
-  .glm-insta-bio-list {
+  #glm-instagram-feed-section .glm-insta-bio-list {
     font-size: 13.5px;
     line-height: 1.6;
     margin-bottom: 16px;
     text-align: left;
     color: #f5f5f5 !important;
   }
-  .glm-insta-bio-item {
+  #glm-instagram-feed-section .glm-insta-bio-item {
     margin-bottom: 6px;
     display: flex;
     align-items: center;
@@ -306,7 +306,7 @@
     gap: 6px;
     margin-bottom: 16px;
   }
-  .glm-insta-link-a {
+  #glm-instagram-feed-section .glm-insta-link-a {
     color: #e0f1ff !important;
     text-decoration: none;
     font-weight: 600;
@@ -315,11 +315,11 @@
     gap: 6px;
     transition: color 0.2s;
   }
-  .glm-insta-link-a:hover {
+  #glm-instagram-feed-section .glm-insta-link-a:hover {
     color: #a8d5ff !important;
     text-decoration: underline;
   }
-  .glm-insta-followed-by {
+  #glm-instagram-feed-section .glm-insta-followed-by {
     font-size: 12px;
     color: #a8a8a8 !important;
     display: flex;
