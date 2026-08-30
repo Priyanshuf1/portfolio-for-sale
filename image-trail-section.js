@@ -166,190 +166,176 @@
     width: 100%;
   }
 
-  /* Live Instagram Profile Card Mockup */
-  #glm-instagram-feed-section .glm-insta-profile-card {
-    max-width: 620px;
-    margin: 0 auto 35px;
-    background: #000000 !important;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 32px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #f5f5f5 !important;
+  /* Integrated Instagram Profile Layout */
+  #glm-instagram-feed-section .glm-insta-integrated-header {
+    max-width: 780px;
+    margin: 0 auto 50px;
     display: flex;
-    gap: 30px;
-    align-items: flex-start;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    gap: 50px;
+    align-items: center;
+    padding: 0 20px 40px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
   }
-  @media (max-width: 600px) {
-    #glm-instagram-feed-section .glm-insta-profile-card {
+  @media (max-width: 640px) {
+    #glm-instagram-feed-section .glm-insta-integrated-header {
       flex-direction: column;
-      align-items: center;
+      gap: 25px;
       text-align: center;
-      padding: 24px;
-      gap: 20px;
+      padding-bottom: 30px;
     }
   }
-  .glm-insta-avatar-wrap {
-    position: relative;
+  .glm-insta-avatar-col {
     flex-shrink: 0;
   }
-  .glm-insta-avatar-inner {
-    width: 105px;
-    height: 105px;
+  .glm-insta-story-ring {
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
-    padding: 3px;
+    padding: 4px;
     background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
     display: flex;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .glm-insta-avatar {
+  .glm-insta-story-ring:hover {
+    transform: scale(1.05) rotate(5deg);
+  }
+  @media (max-width: 640px) {
+    .glm-insta-story-ring {
+      width: 105px;
+      height: 105px;
+    }
+  }
+  .glm-insta-avatar-inner {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    object-fit: cover;
-    background: #000;
-    border: 3px solid #000;
-    box-sizing: border-box;
+    background: #ffffff;
+    border: 3px solid #ffffff;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .glm-insta-info {
+  .glm-insta-avatar-img {
+    width: 90%;
+    height: auto;
+    object-fit: contain;
+  }
+  .glm-insta-content-col {
     flex-grow: 1;
-    width: 100%;
+    text-align: left;
   }
-  .glm-insta-header-row {
+  @media (max-width: 640px) {
+    .glm-insta-content-col {
+      text-align: center;
+      width: 100%;
+    }
+  }
+  .glm-insta-username-row {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
+    gap: 16px;
+    margin-bottom: 18px;
   }
-  @media (max-width: 600px) {
-    .glm-insta-header-row {
+  @media (max-width: 640px) {
+    .glm-insta-username-row {
       justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
     }
   }
-  #glm-instagram-feed-section .glm-insta-username {
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.2px;
-    color: #f5f5f5 !important;
+  #glm-instagram-feed-section .glm-insta-username-txt {
+    font-size: 26px;
+    font-weight: 300;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #111827 !important;
+    margin: 0;
+    letter-spacing: -0.5px;
   }
-  #glm-instagram-feed-section .glm-insta-dots {
-    font-size: 16px;
-    color: #a8a8a8 !important;
-    cursor: pointer;
-    user-select: none;
-  }
-  #glm-instagram-feed-section .glm-insta-subtitle {
-    font-size: 11px;
-    font-weight: 700;
-    color: #f5f5f5 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 12px;
-    text-align: left;
-    line-height: 1.4;
-  }
-  @media (max-width: 600px) {
-    #glm-instagram-feed-section .glm-insta-subtitle {
-      text-align: center;
-    }
-  }
-  #glm-instagram-feed-section .glm-insta-stats {
-    display: flex;
-    gap: 24px;
-    margin-bottom: 16px;
-    font-size: 14.5px;
-    color: #f5f5f5 !important;
-  }
-  @media (max-width: 600px) {
-    #glm-instagram-feed-section .glm-insta-stats {
-      justify-content: center;
-    }
-  }
-  #glm-instagram-feed-section .glm-insta-stat-val {
-    font-weight: 700;
-    color: #f5f5f5 !important;
-  }
-  #glm-instagram-feed-section .glm-insta-bio-cat {
-    font-size: 13.5px;
-    color: #a8a8a8 !important;
-    margin-bottom: 8px;
-    text-align: left;
-  }
-  @media (max-width: 600px) {
-    #glm-instagram-feed-section .glm-insta-bio-cat {
-      text-align: center;
-    }
-  }
-  #glm-instagram-feed-section .glm-insta-bio-list {
-    font-size: 13.5px;
-    line-height: 1.6;
-    margin-bottom: 16px;
-    text-align: left;
-    color: #f5f5f5 !important;
-  }
-  #glm-instagram-feed-section .glm-insta-bio-item {
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #f5f5f5 !important;
-  }
-  .glm-insta-links {
-    font-size: 13.5px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 16px;
-  }
-  #glm-instagram-feed-section .glm-insta-link-a {
-    color: #e0f1ff !important;
-    text-decoration: none;
-    font-weight: 600;
+  .glm-insta-verified-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    transition: color 0.2s;
   }
-  #glm-instagram-feed-section .glm-insta-link-a:hover {
-    color: #a8d5ff !important;
-    text-decoration: underline;
+  #glm-instagram-feed-section .glm-insta-follow-btn {
+    background: #0095f6 !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.2s;
+    display: inline-block;
+    cursor: pointer;
   }
-  #glm-instagram-feed-section .glm-insta-followed-by {
-    font-size: 12px;
-    color: #a8a8a8 !important;
+  #glm-instagram-feed-section .glm-insta-follow-btn:hover {
+    background: #1877f2 !important;
+    transform: translateY(-1px);
+  }
+  #glm-instagram-feed-section .glm-insta-follow-btn:active {
+    transform: translateY(0);
+  }
+  .glm-insta-stats-row {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    padding-top: 14px;
-    text-align: left;
+    gap: 30px;
+    margin-bottom: 20px;
   }
-  @media (max-width: 600px) {
-    .glm-insta-followed-by {
+  @media (max-width: 640px) {
+    .glm-insta-stats-row {
       justify-content: center;
+      gap: 20px;
     }
   }
-  .glm-insta-followed-avatars {
-    display: flex;
-    position: relative;
-    width: 32px;
-    height: 20px;
+  #glm-instagram-feed-section .glm-insta-stat-item {
+    font-size: 16px;
+    color: #111827 !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
-  .glm-insta-followed-avatar {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #000;
-    position: absolute;
-    top: 0;
+  #glm-instagram-feed-section .glm-insta-stat-item b {
+    font-weight: 600;
+    color: #111827 !important;
   }
-  .glm-insta-followed-avatar:nth-child(1) { left: 0; z-index: 2; }
-  .glm-insta-followed-avatar:nth-child(2) { left: 12px; z-index: 1; }
+  .glm-insta-bio-block {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14.5px;
+    line-height: 1.5;
+    text-align: left;
+  }
+  @media (max-width: 640px) {
+    .glm-insta-bio-block {
+      text-align: center;
+    }
+  }
+  #glm-instagram-feed-section .glm-insta-bio-name {
+    font-weight: 600;
+    color: #111827 !important;
+  }
+  #glm-instagram-feed-section .glm-insta-bio-category {
+    color: #8e8e8e !important;
+    margin-bottom: 4px;
+  }
+  #glm-instagram-feed-section .glm-insta-bio-desc {
+    color: #262626 !important;
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+  #glm-instagram-feed-section .glm-insta-bio-link a {
+    color: #00376b !important;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    transition: opacity 0.2s;
+  }
+  #glm-instagram-feed-section .glm-insta-bio-link a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
 
   @media (max-width: 768px) {
     .glm-marquee-wrap {
@@ -435,49 +421,42 @@
           <h2 style="margin: 0; font-weight: 900; color: #111827; font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 30px;">Follow Our Journey</h2>
         </div>
 
-        <!-- Live Instagram Profile Card Mockup -->
-        <div class="glm-insta-profile-card">
-          <div class="glm-insta-avatar-wrap">
-            <div class="glm-insta-avatar-inner">
-              <img src="./logo_icon.png" alt="globallogicmedia" class="glm-insta-avatar">
+        <!-- Integrated Instagram Profile Header -->
+        <div class="glm-insta-integrated-header">
+          <div class="glm-insta-avatar-col">
+            <div class="glm-insta-story-ring">
+              <div class="glm-insta-avatar-inner">
+                <img src="./logo_icon.png" alt="Global Logic Media Logo" class="glm-insta-avatar-img">
+              </div>
             </div>
           </div>
-          <div class="glm-insta-info">
-            <div class="glm-insta-header-row">
-              <span class="glm-insta-username">globallogicmedia</span>
-              <span style="display:inline-flex; align-items:center; color:#3897f0; width:18px; height:18px;" title="Verified">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12.003 2.001c-5.522 0-9.99 4.47-9.99 9.99 0 5.523 4.468 9.99 9.99 9.99 5.523 0 9.99-4.467 9.99-9.99 0-5.52-4.467-9.99-9.99-9.99zm4.218 8.219l-4.72 4.81a1.004 1.004 0 0 1-1.42 0l-2.29-2.3a1.004 1.004 0 0 1 1.42-1.42l1.58 1.58 4.01-4.09a1.004 1.004 0 0 1 1.42 1.42z"/></svg>
+          <div class="glm-insta-content-col">
+            <div class="glm-insta-username-row">
+              <h3 class="glm-insta-username-txt">globallogicmedia</h3>
+              <span class="glm-insta-verified-badge" title="Verified">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="#3897f0"><path d="M12.003 2.001c-5.522 0-9.99 4.47-9.99 9.99 0 5.523 4.468 9.99 9.99 9.99 5.523 0 9.99-4.467 9.99-9.99 0-5.52-4.467-9.99-9.99-9.99zm4.218 8.219l-4.72 4.81a1.004 1.004 0 0 1-1.42 0l-2.29-2.3a1.004 1.004 0 0 1 1.42-1.42l1.58 1.58 4.01-4.09a1.004 1.004 0 0 1 1.42 1.42z"/></svg>
               </span>
-              <span class="glm-insta-dots">&bull;&bull;&bull;</span>
+              <a href="https://www.instagram.com/globallogicmedia/" target="_blank" rel="noopener noreferrer" class="glm-insta-follow-btn">Follow</a>
             </div>
-            <div class="glm-insta-subtitle">DIGITAL MARKETING | SMM | SEO | WEBSITE DESIGN | LOCAL SEO</div>
-            <div class="glm-insta-stats">
-              <div><span class="glm-insta-stat-val">18</span> posts</div>
-              <div><span class="glm-insta-stat-val">411</span> followers</div>
-              <div><span class="glm-insta-stat-val">49</span> following</div>
+            <div class="glm-insta-stats-row">
+              <span class="glm-insta-stat-item"><b>18</b> posts</span>
+              <span class="glm-insta-stat-item"><b>411</b> followers</span>
+              <span class="glm-insta-stat-item"><b>49</b> following</span>
             </div>
-            <div class="glm-insta-bio-cat">AI creator</div>
-            <div class="glm-insta-bio-list">
-              <div class="glm-insta-bio-item">📍 Digital Marketing Agency in Lucknow</div>
-              <div class="glm-insta-bio-item">🚀 Google Ads | SEO | SMM | Branding</div>
-              <div class="glm-insta-bio-item">🔗 100% Result-Driven Growth Strategies</div>
-              <div class="glm-insta-bio-item">📞 Book... <span style="color:#a8a8a8; cursor:pointer;">more</span></div>
-            </div>
-            <div class="glm-insta-links">
-              <a href="https://drive.google.com/drive/folders/1Ro16MKC8SEwVv6H4O4IFgdc80YhrZRg4" target="_blank" rel="noopener noreferrer" class="glm-insta-link-a">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                drive.google.com/drive/folders/1Ro16MKC8SEwVv6H4O4IFgdc80YhrZRg4...
-              </a>
-              <a href="https://threads.net/@globallogicmedia" target="_blank" rel="noopener noreferrer" class="glm-insta-link-a" style="color: #a8a8a8; font-weight: 500;">
-                <span style="font-size:15px; font-weight:700;">@</span> globallogicmedia
-              </a>
-            </div>
-            <div class="glm-insta-followed-by">
-              <div class="glm-insta-followed-avatars">
-                <div class="glm-insta-followed-avatar" style="background:#555; display:flex; justify-content:center; align-items:center; font-size:8px; font-weight:700; color:#fff;">S</div>
-                <div class="glm-insta-followed-avatar" style="background:#888; display:flex; justify-content:center; align-items:center; font-size:8px; font-weight:700; color:#fff;">S</div>
+            <div class="glm-insta-bio-block">
+              <div class="glm-insta-bio-name">Global Logic Media</div>
+              <div class="glm-insta-bio-category">AI Creator</div>
+              <div class="glm-insta-bio-desc">
+                📍 Digital Marketing Agency in Lucknow<br>
+                🚀 Google Ads | SEO | SMM | Branding<br>
+                🔗 100% Result-Driven Growth Strategies
               </div>
-              <span>Followed by <strong>shrey__9038</strong> and <strong>shrey_9038</strong></span>
+              <div class="glm-insta-bio-link">
+                <a href="https://drive.google.com/drive/folders/1Ro16MKC8SEwVv6H4O4IFgdc80YhrZRg4" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:4px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                  drive.google.com/drive/folders/1Ro16MKC8SEwVv6H4O4IFgdc80YhrZRg4...
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -494,6 +473,36 @@
         script.src = "https://static.elfsight.com/platform/platform.js";
         script.async = true;
         document.head.appendChild(script);
+      }
+
+      // Staggered ScrollTrigger reveal animation for the integrated header elements
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: '.glm-insta-integrated-header',
+            start: 'top 85%',
+            toggleActions: 'play none play none'
+          }
+        })
+        .fromTo('#glm-instagram-feed-section .glm-insta-story-ring', 
+          { scale: 0, rotate: -45, opacity: 0 }, 
+          { scale: 1, rotate: 0, opacity: 1, duration: 0.8, ease: 'back.out(1.6)' }
+        )
+        .fromTo('#glm-instagram-feed-section .glm-insta-username-row > *',
+          { opacity: 0, x: -20 },
+          { opacity: 1, x: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out' },
+          '-=0.4'
+        )
+        .fromTo('#glm-instagram-feed-section .glm-insta-stat-item',
+          { opacity: 0, y: 15 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power2.out' },
+          '-=0.3'
+        )
+        .fromTo('#glm-instagram-feed-section .glm-insta-bio-block > *',
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out' },
+          '-=0.3'
+        );
       }
     }
   }

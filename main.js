@@ -174,7 +174,7 @@
         scrollTrigger: {
           trigger: h,
           start: 'top 85%',
-          toggleActions: 'play reset play reset'
+          toggleActions: 'play none play none'
         }
       });
     });
