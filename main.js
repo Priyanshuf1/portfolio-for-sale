@@ -129,7 +129,7 @@
 
     const headings = document.querySelectorAll('h2, #hero h1');
     headings.forEach(h => {
-      if (h.querySelector('.glm-word-reveal')) return;
+      if (h.classList.contains('no-reveal') || h.querySelector('.glm-word-reveal')) return;
 
       const contents = Array.from(h.childNodes);
       h.innerHTML = '';
