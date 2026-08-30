@@ -533,190 +533,150 @@
           </div>
         </div>
 
-        <div style="max-width: 1100px; margin: 0 auto;">
-          <!-- Native Instagram Grid - bypasses Elfsight mobile limitations -->
-          <style>
-            #glm-native-feed {
-              display: grid;
-              grid-template-columns: repeat(3, 1fr);
-              gap: 10px;
-              padding: 0 10px;
-              margin-bottom: 20px;
-            }
-            @media (max-width: 600px) {
-              #glm-native-feed {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-                padding: 0 8px;
-              }
-            }
-            .glm-native-post {
-              position: relative;
-              border-radius: 12px;
-              overflow: hidden;
-              cursor: pointer;
-              aspect-ratio: 1;
-              background: #f0f0f0;
-              box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-              transition: transform 0.2s ease, box-shadow 0.2s ease;
-            }
-            .glm-native-post:hover {
-              transform: scale(1.03);
-              box-shadow: 0 6px 24px rgba(0,0,0,0.15);
-            }
-            .glm-native-post img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-              display: block;
-              transition: transform 0.3s ease;
-            }
-            .glm-native-post:hover img {
-              transform: scale(1.06);
-            }
-            .glm-native-post-overlay {
-              position: absolute;
-              inset: 0;
-              background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
-              opacity: 0;
-              transition: opacity 0.25s ease;
-              display: flex;
-              align-items: flex-end;
-              padding: 10px;
-            }
-            .glm-native-post:hover .glm-native-post-overlay {
-              opacity: 1;
-            }
-            .glm-native-post-overlay span {
-              color: white;
-              font-size: 11px;
-              line-height: 1.3;
-              display: -webkit-box;
-              -webkit-line-clamp: 2;
-              -webkit-box-orient: vertical;
-              overflow: hidden;
-            }
-            .glm-native-post-video-badge {
-              position: absolute;
-              top: 8px;
-              right: 8px;
-              background: rgba(0,0,0,0.55);
-              border-radius: 50%;
-              width: 28px;
-              height: 28px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            }
-            .glm-native-post-video-badge svg {
-              width: 14px;
-              height: 14px;
-              fill: white;
-            }
-            /* Hidden posts for mobile (beyond 4) */
-            @media (max-width: 600px) {
-              .glm-native-post.glm-hidden-mobile {
-                display: none;
-              }
-              .glm-native-post.glm-hidden-mobile.glm-revealed {
-                display: block;
-                animation: glm-fadeIn 0.35s ease;
-              }
-            }
-            @keyframes glm-fadeIn {
-              from { opacity: 0; transform: scale(0.95); }
-              to { opacity: 1; transform: scale(1); }
-            }
-            /* Skeleton loader tiles */
-            .glm-native-post.glm-skeleton {
-              background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-              background-size: 200% 100%;
-              animation: glm-shimmer 1.4s infinite;
-            }
-            @keyframes glm-shimmer {
-              0% { background-position: 200% 0; }
-              100% { background-position: -200% 0; }
-            }
-            /* See More / Show Less button */
-            #glm-see-more-btn {
-              display: none;
-              margin: 16px auto 0;
-              padding: 12px 32px;
-              background: linear-gradient(135deg, #e20001, #ff4444);
-              color: white;
-              border: none;
-              border-radius: 50px;
-              font-size: 14px;
-              font-weight: 700;
-              letter-spacing: 0.5px;
-              cursor: pointer;
-              box-shadow: 0 4px 16px rgba(226,0,1,0.3);
-              transition: transform 0.18s ease, box-shadow 0.18s ease;
-            }
-            #glm-see-more-btn:hover {
-              transform: translateY(-2px);
-              box-shadow: 0 8px 24px rgba(226,0,1,0.4);
-            }
-            #glm-see-more-btn:active {
-              transform: translateY(0);
-            }
-            @media (max-width: 600px) {
-              #glm-see-more-btn {
-                display: block;
-              }
-            }
-          </style>
-          <div id="glm-native-feed">
-            <!-- 6 tiles: first 4 visible on mobile (2x2), last 2 hidden until See More -->
-            <div class="glm-native-post glm-skeleton" data-index="0"></div>
-            <div class="glm-native-post glm-skeleton" data-index="1"></div>
-            <div class="glm-native-post glm-skeleton" data-index="2"></div>
-            <div class="glm-native-post glm-skeleton" data-index="3"></div>
-            <div class="glm-native-post glm-skeleton glm-hidden-mobile" data-index="4"></div>
-            <div class="glm-native-post glm-skeleton glm-hidden-mobile" data-index="5"></div>
-          </div>
-          <div style="text-align:center;">
-            <button id="glm-see-more-btn">📸 See More Posts</button>
-          </div>
-          <!-- Keep Elfsight as hidden fallback for desktop -->
-          <div class="elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40" style="display:none;"></div>
+        <div style="max-width: 1100px; margin: 0 auto; min-height: 300px; padding: 0 8px;">
+          <div class="elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40"></div>
         </div>
       `;
 
       instaSection.dataset.elfsightBuilt = '1';
 
-      // Wire up the "See More Posts" button
-      setTimeout(function() {
-        var seeMoreBtn = document.getElementById('glm-see-more-btn');
-        if (seeMoreBtn) {
-          var expanded = false;
-          seeMoreBtn.addEventListener('click', function() {
-            expanded = !expanded;
-            var hiddenPosts = document.querySelectorAll('#glm-native-feed .glm-hidden-mobile');
-            hiddenPosts.forEach(function(p) {
-              if (expanded) {
-                p.classList.add('glm-revealed');
-              } else {
-                p.classList.remove('glm-revealed');
-              }
-            });
-            seeMoreBtn.textContent = expanded ? '▲ Show Less' : '📸 See More Posts';
-          });
-        }
-      }, 100);
-
-      // Load native feed from Instagram API
-      setTimeout(loadNativeFeed, 300);
-
+      // Load the Elfsight platform script if not yet loaded
       if (!document.querySelector('script[src*="elfsight.com"]')) {
         const script = document.createElement('script');
         script.src = "https://static.elfsight.com/platform/platform.js";
-
         script.async = true;
         document.head.appendChild(script);
       }
 
+      // ── Shadow DOM Style Injector ──────────────────────────────────────────
+      // Watches for the Elfsight shadow root to mount, then injects mobile CSS
+      // to force a 2-column grid instead of a carousel/slider on small screens.
+      (function watchElfsightShadow() {
+        var STYLE_ID = 'glm-elfsight-mobile-fix';
+        var injected = false;
+
+        function injectStyles(shadowRoot) {
+          if (shadowRoot.getElementById(STYLE_ID)) return;
+          var style = document.createElement('style');
+          style.id = STYLE_ID;
+          style.textContent = `
+            @media (max-width: 600px) {
+
+              /* 1. Force grid container to wrap into 2 columns */
+              .es-grid-layout,
+              [class*="Grid__GridContainer"],
+              [class*="Grid__StyledGridLayout"],
+              [class*="Layout__LayoutContent"] {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                overflow: visible !important;
+                width: 100% !important;
+                height: auto !important;
+                min-height: 0 !important;
+                transform: none !important;
+                transition: none !important;
+                gap: 8px !important;
+                padding: 4px !important;
+              }
+
+              /* 2. Each post card — exactly 2 per row */
+              .es-grid-layout > *,
+              [class*="Grid__GridContainer"] > *,
+              [class*="Grid__StyledGridLayout"] > * {
+                flex: 0 0 calc(50% - 6px) !important;
+                max-width: calc(50% - 6px) !important;
+                width: calc(50% - 6px) !important;
+                box-sizing: border-box !important;
+                margin: 0 !important;
+              }
+
+              /* 3. Make card images square and fill */
+              .es-card-container,
+              [class*="InstagramCardContainer__Card"],
+              [class*="es-card-1-container"] {
+                border-radius: 10px !important;
+                overflow: hidden !important;
+                aspect-ratio: 1 !important;
+                cursor: pointer !important;
+              }
+
+              /* 4. Hide slider arrows, dots, nav */
+              [class*="Arrow"],
+              [class*="arrow"],
+              [class*="Bullet"],
+              [class*="bullet"],
+              [class*="Dots"],
+              [class*="dots"],
+              [class*="Pagination"],
+              [class*="pagination"] {
+                display: none !important;
+              }
+
+              /* 5. Remove any slider translate/clip */
+              [class*="Slider"],
+              [class*="slider"],
+              [class*="Carousel"],
+              [class*="carousel"],
+              [class*="Track"],
+              [class*="track"],
+              [class*="Viewport"],
+              [class*="viewport"] {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                overflow: visible !important;
+                transform: none !important;
+                width: 100% !important;
+                height: auto !important;
+              }
+            }
+
+            /* Hide Elfsight branding / watermark on all screens */
+            a[href*="elfsight.com"],
+            [class*="PoweredBy"],
+            [class*="poweredby"],
+            [class*="BrandingContainer"],
+            [class*="LogoContainer"],
+            [class*="eapps-link"] {
+              display: none !important;
+              visibility: hidden !important;
+              height: 0 !important;
+              width: 0 !important;
+              overflow: hidden !important;
+              pointer-events: none !important;
+            }
+          `;
+          shadowRoot.appendChild(style);
+          console.log('[Elfsight] Mobile 2-col grid CSS injected into shadow DOM');
+          injected = true;
+        }
+
+        function tryInject() {
+          var embedRoot = document.querySelector('.es-embed-root');
+          if (embedRoot && embedRoot.shadowRoot) {
+            injectStyles(embedRoot.shadowRoot);
+            // Keep watching for dynamic re-renders
+            if (!injected) return;
+            var observer = new MutationObserver(function() {
+              injectStyles(embedRoot.shadowRoot);
+            });
+            observer.observe(embedRoot.shadowRoot, { childList: true, subtree: true });
+          }
+        }
+
+        // Poll until shadow root appears (widget loads async)
+        var poll = setInterval(function() {
+          tryInject();
+          if (injected) clearInterval(poll);
+        }, 300);
+
+        // Stop polling after 15 seconds regardless
+        setTimeout(function() { clearInterval(poll); }, 15000);
+      })();
+
+
+
       // Staggered ScrollTrigger reveal animation for the integrated header elements
+
       if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.timeline({
           scrollTrigger: {
