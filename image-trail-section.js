@@ -533,16 +533,185 @@
           </div>
         </div>
 
-        <div style="max-width: 1100px; margin: 0 auto; min-height: 400px;">
-          <div class="elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40"></div>
+        <div style="max-width: 1100px; margin: 0 auto;">
+          <!-- Native Instagram Grid - bypasses Elfsight mobile limitations -->
+          <style>
+            #glm-native-feed {
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 10px;
+              padding: 0 10px;
+              margin-bottom: 20px;
+            }
+            @media (max-width: 600px) {
+              #glm-native-feed {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                padding: 0 8px;
+              }
+            }
+            .glm-native-post {
+              position: relative;
+              border-radius: 12px;
+              overflow: hidden;
+              cursor: pointer;
+              aspect-ratio: 1;
+              background: #f0f0f0;
+              box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+              transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+            .glm-native-post:hover {
+              transform: scale(1.03);
+              box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+            }
+            .glm-native-post img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+              transition: transform 0.3s ease;
+            }
+            .glm-native-post:hover img {
+              transform: scale(1.06);
+            }
+            .glm-native-post-overlay {
+              position: absolute;
+              inset: 0;
+              background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+              opacity: 0;
+              transition: opacity 0.25s ease;
+              display: flex;
+              align-items: flex-end;
+              padding: 10px;
+            }
+            .glm-native-post:hover .glm-native-post-overlay {
+              opacity: 1;
+            }
+            .glm-native-post-overlay span {
+              color: white;
+              font-size: 11px;
+              line-height: 1.3;
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
+            .glm-native-post-video-badge {
+              position: absolute;
+              top: 8px;
+              right: 8px;
+              background: rgba(0,0,0,0.55);
+              border-radius: 50%;
+              width: 28px;
+              height: 28px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .glm-native-post-video-badge svg {
+              width: 14px;
+              height: 14px;
+              fill: white;
+            }
+            /* Hidden posts for mobile (beyond 4) */
+            @media (max-width: 600px) {
+              .glm-native-post.glm-hidden-mobile {
+                display: none;
+              }
+              .glm-native-post.glm-hidden-mobile.glm-revealed {
+                display: block;
+                animation: glm-fadeIn 0.35s ease;
+              }
+            }
+            @keyframes glm-fadeIn {
+              from { opacity: 0; transform: scale(0.95); }
+              to { opacity: 1; transform: scale(1); }
+            }
+            /* Skeleton loader tiles */
+            .glm-native-post.glm-skeleton {
+              background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+              background-size: 200% 100%;
+              animation: glm-shimmer 1.4s infinite;
+            }
+            @keyframes glm-shimmer {
+              0% { background-position: 200% 0; }
+              100% { background-position: -200% 0; }
+            }
+            /* See More / Show Less button */
+            #glm-see-more-btn {
+              display: none;
+              margin: 16px auto 0;
+              padding: 12px 32px;
+              background: linear-gradient(135deg, #e20001, #ff4444);
+              color: white;
+              border: none;
+              border-radius: 50px;
+              font-size: 14px;
+              font-weight: 700;
+              letter-spacing: 0.5px;
+              cursor: pointer;
+              box-shadow: 0 4px 16px rgba(226,0,1,0.3);
+              transition: transform 0.18s ease, box-shadow 0.18s ease;
+            }
+            #glm-see-more-btn:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 8px 24px rgba(226,0,1,0.4);
+            }
+            #glm-see-more-btn:active {
+              transform: translateY(0);
+            }
+            @media (max-width: 600px) {
+              #glm-see-more-btn {
+                display: block;
+              }
+            }
+          </style>
+          <div id="glm-native-feed">
+            <!-- 6 skeleton placeholder tiles shown while posts load -->
+            <div class="glm-native-post glm-skeleton" data-index="0"></div>
+            <div class="glm-native-post glm-skeleton" data-index="1"></div>
+            <div class="glm-native-post glm-skeleton" data-index="2"></div>
+            <div class="glm-native-post glm-skeleton glm-hidden-mobile" data-index="3"></div>
+            <div class="glm-native-post glm-skeleton glm-hidden-mobile" data-index="4"></div>
+            <div class="glm-native-post glm-skeleton glm-hidden-mobile" data-index="5"></div>
+          </div>
+          <div style="text-align:center;">
+            <button id="glm-see-more-btn">📸 See More Posts</button>
+          </div>
+          <!-- Keep Elfsight as hidden fallback for desktop -->
+          <div class="elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40" style="display:none;"></div>
         </div>
       `;
 
       instaSection.dataset.elfsightBuilt = '1';
 
+      // Wire up the "See More Posts" button
+      setTimeout(function() {
+        var seeMoreBtn = document.getElementById('glm-see-more-btn');
+        if (seeMoreBtn) {
+          var expanded = false;
+          seeMoreBtn.addEventListener('click', function() {
+            expanded = !expanded;
+            var hiddenPosts = document.querySelectorAll('#glm-native-feed .glm-hidden-mobile');
+            hiddenPosts.forEach(function(p) {
+              if (expanded) {
+                p.classList.add('glm-revealed');
+              } else {
+                p.classList.remove('glm-revealed');
+              }
+            });
+            seeMoreBtn.textContent = expanded ? '▲ Show Less' : '📸 See More Posts';
+          });
+        }
+      }, 100);
+
+      // Load native feed from Instagram API
+      setTimeout(loadNativeFeed, 300);
+
       if (!document.querySelector('script[src*="elfsight.com"]')) {
         const script = document.createElement('script');
         script.src = "https://static.elfsight.com/platform/platform.js";
+
         script.async = true;
         document.head.appendChild(script);
       }
@@ -668,6 +837,51 @@
         glare.style.opacity = '0';
       });
     });
+  }
+
+  // Populate the native Instagram grid from API data
+  function loadNativeFeed() {
+    var feed = document.getElementById('glm-native-feed');
+    if (!feed) return;
+
+    function renderNativePosts(posts) {
+      if (!posts || !posts.length) return;
+      var tiles = feed.querySelectorAll('.glm-native-post');
+      posts.slice(0, 6).forEach(function(p, i) {
+        if (i >= tiles.length) return;
+        var tile = tiles[i];
+        var imgSrc = p.media_type === 'VIDEO' ? (p.thumbnail_url || p.media_url) : p.media_url;
+        var caption = (p.caption || 'Global Logic Media').substring(0, 120);
+        var isVideo = p.media_type === 'VIDEO';
+
+        tile.classList.remove('glm-skeleton');
+        tile.innerHTML = `
+          <img src="${imgSrc}" alt="${caption}" loading="lazy">
+          <div class="glm-native-post-overlay"><span>${caption}</span></div>
+          ${isVideo ? `<div class="glm-native-post-video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>` : ''}
+        `;
+        tile.onclick = function() {
+          if (window.glmShowLightbox) window.glmShowLightbox(imgSrc, caption, p.permalink);
+          else window.open(p.permalink, '_blank');
+        };
+      });
+    }
+
+    // Try Firebase token → Instagram API
+    if (window.firebaseDB) {
+      window.firebaseDB.ref('config/instagram_token').once('value')
+        .then(function(snap) {
+          if (snap.exists() && snap.val()) {
+            var token = typeof decryptToken === 'function' ? decryptToken(snap.val()) : snap.val();
+            if (token) {
+              fetch('https://graph.instagram.com/me/media?fields=id,caption,media_type,media_url,permalink,thumbnail_url,timestamp&access_token=' + token)
+                .then(function(r) { return r.json(); })
+                .then(function(d) { if (d.data) renderNativePosts(d.data); })
+                .catch(function() {});
+            }
+          }
+        }).catch(function() {});
+    }
   }
 
   function loadInstagramFeed() {
