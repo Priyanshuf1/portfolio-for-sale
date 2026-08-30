@@ -223,8 +223,8 @@ console.error = function(...args) {
     }
 
     /* Adjust header height and style */
-    header,
-    header[data-framer-name="Desktop"],
+    header:not(.glb-site-header),
+    header[data-framer-name="Desktop"]:not(.glb-site-header),
     .framer-QWF25.framer-9hd2nx {
       height: auto !important;
       min-height: 145px !important;
