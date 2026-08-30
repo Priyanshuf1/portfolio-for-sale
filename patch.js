@@ -592,7 +592,48 @@ const scrollSpyScript = `
     { id: '#glb-skills-section', name: 'Contact us' }
   ];
 
+  let cachedLinks = [];
+  function cacheLinks() {
+    const links = document.querySelectorAll('a');
+    cachedLinks = Array.from(links).map(a => {
+      const p = a.querySelector('p') || a;
+      const text = p.textContent.trim().toLowerCase();
+      const isFooter = a.closest('footer') || a.closest('.glb-footer') || a.closest('[data-framer-name*="footer"]') || a.closest('[class*="footer"]');
+      
+      const isHome = text === 'home';
+      const isAbout = text === 'about' || text === 'about us';
+      const isClients = text === 'our clients' || text === 'clients';
+      const isServices = text === 'services' || text === 'service';
+      const isBlog = text === 'blog';
+      const isContact = text === 'contact us' || text === 'contact';
+      
+      return {
+        element: a,
+        isFooter: !!isFooter,
+        isHome,
+        isAbout,
+        isClients,
+        isServices,
+        isBlog,
+        isContact
+      };
+    }).filter(item => !item.isFooter);
+  }
+
+  let ticking = false;
   function updateActiveNav() {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        performUpdate();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  function performUpdate() {
+    if (cachedLinks.length === 0) cacheLinks();
+    
     const scrollY = window.scrollY || window.pageYOffset;
     const viewportHeight = window.innerHeight;
     const docHeight = document.documentElement.scrollHeight;
@@ -624,47 +665,40 @@ const scrollSpyScript = `
       });
     }
 
-    // Update class glb-nav-active on ALL links matching activeSectionName (including mobile menu drawer)
-    const allLinks = document.querySelectorAll('a');
-    allLinks.forEach(a => {
-      const p = a.querySelector('p') || a;
-      const text = p.textContent.trim().toLowerCase();
-      if (!text) return;
-
-      const isHome = text === 'home';
-      const isAbout = text === 'about' || text === 'about us';
-      const isClients = text === 'our clients' || text === 'clients';
-      const isServices = text === 'services' || text === 'service';
-      const isBlog = text === 'blog';
-      const isContact = text === 'contact us' || text === 'contact';
-
+    cachedLinks.forEach(item => {
       let isMatch = false;
-      if (activeSectionName === 'Home' && isHome) isMatch = true;
-      if (activeSectionName === 'About' && isAbout) isMatch = true;
-      if (activeSectionName === 'Our Clients' && isClients) isMatch = true;
-      if (activeSectionName === 'Services' && isServices) isMatch = true;
-      if (activeSectionName === 'Blog' && isBlog) isMatch = true;
-      if (activeSectionName === 'Contact us' && isContact) isMatch = true;
-
-      // Don't apply active styling overrides to footer links
-      const isFooter = a.closest('footer') || a.closest('.glb-footer') || a.closest('[data-framer-name*="footer"]') || a.closest('[class*="footer"]');
-      if (isFooter) return;
+      if (activeSectionName === 'Home' && item.isHome) isMatch = true;
+      if (activeSectionName === 'About' && item.isAbout) isMatch = true;
+      if (activeSectionName === 'Our Clients' && item.isClients) isMatch = true;
+      if (activeSectionName === 'Services' && item.isServices) isMatch = true;
+      if (activeSectionName === 'Blog' && item.isBlog) isMatch = true;
+      if (activeSectionName === 'Contact us' && item.isContact) isMatch = true;
 
       if (isMatch) {
-        a.classList.add('glb-nav-active');
+        item.element.classList.add('glb-nav-active');
       } else {
-        a.classList.remove('glb-nav-active');
+        item.element.classList.remove('glb-nav-active');
       }
     });
   }
 
-  window.addEventListener('scroll', updateActiveNav);
-  window.addEventListener('resize', updateActiveNav);
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  window.addEventListener('resize', () => {
+    cacheLinks();
+    updateActiveNav();
+  }, { passive: true });
 
-  const observer = new MutationObserver(updateActiveNav);
+  const observer = new MutationObserver(() => {
+    cacheLinks();
+    updateActiveNav();
+  });
   observer.observe(document.body, { childList: true, subtree: true });
-
-  setTimeout(updateActiveNav, 500);
+  
+  // Initial run
+  setTimeout(() => {
+    cacheLinks();
+    performUpdate();
+  }, 100);
 })();
 </script>
 `;

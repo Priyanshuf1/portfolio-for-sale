@@ -547,7 +547,22 @@
         var STYLE_ID = 'glm-elfsight-mobile-fix';
         var injected = false;
 
+        function cleanWatermarks(shadowRoot) {
+          if (!shadowRoot) return;
+          var elfsightLinks = shadowRoot.querySelectorAll('a[href*="elfsight.com"], [class*="Branding"], [class*="Logo"], [class*="Badge"], a[class*="eapps-link"]');
+          elfsightLinks.forEach(function(link) {
+            link.style.setProperty('display', 'none', 'important');
+            link.style.setProperty('opacity', '0', 'important');
+            link.style.setProperty('visibility', 'hidden', 'important');
+            link.style.setProperty('height', '0', 'important');
+            link.style.setProperty('width', '0', 'important');
+            link.style.setProperty('pointer-events', 'none', 'important');
+            link.remove();
+          });
+        }
+
         function injectStyles(shadowRoot) {
+          cleanWatermarks(shadowRoot);
           if (shadowRoot.getElementById(STYLE_ID)) return;
           var style = document.createElement('style');
           style.id = STYLE_ID;
@@ -645,10 +660,11 @@
         function tryInject() {
           var embedRoot = document.querySelector('.es-embed-root');
           if (embedRoot && embedRoot.shadowRoot) {
+            cleanWatermarks(embedRoot.shadowRoot);
             injectStyles(embedRoot.shadowRoot);
-            // Keep watching for dynamic re-renders
             if (!injected) return;
             var observer = new MutationObserver(function() {
+              cleanWatermarks(embedRoot.shadowRoot);
               injectStyles(embedRoot.shadowRoot);
             });
             observer.observe(embedRoot.shadowRoot, { childList: true, subtree: true });

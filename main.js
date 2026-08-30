@@ -200,7 +200,6 @@
       });
     }
 
-    // Lenis smooth scroll - prevent duplicate instances
     if (window.Lenis && !window.lenisInstance) {
       window.lenisInstance = new Lenis({
         duration: 1.1,
@@ -209,11 +208,6 @@
         wheelMultiplier: 0.85,
         touchMultiplier: 1.5
       });
-      function raf(time) { 
-        if (window.lenisInstance) window.lenisInstance.raf(time); 
-        requestAnimationFrame(raf); 
-      }
-      requestAnimationFrame(raf);
       window.lenisInstance.on('scroll', () => ScrollTrigger.update());
       gsap.ticker.add(time => {
         if (window.lenisInstance) window.lenisInstance.raf(time * 1000);
@@ -275,16 +269,8 @@
     }
   }
 
-  // ── 8. HEADER SCROLL SHRINK ─────────────────────────────────────────────
   function initHeaderShrink() {
-    const header = document.querySelector('header.glb-site-header');
-    if (!header) return;
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 60) {
-        header.style.padding = '8px 20px';
-        header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.06)';
-      }
-    }, { passive: true });
+    // Disabled header shrink card styling as requested by user
   }
 
   // ── MOBILE DRAWER MENU ────────────────══════════════════════════════════
