@@ -126,6 +126,10 @@
     if (!window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
 
+    // Prevent duplicate initialization
+    if (document.body.classList.contains('glb-animations-loaded')) return;
+    document.body.classList.add('glb-animations-loaded');
+
     // ── SCROLL PROGRESS BAR (Rafael-style thin red top line) ──
     const progressEl = document.getElementById('glm-scroll-progress');
     if (progressEl) {
@@ -140,6 +144,65 @@
         }
       });
     }
+
+    const isMobile = window.innerWidth <= 767 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    // ── HERO REVEAL (Immediate on Load) ──
+    const heroTitle = document.querySelector('#hero h1');
+    const heroElements = document.querySelectorAll('#hero .badge-pill-red, #hero .hero-typewriter-wrap, #hero p, #hero .btn-primary');
+    
+    if (heroTitle) {
+      gsap.fromTo(heroTitle,
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.1 }
+      );
+    }
+    if (heroElements.length > 0) {
+      gsap.fromTo(heroElements,
+        { opacity: 0, y: 25 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out', delay: 0.35 }
+      );
+    }
+
+    // ── SECTION REVEALS ──
+    const revealConfigs = [
+      {
+        trigger: '#about-me',
+        elements: '#about-me .badge-pill-red, #about-me h2, #about-me p, #about-me .about-tag-item, #about-me .about-tool-tag, #about-me .about-stat-card, #about-logo-3d-card'
+      },
+      {
+        trigger: '#services',
+        elements: '#services .badge-pill-red, #services h2, #services p, #services .service-card-item, #services .process-img-wrap'
+      },
+      {
+        trigger: '#faq',
+        elements: '#faq .badge-pill-red, #faq h2, #faq p, #faq .faq-row'
+      }
+    ];
+
+    revealConfigs.forEach(config => {
+      const section = document.querySelector(config.trigger);
+      if (!section) return;
+
+      const items = section.querySelectorAll(config.elements);
+      if (items.length === 0) return;
+
+      // Set initial state to avoid flash
+      gsap.set(items, { opacity: 0, y: 30 });
+
+      gsap.to(items, {
+        opacity: 1,
+        y: 0,
+        duration: 0.75,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: section,
+          start: isMobile ? 'top 92%' : 'top 85%',
+          toggleActions: 'play none none none' // Play once on enter, do not reverse or reset
+        }
+      });
+    });
   }
 
   function initHeaderShrink() {
