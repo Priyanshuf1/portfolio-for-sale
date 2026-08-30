@@ -72,18 +72,8 @@
     update();
   }
 
-  // ── 4. DESKTOP FLOURISHES ─────────────────────────────────────────────────
   function initDesktopFlourishes() {
-    const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (!isDesktop) return;
-    ['./custom-cursor.js','./audio-system.js',
-     './three-logo-interactive.js','./rabto-fx-engine.js','./bg-enhancer.js'
-    ].forEach(src => {
-      const s = document.createElement('script');
-      s.src = src + '?v=' + Date.now();
-      s.defer = true;
-      document.body.appendChild(s);
-    });
+    // Disabled dynamic script injection because they are statically loaded via index.html scripts
   }
 
   // ── 5. ANIMATED STAT COUNTER ─────────────────────────────────────────────
@@ -91,6 +81,9 @@
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     const statNums = document.querySelectorAll('.about-stat-num');
     statNums.forEach(el => {
+      if (el.classList.contains('glb-counter-initialized')) return;
+      el.classList.add('glb-counter-initialized');
+      
       const rawText = el.textContent.trim();
       const match = rawText.match(/^(\d+)(\+?\s*[A-Za-z+\s]*)$/);
       if (!match) return;
@@ -125,59 +118,7 @@
 
   // ── 6. WORD-BY-WORD HEADING REVEAL ───────────────────────────────────────
   function initHeadingWordReveals() {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-
-    const headings = document.querySelectorAll('h2, #hero h1');
-    headings.forEach(h => {
-      if (h.classList.contains('no-reveal') || h.querySelector('.glm-word-reveal')) return;
-
-      const contents = Array.from(h.childNodes);
-      h.innerHTML = '';
-
-      contents.forEach(node => {
-        if (node.nodeType === Node.TEXT_NODE) {
-          const words = node.textContent.split(/(\s+)/);
-          words.forEach(w => {
-            if (w.trim() === '') {
-              h.appendChild(document.createTextNode(w));
-            } else {
-              const wrap = document.createElement('span');
-              wrap.className = 'glm-word-reveal';
-              const inner = document.createElement('span');
-              inner.className = 'glm-word-inner';
-              inner.textContent = w;
-              wrap.appendChild(inner);
-              h.appendChild(wrap);
-            }
-          });
-        } else if (node.nodeType === Node.ELEMENT_NODE) {
-          if (node.tagName.toLowerCase() === 'br') {
-            h.appendChild(node.cloneNode(true));
-          } else {
-            const wrap = document.createElement('span');
-            wrap.className = 'glm-word-reveal';
-            const inner = node.cloneNode(true);
-            inner.classList.add('glm-word-inner');
-            inner.style.display = 'inline-block';
-            wrap.appendChild(inner);
-            h.appendChild(wrap);
-          }
-        }
-      });
-
-      gsap.to(h.querySelectorAll('.glm-word-inner'), {
-        y: '0%',
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.045,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: h,
-          start: 'top 85%',
-          toggleActions: 'play none play none'
-        }
-      });
-    });
+    // Disabled to prevent breaking React DOM tree and clashing with Framer's native scroll animations
   }
 
   // ── 7. SMOOTH SCROLL + GSAP ANIMATIONS ───────────────────────────────────
@@ -198,74 +139,6 @@
           scrub: 0.3
         }
       });
-    }
-
-    if (window.Lenis && !window.lenisInstance) {
-      window.lenisInstance = new Lenis({
-        duration: 1.1,
-        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-        wheelMultiplier: 0.85,
-        touchMultiplier: 1.5
-      });
-      window.lenisInstance.on('scroll', () => ScrollTrigger.update());
-      gsap.ticker.add(time => {
-        if (window.lenisInstance) window.lenisInstance.raf(time * 1000);
-      });
-      gsap.ticker.lagSmoothing(0);
-    }
-
-    const isMobile = window.innerWidth <= 767 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-    // ── HERO — immediate reveal on load ──
-    gsap.fromTo(
-      '#hero .badge-pill-red, #hero .hero-typewriter-wrap, #hero p, #hero .hero-cta-row, #hero .hero-metrics-row, #hero .btn-primary',
-      { opacity: 0, y: 35 },
-      { opacity: 1, y: 0, duration: 0.9, stagger: 0.1, ease: 'power3.out', delay: 0.15 }
-    );
-
-    // ── RESTORE STAGGERED REVEALS FOR ALL OTHER ELEMENTS ──
-    const revealSections = ['#about-me', '#services', '#faq', '#glb-skills-section', '#glb-reviews-section', '#glb-location', 'footer'];
-    revealSections.forEach(selector => {
-      const section = document.querySelector(selector);
-      if (!section) return;
-      if (section.classList.contains('glb-anim-initialized')) return;
-      section.classList.add('glb-anim-initialized');
-
-      // Select inner elements that should animate in smoothly on scroll (excluding .glb-skill-card to avoid clashes)
-      const anims = section.querySelectorAll(
-        '.badge-pill-red, .badge-pill-gold, .badge-pill-red, .badge-pill-gold, .body-fluid, p, .btn-primary, .btn-secondary, .about-stat-card, .project-card, .service-card-item, .faq-row, .glb-review-card-premium, .footer-inner > *, .services-image-col, .glb-map-container-box, .glb-contact-card'
-      );
-      if (anims.length === 0) return;
-
-      gsap.fromTo(anims,
-        { opacity: 0, y: 35 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: section,
-            start: isMobile ? 'top 90%' : 'top 82%',
-            toggleActions: 'play none play none'
-          }
-        }
-      );
-    });
-
-    ScrollTrigger.refresh();
-
-    // ── EXTRA REVEAL ANIMATIONS FOR GRAPHIC CONTAINERS ──
-    // About 3D logo
-    const logoCard = document.getElementById('about-logo-3d-card');
-    if (logoCard) {
-      gsap.fromTo(logoCard,
-        { opacity: 0, scale: 0.93 },
-        { opacity: 1, scale: 1, duration: 0.85, ease: 'power2.out',
-          scrollTrigger: { trigger: logoCard, start: isMobile ? 'top 92%' : 'top 85%', toggleActions: 'play reset play reset' } }
-      );
     }
   }
 
@@ -344,22 +217,16 @@
     initAnimations();
     initHeaderShrink();
 
-    // Re-trigger layout captures after dynamic script injection delays (300ms, 800ms, 1500ms)
+    // Refresh ScrollTrigger to align bounds with React hydration layout adjustments
     setTimeout(() => {
-      initHeadingWordReveals();
-      initAnimations();
       if (window.ScrollTrigger) window.ScrollTrigger.refresh();
     }, 450);
 
     setTimeout(() => {
-      initHeadingWordReveals();
-      initAnimations();
       if (window.ScrollTrigger) window.ScrollTrigger.refresh();
     }, 950);
 
     setTimeout(() => {
-      initHeadingWordReveals();
-      initAnimations();
       if (window.ScrollTrigger) window.ScrollTrigger.refresh();
     }, 1800);
   }
