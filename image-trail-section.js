@@ -749,8 +749,6 @@
 
       updateReelPositions();
       startAutoRotation();
-    }
-
 
 
       // Staggered ScrollTrigger reveal animation for the integrated header elements
