@@ -498,9 +498,9 @@
 
 
 <style>
-/* Hide View Casestudy / View Project overlays */
-[data-framer-name="View Project"],
-[data-framer-name="View Casestudy"],
+/* Hide  /  overlays */
+[data-framer-name=""],
+[data-framer-name=""],
 .framer-s7w4jd,
 .framer-1i72ip {
   display: none !important;
@@ -633,6 +633,7 @@
       <nav class="glb-drawer-nav">
         <a href="#hero" class="glb-drawer-link">Home</a>
         <a href="#about-me" class="glb-drawer-link">About</a>
+        <a href="#projects" class="glb-drawer-link">Our Clients</a>
         <a href="#services" class="glb-drawer-link">Services</a>
         <a href="./blog.html" class="glb-drawer-link">Blog</a>
         <a href="#contact" class="glb-drawer-link">Contact us</a>
@@ -983,24 +984,25 @@
   <script src="brand-logos-marquee.js?v=1.1"></script>
   <script src="about-us-modal.js?v=1.1"></script>
   <script src="custom-footer.js?v=1.1"></script>
-  <script src="image-trail-section.js?v=1.5"></script>
+  <script src="image-trail-section.js?v=1.6"></script>
   <script src="main.js?v=1.1"></script>
 
-<script src="./ambient-particles.js?v=1788076476475"></script>
-<script src="./audio-system.js?v=1788076476475"></script>
-<script src="./svg-decorations.js?v=1788076476475"></script>
-<script src="./rabto-fx-engine.js?v=1788076476475"></script>
-<script src="./bg-enhancer.js?v=1788076476475"></script>
-<script src="./global-logic-replacer.js?v=1788076476475"></script>
-<script src="./three-bg.js?v=1788076476475"></script>
-<script src="./custom-cursor.js?v=1788076476475"></script>
+<script src="./ambient-particles.js?v=1788076822390"></script>
+<script src="./audio-system.js?v=1788076822390"></script>
+<script src="./svg-decorations.js?v=1788076822390"></script>
+<script src="./rabto-fx-engine.js?v=1788076822390"></script>
+<script src="./bg-enhancer.js?v=1788076822390"></script>
+<script src="./global-logic-replacer.js?v=1788076822390"></script>
+<script src="./three-bg.js?v=1788076822390"></script>
+<script src="./custom-cursor.js?v=1788076822390"></script>
+
 
 <script id="glb-scroll-spy-navbar">
 (function() {
   const sections = [
     { id: '#hero', name: 'Home' },
     { id: '#about-me', name: 'About' },
-    { id: '#projects', name: 'About' },
+    { id: '#projects', name: 'Our Clients' },
     { id: '#glm-instagram-feed-section', name: 'About' },
     { id: '#process', name: 'Services' },
     { id: '#services', name: 'Services' },
@@ -1054,6 +1056,7 @@
 
       const isHome = text === 'home';
       const isAbout = text === 'about' || text === 'about us';
+      const isClients = text === 'our clients' || text === 'clients';
       const isServices = text === 'services' || text === 'service';
       const isBlog = text === 'blog';
       const isContact = text === 'contact us' || text === 'contact';
@@ -1061,6 +1064,7 @@
       let isMatch = false;
       if (activeSectionName === 'Home' && isHome) isMatch = true;
       if (activeSectionName === 'About' && isAbout) isMatch = true;
+      if (activeSectionName === 'Our Clients' && isClients) isMatch = true;
       if (activeSectionName === 'Services' && isServices) isMatch = true;
       if (activeSectionName === 'Blog' && isBlog) isMatch = true;
       if (activeSectionName === 'Contact us' && isContact) isMatch = true;
@@ -1086,6 +1090,7 @@
   setTimeout(updateActiveNav, 500);
 })();
 </script>
+
 
 </body>
 </html>

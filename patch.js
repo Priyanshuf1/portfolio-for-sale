@@ -580,7 +580,7 @@ const scrollSpyScript = `
   const sections = [
     { id: '#hero', name: 'Home' },
     { id: '#about-me', name: 'About' },
-    { id: '#projects', name: 'About' },
+    { id: '#projects', name: 'Our Clients' },
     { id: '#glm-instagram-feed-section', name: 'About' },
     { id: '#process', name: 'Services' },
     { id: '#services', name: 'Services' },
@@ -634,6 +634,7 @@ const scrollSpyScript = `
 
       const isHome = text === 'home';
       const isAbout = text === 'about' || text === 'about us';
+      const isClients = text === 'our clients' || text === 'clients';
       const isServices = text === 'services' || text === 'service';
       const isBlog = text === 'blog';
       const isContact = text === 'contact us' || text === 'contact';
@@ -641,6 +642,7 @@ const scrollSpyScript = `
       let isMatch = false;
       if (activeSectionName === 'Home' && isHome) isMatch = true;
       if (activeSectionName === 'About' && isAbout) isMatch = true;
+      if (activeSectionName === 'Our Clients' && isClients) isMatch = true;
       if (activeSectionName === 'Services' && isServices) isMatch = true;
       if (activeSectionName === 'Blog' && isBlog) isMatch = true;
       if (activeSectionName === 'Contact us' && isContact) isMatch = true;

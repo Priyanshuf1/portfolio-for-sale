@@ -357,6 +357,59 @@
   /* Hide scrollbar helper */
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Mobile Instagram Layout Overrides & Watermark Cleanup */
+  @media (max-width: 600px) {
+    .elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40,
+    .elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40 > div,
+    .elfsight-app-8b61b60e-8e55-4ffb-925d-eb7e70005a40 iframe {
+      min-height: 480px !important;
+      display: block !important;
+      height: auto !important;
+    }
+    /* Force grid list items container to have layout */
+    div[class*="PostsGrid__Container"],
+    div[class*="PostsGrid__Grid"],
+    [class*="GridContainer"],
+    [class*="InstagramFeed__Grid"],
+    [class*="eapps-instagram-feed-posts-grid"] {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 10px !important;
+      height: auto !important;
+      min-height: 380px !important;
+    }
+    /* Force the first 2 items to always display */
+    [class*="PostsGrid__Item"]:nth-child(1),
+    [class*="PostsGrid__Item"]:nth-child(2),
+    [class*="InstagramFeed__PostItem"]:nth-child(1),
+    [class*="InstagramFeed__PostItem"]:nth-child(2),
+    [class*="PostItem"]:nth-child(1),
+    [class*="PostItem"]:nth-child(2),
+    [class*="GridItem"]:nth-child(1),
+    [class*="GridItem"]:nth-child(2),
+    [class*="eapps-instagram-feed-posts-item"]:nth-child(1),
+    [class*="eapps-instagram-feed-posts-item"]:nth-child(2) {
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      height: auto !important;
+    }
+  }
+
+  /* Force Elfsight free widget badge/logo removal */
+  a[href*="elfsight.com"],
+  a[class*="eapps-link"],
+  [class*="LogoContainer"],
+  [class*="Logo__Container"],
+  [class*="BadgeContainer"] {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+  }
 </style>
 `;
     if (!document.getElementById('glm-combined-layouts-styles')) {
