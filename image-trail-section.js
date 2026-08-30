@@ -452,9 +452,9 @@
                 🔗 100% Result-Driven Growth Strategies
               </div>
               <div class="glm-insta-bio-link">
-                <a href="https://drive.google.com/drive/folders/1Ro16MKC8SEwVv6H4O4IFgdc80YhrZRg4" target="_blank" rel="noopener noreferrer">
+                <a href="https://drive.google.com/drive/folders/1Ro16MKC8SEwVv6H4O4lFgdC80YhrZRg4" target="_blank" rel="noopener noreferrer">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:middle; margin-right:4px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                  drive.google.com/drive/folders/1Ro16MKC8SEwVv6H4O4IFgdc80YhrZRg4...
+                  drive.google.com/drive/folders/1Ro16MKC8SEwVv6H4O4lFgdC80YhrZRg4...
                 </a>
               </div>
             </div>

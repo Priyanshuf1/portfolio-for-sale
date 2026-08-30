@@ -131,9 +131,25 @@
     }
     .glb-password-submit:hover { background: #3ac06a; }
     .glb-password-error {
-      color: #f87171;
+      color: #f87171 !important;
       font-size: 14px;
       display: none;
+    }
+
+    /* Force all texts, labels, and input details to white (except custom buttons/errors) */
+    .glb-admin-content label,
+    .glb-admin-content p,
+    .glb-admin-content span:not(.glb-password-error),
+    .glb-admin-content legend,
+    .glb-admin-content li,
+    .glb-admin-content div:not(.glb-password-error):not(.glb-review-action-btns) {
+      color: #ffffff !important;
+    }
+    
+    /* Input and textarea placeholder overrides */
+    .glb-admin-content input::placeholder,
+    .glb-admin-content textarea::placeholder {
+      color: rgba(255, 255, 255, 0.45) !important;
     }
 
     /* Admin Dashboard */
@@ -145,7 +161,7 @@
       font-weight: 700;
       text-align: center;
       margin-bottom: 24px;
-      color: white;
+      color: #ffffff !important;
     }
     .glb-admin-tabs {
       display: flex;
@@ -159,7 +175,7 @@
       flex: 1;
       text-align: center;
       padding: 10px;
-      color: #888;
+      color: rgba(255, 255, 255, 0.6) !important;
       cursor: pointer;
       font-weight: 500;
       border-radius: 8px;
@@ -167,7 +183,7 @@
       transition: 0.2s;
     }
     .glb-admin-tab.active {
-      color: white;
+      color: #ffffff !important;
       background: rgba(255,255,255,0.08);
     }
     .glb-tab-content { display: none; }
@@ -179,7 +195,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: #4ade80;
+      color: #4ade80 !important;
       margin: 20px 0 12px;
       padding-bottom: 6px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -191,38 +207,40 @@
       margin-bottom: 14px;
       border: 1px solid rgba(255,255,255,0.08);
     }
-    .glb-pending-review strong { color: #fff; }
-    .glb-pending-review p { margin: 5px 0; font-size: 14px; color: #ccc; }
+    .glb-pending-review strong { color: #ffffff !important; }
+    .glb-pending-review p { margin: 5px 0; font-size: 14px; color: #ffffff !important; }
     .glb-review-action-btns {
       display: flex;
       gap: 10px;
       margin-top: 12px;
     }
     .glb-approve-btn {
-      background: #4ade80; color: #111; border: none;
+      background: #4ade80 !important; 
+      color: #111111 !important; 
+      border: none;
       padding: 7px 14px; border-radius: 6px; cursor: pointer;
       font-size: 13px; font-weight: 700;
       transition: background 0.2s;
     }
-    .glb-approve-btn:hover { background: #3ac06a; }
+    .glb-approve-btn:hover { background: #3ac06a !important; }
     .glb-delete-btn {
-      background: rgba(248, 113, 113, 0.15);
-      color: #f87171;
+      background: rgba(248, 113, 113, 0.15) !important;
+      color: #f87171 !important;
       border: 1px solid rgba(248, 113, 113, 0.3);
       padding: 7px 14px; border-radius: 6px; cursor: pointer;
       font-size: 13px; font-weight: 600;
       transition: all 0.2s;
     }
     .glb-delete-btn:hover {
-      background: #f87171;
-      color: #fff;
+      background: #f87171 !important;
+      color: #ffffff !important;
     }
 
     /* Blog Form */
     .glb-form-group { margin-bottom: 18px; }
     .glb-form-group label {
       display: block; margin-bottom: 7px; font-size: 12px;
-      color: #888; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
+      color: #ffffff !important; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
     }
     .glb-form-group input, .glb-form-group textarea, .glb-form-group select {
       width: 100%; padding: 12px 14px; background: rgba(255,255,255,0.05);
@@ -235,11 +253,11 @@
     }
     .glb-form-group select option { background: #1a1a1a; color: #ffffff !important; }
     .glb-admin-submit {
-      width: 100%; padding: 14px; background: #4ade80; color: #111;
+      width: 100%; padding: 14px; background: #4ade80 !important; color: #111111 !important;
       border: none; border-radius: 8px; cursor: pointer; font-weight: 700;
       font-size: 16px; transition: background 0.2s;
     }
-    .glb-admin-submit:hover { background: #3ac06a; }
+    .glb-admin-submit:hover { background: #3ac06a !important; }
     .glb-admin-submit:disabled { opacity: 0.6; cursor: not-allowed; }
   `;
 
@@ -252,20 +270,20 @@
         <div class="glb-password-screen" id="glbPasswordScreen" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; width: 100%; max-width: 320px; margin: 0 auto; padding: 20px 0;">
           <div style="font-size:40px; margin-bottom: 8px;">🔐</div>
           <h3 style="margin: 0; font-size: 22px; font-weight: 700; color: #fff;">Admin Authentication</h3>
-          <p style="margin: 0 0 16px; font-size: 14px; color: #9ca3af;">Enter your Admin ID and Password to unlock the dashboard.</p>
+          <p style="margin: 0 0 16px; font-size: 14px; color: #ffffff !important;">Enter your Admin ID and Password to unlock the dashboard.</p>
           
           <div style="width: 100%; display: flex; flex-direction: column; gap: 12px;">
             <div style="text-align: left; width: 100%;">
-              <label style="font-size: 11px; text-transform: uppercase; color: #9ca3af; font-weight: 600; display: block; margin-bottom: 4px;">Admin ID</label>
+              <label style="font-size: 11px; text-transform: uppercase; color: #ffffff !important; font-weight: 600; display: block; margin-bottom: 4px;">Admin ID</label>
               <input type="text" id="glbAdminIdInput" placeholder="Enter Admin ID..." style="width: 100%; padding: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #ffffff !important; outline: none; font-size: 14px; box-sizing: border-box;">
             </div>
             <div style="text-align: left; width: 100%;">
-              <label style="font-size: 11px; text-transform: uppercase; color: #9ca3af; font-weight: 600; display: block; margin-bottom: 4px;">Password</label>
+              <label style="font-size: 11px; text-transform: uppercase; color: #ffffff !important; font-weight: 600; display: block; margin-bottom: 4px;">Password</label>
               <input type="password" id="glbPasswordInput" placeholder="Enter password..." autocomplete="current-password" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #ffffff !important; outline: none; font-size: 14px; box-sizing: border-box;">
             </div>
             <button class="glb-password-submit" id="glbPasswordSubmit" style="width: 100%; padding: 12px; background: #ffffff; color: #000; border: none; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; transition: background 0.2s; margin-top: 8px;">Sign In</button>
           </div>
-          <span class="glb-password-error" id="glbPasswordError" style="color: #f87171; font-size: 13px; display: none; margin-top: 8px;">Invalid credentials. Please try again.</span>
+          <span class="glb-password-error" id="glbPasswordError" style="color: #f87171 !important; font-size: 13px; display: none; margin-top: 8px;">Invalid credentials. Please try again.</span>
         </div>
 
         <!-- Admin Dashboard (shown after auth) -->
@@ -309,13 +327,13 @@
  
           <div class="glb-tab-content" id="tab-reviews">
             <div id="glbPendingReviewsList">
-              <p style="color:#888; text-align:center; padding:20px 0;">Loading reviews...</p>
+              <p style="color:#ffffff !important; text-align:center; padding:20px 0;">Loading reviews...</p>
             </div>
           </div>
  
           <div class="glb-tab-content" id="tab-bookings">
             <div id="glbBookingsList">
-              <p style="color:#888; text-align:center; padding:20px 0;">Loading bookings...</p>
+              <p style="color:#ffffff !important; text-align:center; padding:20px 0;">Loading bookings...</p>
             </div>
           </div>
 
@@ -343,7 +361,7 @@
               <div class="glb-form-group">
                 <label>Instagram Access Token</label>
                 <input type="password" id="adminInstaToken" placeholder="Paste Access Token here..." style="font-family: monospace;">
-                <p style="color:#888; font-size:12px; margin-top:8px; line-height:1.4;">
+                <p style="color:#ffffff !important; font-size:12px; margin-top:8px; line-height:1.4; opacity: 0.85;">
                   Enter your Instagram Basic Display API Access Token. The key is encrypted client-side and saved securely in your Firebase Realtime Database.
                 </p>
               </div>
