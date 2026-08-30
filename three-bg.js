@@ -232,6 +232,11 @@
 
   // 2. Load Vanta Topology and dependencies dynamically
   function loadVantaTopology(callback) {
+    const isMobile = window.innerWidth <= 767 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+    if (isMobile) {
+      console.log('[Vanta] ⚡ Skipped on mobile view to maximize performance.');
+      return;
+    }
     loadThreeJS(() => {
       loadP5JS(() => {
         if (window.VANTA && window.VANTA.TOPOLOGY) {

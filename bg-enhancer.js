@@ -459,21 +459,16 @@
         z-index: 9999 !important;
       }
     }
+
+    /* Hardware-accelerated cloud background filter overrides */
+    [data-framer-background-image-wrapper], .framer-1uy17lu {
+      filter: none !important;
+    }
   `;
 
   const styleEl = document.createElement('style');
   styleEl.innerHTML = styles;
   document.head.appendChild(styleEl);
-
-  // Dynamic watcher to remove filter from cloud background
-  function resetHeroCloudFilter() {
-    const hero = document.querySelector('[data-framer-name="Hero"]') || document.querySelector('[data-framer-name="hero"]') || document.querySelector('#hero');
-    if (!hero) return;
-    const bgWrappers = hero.querySelectorAll('[data-framer-background-image-wrapper], .framer-1uy17lu');
-    bgWrappers.forEach(el => {
-      el.style.filter = 'none';
-    });
-  }
 
   // Inject spotlight DOM element
   function initMonochromeSpotlight() {
@@ -488,41 +483,29 @@
     });
   }
 
-  // Intercept all "Book a Call" buttons to trigger the local modal
-  function patchBookACallLinks() {
-    const elements = document.querySelectorAll('a, button');
-    elements.forEach(el => {
+  // Intercept all "Book a Call" clicks dynamically using event delegation (0% CPU overhead)
+  function initBookACallDelegation() {
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('a, button');
+      if (!el) return;
       const text = (el.textContent || '').trim().toLowerCase();
       if (text.includes('book') && text.includes('call')) {
-        if (!el.dataset.patchedGlbCall) {
-          el.dataset.patchedGlbCall = 'true';
-          el.setAttribute('href', 'javascript:void(0)');
-          el.removeAttribute('target');
-          el.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            if (typeof window.openBookACallModal === 'function') {
-              window.openBookACallModal();
-            }
-          });
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof window.openBookACallModal === 'function') {
+          window.openBookACallModal();
         }
       }
-    });
+    }, { capture: true });
   }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-      resetHeroCloudFilter();
       initMonochromeSpotlight();
-      patchBookACallLinks();
+      initBookACallDelegation();
     });
   } else {
-    resetHeroCloudFilter();
     initMonochromeSpotlight();
-    patchBookACallLinks();
+    initBookACallDelegation();
   }
-  setInterval(() => {
-    resetHeroCloudFilter();
-    patchBookACallLinks();
-  }, 500);
 })();

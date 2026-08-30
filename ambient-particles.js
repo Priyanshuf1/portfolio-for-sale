@@ -1,7 +1,8 @@
 (function() {
   // Destinyland-Style Interactive Constellation & Node-Link Background Animation (Brand Red Accents)
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced) return;
+  const isMobile = window.innerWidth <= 767 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  if (prefersReduced || isMobile) return;
 
   const canvas = document.createElement('canvas');
   canvas.id = 'rabto-ambient-canvas';
@@ -108,10 +109,7 @@
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${this.colorObj.r}, ${this.colorObj.g}, ${this.colorObj.b}, ${Math.max(0, this.alpha)})`;
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = `rgba(${this.colorObj.r}, ${this.colorObj.g}, ${this.colorObj.b}, 0.8)`;
       ctx.fill();
-      ctx.shadowBlur = 0;
     }
   }
 
