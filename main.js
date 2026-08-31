@@ -241,28 +241,43 @@
   // ── HASH LINK SMOOTH SCROLL (Delegated) ──
   function initHashLinkScroll() {
     document.addEventListener('click', function(e) {
-      const anchor = e.target.closest('a[href^="#"]');
+      const anchor = e.target.closest('a');
       if (!anchor) return;
       
-      const href = anchor.getAttribute('href');
-      if (!href || href === '#') return;
+      let href = anchor.getAttribute('href');
+      const text = anchor.innerText.trim().toLowerCase();
       
-      const targetEl = document.querySelector(href);
-      if (targetEl) {
-        e.preventDefault();
-        if (window.lenisInstance) {
-          window.lenisInstance.scrollTo(targetEl, { offset: -20 });
-        } else {
+      // Map blank/empty/root href desktop header buttons based on their text content
+      if (href === '#' || href === '/' || !href) {
+        if (text === 'home') {
+          href = '#hero';
+        } else if (text === 'about us' || text === 'about') {
+          href = '#about-me';
+        } else if (text === 'service' || text === 'services') {
+          href = '#services';
+        } else if (text === 'contact us' || text === 'contact') {
+          href = '#glb-location';
+        } else if (text === 'our clients' || text === 'clients') {
+          href = '#projects';
+        }
+      }
+      
+      // If we have a valid hash target, scroll to it smoothly
+      if (href && href.startsWith('#')) {
+        const targetEl = document.querySelector(href);
+        if (targetEl) {
+          e.preventDefault();
           targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          // Close mobile menu drawer if open
+          const drawer = document.getElementById('glbMobileDrawer');
+          if (drawer && drawer.classList.contains('active')) {
+            drawer.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+          // Update URL hash without browser jump
+          history.pushState(null, null, href);
         }
-        // Close mobile menu drawer if open
-        const drawer = document.getElementById('glbMobileDrawer');
-        if (drawer && drawer.classList.contains('active')) {
-          drawer.classList.remove('active');
-          document.body.style.overflow = '';
-        }
-        // Update URL hash without browser jump
-        history.pushState(null, null, href);
       }
     });
   }
