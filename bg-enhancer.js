@@ -259,13 +259,37 @@
     #post-modal *,
     .glb-modal-overlay *,
     .glb-modal-content *,
-    .glb-modal-overlay-book *,
-    .glb-modal-content-book *,
-    .glb-modal-overlay-review *,
-    .glb-modal-content-review *,
     .glb-admin-overlay *,
     .glb-admin-content * {
       color: inherit !important;
+    }
+
+    /* Force all modal text and close buttons to white against the dark background */
+    .glb-modal-overlay-book,
+    .glb-modal-overlay-book *,
+    .glb-modal-content-book,
+    .glb-modal-content-book *,
+    .glb-modal-overlay-review,
+    .glb-modal-overlay-review *,
+    .glb-modal-content-review,
+    .glb-modal-content-review * {
+      color: #ffffff !important;
+    }
+
+    /* Preserve black text inside white call-to-action submit buttons */
+    .glb-modal-overlay-book button,
+    .glb-modal-overlay-review button,
+    .glb-modal-book-btn,
+    .glb-modal-review-btn {
+      color: #000000 !important;
+    }
+
+    /* Preserve green text for success notifications */
+    #glbBookSuccess,
+    #glbBookSuccess *,
+    #glbReviewSuccess,
+    #glbReviewSuccess * {
+      color: #4ade80 !important;
     }
 
     /* ── Card Wireframe Accent Outlines for Premium Light UI ── */

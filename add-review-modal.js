@@ -108,8 +108,8 @@
       font-weight: 700;
       margin-bottom: 8px;
       letter-spacing: -0.5px;
-      background: #ffffff !important;
-      -webkit-background-clip: text;
+      background: none !important;
+      -webkit-background-clip: unset !important;
       -webkit-text-fill-color: #ffffff !important;
       color: #ffffff !important;
     }
