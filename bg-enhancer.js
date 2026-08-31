@@ -364,8 +364,8 @@
     }
 
     /* 2. Secondary CTA Buttons (Dark Slate, White Text, Turns Red on Hover) */
-    html body a[href*="project"],
-    html body a[href*="services"],
+    html body a[href*="project"]:not(.glb-nav-link):not(.glb-drawer-link),
+    html body a[href*="services"]:not(.glb-nav-link):not(.glb-drawer-link),
     html body .glass-card.px-6.py-3,
     html body .glb-home-blogs-btn {
       background: #1f2937 !important;
