@@ -249,17 +249,22 @@
       
       // Map blank/empty/root href desktop header buttons based on their text content
       if (href === '#' || href === '/' || !href) {
-        if (text === 'home') {
+        if (text.includes('home')) {
           href = '#hero';
-        } else if (text === 'about us' || text === 'about') {
+        } else if (text.includes('about')) {
           href = '#about-me';
-        } else if (text === 'service' || text === 'services') {
+        } else if (text.includes('service')) {
           href = '#services';
-        } else if (text === 'contact us' || text === 'contact') {
+        } else if (text.includes('contact')) {
           href = '#glb-location';
-        } else if (text === 'our clients' || text === 'clients') {
+        } else if (text.includes('client')) {
           href = '#projects';
         }
+      }
+      
+      // Fallback redirect for old #contact hash to #glb-location
+      if (href === '#contact') {
+        href = '#glb-location';
       }
       
       // If we have a valid hash target, scroll to it smoothly
@@ -280,6 +285,22 @@
         }
       }
     });
+
+    // Hash redirect listener for window load & hashchange
+    function handleHashRedirect() {
+      const hash = window.location.hash;
+      if (hash === '#contact' || hash === '#glb-location') {
+        const targetEl = document.getElementById('glb-location');
+        if (targetEl) {
+          setTimeout(() => {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 350);
+        }
+      }
+    }
+    window.addEventListener('hashchange', handleHashRedirect);
+    window.addEventListener('load', handleHashRedirect);
+    handleHashRedirect();
   }
 
   // ── START ────────────────────────────────────────────────────────────────
