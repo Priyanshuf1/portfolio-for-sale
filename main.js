@@ -130,6 +130,22 @@
     if (document.body.classList.contains('glb-animations-loaded')) return;
     document.body.classList.add('glb-animations-loaded');
 
+    // ── LENIS SMOOTH SCROLL INITIALIZATION ──
+    if (window.Lenis) {
+      const lenis = new Lenis({
+        duration: 1.1,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        smoothTouch: false
+      });
+      window.lenisInstance = lenis;
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+      gsap.ticker.lagSmoothing(0);
+    }
+
     // ── SCROLL PROGRESS BAR (Rafael-style thin red top line) ──
     const progressEl = document.getElementById('glm-scroll-progress');
     if (progressEl) {

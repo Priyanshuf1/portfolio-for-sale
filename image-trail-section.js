@@ -496,6 +496,24 @@
 
       fillRow('marquee-row-2', row2Images);
 
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.fromTo('#projects h2, #projects .glm-marquee-wrap',
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '#projects',
+              start: 'top 85%',
+              toggleActions: 'play reset play reset'
+            }
+          }
+        );
+      }
+
       marqueeSection.dataset.marqueeBuilt = '1';
     }
 
@@ -759,7 +777,7 @@
           scrollTrigger: {
             trigger: '.glm-insta-integrated-header',
             start: 'top 85%',
-            toggleActions: 'play none play none'
+            toggleActions: 'play reset play reset'
           }
         })
         .fromTo('#glm-instagram-feed-section .glm-insta-story-ring', 
@@ -780,6 +798,23 @@
           { opacity: 0, y: 10 },
           { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out' },
           '-=0.3'
+        );
+
+        // Animate the Reels Carousel on entry
+        gsap.fromTo('#reel-carousel',
+          { opacity: 0, scale: 0.95, y: 30 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '#reel-carousel',
+              start: 'top 90%',
+              toggleActions: 'play reset play reset'
+            }
+          }
         );
       }
     }
