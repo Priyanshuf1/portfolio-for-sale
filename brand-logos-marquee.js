@@ -162,7 +162,7 @@
         <div class="glm-about-3d-wrapper" style="position: relative; width: 230px; height: 230px; display: flex; justify-content: center; align-items: center; transition: transform 0.15s ease-out; transform-style: preserve-3d; cursor: pointer;">
           <!-- Rotating Yellow Ring SVG (3D depth: translateZ(-20px)) -->
           <svg viewBox="0 0 100 100" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 1; transform: translateZ(-20px);">
-            <circle cx="50" cy="50" r="47" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="8 6" class="glm-rotating-ring-element" style="transform-origin: center; stroke: #fbbf24 !important; fill: none !important;"></circle>
+            <circle cx="50" cy="50" r="47" fill="none" stroke="#e20001" stroke-width="2" stroke-dasharray="8 6" class="glm-rotating-ring-element" style="transform-origin: center; stroke: #e20001 !important; fill: none !important;"></circle>
           </svg>
           <!-- Real logo.png image (3D depth: translateZ(25px)) -->
           <img src="./logo.png" style="width: 85%; height: auto; z-index: 2; transform: translateZ(25px); filter: drop-shadow(0 15px 25px rgba(0,0,0,0.06)); object-fit: contain;">

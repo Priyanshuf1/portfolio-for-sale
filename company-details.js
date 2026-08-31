@@ -25,9 +25,9 @@
     .glb-why-us-badge {
       display: inline-block;
       padding: 6px 16px;
-      background: rgba(226, 0, 1, 0.1);
-      border: 1px solid rgba(226, 0, 1, 0.35);
-      color: #e20001;
+      background: #e20001 !important;
+      border: 1px solid #e20001 !important;
+      color: #ffffff !important;
       font-size: 14px;
       font-weight: 800;
       letter-spacing: 2px;
@@ -413,7 +413,7 @@
           <div class="glb-why-us-header">
             <span class="glb-why-us-badge">The Advantage</span>
             <h2>Why Choose Us?</h2>
-            <p>See how Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generationstacks up against generic marketing agencies and why we are trusted by Lucknow's leading companies.</p>
+            <p>We believe great marketing has no boundaries. Global Logic Media combines global expertise, creative innovation, advanced technology, and performance-driven strategies to help brands build trust, reach the right audience, and scale with confidence. Our commitment to transparency, quality, and measurable growth makes us a reliable digital partner for businesses looking to make an impact in local and global markets.</p>
           </div>
           
           <div class="glb-comparison-grid">

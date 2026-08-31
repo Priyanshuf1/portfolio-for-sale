@@ -284,6 +284,18 @@
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) closeModal();
   });
+
+  // Automatically trigger modal open if URL hash matches #review or #leave-a-review
+  function checkReviewHash() {
+    if (window.location.hash === '#review' || window.location.hash === '#leave-a-review') {
+      openModal();
+    }
+  }
+  window.addEventListener('load', checkReviewHash);
+  window.addEventListener('hashchange', checkReviewHash);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    checkReviewHash();
+  }
   
   form.addEventListener('submit', async (e) => {
       e.preventDefault();

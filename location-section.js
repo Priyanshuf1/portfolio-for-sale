@@ -204,7 +204,7 @@
                   <span class="glb-contact-card-val">Mon – Sat: 9:00 AM – 7:00 PM IST</span>
                 </div>
               </div>
-              <span style="font-size:12px;color:#e20001;font-weight:700;">Open Today</span>
+              <span style="font-size:12px;color:#ffffff !important;font-weight:700;background:#e20001 !important;border:1px solid #e20001 !important;padding:6px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;display:inline-block;white-space:nowrap;">Open Today</span>
             </div>
           </div>
 
