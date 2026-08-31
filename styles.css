@@ -1806,3 +1806,21 @@ a[href*="elfsight.com"],
   box-shadow: 0 30px 65px rgba(226, 0, 1, 0.28) !important;
 }
 
+/* ── Hardware Acceleration (GPU) Performance Optimizations ── */
+#about-me, #services, #faq, #projects, #glm-instagram-feed-section {
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+#about-me .badge-pill-red, #about-me h2, #about-me p, #about-me .about-tag-item, #about-me .about-tool-tag, #about-me .about-stat-card, #about-logo-3d-card,
+#services .badge-pill-red, #services h2, #services p, #services .service-card-item, #services .process-img-wrap,
+#faq .badge-pill-red, #faq h2, #faq p, #faq .faq-row,
+#projects h2, .glm-marquee-wrap,
+.glm-insta-integrated-header, #reel-carousel, .glm-insta-story-ring {
+  will-change: transform, opacity;
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+}
+
+
