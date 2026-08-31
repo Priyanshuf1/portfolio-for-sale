@@ -80,7 +80,7 @@
       right: 20px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
-      color: #aaa;
+      color: #fff !important;
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -102,14 +102,15 @@
       font-weight: 700;
       margin-bottom: 8px;
       letter-spacing: -0.5px;
-      background: linear-gradient(90deg, #fff, #aaa);
+      background: #ffffff !important;
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-text-fill-color: #ffffff !important;
+      color: #ffffff !important;
     }
     
     .glb-modal-book-subtitle {
       font-size: 15px;
-      color: #888;
+      color: #ffffff !important;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -179,7 +180,7 @@
         <div id="glbBookFormContainer">
           <div class="glb-modal-book-subtitle">Let's Talk</div>
           <div class="glb-modal-book-title">Book a Call With Us</div>
-          <div style="color: #999; margin-bottom: 24px; font-size: 15px;">Schedule a free consultation with our experts to discuss your digital marketing needs.</div>
+          <div style="color: #ffffff !important; margin-bottom: 24px; font-size: 15px;">Schedule a free consultation with our experts to discuss your digital marketing needs.</div>
           
           <form id="glbBookForm">
             <!-- Honeypot Bot Trap (Invisible to humans, caught by spam bots) -->
@@ -210,7 +211,7 @@
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
             </svg>
             <div class="glb-modal-book-title" style="background: none; -webkit-text-fill-color: #4ade80; color: #4ade80 !important; font-size: 24px; text-shadow: none;">Thank You!</div>
-            <div style="color: #999; font-size: 15px; margin-top: 8px;">Your booking request was submitted successfully!</div>
+            <div style="color: #ffffff !important; font-size: 15px; margin-top: 8px;">Your booking request was submitted successfully!</div>
         </div>
       </div>
     </div>

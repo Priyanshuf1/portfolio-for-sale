@@ -87,7 +87,7 @@
       right: 20px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
-      color: #aaa;
+      color: #fff !important;
       width: 32px;
       height: 32px;
       border-radius: 50%;
@@ -108,14 +108,15 @@
       font-weight: 700;
       margin-bottom: 8px;
       letter-spacing: -0.5px;
-      background: linear-gradient(90deg, #fff, #aaa);
+      background: #ffffff !important;
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-text-fill-color: #ffffff !important;
+      color: #ffffff !important;
     }
     
     .glb-modal-review-subtitle {
       font-size: 15px;
-      color: #888;
+      color: #ffffff !important;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -219,7 +220,7 @@
         <div id="glbReviewFormContainer">
             <div class="glb-modal-review-subtitle">Feedback</div>
             <div class="glb-modal-review-title">Write a Review</div>
-            <div style="color: #999; margin-bottom: 24px; font-size: 15px;">Tell us about your experience working with Global Logic Media.</div>
+            <div style="color: #ffffff !important; margin-bottom: 24px; font-size: 15px;">Tell us about your experience working with Global Logic Media.</div>
             
             <form id="glbReviewForm">
               <div class="glb-star-rating" style="display:flex; flex-direction:row-reverse; justify-content:flex-end;">
@@ -245,7 +246,7 @@
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
             </svg>
             <div class="glb-modal-review-title">Thank You!</div>
-            <div style="color: #999; font-size: 15px;">Your review has been submitted successfully and is pending approval.</div>
+            <div style="color: #ffffff !important; font-size: 15px;">Your review has been submitted successfully and is pending approval.</div>
         </div>
       </div>
     </div>

@@ -16,9 +16,9 @@
     .glb-home-blogs-badge {
       display: inline-block;
       padding: 6px 14px;
-      background: rgba(226, 0, 1, 0.06);
-      border: 1px solid rgba(226, 0, 1, 0.25);
-      color: #e20001;
+      background: #e20001 !important;
+      border: 1px solid #e20001 !important;
+      color: #ffffff !important;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 1.5px;

@@ -90,10 +90,10 @@
     gap: 28px;
   }
   .glm-marquee-row.left {
-    animation: glmMarqueeLeft 50s linear infinite;
+    animation: glmMarqueeLeft 32s linear infinite;
   }
   .glm-marquee-row.right {
-    animation: glmMarqueeRight 50s linear infinite;
+    animation: glmMarqueeRight 32s linear infinite;
   }
   .glm-marquee-row:hover {
     animation-play-state: paused;
@@ -132,12 +132,12 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    opacity: 0.95;
-    transition: opacity 0.4s ease;
+    filter: grayscale(1) opacity(0.45);
+    transition: filter 0.4s ease, opacity 0.4s ease;
     pointer-events: none;
   }
   .glm-marquee-item:hover img {
-    opacity: 1;
+    filter: grayscale(0) opacity(1);
   }
 
   @keyframes glmMarqueeLeft {
@@ -467,7 +467,6 @@
       `;
 
       var row2Images = [
-        './brand_b_luxury2.jpeg',
         './brand_home_archs.png',
         './brand_forever_treasures.png',
         './brand_om_group.png',

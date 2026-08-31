@@ -20,9 +20,9 @@
     .glb-location-badge {
       display: inline-block;
       padding: 6px 16px;
-      background: rgba(226, 0, 1, 0.08);
-      border: 1px solid rgba(226, 0, 1, 0.2);
-      color: #e20001;
+      background: #e20001 !important;
+      border: 1px solid #e20001 !important;
+      color: #ffffff !important;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 1.5px;
@@ -92,13 +92,13 @@
     .glb-contact-card-action {
       display: inline-flex; align-items: center; gap: 6px;
       padding: 8px 16px;
-      background: rgba(0,0,0,0.04);
-      border: 1px solid rgba(0,0,0,0.1);
-      color: #374151; border-radius: 8px; font-size: 13px; font-weight: 600;
+      background: #e20001 !important;
+      border: 1px solid #e20001 !important;
+      color: #ffffff !important; border-radius: 8px; font-size: 13px; font-weight: 600;
       text-decoration: none; white-space: nowrap; transition: all 0.2s;
     }
     .glb-contact-card:hover .glb-contact-card-action {
-      background: #e20001; color: #ffffff; border-color: #e20001;
+      background: #c10001 !important; color: #ffffff !important; border-color: #c10001 !important;
     }
 
     /* Map Box Container */
