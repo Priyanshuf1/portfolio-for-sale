@@ -122,9 +122,9 @@ button {
 .badge-pill-red {
   display: inline-block;
   padding: 6px 14px;
-  background: rgba(var(--primary-rgb), 0.1);
-  border: 1px solid rgba(var(--primary-rgb), 0.3);
-  color: var(--primary);
+  background: var(--primary) !important;
+  border: 1px solid var(--primary) !important;
+  color: #ffffff !important;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 1.5px;
@@ -221,11 +221,12 @@ header.glb-site-header {
   width: 95%;
   max-width: 1200px;
   z-index: 9999;
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border: none !important;
-  box-shadow: none !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  border-radius: 40px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
   transition: all 0.3s ease;
 }
 
@@ -235,7 +236,7 @@ header.glb-site-header {
   align-items: center;
   width: 100%;
   height: 76px;
-  padding: 0 16px;
+  padding: 0 24px;
   box-sizing: border-box;
 }
 
@@ -837,7 +838,7 @@ nav.glb-nav-menu a.glb-nav-active {
   display: grid;
   grid-template-columns: 1fr 1.1fr;
   gap: 60px;
-  align-items: center;
+  align-items: flex-start;
 }
 
 @media (max-width: 900px) {

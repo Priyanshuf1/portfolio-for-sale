@@ -23,9 +23,9 @@
     .glb-skills-badge {
       display: inline-block;
       padding: 5px 14px;
-      background: rgba(226, 0, 1, 0.05);
-      border: 1px solid rgba(226, 0, 1, 0.2);
-      color: #e20001;
+      background: #e20001 !important;
+      border: 1px solid #e20001 !important;
+      color: #ffffff !important;
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 1px;
@@ -213,7 +213,7 @@
 
   const skillsData = [
     { title: "SEO", category: "skills", icon: "🚀", badge: "98% Mastery", desc: "Technical audits, keyword strategy, and backlink authority to secure #1 search engine rankings.", level: 98 },
-    { title: "ROI", category: "skills", icon: "💰", badge: "4.2x ROAS", desc: "Precision PPC campaigns, audience retargeting, and high-conversion ad copy on Google & Meta.", level: 95 },
+    { title: "Meta and Google Ads", category: "skills", icon: "💰", badge: "4.2x ROAS", desc: "Precision PPC campaigns, audience retargeting, and high-conversion ad copy on Google & Meta.", level: 95 },
     { title: "Social Media Marketing", category: "skills", icon: "📲", badge: "3x Organic Reach", desc: "Viral short-form video strategy, engagement, and multi-channel brand building.", level: 92 },
     { title: "Website Design & Development", category: "skills", icon: "⚡", badge: "100/100 Speed", desc: "Next.js, Vite React, Framer, and custom ultra-fast web development.", level: 96 },
     { title: "UI/UX Design", category: "skills", icon: "🎨", badge: "Premium Standard", desc: "Figma design systems, glassmorphism, 3D interactive layouts, and user experience.", level: 94 },
@@ -368,7 +368,7 @@
       <div class="glb-skills-section" id="glb-skills-section">
         <div class="glb-skills-inner">
           <div class="glb-skills-header" style="margin-bottom: 50px;">
-            <h2 class="h2-fluid no-reveal" style="text-transform: uppercase; letter-spacing: 0.15em; font-weight: 900; color: #111827;">Skills</h2>
+            <h2 class="h2-fluid no-reveal" style="text-transform: uppercase; letter-spacing: 0.15em; font-weight: 900; color: #e20001 !important;">Our Services</h2>
           </div>
 
           <div id="glbSkillsGrid"></div>

@@ -3,24 +3,21 @@
     /* Floating Button */
     .glb-floating-btn-book {
       position: fixed;
-      bottom: 30px;
-      right: 260px;
+      bottom: 96px;
+      right: 30px;
       z-index: 9998;
       background: linear-gradient(135deg, #e20001, #a30000);
       color: #ffffff;
-      padding: 16px 28px;
-      border-radius: 30px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
       cursor: pointer;
       box-shadow: 0 8px 24px rgba(226,0,1,0.3), inset 0 1px 1px rgba(255,255,255,0.1);
       border: 1px solid rgba(255,255,255,0.1);
       transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
     }
     
     .glb-floating-btn-book:hover {
@@ -30,12 +27,7 @@
       color: #fff;
     }
 
-    @media (max-width: 600px) {
-      .glb-floating-btn-book {
-        right: 30px;
-        bottom: 90px;
-      }
-    }
+
 
     /* Modal Overlay */
     .glb-modal-overlay-book {
@@ -174,10 +166,9 @@
   const modalHTML = `
     <!-- Floating Trigger -->
     <div class="glb-floating-btn-book" id="glbTriggerBook">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
       </svg>
-      Book a Call
     </div>
 
     <!-- Modal Overlay -->

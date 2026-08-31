@@ -521,7 +521,7 @@
     if (!instaSection.dataset.elfsightBuilt) {
       instaSection.innerHTML = `
         <div style="text-align:center; margin-bottom: 25px;">
-          <span style="display:inline-block; padding: 5px 16px; background: rgba(226,0,1,0.1); border: 1px solid rgba(226,0,1,0.3); color: #e20001; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 20px;">Social Presence</span>
+          <span style="display:inline-block; padding: 5px 16px; background: #e20001 !important; border: 1px solid #e20001 !important; color: #ffffff !important; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border-radius: 20px;">Follow Us</span>
         </div>
 
         <!-- Integrated Instagram Profile Header -->

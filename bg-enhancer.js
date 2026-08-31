@@ -435,28 +435,12 @@
 
     /* ── Mobile Phone UI Custom Optimizations ── */
     @media (max-width: 768px) {
-      /* Hide secondary and cluttered floating buttons to keep UI clean */
-      .glb-floating-btn,
       .glb-floating-btn-review,
-      #glbTrigger,
       #glbTriggerReview {
         display: none !important;
         opacity: 0 !important;
         visibility: hidden !important;
         pointer-events: none !important;
-      }
-
-      /* Convert primary "Book a Call" trigger to a clean bottom full-width sticky bar */
-      .glb-floating-btn-book,
-      #glbTriggerBook {
-        left: 20px !important;
-        right: 20px !important;
-        bottom: 20px !important;
-        width: auto !important;
-        transform: none !important;
-        justify-content: center !important;
-        box-shadow: 0 8px 30px rgba(226, 0, 1, 0.45) !important;
-        z-index: 9999 !important;
       }
     }
 

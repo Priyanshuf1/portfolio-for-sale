@@ -162,9 +162,9 @@
     .glb-team-badge {
       display: inline-block;
       padding: 6px 16px;
-      background: rgba(226, 0, 1, 0.1);
-      border: 1px solid rgba(226, 0, 1, 0.35);
-      color: #e20001;
+      background: #e20001 !important;
+      border: 1px solid #e20001 !important;
+      color: #ffffff !important;
       font-size: 14px;
       font-weight: 800;
       letter-spacing: 2px;
@@ -438,7 +438,7 @@
       <section class="glb-team-section" id="our-team">
         <div class="glb-team-inner">
           <div class="glb-team-header">
-            <span class="glb-team-badge">OUR EXPERTS</span>
+            <span class="glb-team-badge">OUR TEAM</span>
             <h2>Meet The Minds</h2>
             <p>Our dedicated Lucknow-based team of marketers, developers, and visual designers working together to grow your brand.</p>
           </div>
