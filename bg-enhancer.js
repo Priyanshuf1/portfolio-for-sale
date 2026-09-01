@@ -581,6 +581,32 @@ html body .glb-footer-socials a svg polygon {
   stroke: none !important;
 }
 
+    
+
+/* Force Blog Cards to clean light background and readable dark text */
+.glb-home-blog-card {
+  background: #fffdf5 !important;
+  background-color: #fffdf5 !important;
+  border: 1px solid rgba(217, 119, 6, 0.18) !important;
+  color: #111827 !important;
+}
+.glb-home-blog-title {
+  color: #111827 !important;
+}
+.glb-home-blog-excerpt {
+  color: #4b5563 !important;
+}
+.glb-home-blog-read {
+  color: #e20001 !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+.glb-home-blog-read * {
+  color: #e20001 !important;
+}
+
     /* Hardware-accelerated cloud background filter overrides */
     [data-framer-background-image-wrapper], .framer-1uy17lu {
       filter: none !important;
