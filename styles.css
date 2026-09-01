@@ -1888,12 +1888,13 @@ html body .glb-footer-socials a polygon {
 }
 
 
-/* Force See Projects buttons, Open in Google Maps, and View Article buttons to solid red with white text */
+
+
+/* ── Primary Red Buttons System (Clean Syntax) ── */
 html body .btn-primary,
 html body a[href*="project"]:not(.glb-nav-link):not(.glb-drawer-link),
 html body .glb-map-direct-btn,
-html body .glb-home-blogs-btn,
-/* .glb-home-blog-read clean text link */ {
+html body .glb-home-blogs-btn {
   background: #e20001 !important;
   background-color: #e20001 !important;
   border: 1px solid #e20001 !important;
@@ -1905,8 +1906,7 @@ html body .glb-home-blogs-btn,
 html body .btn-primary *,
 html body a[href*="project"] *,
 html body .glb-map-direct-btn *,
-html body .glb-home-blogs-btn *,
-/* .glb-home-blog-read clean text link */ * {
+html body .glb-home-blogs-btn * {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
@@ -1914,15 +1914,14 @@ html body .glb-home-blogs-btn *,
 html body .btn-primary:hover,
 html body a[href*="project"]:hover,
 html body .glb-map-direct-btn:hover,
-html body .glb-home-blogs-btn:hover,
-/* .glb-home-blog-read clean text link */:hover {
+html body .glb-home-blogs-btn:hover {
   background: #a30000 !important;
   background-color: #a30000 !important;
   border-color: #a30000 !important;
   color: #ffffff !important;
 }
 
-/* Precise styling for SVG icons in footer social buttons */
+/* ── Clean Footer Social Icons ── */
 html body .glb-footer-socials a {
   background: #e20001 !important;
   background-color: #e20001 !important;
@@ -1944,33 +1943,7 @@ html body .glb-footer-socials a svg polygon {
   stroke: none !important;
 }
 
-
-/* Force Blog Cards to clean light background and readable dark text */
-.glb-home-blog-card {
-  background: #fffdf5 !important;
-  background-color: #fffdf5 !important;
-  border: 1px solid rgba(217, 119, 6, 0.18) !important;
-  color: #111827 !important;
-}
-.glb-home-blog-title {
-  color: #111827 !important;
-}
-.glb-home-blog-excerpt {
-  color: #4b5563 !important;
-}
-.glb-home-blog-read {
-  color: #e20001 !important;
-  font-weight: 700 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-}
-.glb-home-blog-read * {
-  color: #e20001 !important;
-}
-
-
-/* Remove red rectangle background surrounding Read Article text */
+/* ── Clean Read Article Link (No Red Box, Red Text Only) ── */
 html body .glb-home-blog-read,
 .glb-home-blog-read {
   background: transparent !important;
