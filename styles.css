@@ -1453,7 +1453,7 @@ footer.glb-footer {
   /* Why Choose Us & Meet Team Sections — Phone Light Theme Formatting */
   .glb-additional-details { color: #111827 !important; }
   .glb-why-us-section, .glb-team-section { padding: 56px 5% !important; }
-  .glb-why-us-header h2, .glb-team-header h2 { font-size: clamp(1.75rem, 7.5vw, 2.3rem) !important; color: #e20001 !important; }
+  .glb-why-us-header h2, .glb-team-header h2 { font-size: clamp(1.75rem, 7.5vw, 2.3rem) !important; color: #111827 !important; -webkit-text-fill-color: #111827 !important; }
   .glb-why-us-header p, .glb-team-header p { color: #4b5563 !important; font-size: clamp(0.92rem, 3.8vw, 1rem) !important; }
   
   .glb-comparison-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
@@ -1838,3 +1838,51 @@ a[href*="elfsight.com"],
 }
 
 
+
+
+/* Force solid red badges to have white text on desktop and mobile */
+.glb-why-us-badge,
+.glb-team-badge,
+.badge-pill-red,
+.glb-home-blogs-badge,
+.glb-location-badge {
+  background: #e20001 !important;
+  background-color: #e20001 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+.glb-why-us-badge *,
+.glb-team-badge *,
+.badge-pill-red * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Force headings to black */
+.glb-why-us-header h2,
+.glb-team-header h2,
+.glb-skills-section h2 {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+}
+
+/* Force all footer social icon SVGs (Insta, LinkedIn, YouTube, WhatsApp) to white */
+html body .glb-footer-socials a svg,
+html body .glb-footer-socials a svg *,
+html body .glb-footer-socials a path,
+html body .glb-footer-socials a circle,
+html body .glb-footer-socials a rect,
+html body .glb-footer-socials a line,
+html body .glb-footer-socials a polygon {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  fill: #ffffff !important;
+  --21h8s6: #ffffff !important;
+}
+
+/* Hide any floating overlay badge on the map */
+.glb-map-floating-badge {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}

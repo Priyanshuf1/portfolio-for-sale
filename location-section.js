@@ -209,10 +209,6 @@
           </div>
 
           <div class="glb-map-container-box" id="glbMapBox">
-            <div class="glb-map-floating-badge">
-              <span class="glb-map-dot"></span>
-              <span>Gomti Nagar, Lucknow — Live HQ</span>
-            </div>
             <iframe
               class="glb-map-iframe-element"
               src="${mapSrc}"

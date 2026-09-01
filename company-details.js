@@ -38,9 +38,9 @@
     .glb-why-us-header h2 {
       font-size: clamp(2.3rem, 5vw, 3.5rem) !important;
       margin: 0 0 10px;
-      color: #e20001 !important;
+      color: #111827 !important;
       background: none !important;
-      -webkit-text-fill-color: #e20001 !important;
+      -webkit-text-fill-color: #111827 !important;
       letter-spacing: -1px;
       font-weight: 900;
     }
@@ -175,9 +175,9 @@
     .glb-team-header h2 {
       font-size: clamp(2.3rem, 5vw, 3.5rem) !important;
       margin: 0 0 10px;
-      color: #e20001 !important;
+      color: #111827 !important;
       background: none !important;
-      -webkit-text-fill-color: #e20001 !important;
+      -webkit-text-fill-color: #111827 !important;
       letter-spacing: -1px;
       font-weight: 900;
     }

@@ -502,6 +502,27 @@
       fill: transparent !important;
     }
 
+    
+    /* Force footer social icon SVGs to white */
+    html body .glb-footer-socials a svg,
+    html body .glb-footer-socials a svg *,
+    html body .glb-footer-socials a path,
+    html body .glb-footer-socials a circle,
+    html body .glb-footer-socials a rect {
+      color: #ffffff !important;
+      stroke: #ffffff !important;
+      fill: #ffffff !important;
+      --21h8s6: #ffffff !important;
+    }
+
+    /* Force badge pill texts to white */
+    html body .glb-why-us-badge,
+    html body .glb-team-badge,
+    html body .badge-pill-red {
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff !important;
+    }
+
     /* Hardware-accelerated cloud background filter overrides */
     [data-framer-background-image-wrapper], .framer-1uy17lu {
       filter: none !important;
