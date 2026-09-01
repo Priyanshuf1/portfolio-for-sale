@@ -469,7 +469,7 @@
 
       /* Ensure floating buttons never overlap on mobile */
       html body .glb-floating-btn-book {
-        bottom: 86px !important;
+        bottom: 96px !important;
         right: 16px !important;
         width: 52px !important;
         height: 52px !important;
