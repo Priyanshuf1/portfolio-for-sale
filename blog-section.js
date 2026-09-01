@@ -48,7 +48,7 @@
       margin: 0 auto;
     }
     .glb-home-blog-card {
-      background: #FFFDF0;
+      background: #e20001 !important; background-color: #e20001 !important; color: #ffffff !important; border: 1px solid #e20001 !important;
       border: 1px solid rgba(226, 160, 0, 0.15);
       border-radius: 18px;
       overflow: hidden;
@@ -136,7 +136,7 @@
       gap: 10px;
       padding: 16px 36px;
       background: #FFFDF0;
-      color: #111;
+      color: #ffffff !important;
       border: 1px solid rgba(226, 0, 1, 0.25);
       border-radius: 30px;
       text-decoration: none;

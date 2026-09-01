@@ -143,14 +143,15 @@
 
     .glb-map-direct-btn {
       position: absolute; bottom: 16px; right: 16px; z-index: 5;
-      background: rgba(10,14,39,0.92); backdrop-filter: blur(12px);
-      border: 1px solid rgba(226, 0, 1,0.4);
-      color: #e20001; font-weight: 700; font-size: 12px;
+      background: #e20001 !important;
+      background-color: #e20001 !important;
+      border: 1px solid #e20001 !important;
+      color: #ffffff !important; font-weight: 700; font-size: 12px;
       padding: 8px 16px; border-radius: 20px;
-      text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      text-decoration: none; box-shadow: 0 4px 14px rgba(226, 0, 1, 0.3);
       transition: all 0.2s ease;
     }
-    .glb-map-direct-btn:hover { background: #e20001; color: #0A0E27; box-shadow: 0 0 25px rgba(226, 0, 1,0.6); }
+    .glb-map-direct-btn:hover { background: #a30000 !important; border-color: #a30000 !important; color: #ffffff !important; }
   `;
 
   // Proper Google Maps Embed URL for Gomti Nagar, Lucknow

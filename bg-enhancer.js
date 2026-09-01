@@ -388,10 +388,10 @@
     }
 
     /* 2. Secondary CTA Buttons (Dark Slate, White Text, Turns Red on Hover) */
-    html body a[href*="project"]:not(.glb-nav-link):not(.glb-drawer-link),
+    /* html body a[href*="project"] moved to primary red */
     html body a[href*="services"]:not(.glb-nav-link):not(.glb-drawer-link),
     html body .glass-card.px-6.py-3,
-    html body .glb-home-blogs-btn {
+    /* html body .glb-home-blogs-btn moved to primary red */ {
       background: #1f2937 !important;
       background-color: #1f2937 !important;
       color: #ffffff !important;
@@ -522,6 +522,64 @@
       color: #ffffff !important;
       -webkit-text-fill-color: #ffffff !important;
     }
+
+    
+
+/* Force See Projects buttons, Open in Google Maps, and View Article buttons to solid red with white text */
+html body .btn-primary,
+html body a[href*="project"]:not(.glb-nav-link):not(.glb-drawer-link),
+html body .glb-map-direct-btn,
+html body .glb-home-blogs-btn,
+html body .glb-home-blog-read {
+  background: #e20001 !important;
+  background-color: #e20001 !important;
+  border: 1px solid #e20001 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(226, 0, 1, 0.25) !important;
+}
+
+html body .btn-primary *,
+html body a[href*="project"] *,
+html body .glb-map-direct-btn *,
+html body .glb-home-blogs-btn *,
+html body .glb-home-blog-read * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+html body .btn-primary:hover,
+html body a[href*="project"]:hover,
+html body .glb-map-direct-btn:hover,
+html body .glb-home-blogs-btn:hover,
+html body .glb-home-blog-read:hover {
+  background: #a30000 !important;
+  background-color: #a30000 !important;
+  border-color: #a30000 !important;
+  color: #ffffff !important;
+}
+
+/* Precise styling for SVG icons in footer social buttons */
+html body .glb-footer-socials a {
+  background: #e20001 !important;
+  background-color: #e20001 !important;
+  border: 1px solid #e20001 !important;
+  color: #ffffff !important;
+}
+html body .glb-footer-socials a svg {
+  color: #ffffff !important;
+}
+html body .glb-footer-socials a svg path,
+html body .glb-footer-socials a svg rect,
+html body .glb-footer-socials a svg circle,
+html body .glb-footer-socials a svg line {
+  stroke: #ffffff !important;
+  fill: none !important;
+}
+html body .glb-footer-socials a svg polygon {
+  fill: #ffffff !important;
+  stroke: none !important;
+}
 
     /* Hardware-accelerated cloud background filter overrides */
     [data-framer-background-image-wrapper], .framer-1uy17lu {
