@@ -122,6 +122,10 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      box-shadow: none;
       transition: color 0.2s;
     }
     .glb-home-blog-card:hover .glb-home-blog-read {
