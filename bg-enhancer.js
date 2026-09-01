@@ -530,7 +530,7 @@ html body .btn-primary,
 html body a[href*="project"]:not(.glb-nav-link):not(.glb-drawer-link),
 html body .glb-map-direct-btn,
 html body .glb-home-blogs-btn,
-html body .glb-home-blog-read {
+/* .glb-home-blog-read clean text link */ {
   background: #e20001 !important;
   background-color: #e20001 !important;
   border: 1px solid #e20001 !important;
@@ -543,7 +543,7 @@ html body .btn-primary *,
 html body a[href*="project"] *,
 html body .glb-map-direct-btn *,
 html body .glb-home-blogs-btn *,
-html body .glb-home-blog-read * {
+/* .glb-home-blog-read clean text link */ * {
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
@@ -552,7 +552,7 @@ html body .btn-primary:hover,
 html body a[href*="project"]:hover,
 html body .glb-map-direct-btn:hover,
 html body .glb-home-blogs-btn:hover,
-html body .glb-home-blog-read:hover {
+/* .glb-home-blog-read clean text link */:hover {
   background: #a30000 !important;
   background-color: #a30000 !important;
   border-color: #a30000 !important;
@@ -605,6 +605,37 @@ html body .glb-footer-socials a svg polygon {
 }
 .glb-home-blog-read * {
   color: #e20001 !important;
+}
+
+    
+
+/* Remove red rectangle background surrounding Read Article text */
+html body .glb-home-blog-read,
+.glb-home-blog-read {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  color: #e20001 !important;
+  -webkit-text-fill-color: #e20001 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+html body .glb-home-blog-read *,
+.glb-home-blog-read * {
+  color: #e20001 !important;
+  -webkit-text-fill-color: #e20001 !important;
+}
+html body .glb-home-blog-card:hover .glb-home-blog-read,
+.glb-home-blog-card:hover .glb-home-blog-read {
+  color: #a30000 !important;
+  -webkit-text-fill-color: #a30000 !important;
 }
 
     /* Hardware-accelerated cloud background filter overrides */
