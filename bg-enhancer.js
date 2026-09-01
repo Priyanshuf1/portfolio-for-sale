@@ -466,6 +466,40 @@
         visibility: hidden !important;
         pointer-events: none !important;
       }
+
+      /* Ensure floating buttons never overlap on mobile */
+      .glb-floating-btn-book {
+        bottom: 145px !important;
+        right: 20px !important;
+        width: 52px !important;
+        height: 52px !important;
+        border-radius: 50% !important;
+      }
+      .glb-floating-btn {
+        bottom: 80px !important;
+        right: 20px !important;
+        width: 52px !important;
+        height: 52px !important;
+        border-radius: 50% !important;
+      }
+    }
+
+    /* Force navbar call button to always be red with white content */
+    html body .glb-call-btn,
+    html body a.glb-call-btn {
+      background: #e20001 !important;
+      background-color: #e20001 !important;
+      border: 1px solid #e20001 !important;
+      color: #ffffff !important;
+      border-radius: 30px !important;
+    }
+    html body .glb-call-btn *,
+    html body a.glb-call-btn *,
+    html body .glb-call-btn svg,
+    html body .glb-call-btn svg * {
+      color: #ffffff !important;
+      stroke: #ffffff !important;
+      fill: transparent !important;
     }
 
     /* Hardware-accelerated cloud background filter overrides */
