@@ -46,9 +46,9 @@
     }
     
     .glb-footer-socials a {
-      color: #374151;
-      background: rgba(0,0,0,0.03);
-      border: 1px solid rgba(0,0,0,0.08);
+      color: #ffffff !important;
+      background: #e20001 !important;
+      border: 1px solid #e20001 !important;
       width: 36px;
       height: 36px;
       border-radius: 50%;
@@ -60,9 +60,9 @@
     }
     
     .glb-footer-socials a:hover {
-      background: rgba(226,0,1,0.08);
-      color: #e20001;
-      border-color: rgba(226,0,1,0.2);
+      background: #a30000 !important;
+      color: #ffffff !important;
+      border-color: #a30000 !important;
       transform: translateY(-2px);
     }
     
@@ -181,7 +181,7 @@
         </div>
         <div class="glb-footer-contact-item">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-          +91-9208111603
+          <span style="color:#e20001; font-weight:700;">+91-9208111603</span>
         </div>
       </div>
     </div>
