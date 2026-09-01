@@ -3,7 +3,7 @@
     /* Floating Button */
     .glb-floating-btn-book {
       position: fixed;
-      bottom: 145px;
+      bottom: 280px;
       right: 30px;
       z-index: 9998;
       background: linear-gradient(135deg, #e20001, #a30000);
