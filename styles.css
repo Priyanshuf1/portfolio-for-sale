@@ -1161,15 +1161,18 @@ footer.glb-footer {
   html body #glbBookACallFloating,
   html body #glbTriggerBook {
     display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     position: fixed !important;
-    bottom: 64px !important;
+    bottom: 86px !important;
     right: 16px !important;
     left: auto !important;
-    font-size: clamp(10px, 3.2vw, 12px) !important;
-    padding: 8px 16px !important;
-    min-height: 40px !important;
-    border-radius: 25px !important;
-    box-shadow: 0 4px 14px rgba(226, 0, 1, 0.25) !important;
+    width: 52px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    box-shadow: 0 4px 14px rgba(226, 0, 1, 0.3) !important;
     z-index: 9999 !important;
   }
   html body .glb-floating-btn,
@@ -1177,14 +1180,17 @@ footer.glb-footer {
   html body #glbAboutUsFloating,
   html body #glbTriggerAbout {
     display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     position: fixed !important;
-    bottom: 16px !important;
+    bottom: 20px !important;
     right: 16px !important;
     left: auto !important;
-    font-size: clamp(10px, 3.2vw, 12px) !important;
-    padding: 8px 16px !important;
-    min-height: 40px !important;
-    border-radius: 25px !important;
+    width: 52px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
     z-index: 9999 !important;
   }

@@ -468,16 +468,16 @@
       }
 
       /* Ensure floating buttons never overlap on mobile */
-      .glb-floating-btn-book {
-        bottom: 280px !important;
-        right: 20px !important;
+      html body .glb-floating-btn-book {
+        bottom: 86px !important;
+        right: 16px !important;
         width: 52px !important;
         height: 52px !important;
         border-radius: 50% !important;
       }
-      .glb-floating-btn {
-        bottom: 90px !important;
-        right: 20px !important;
+      html body .glb-floating-btn {
+        bottom: 20px !important;
+        right: 16px !important;
         width: 52px !important;
         height: 52px !important;
         border-radius: 50% !important;
@@ -500,14 +500,6 @@
       color: #ffffff !important;
       stroke: #ffffff !important;
       fill: transparent !important;
-    }
-
-    /* HARD OVERRIDE: Always keep floating buttons apart */
-    html body .glb-floating-btn-book {
-      bottom: 280px !important;
-    }
-    html body .glb-floating-btn {
-      bottom: 90px !important;
     }
 
     /* Hardware-accelerated cloud background filter overrides */
