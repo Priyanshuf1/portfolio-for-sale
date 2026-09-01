@@ -241,6 +241,7 @@
     overlay.classList.remove('active');
   }
 
+  window.openBookACallModal = openModal;
   trigger.addEventListener('click', openModal);
   closeBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', (e) => {

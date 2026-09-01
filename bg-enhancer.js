@@ -536,6 +536,13 @@
         e.stopPropagation();
         if (typeof window.openBookACallModal === 'function') {
           window.openBookACallModal();
+        } else {
+          const overlay = document.getElementById('glbOverlayBook');
+          if (overlay) {
+            overlay.classList.add('active');
+            const formContainer = document.getElementById('glbBookFormContainer');
+            if (formContainer) formContainer.style.display = 'block';
+          }
         }
       }
     }, { capture: true });

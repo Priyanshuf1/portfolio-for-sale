@@ -784,7 +784,7 @@
           </div>
           
           <div style="margin-top: 10px; display: flex; gap: 16px; flex-wrap: wrap;">
-            <button class="btn-secondary" onclick="document.getElementById('glbTriggerBook').click();">Book a Free Call</button>
+            <button class="btn-secondary" onclick="if(window.openBookACallModal){window.openBookACallModal();}else if(document.getElementById('glbTriggerBook')){document.getElementById('glbTriggerBook').click();}">Book a Free Call</button>
             <a href="#projects" class="btn-primary">See Projects</a>
           </div>
         </div>
@@ -977,14 +977,15 @@
   <script src="image-trail-section.js?v=1.7"></script>
   <script src="main.js?v=1.2"></script>
 
-<script src="./ambient-particles.js?v=1788244735252"></script>
-<script src="./audio-system.js?v=1788244735252"></script>
-<script src="./svg-decorations.js?v=1788244735252"></script>
-<script src="./rabto-fx-engine.js?v=1788244735252"></script>
-<script src="./bg-enhancer.js?v=1788244735252"></script>
-<script src="./global-logic-replacer.js?v=1788244735252"></script>
-<script src="./three-bg.js?v=1788244735252"></script>
-<script src="./custom-cursor.js?v=1788244735252"></script>
+<script src="./ambient-particles.js?v=1788273909047"></script>
+<script src="./audio-system.js?v=1788273909047"></script>
+<script src="./svg-decorations.js?v=1788273909047"></script>
+<script src="./rabto-fx-engine.js?v=1788273909047"></script>
+<script src="./bg-enhancer.js?v=1788273909047"></script>
+<script src="./global-logic-replacer.js?v=1788273909047"></script>
+<script src="./three-bg.js?v=1788273909047"></script>
+<script src="./custom-cursor.js?v=1788273909047"></script>
+
 
 
 
@@ -1160,6 +1161,7 @@
   }, 100);
 })();
 </script>
+
 
 
 
