@@ -4,6 +4,10 @@ let html = fs.readFileSync('index.html', 'utf8');
 // Update viewport meta tag for mobile accessibility
 html = html.replace(/<meta[^>]*name=["']viewport["'][^>]*>/gi, '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">');
 
+
+// Actively remove old background lines and dots experimental scripts
+html = html.replace(/<script[^>]+(?:ambient-particles|svg-decorations|three-bg)[^>]*><\/script>\r?\n?/gi, '');
+
 // ACTIVELY REMOVE three-logo-interactive.js (unused 3D model)
 html = html.replace(/<script[^>]+three-logo-interactive\.js[^>]*><\/script>\r?\n?/gi, '');
 html = html.replace(/<script id="inline-logo3d-script">[\s\S]*?<\/script>\r?\n?/gi, '');
@@ -559,15 +563,12 @@ if (!html.includes('native-sections.js')) html = html.replace('</body>', '<scrip
 if (!html.includes('blog-section.js')) html = html.replace('</body>', '<script src="./blog-section.js"></script>\n</body>');
 if (!html.includes('location-section.js')) html = html.replace('</body>', '<script src="./location-section.js"></script>\n</body>');
 if (!html.includes('admin-panel.js')) html = html.replace('</body>', '<script src="./admin-panel.js"></script>\n</body>');
-if (!html.includes('ambient-particles.js')) html = html.replace('</body>', '<script src="./ambient-particles.js"></script>\n</body>');
 if (!html.includes('audio-system.js')) html = html.replace('</body>', '<script src="./audio-system.js"></script>\n</body>');
-if (!html.includes('svg-decorations.js')) html = html.replace('</body>', '<script src="./svg-decorations.js"></script>\n</body>');
 if (!html.includes('rabto-fx-engine.js')) html = html.replace('</body>', '<script src="./rabto-fx-engine.js"></script>\n</body>');
 if (!html.includes('bg-enhancer.js')) html = html.replace('</body>', '<script src="./bg-enhancer.js"></script>\n</body>');
 if (!html.includes('skills-section.js')) html = html.replace('</body>', '<script src="./skills-section.js"></script>\n</body>');
 if (!html.includes('global-logic-replacer.js')) html = html.replace('</body>', '<script src="./global-logic-replacer.js"></script>\n</body>');
 if (!html.includes('company-details.js')) html = html.replace('</body>', '<script src="./company-details.js"></script>\n</body>');
-if (!html.includes('three-bg.js')) html = html.replace('</body>', '<script src="./three-bg.js"></script>\n</body>');
 if (!html.includes('image-trail-section.js')) html = html.replace('</body>', '<script src="./image-trail-section.js"></script>\n</body>');
 if (!html.includes('custom-cursor.js')) html = html.replace('</body>', '<script src="./custom-cursor.js"></script>\n</body>');
 if (!html.includes('brand-logos-marquee.js')) html = html.replace('</body>', '<script src="./brand-logos-marquee.js"></script>\n</body>');

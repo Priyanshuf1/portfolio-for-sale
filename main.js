@@ -116,11 +116,12 @@
     });
   }
 
-  // ── 6. WORD-BY-WORD HEADING REVEAL ───────────────────────────────────────
+    // ── 6. WORD-BY-WORD HEADING REVEAL ───────────────────────────────────────
   function initHeadingWordReveals() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-    const headings = document.querySelectorAll('section:not(#hero) h2');
+    // Animate all section headings (excluding hero title which has its own entrance)
+    const headings = document.querySelectorAll('h2, .glb-team-header h2, .glb-skills-header h2, .glb-reviews-header h2, .glb-home-blogs-header h2');
     headings.forEach(h => {
       if (h.classList.contains('no-reveal') || h.querySelector('.glm-word-reveal') || h.closest('#projects')) return;
 
@@ -167,11 +168,13 @@
         scrollTrigger: {
           trigger: h,
           start: 'top 85%',
-          toggleActions: 'play none play none'
+          toggleActions: 'play none none none',
+          once: true
         }
       });
     });
   }
+  window.initHeadingWordReveals = initHeadingWordReveals;
 
   // ── 7. SMOOTH SCROLL + GSAP ANIMATIONS ───────────────────────────────────
   function initAnimations() {
