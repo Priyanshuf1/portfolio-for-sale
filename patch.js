@@ -546,6 +546,21 @@ if (html.includes('id="glb-main-custom-styles"')) {
     }
 }
 
+
+// Inject Microsoft Clarity Heatmap tracking if missing
+if (!html.includes('ycm4i77tiz')) {
+    html = html.replace('<head>', '<head>\n' + `
+  <!-- Microsoft Clarity Heatmaps & Analytics -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ycm4i77tiz");
+  </script>
+`);
+}
+
 // Inject Firebase init before other custom scripts
 if (!html.includes('firebase-init.js')) {
     const firebaseScripts = `
