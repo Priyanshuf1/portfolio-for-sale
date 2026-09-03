@@ -462,7 +462,7 @@
           <h2 class="h2-fluid" style="margin:0;">Our Clients</h2>
         </div>
         <div class="glm-marquee-wrap">
-          <div class="glm-marquee-row right" id="marquee-row-2"></div>
+          <div class="glm-marquee-row left" id="marquee-row-2"></div>
         </div>
       `;
 

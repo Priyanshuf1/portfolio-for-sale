@@ -183,7 +183,7 @@
           <li><a href="#">PAY PER CLICK</a></li>
           <li><a href="#">META ADS</a></li>
           <li><a href="#">WEB DESIGN</a></li>
-          <li><a href="#">SMM</a></li>
+          <li><a href="#">SOCIAL MEDIA MARKETING</a></li>
           <li><a href="#">GRAPHIC DESIGNING</a></li>
         </ul>
       </div>
@@ -206,7 +206,7 @@
     </div>
     
     <div class="glb-footer-bottom">
-      &copy; ${new Date().getFullYear()} Global Logic Media. All rights reserved.
+      &copy; 2025 Global Logic Media. All rights reserved.
     </div>
   `;
 
