@@ -38,29 +38,16 @@
       'Brand Development',
       'Google & Meta Ads'
     ];
-    let wordIdx = 0, charIdx = words[0].length, isDeleting = true, delay = 2200;
+    let wordIdx = 0, charIdx = 0, isDeleting = false, delay = 180;
     function type() {
       const w = words[wordIdx];
-      if (isDeleting) {
-        textEl.textContent = w.substring(0, charIdx - 1);
-        charIdx--;
-        delay = 60;
-      } else {
-        textEl.textContent = w.substring(0, charIdx + 1);
-        charIdx++;
-        delay = 100;
-      }
-      if (!isDeleting && charIdx === w.length) {
-        delay = 2400;
-        isDeleting = true;
-      } else if (isDeleting && charIdx === 0) {
-        isDeleting = false;
-        wordIdx = (wordIdx + 1) % words.length;
-        delay = 350;
-      }
+      if (isDeleting) { textEl.textContent = w.substring(0, charIdx - 1); charIdx--; delay = 80; }
+      else            { textEl.textContent = w.substring(0, charIdx + 1); charIdx++; delay = 140; }
+      if (!isDeleting && charIdx === w.length)  { delay = 2000; isDeleting = true; }
+      else if (isDeleting && charIdx === 0)     { isDeleting = false; wordIdx = (wordIdx + 1) % words.length; delay = 400; }
       setTimeout(type, delay);
     }
-    setTimeout(type, 2200);
+    setTimeout(type, 600);
   }
 
   // ── 3. SCROLL SPY ────────────────────────────────────────────────────────
@@ -131,7 +118,59 @@
 
   // ── 6. WORD-BY-WORD HEADING REVEAL ───────────────────────────────────────
   function initHeadingWordReveals() {
-    // Disabled to prevent breaking React DOM tree and clashing with Framer's native scroll animations
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    const headings = document.querySelectorAll('section:not(#hero) h2');
+    headings.forEach(h => {
+      if (h.classList.contains('no-reveal') || h.querySelector('.glm-word-reveal') || h.closest('#projects')) return;
+
+      const contents = Array.from(h.childNodes);
+      h.innerHTML = '';
+
+      contents.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const words = node.textContent.split(/(\s+)/);
+          words.forEach(w => {
+            if (w.trim() === '') {
+              h.appendChild(document.createTextNode(w));
+            } else {
+              const wrap = document.createElement('span');
+              wrap.className = 'glm-word-reveal';
+              const inner = document.createElement('span');
+              inner.className = 'glm-word-inner';
+              inner.textContent = w;
+              wrap.appendChild(inner);
+              h.appendChild(wrap);
+            }
+          });
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          if (node.tagName.toLowerCase() === 'br') {
+            h.appendChild(node.cloneNode(true));
+          } else {
+            const wrap = document.createElement('span');
+            wrap.className = 'glm-word-reveal';
+            const inner = node.cloneNode(true);
+            inner.classList.add('glm-word-inner');
+            inner.style.display = 'inline-block';
+            wrap.appendChild(inner);
+            h.appendChild(wrap);
+          }
+        }
+      });
+
+      gsap.to(h.querySelectorAll('.glm-word-inner'), {
+        y: '0%',
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.045,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: h,
+          start: 'top 85%',
+          toggleActions: 'play none play none'
+        }
+      });
+    });
   }
 
   // ── 7. SMOOTH SCROLL + GSAP ANIMATIONS ───────────────────────────────────
@@ -167,20 +206,20 @@
 
     const isMobile = window.innerWidth <= 767 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    // ── HERO REVEAL (Immediate, Smooth, Zero Stutter on Button & Text) ──
+    // ── HERO REVEAL (Rich Entrance Animation) ──
     const heroTitle = document.querySelector('#hero h1');
     const heroElements = document.querySelectorAll('#hero .badge-pill-red, #hero .hero-typewriter-wrap, #hero p, #hero .btn-primary');
     
     if (heroTitle) {
       gsap.fromTo(heroTitle,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.1 }
       );
     }
     if (heroElements.length > 0) {
       gsap.fromTo(heroElements,
-        { opacity: 0, y: 12 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power2.out', delay: 0.06 }
+        { opacity: 0, y: 25 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out', delay: 0.25 }
       );
     }
 

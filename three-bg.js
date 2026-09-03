@@ -251,7 +251,7 @@
         return;
       }
       const script = document.createElement('script');
-      script.src = './vanta.topology.js?v=' + Date.now();
+      script.src = './vanta.topology.js?v=2.0';
       script.onload = callback;
       document.head.appendChild(script);
     });
