@@ -116,14 +116,19 @@
     });
   }
 
-    // ── 6. WORD-BY-WORD HEADING REVEAL ───────────────────────────────────────
+      // ── 6. WORD-BY-WORD HEADING REVEAL (Smooth Looping Scroll Animation) ─────
   function initHeadingWordReveals() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-    // Animate all section headings (excluding hero title which has its own entrance)
-    const headings = document.querySelectorAll('h2, .glb-team-header h2, .glb-skills-header h2, .glb-reviews-header h2, .glb-home-blogs-header h2');
+    // Target all H2 headings across all sections (static and dynamic)
+    const headings = document.querySelectorAll(
+      'section:not(#hero) h2, .glb-why-us-header h2, .glb-team-header h2, .glb-skills-header h2, .glb-reviews-header h2, .glb-home-blogs-header h2, .glb-location-header h2'
+    );
+
     headings.forEach(h => {
-      if (h.classList.contains('no-reveal') || h.querySelector('.glm-word-reveal') || h.closest('#projects')) return;
+      // Prevent duplicate wrapping or wrapping marquee headers
+      if (h.dataset.wordsRevealed || h.querySelector('.glm-word-reveal') || h.closest('#projects')) return;
+      h.dataset.wordsRevealed = '1';
 
       const contents = Array.from(h.childNodes);
       h.innerHTML = '';
@@ -159,17 +164,23 @@
         }
       });
 
-      gsap.to(h.querySelectorAll('.glm-word-inner'), {
+      const inners = h.querySelectorAll('.glm-word-inner');
+      if (inners.length === 0) return;
+
+      gsap.set(inners, { y: '100%', opacity: 0 });
+
+      // Silky-smooth 0.45s duration with tight 0.025s stagger that loops on both scroll up & down
+      gsap.to(inners, {
         y: '0%',
         opacity: 1,
-        duration: 0.8,
-        stagger: 0.045,
-        ease: 'power3.out',
+        duration: 0.45,
+        stagger: 0.025,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: h,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-          once: true
+          start: 'top 88%',
+          end: 'bottom 12%',
+          toggleActions: 'play reverse play reverse'
         }
       });
     });

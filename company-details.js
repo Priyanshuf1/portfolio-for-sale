@@ -457,6 +457,7 @@
     } else {
       document.body.appendChild(wrapper);
     }
+    if (window.initHeadingWordReveals) setTimeout(window.initHeadingWordReveals, 50);
   }
 
   // Inject styles once
