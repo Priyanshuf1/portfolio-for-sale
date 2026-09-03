@@ -156,25 +156,28 @@
   `;
 
   const defaultBlogs = [
-      { 
-        title: "10 Reasons Why You Need a Premium Website", 
-        excerpt: "A website is no longer just a digital business card. Learn how premium design converts visitors into high-paying clients automatically.", 
-        category: "Marketing", date: "Aug 12, 2026", 
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-      },
-      { 
-        title: "The Future of SEO: AI Search & Ranking Factors", 
-        excerpt: "Search engines are evolving faster than ever. Learn how to adapt your content strategy to rank higher in an AI-driven search landscape.", 
-        category: "SEO", date: "Aug 05, 2026", 
-        image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-      },
-      { 
-        title: "Why First Impressions Matter: Web Design Basics", 
-        excerpt: "Your website is your digital storefront. We explore the psychological impact of clean UI/UX and fast loading speeds on customer conversion rates.", 
-        category: "Design", date: "Jul 28, 2026", 
-        image: "https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-      }
-  ];
+  {
+    "title": "Meta Ads Optimization for Conversion Campaigns: A Complete 2025 Guide",
+    "excerpt": "Running Meta Ads (formerly Facebook Ads) can be one of the most profitable strategies for businesses—if optimized the right way. However, with competition growi...",
+    "category": "Meta Ads",
+    "date": "Nov 17, 2025",
+    "image": "./images/blogs/meta-ads-optimization.webp"
+  },
+  {
+    "title": "10 Powerful Digital Marketing Services to Grow Fast",
+    "excerpt": "In today’s fast-paced digital world, businesses that fail to leverage digital marketing effectively often fall behind. Whether you’re a startup or an establishe...",
+    "category": "Marketing",
+    "date": "Sep 12, 2025",
+    "image": "./images/blogs/digital-marketing-services.jpg"
+  },
+  {
+    "title": "10 Powerful Tips of Digital Marketing for Small Businesses",
+    "excerpt": "Running a small business in 2025 is exciting—but let’s be honest, it’s not easy. From competing with bigger brands to staying visible in a crowded online world,...",
+    "category": "Strategy",
+    "date": "Sep 05, 2025",
+    "image": "./images/blogs/small-business-marketing.jpg"
+  }
+];
 
   async function loadHomeBlogs() {
       let allBlogs = [...defaultBlogs];
