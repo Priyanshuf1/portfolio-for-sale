@@ -38,16 +38,29 @@
       'Brand Development',
       'Google & Meta Ads'
     ];
-    let wordIdx = 0, charIdx = 0, isDeleting = false, delay = 180;
+    let wordIdx = 0, charIdx = words[0].length, isDeleting = true, delay = 2200;
     function type() {
       const w = words[wordIdx];
-      if (isDeleting) { textEl.textContent = w.substring(0, charIdx - 1); charIdx--; delay = 80; }
-      else            { textEl.textContent = w.substring(0, charIdx + 1); charIdx++; delay = 140; }
-      if (!isDeleting && charIdx === w.length)  { delay = 2000; isDeleting = true; }
-      else if (isDeleting && charIdx === 0)     { isDeleting = false; wordIdx = (wordIdx + 1) % words.length; delay = 400; }
+      if (isDeleting) {
+        textEl.textContent = w.substring(0, charIdx - 1);
+        charIdx--;
+        delay = 60;
+      } else {
+        textEl.textContent = w.substring(0, charIdx + 1);
+        charIdx++;
+        delay = 100;
+      }
+      if (!isDeleting && charIdx === w.length) {
+        delay = 2400;
+        isDeleting = true;
+      } else if (isDeleting && charIdx === 0) {
+        isDeleting = false;
+        wordIdx = (wordIdx + 1) % words.length;
+        delay = 350;
+      }
       setTimeout(type, delay);
     }
-    setTimeout(type, 800);
+    setTimeout(type, 2200);
   }
 
   // ── 3. SCROLL SPY ────────────────────────────────────────────────────────
@@ -154,20 +167,20 @@
 
     const isMobile = window.innerWidth <= 767 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-    // ── HERO REVEAL (Immediate on Load) ──
+    // ── HERO REVEAL (Immediate, Smooth, Zero Stutter on Button & Text) ──
     const heroTitle = document.querySelector('#hero h1');
     const heroElements = document.querySelectorAll('#hero .badge-pill-red, #hero .hero-typewriter-wrap, #hero p, #hero .btn-primary');
     
     if (heroTitle) {
       gsap.fromTo(heroTitle,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.1 }
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
       );
     }
     if (heroElements.length > 0) {
       gsap.fromTo(heroElements,
-        { opacity: 0, y: 25 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out', delay: 0.35 }
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power2.out', delay: 0.06 }
       );
     }
 

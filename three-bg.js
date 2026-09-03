@@ -244,17 +244,16 @@
       console.log('[Vanta] ⚡ Skipped on mobile view to maximize performance.');
       return;
     }
-    loadThreeJS(() => {
-      loadP5JS(() => {
-        if (window.VANTA && window.VANTA.TOPOLOGY) {
-          callback();
-          return;
-        }
-        const script = document.createElement('script');
-        script.src = './vanta.topology.js?v=' + Date.now();
-        script.onload = callback;
-        document.head.appendChild(script);
-      });
+    // Vanta Topology uses p5.js directly; Three.js is not needed
+    loadP5JS(() => {
+      if (window.VANTA && window.VANTA.TOPOLOGY) {
+        callback();
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = './vanta.topology.js?v=' + Date.now();
+      script.onload = callback;
+      document.head.appendChild(script);
     });
   }
 
@@ -316,7 +315,7 @@
       // Extra 100ms delay to ensure hydration has settled
       setTimeout(() => {
         loadVantaTopology(initVantaTopology);
-      }, 100);
+      }, 400);
     });
   }
 
