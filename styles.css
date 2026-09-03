@@ -1628,8 +1628,6 @@ footer.glb-footer {
 }
 .glm-word-inner {
   display: inline-block;
-  transform: translateY(100%);
-  opacity: 0;
 }
 
 /* ── Stat counter cards — premium number display ── */

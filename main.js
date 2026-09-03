@@ -116,27 +116,29 @@
     });
   }
 
-        // ── 6. WORD-BY-WORD HEADING REVEAL (Buttery Smooth Looping Animation) ────
+          // ── 6. WORD-BY-WORD HEADING REVEAL (Safe & Rock-Solid) ────────────────────
   function initHeadingWordReveals() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-    // Target all H2 headings across the entire page
-    const headings = document.querySelectorAll('h2');
+    // Target major section headings
+    const headings = document.querySelectorAll(
+      '#about-me h2, #services h2, #faq h2, #glb-skills-section h2, #why-choose-us h2, #our-team h2, #glb-reviews-section h2, .glb-home-blogs h2, #glb-location h2'
+    );
 
     headings.forEach(h => {
-      // Prevent double-wrapping
+      // Prevent wrapping headings more than once
       if (h.dataset.wordsRevealed === '1' || h.querySelector('.glm-word-reveal')) return;
       h.dataset.wordsRevealed = '1';
 
       const contents = Array.from(h.childNodes);
-      h.innerHTML = '';
+      const fragment = document.createDocumentFragment();
 
       contents.forEach(node => {
         if (node.nodeType === Node.TEXT_NODE) {
           const words = node.textContent.split(/(\s+)/);
           words.forEach(w => {
             if (w.trim() === '') {
-              h.appendChild(document.createTextNode(w));
+              fragment.appendChild(document.createTextNode(w));
             } else {
               const wrap = document.createElement('span');
               wrap.className = 'glm-word-reveal';
@@ -144,12 +146,12 @@
               inner.className = 'glm-word-inner';
               inner.textContent = w;
               wrap.appendChild(inner);
-              h.appendChild(wrap);
+              fragment.appendChild(wrap);
             }
           });
         } else if (node.nodeType === Node.ELEMENT_NODE) {
           if (node.tagName.toLowerCase() === 'br') {
-            h.appendChild(node.cloneNode(true));
+            fragment.appendChild(node.cloneNode(true));
           } else {
             const wrap = document.createElement('span');
             wrap.className = 'glm-word-reveal';
@@ -157,59 +159,37 @@
             inner.classList.add('glm-word-inner');
             inner.style.display = 'inline-block';
             wrap.appendChild(inner);
-            h.appendChild(wrap);
+            fragment.appendChild(wrap);
           }
         }
       });
+
+      h.innerHTML = '';
+      h.appendChild(fragment);
 
       const inners = h.querySelectorAll('.glm-word-inner');
       if (inners.length === 0) return;
 
-      gsap.set(inners, { y: '100%', opacity: 0 });
-
-      // Natural, graceful 0.65s timing with 0.035s stagger
-      // toggleActions: 'play none none reverse'
-      // - Smoothly reveals on scroll down
-      // - STAYS 100% VISIBLE while inside the viewport (never vanishes or gets stuck while reading)
-      // - Resets only when completely scrolled back above, creating an infinite smooth loop
-      gsap.to(inners, {
-        y: '0%',
-        opacity: 1,
-        duration: 0.65,
-        stagger: 0.035,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: h,
-          start: 'top 90%',
-          toggleActions: 'play none none reverse'
+      // Safe GSAP fromTo: elements start naturally visible in HTML,
+      // animate gracefully on scroll, and loop without getting stuck
+      gsap.fromTo(inners, 
+        { y: '100%', opacity: 0 },
+        {
+          y: '0%',
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.03,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: h,
+            start: 'top 90%',
+            toggleActions: 'play none none reverse'
+          }
         }
-      });
+      );
     });
   }
   window.initHeadingWordReveals = initHeadingWordReveals;
-
-  // Observe DOM for any newly injected headings (Blogs, Reviews, Team, Services)
-  if (typeof MutationObserver !== 'undefined' && !window.glmHeadingObserverInit) {
-    window.glmHeadingObserverInit = true;
-    const observer = new MutationObserver((mutations) => {
-      let hasNewH2 = false;
-      for (const m of mutations) {
-        if (m.addedNodes) {
-          for (const node of m.addedNodes) {
-            if (node.nodeType === 1 && (node.tagName === 'H2' || node.querySelector && node.querySelector('h2'))) {
-              hasNewH2 = true;
-              break;
-            }
-          }
-        }
-        if (hasNewH2) break;
-      }
-      if (hasNewH2) {
-        setTimeout(initHeadingWordReveals, 50);
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-  }
 
   // ── 7. SMOOTH SCROLL + GSAP ANIMATIONS ───────────────────────────────────
   function initAnimations() {
@@ -265,15 +245,15 @@
     const revealConfigs = [
       {
         trigger: '#about-me',
-        elements: '#about-me .badge-pill-red, #about-me h2, #about-me p, #about-me .about-tag-item, #about-me .about-tool-tag, #about-me .about-stat-card, #about-logo-3d-card'
+        elements: '#about-me .badge-pill-red, #about-me p, #about-me .about-tag-item, #about-me .about-tool-tag, #about-me .about-stat-card, #about-logo-3d-card'
       },
       {
         trigger: '#services',
-        elements: '#services .badge-pill-red, #services h2, #services p, #services .service-card-item, #services .process-img-wrap'
+        elements: '#services .badge-pill-red, #services p, #services .service-card-item, #services .process-img-wrap'
       },
       {
         trigger: '#faq',
-        elements: '#faq .badge-pill-red, #faq h2, #faq p, #faq .faq-row'
+        elements: '#faq .badge-pill-red, #faq p, #faq .faq-row'
       }
     ];
 
