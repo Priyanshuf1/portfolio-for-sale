@@ -465,5 +465,12 @@
   document.head.appendChild(styleEl);
 
   // Poll to ensure sections are always present in the DOM (surviving React hydration wipes)
-  setInterval(injectCompanyDetails, 600);
+  let _compTimerCount = 0;
+  const _compTimer = setInterval(function() {
+    injectCompanyDetails();
+    _compTimerCount++;
+    if (document.getElementById('glb-company-details-wrapper') || _compTimerCount > 10) {
+      clearInterval(_compTimer);
+    }
+  }, 500);
 })();

@@ -210,6 +210,13 @@
   }
   
   // Single-run safety checker
-  setInterval(run, 1000);
+  let _marqueeTimerCount = 0;
+  const _marqueeTimer = setInterval(function() {
+    run();
+    _marqueeTimerCount++;
+    if (_marqueeTimerCount > 8) {
+      clearInterval(_marqueeTimer);
+    }
+  }, 500);
 
 })();

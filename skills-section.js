@@ -424,7 +424,14 @@
 
   // Initial and recurring check
   injectSkillsSection();
-  setInterval(injectSkillsSection, 600);
+  let _skillsTimerCount = 0;
+  const _skillsTimer = setInterval(function() {
+    injectSkillsSection();
+    _skillsTimerCount++;
+    if (document.getElementById('glb-skills-section') || _skillsTimerCount > 10) {
+      clearInterval(_skillsTimer);
+    }
+  }, 500);
 
   // Refresh layout on resize
   let lastWidth = window.innerWidth;

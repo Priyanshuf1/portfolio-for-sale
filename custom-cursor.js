@@ -67,6 +67,21 @@
     }
   }, { passive: true });
 
+  let _ringRaf = null;
+  let _lastActiveTime = Date.now();
+
+  window.addEventListener('mousemove', () => {
+    _lastActiveTime = Date.now();
+    if (!_ringRaf) {
+      _ringRaf = const diff = Math.abs(mouseX - ringX) + Math.abs(mouseY - ringY);
+    if (diff > 0.1 || Date.now() - _lastActiveTime < 1000) {
+      _ringRaf = requestAnimationFrame(animateRing);
+    } else {
+      _ringRaf = null;
+    }
+    }
+  }, { passive: true });
+
   function animateRing() {
     ringX += (mouseX - ringX) * 0.18;
     ringY += (mouseY - ringY) * 0.18;

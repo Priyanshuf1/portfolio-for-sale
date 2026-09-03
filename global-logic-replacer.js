@@ -58,10 +58,31 @@
     replaceAllMeily();
   }
 
-  const observer = new MutationObserver(replaceAllMeily);
+  
+  // Optimized: Run only during initial page load & early hydration, then disconnect
+  let replaceCount = 0;
+  const replaceTimer = setInterval(function() {
+    replaceAllMeily();
+    replaceCount++;
+    if (replaceCount >= 4) {
+      clearInterval(replaceTimer);
+      if (observer) observer.disconnect();
+    }
+  }, 500);
+
+  const observer = new MutationObserver(function(mutations) {
+    if (replaceCount < 4) {
+      replaceAllMeily();
+    }
+  });
+
   if (document.body) {
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 
-  setInterval(replaceAllMeily, 300);
+  // Safety cleanup: Disconnect completely after 3 seconds
+  setTimeout(function() {
+    clearInterval(replaceTimer);
+    if (observer) observer.disconnect();
+  }, 3000);
 })();
