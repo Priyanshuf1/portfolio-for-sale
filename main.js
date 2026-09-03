@@ -116,18 +116,16 @@
     });
   }
 
-      // ── 6. WORD-BY-WORD HEADING REVEAL (Smooth Looping Scroll Animation) ─────
+        // ── 6. WORD-BY-WORD HEADING REVEAL (Buttery Smooth Looping Animation) ────
   function initHeadingWordReveals() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-    // Target all H2 headings across all sections (static and dynamic)
-    const headings = document.querySelectorAll(
-      'section:not(#hero) h2, .glb-why-us-header h2, .glb-team-header h2, .glb-skills-header h2, .glb-reviews-header h2, .glb-home-blogs-header h2, .glb-location-header h2'
-    );
+    // Target all H2 headings across the entire page
+    const headings = document.querySelectorAll('h2');
 
     headings.forEach(h => {
-      // Prevent duplicate wrapping or wrapping marquee headers
-      if (h.dataset.wordsRevealed || h.querySelector('.glm-word-reveal') || h.closest('#projects')) return;
+      // Prevent double-wrapping
+      if (h.dataset.wordsRevealed === '1' || h.querySelector('.glm-word-reveal')) return;
       h.dataset.wordsRevealed = '1';
 
       const contents = Array.from(h.childNodes);
@@ -169,23 +167,49 @@
 
       gsap.set(inners, { y: '100%', opacity: 0 });
 
-      // Silky-smooth 0.45s duration with tight 0.025s stagger that loops on both scroll up & down
+      // Natural, graceful 0.65s timing with 0.035s stagger
+      // toggleActions: 'play none none reverse'
+      // - Smoothly reveals on scroll down
+      // - STAYS 100% VISIBLE while inside the viewport (never vanishes or gets stuck while reading)
+      // - Resets only when completely scrolled back above, creating an infinite smooth loop
       gsap.to(inners, {
         y: '0%',
         opacity: 1,
-        duration: 0.45,
-        stagger: 0.025,
+        duration: 0.65,
+        stagger: 0.035,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: h,
-          start: 'top 88%',
-          end: 'bottom 12%',
-          toggleActions: 'play reverse play reverse'
+          start: 'top 90%',
+          toggleActions: 'play none none reverse'
         }
       });
     });
   }
   window.initHeadingWordReveals = initHeadingWordReveals;
+
+  // Observe DOM for any newly injected headings (Blogs, Reviews, Team, Services)
+  if (typeof MutationObserver !== 'undefined' && !window.glmHeadingObserverInit) {
+    window.glmHeadingObserverInit = true;
+    const observer = new MutationObserver((mutations) => {
+      let hasNewH2 = false;
+      for (const m of mutations) {
+        if (m.addedNodes) {
+          for (const node of m.addedNodes) {
+            if (node.nodeType === 1 && (node.tagName === 'H2' || node.querySelector && node.querySelector('h2'))) {
+              hasNewH2 = true;
+              break;
+            }
+          }
+        }
+        if (hasNewH2) break;
+      }
+      if (hasNewH2) {
+        setTimeout(initHeadingWordReveals, 50);
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
 
   // ── 7. SMOOTH SCROLL + GSAP ANIMATIONS ───────────────────────────────────
   function initAnimations() {

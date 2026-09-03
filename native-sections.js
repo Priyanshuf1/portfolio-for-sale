@@ -232,6 +232,7 @@
       }
 
       placeReviews();
+      if (window.initHeadingWordReveals) setTimeout(window.initHeadingWordReveals, 60);
   }
 
   function init() {
