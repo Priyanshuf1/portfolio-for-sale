@@ -507,7 +507,7 @@
             scrollTrigger: {
               trigger: '#projects',
               start: 'top 85%',
-              toggleActions: 'play none none none', once: true
+              toggleActions: 'play reset play reset'
             }
           }
         );
@@ -776,7 +776,7 @@
           scrollTrigger: {
             trigger: '.glm-insta-integrated-header',
             start: 'top 85%',
-            toggleActions: 'play none none none', once: true
+            toggleActions: 'play reset play reset'
           }
         })
         .fromTo('#glm-instagram-feed-section .glm-insta-story-ring', 
@@ -811,7 +811,7 @@
             scrollTrigger: {
               trigger: '#reel-carousel',
               start: 'top 90%',
-              toggleActions: 'play none none none', once: true
+              toggleActions: 'play reset play reset'
             }
           }
         );

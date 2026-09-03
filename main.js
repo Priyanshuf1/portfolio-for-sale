@@ -178,27 +178,11 @@
     if (!window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    // Optimize ScrollTrigger performance & eliminate fast-scroll lag
+    // Optimize ScrollTrigger performance
     ScrollTrigger.config({
       limitCallbacks: true,
-      ignoreMobileResize: true,
-      fastScrollEnd: 2000
+      ignoreMobileResize: true
     });
-
-    // Initialize Lenis Smooth Scrolling synchronized with GSAP
-    if (window.Lenis && !window.lenisInstance) {
-      window.lenisInstance = new Lenis({
-        duration: 1.0,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true,
-        touchMultiplier: 1.2
-      });
-      window.lenisInstance.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => {
-        if (window.lenisInstance) window.lenisInstance.raf(time * 1000);
-      });
-      gsap.ticker.lagSmoothing(0);
-    }
 
     // Prevent duplicate initialization
     if (document.body.classList.contains('glb-animations-loaded')) return;
@@ -274,7 +258,7 @@
         scrollTrigger: {
           trigger: section,
           start: isMobile ? 'top 92%' : 'top 85%',
-          toggleActions: 'play none none none', once: true
+          toggleActions: 'play reset play reset' // Replay animations on scroll up and down
         }
       });
     });
