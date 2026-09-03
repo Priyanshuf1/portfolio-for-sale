@@ -2001,7 +2001,42 @@ html body .glb-home-blog-card:hover .glb-home-blog-read,
   color: #ffffff !important;
 }
 
-.glb-footer-contact-item a,
-.glb-footer-contact-item span {
-  color: #111827 !important;
+
+
+
+/* WhatsApp crisp icon & rich green background for floating/CTA WhatsApp buttons */
+html body .glb-footer-socials a svg.glb-footer-wa-svg,
+html body .glb-footer-socials a svg.glb-footer-wa-svg path {
+  fill: #ffffff !important;
+  stroke: none !important;
+}
+
+html body .glb-floating-btn,
+html body #glbTrigger,
+html body a[href*="wa.me"]:not(.glb-footer-socials a) {
+  background: #1da851 !important;
+  background-color: #1da851 !important;
+  border-color: #1da851 !important;
+  color: #ffffff !important;
+}
+html body .glb-floating-btn:hover,
+html body #glbTrigger:hover,
+html body a[href*="wa.me"]:not(.glb-footer-socials a):hover {
+  background: #178c43 !important;
+  background-color: #178c43 !important;
+  border-color: #178c43 !important;
+}
+
+/* Contact item font & color uniformity (non-bold, same #4b5563 as address) */
+html body .glb-footer-contact-item,
+html body .glb-footer-contact-item a,
+html body .glb-footer-contact-link {
+  color: #4b5563 !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  text-decoration: none !important;
+}
+html body .glb-footer-contact-item a:hover {
+  color: #e20001 !important;
 }

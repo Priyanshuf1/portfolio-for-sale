@@ -95,6 +95,25 @@
       color: #e20001;
     }
     
+    
+    .glb-footer-socials a svg.glb-footer-wa-svg path {
+      fill: #ffffff !important;
+      stroke: none !important;
+    }
+    .glb-footer-contact-item,
+    .glb-footer-contact-item a,
+    .glb-footer-contact-link {
+      color: #4b5563 !important;
+      font-size: 15px !important;
+      font-weight: 400 !important;
+      text-decoration: none !important;
+      line-height: 1.5 !important;
+      transition: color 0.2s ease;
+    }
+    .glb-footer-contact-item a:hover {
+      color: #e20001 !important;
+    }
+
     .glb-footer-contact-item {
       display: flex;
       gap: 12px;
@@ -142,7 +161,7 @@
           <a href="https://www.instagram.com/globallogicmedia" target="_blank" aria-label="Instagram" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
           <a href="https://www.linkedin.com/company/globallogicmedia" target="_blank" aria-label="LinkedIn" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2" fill="#ffffff"></circle></svg></a>
           <a href="https://www.youtube.com/@globallogicmedia" target="_blank" aria-label="YouTube" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="#ffffff" stroke="none"></polygon></svg></a>
-          <a href="https://wa.me/message/CDN2NPVITSRHH1" target="_blank" aria-label="WhatsApp" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.45 1.03 2.62.13.17 1.78 2.72 4.31 3.81.6.26 1.07.42 1.44.53.61.19 1.16.16 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.18-.48-.3"/></svg></a>
+          <a href="https://wa.me/message/CDN2NPVITSRHH1" target="_blank" aria-label="WhatsApp" rel="noopener noreferrer"><svg class="glb-footer-wa-svg" width="18" height="18" viewBox="0 0 24 24"><path fill="#ffffff" stroke="none" d="M17.472 14.382c-.301-.15-1.78-.878-2.056-.979-.276-.1-.477-.15-.678.151-.2.301-.778.979-.954 1.18-.176.2-.352.226-.653.076-.301-.15-1.272-.469-2.423-1.496-.896-.799-1.5-1.787-1.676-2.088-.176-.301-.019-.464.132-.614.136-.135.301-.352.452-.527.15-.175.2-.301.301-.502.101-.2.05-.376-.025-.527-.075-.15-.678-1.632-.93-2.235-.244-.588-.493-.509-.677-.518h-.578c-.2 0-.527.075-.803.376s-1.054 1.029-1.054 2.511c0 1.482 1.079 2.913 1.23 3.114.15.2 2.124 3.243 5.145 4.549.719.311 1.28.497 1.718.636.722.23 1.379.197 1.9.12.58-.087 1.78-.727 2.031-1.43.25-.703.25-1.304.175-1.43-.075-.126-.276-.201-.577-.351z"/><path fill="#ffffff" stroke="none" d="M12.004 2C6.479 2 2 6.48 2 12.006c0 1.83.498 3.547 1.365 5.023L2 22l5.143-1.348A9.96 9.96 0 0 0 12.004 22c5.524 0 10.003-4.478 10.003-10.004S17.528 2 12.004 2zm0 18.283c-1.605 0-3.114-.46-4.397-1.253l-.316-.194-3.262.856.871-3.18-.21-.334a8.243 8.243 0 0 1-1.267-4.172c0-4.57 3.717-8.288 8.281-8.288 4.564 0 8.281 3.718 8.281 8.288 0 4.57-3.717 8.287-8.281 8.287z"/></svg></a>
         </div>
       </div>
       
@@ -177,11 +196,11 @@
         </div>
         <div class="glb-footer-contact-item">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-          <a href="mailto:globallogicmedia06@gmail.com" style="color:#111827; text-decoration:none; font-weight:500;">globallogicmedia06@gmail.com</a>
+          <a href="mailto:globallogicmedia06@gmail.com" class="glb-footer-contact-link">globallogicmedia06@gmail.com</a>
         </div>
         <div class="glb-footer-contact-item">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-          <a href="tel:+919208111603" style="color:#111827; text-decoration:none; font-weight:500;">+91-9208111603</a>
+          <a href="tel:+919208111603" class="glb-footer-contact-link">+91-9208111603</a>
         </div>
       </div>
     </div>

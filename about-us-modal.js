@@ -7,13 +7,13 @@
       bottom: 30px;
       right: 30px;
       z-index: 9998;
-      background: #25D366;
+      background: #1da851;
       color: #ffffff;
       width: 56px;
       height: 56px;
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 8px 24px rgba(37,211,102,0.3), inset 0 1px 1px rgba(255,255,255,0.2);
+      box-shadow: 0 8px 24px rgba(29,168,81,0.3), inset 0 1px 1px rgba(255,255,255,0.2);
       border: 1px solid rgba(255,255,255,0.1);
       transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
       display: flex;
@@ -24,8 +24,8 @@
     
     .glb-floating-btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(37,211,102,0.45), inset 0 1px 1px rgba(255,255,255,0.3);
-      background: #128C7E;
+      box-shadow: 0 12px 32px rgba(29,168,81,0.45), inset 0 1px 1px rgba(255,255,255,0.3);
+      background: #178c43;
       color: #fff;
     }
   `;
