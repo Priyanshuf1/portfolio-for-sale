@@ -212,9 +212,9 @@ section {
   gap: 12px;
 }
 
-/* ── Sticky Header Navigation ── */
+/* ── Navigation Header (Stays with First Slide / Hero) ── */
 header.glb-site-header {
-  position: fixed;
+  position: absolute !important;
   top: 16px;
   left: 50%;
   transform: translateX(-50%);
@@ -1200,6 +1200,7 @@ footer.glb-footer {
 
   /* Header Mobile Bar */
   header.glb-site-header {
+    position: absolute !important;
     top: 8px !important;
     left: 8px !important;
     right: 8px !important;
@@ -2069,4 +2070,11 @@ body {
 /* Disable expensive background filters during scroll */
 .glb-scrolling * {
   pointer-events: none !important;
+}
+
+.glb-home-blogs-header h2,
+.glb-home-blogs-header h2 .glm-word-inner {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  opacity: 1 !important;
 }

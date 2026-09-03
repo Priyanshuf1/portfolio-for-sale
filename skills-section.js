@@ -230,7 +230,8 @@
 
     // Clean up any existing ScrollTriggers inside our capabilities section
     ScrollTrigger.getAll().forEach(t => {
-      if (t.trigger === section || (t.trigger && t.trigger.closest && t.trigger.closest('#glb-skills-section'))) {
+      if (t.trigger && (t.trigger.tagName === 'H2' || (t.trigger.classList && t.trigger.classList.contains('glm-word-reveal')))) return;
+      if (t.trigger === section || (t.trigger && t.trigger.closest && t.trigger.closest('#glb-skills-section') && t.trigger.tagName !== 'H2')) {
         t.kill(true);
       }
     });
@@ -420,6 +421,7 @@
     } else if (!container.parentNode) {
       document.body.appendChild(container);
     }
+    if (window.initHeadingWordReveals) setTimeout(window.initHeadingWordReveals, 120);
     if (window.initHeadingWordReveals) window.initHeadingWordReveals();
   }
 
