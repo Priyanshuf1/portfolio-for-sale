@@ -2078,3 +2078,45 @@ body {
   -webkit-text-fill-color: #111827 !important;
   opacity: 1 !important;
 }
+
+/* ── Universal Section Heading Typography Standard (Exact Same Font & Boldness) ── */
+h2,
+.h2-fluid,
+#about-me h2,
+#services h2,
+#faq h2,
+.glb-skills-header h2,
+.glb-why-us-header h2,
+.glb-team-header h2,
+.glb-reviews-title-wrap h2,
+.glb-home-blogs-header h2,
+.glb-location-header h2,
+#projects h2 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-weight: 900 !important;
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  font-size: clamp(2.1rem, 4.5vw, 3.2rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: none !important;
+}
+
+@media (max-width: 768px) {
+  h2,
+  .h2-fluid,
+  #about-me h2,
+  #services h2,
+  #faq h2,
+  .glb-skills-header h2,
+  .glb-why-us-header h2,
+  .glb-team-header h2,
+  .glb-reviews-title-wrap h2,
+  .glb-home-blogs-header h2,
+  .glb-location-header h2,
+  #projects h2 {
+    font-size: clamp(1.85rem, 6.5vw, 2.3rem) !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.02em !important;
+  }
+}

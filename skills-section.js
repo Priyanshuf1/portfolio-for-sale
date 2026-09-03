@@ -369,7 +369,7 @@
       <div class="glb-skills-section" id="glb-skills-section">
         <div class="glb-skills-inner">
           <div class="glb-skills-header" style="margin-bottom: 50px;">
-            <h2 class="h2-fluid" style="text-transform: uppercase; letter-spacing: 0.15em; font-weight: 900; color: #111827 !important;">Our Services</h2>
+            <h2 class="h2-fluid" style="margin:0;">Our Services</h2>
           </div>
 
           <div id="glbSkillsGrid"></div>

@@ -459,7 +459,7 @@
     if (!marqueeSection.dataset.marqueeBuilt) {
       marqueeSection.innerHTML = `
         <div style="text-align:center;pointer-events:none;user-select:none;margin-bottom:30px;">
-          <h2 style="color:#111827 !important;font-size:clamp(36px,5vw,64px);font-weight:900;line-height:1.1;font-family:sans-serif;margin:0;text-transform:uppercase;letter-spacing:0.15em;">our clients</h2>
+          <h2 class="h2-fluid" style="margin:0;">Our Clients</h2>
         </div>
         <div class="glm-marquee-wrap">
           <div class="glm-marquee-row right" id="marquee-row-2"></div>
