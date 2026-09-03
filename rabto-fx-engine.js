@@ -254,5 +254,10 @@
     setTimeout(initFXEngine, 200);
   }
 
-  setInterval(applyCardTiltFX, 1500);
+  var _fxTimerCount = 0;
+  var _fxTimer = setInterval(function() {
+    applyCardTiltFX();
+    _fxTimerCount++;
+    if (_fxTimerCount > 8) clearInterval(_fxTimer);
+  }, 1500);
 })();

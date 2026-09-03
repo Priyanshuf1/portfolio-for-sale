@@ -85,6 +85,13 @@
     if (canvasVanta) {
       canvasVanta.style.opacity = opacityVanta;
       canvasVanta.style.display = opacityVanta === 0 ? 'none' : 'block';
+  if (vantaEffect) {
+    if (opacityVanta === 0 && !vantaEffect.paused) {
+      if (typeof vantaEffect.pause === 'function') vantaEffect.pause();
+    } else if (opacityVanta > 0 && vantaEffect.paused) {
+      if (typeof vantaEffect.play === 'function') vantaEffect.play();
+    }
+  }
     }
   }
 
@@ -314,6 +321,15 @@
   }
 
   // Setup scroll opacity listener
-  window.addEventListener('scroll', updateCanvasOpacities);
+  let _scrollTick = false;
+  window.addEventListener('scroll', () => {
+    if (!_scrollTick) {
+      requestAnimationFrame(() => {
+        updateCanvasOpacities();
+        _scrollTick = false;
+      });
+      _scrollTick = true;
+    }
+  }, { passive: true });
   window.addEventListener('resize', updateCanvasOpacities);
 })();

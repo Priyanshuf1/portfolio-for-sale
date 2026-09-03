@@ -1088,5 +1088,15 @@
     checkAndInject();
   }
   window.addEventListener('load', checkAndInject);
-  setInterval(checkAndInject, 1000);
+  var _injectTimer = setInterval(function() {
+    var existingMarquee = document.getElementById('projects');
+    var existingInsta = document.getElementById('glm-instagram-feed-section');
+    if (existingMarquee && existingMarquee.dataset.marqueeBuilt &&
+        existingInsta && existingInsta.dataset.elfsightBuilt) {
+      clearInterval(_injectTimer);
+      return;
+    }
+    checkAndInject();
+  }, 1000);
+  setTimeout(function() { clearInterval(_injectTimer); }, 10000);
 })();

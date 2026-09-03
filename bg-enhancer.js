@@ -18,7 +18,7 @@
         radial-gradient(at 50% 50%, rgba(226, 0, 1, 0.03) 0px, transparent 55%),
         radial-gradient(at 85% 85%, rgba(0, 0, 0, 0.02) 0px, transparent 50%),
         radial-gradient(at 15% 85%, rgba(226, 0, 1, 0.02) 0px, transparent 50%) !important;
-      background-attachment: fixed !important;
+      /* background-attachment: fixed removed for 60fps scrolling */
       background-size: cover !important;
       color: #1f2937 !important;
     }

@@ -2040,3 +2040,32 @@ html body .glb-footer-contact-link {
 html body .glb-footer-contact-item a:hover {
   color: #e20001 !important;
 }
+
+
+/* ── Hardware-Accelerated 60FPS Scroll Optimization ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Eliminate repaint stutter on animated cards and sections */
+.glb-skill-card,
+.glb-home-blog-card,
+.glb-review-card-premium,
+.glb-comparison-card,
+.glb-contact-card,
+.glb-map-container-box {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Disable expensive background filters during scroll */
+.glb-scrolling * {
+  pointer-events: none !important;
+}

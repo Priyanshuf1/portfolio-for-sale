@@ -170,6 +170,9 @@
   }
 
   function animate() {
+    if (canvas.style.display === 'none' || canvas.style.opacity === '0') {
+      return; // Stop animation loop immediately if canvas is disabled
+    }
     ctx.clearRect(0, 0, width, height);
 
     drawConstellationLines();
