@@ -128,10 +128,10 @@
     }
     
     .glb-comparison-card.others .glb-comp-item {
-      color: #777;
+      color: #4b5563 !important;
     }
     .glb-comparison-card.glm .glb-comp-item {
-      color: #ddd;
+      color: #4b5563 !important;
     }
     
     .glb-comp-icon {

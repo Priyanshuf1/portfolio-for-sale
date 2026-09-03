@@ -1971,3 +1971,37 @@ html body .glb-home-blog-card:hover .glb-home-blog-read,
   color: #a30000 !important;
   -webkit-text-fill-color: #a30000 !important;
 }
+
+
+/* Exact requested fixes for comparison items & contact buttons */
+.glb-comparison-card.glm .glb-comp-item,
+.glb-comparison-card.others .glb-comp-item {
+  color: #4b5563 !important;
+}
+
+@media (min-width: 769px) {
+  .glb-contact-card-action {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 126px !important;
+    min-width: 126px !important;
+    height: 38px !important;
+    box-sizing: border-box !important;
+    border-radius: 8px !important;
+    text-align: center !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+  }
+}
+
+.glb-contact-card-action svg,
+.glb-contact-card-action svg * {
+  stroke: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.glb-footer-contact-item a,
+.glb-footer-contact-item span {
+  color: #111827 !important;
+}

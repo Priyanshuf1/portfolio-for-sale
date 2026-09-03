@@ -90,12 +90,13 @@
     }
     .glb-contact-card-val { color: #111827; font-size: 0.95rem; font-weight: 500; line-height: 1.4; }
     .glb-contact-card-action {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 16px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      width: 126px; min-width: 126px; height: 38px; box-sizing: border-box;
       background: #e20001 !important;
       border: 1px solid #e20001 !important;
-      color: #ffffff !important; border-radius: 8px; font-size: 13px; font-weight: 600;
+      color: #ffffff !important; border-radius: 8px !important; font-size: 13px; font-weight: 700;
       text-decoration: none; white-space: nowrap; transition: all 0.2s;
+      text-align: center;
     }
     .glb-contact-card:hover .glb-contact-card-action {
       background: #c10001 !important; color: #ffffff !important; border-color: #c10001 !important;
@@ -161,8 +162,8 @@
     <div class="glb-location-section">
       <div class="glb-location-inner">
         <div class="glb-location-header">
-          <span class="glb-location-badge">OUR HEADQUARTERS</span>
-          <h2>Visit Our Lucknow Office</h2>
+          <span class="glb-location-badge">OUR OFFICE</span>
+          <h2>Visit Our Office</h2>
           <p>Have a project in mind or want to discuss growth strategies? Stop by our office or reach out directly.</p>
         </div>
         <div class="glb-location-grid">
@@ -185,7 +186,7 @@
                   <span class="glb-contact-card-val">+91-9208111603</span>
                 </div>
               </div>
-              <a href="tel:+919208111603" class="glb-contact-card-action">Call Us 📞</a>
+              <a href="tel:+919208111603" class="glb-contact-card-action">Call Us <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-left:2px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
             </div>
             <div class="glb-contact-card">
               <div class="glb-contact-card-left">
@@ -205,7 +206,7 @@
                   <span class="glb-contact-card-val">Mon – Sat: 9:00 AM – 7:00 PM IST</span>
                 </div>
               </div>
-              <span style="font-size:12px;color:#ffffff !important;font-weight:700;background:#e20001 !important;border:1px solid #e20001 !important;padding:6px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;display:inline-block;white-space:nowrap;">Open Today</span>
+              <span class="glb-contact-card-action">Open Today</span>
             </div>
           </div>
 
