@@ -272,6 +272,41 @@
 
       placeReviews();
       if (window.initHeadingWordReveals) setTimeout(window.initHeadingWordReveals, 60);
+
+      // Aggressive Elfsight "Free Google Reviews Widget" Badge Remover
+      function obliterateElfsightBadge() {
+        // Standard DOM elements
+        const targets = document.querySelectorAll('a[href*="elfsight"], [class*="Badge"], [class*="badge"], [class*="branding"], [class*="Branding"], [class*="Watermark"], [class*="watermark"]');
+        targets.forEach(el => {
+          const text = (el.innerText || el.textContent || '').trim();
+          const href = el.getAttribute('href') || '';
+          if (text.includes('Free Google') || text.includes('Elfsight') || text.includes('Widget') || href.includes('elfsight')) {
+            el.style.setProperty('display', 'none', 'important');
+            el.remove();
+          }
+        });
+
+        // Search within all container children and shadow DOMs
+        const container = document.getElementById('glb-reviews-section');
+        if (container) {
+          const walker = (root) => {
+            if (!root) return;
+            const nodes = root.querySelectorAll ? root.querySelectorAll('*') : [];
+            nodes.forEach(node => {
+              if (node.shadowRoot) walker(node.shadowRoot);
+              const txt = (node.innerText || node.textContent || '').trim();
+              if (node.tagName === 'A' && (node.href && node.href.includes('elfsight.com') || txt.includes('Free Google'))) {
+                node.style.setProperty('display', 'none', 'important');
+                node.remove();
+              }
+            });
+          };
+          walker(container);
+        }
+      }
+
+      setInterval(obliterateElfsightBadge, 250);
+
   }
 
   function init() {
