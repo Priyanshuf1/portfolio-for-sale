@@ -2,6 +2,16 @@
   // === SECURITY CONFIG (SHA-256 Hash Verified) ===
   const ADMIN_PASSWORD_HASH = '7584bd8ca8b0051d95ee2be2b1aeb134ff88ca298f2638891515bbcf59d0d350';
   
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   async function sha256(str) {
     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
     return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
@@ -685,8 +695,8 @@
           if (rev.status === 'pending') {
             pendingHtml += `
               <div class="glb-pending-review" id="review-${key}">
-                <p><strong>${rev.author || 'Anonymous'}</strong> &nbsp;•&nbsp; <span style="color:#e20001">${stars}</span> (${rev.rating || 5}/5)</p>
-                <p>"${rev.text}"</p>
+                <p><strong>${escapeHtml(rev.author || 'Anonymous')}</strong> &nbsp;•&nbsp; <span style="color:#e20001">${stars}</span> (${rev.rating || 5}/5)</p>
+                <p>"${escapeHtml(rev.text)}"</p>
                 <div class="glb-review-action-btns">
                   <button class="glb-approve-btn" onclick="window.approveReview('${key}')">✓ Approve & Make Live</button>
                   <button class="glb-delete-btn" onclick="window.deleteReview('${key}')">🗑 Delete</button>
@@ -896,10 +906,10 @@
       const deleteAction = b.key ? `window.deleteBooking('${b.key}')` : `window.deleteLocalBooking('${b.email}')`;
       bookingsHtml += `
         <div class="glb-pending-review" id="booking-${b.key || b.email.replace(/[@\.]/g, '')}">
-          <p style="margin:0 0 8px; font-size:15px;"><strong>📞 ${b.name || 'Client'}</strong> &nbsp;•&nbsp; <span style="color:#888; font-size:12px;">${dateStr}</span></p>
-          <p style="margin:4px 0; font-size:14px;">📧 Email: <a href="mailto:${b.email}" style="color:#4ade80; text-decoration:underline;">${b.email}</a></p>
-          <p style="margin:4px 0; font-size:14px;">📱 Phone: <a href="tel:${b.phone}" style="color:#4ade80; text-decoration:underline;">${b.phone}</a></p>
-          <p style="margin:10px 0 4px; font-size:14px; color:#ddd; font-style:italic;">"${b.businessDetails || 'No details provided'}"</p>
+          <p style="margin:0 0 8px; font-size:15px;"><strong>📞 ${escapeHtml(b.name || 'Client')}</strong> &nbsp;•&nbsp; <span style="color:#888; font-size:12px;">${dateStr}</span></p>
+          <p style="margin:4px 0; font-size:14px;">📧 Email: <a href="mailto:${encodeURIComponent(b.email || '')}" style="color:#4ade80; text-decoration:underline;">${escapeHtml(b.email)}</a></p>
+          <p style="margin:4px 0; font-size:14px;">📱 Phone: <a href="tel:${encodeURIComponent(b.phone || '')}" style="color:#4ade80; text-decoration:underline;">${escapeHtml(b.phone)}</a></p>
+          <p style="margin:10px 0 4px; font-size:14px; color:#ddd; font-style:italic;">"${escapeHtml(b.businessDetails || 'No details provided')}"</p>
           <div class="glb-review-action-btns">
             <button class="glb-delete-btn" onclick="${deleteAction}">🗑 Mark as Contacted / Delete</button>
           </div>

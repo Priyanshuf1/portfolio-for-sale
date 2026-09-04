@@ -190,16 +190,16 @@
             </div>
             
             <div class="glb-form-group">
-              <input type="text" placeholder="Your Name" required>
+              <input type="text" id="glbBookName" placeholder="Your Name" required>
             </div>
             <div class="glb-form-group">
-              <input type="email" placeholder="Email Address" required>
+              <input type="email" id="glbBookEmail" placeholder="Email Address" required>
             </div>
             <div class="glb-form-group">
-              <input type="tel" placeholder="Phone Number" required>
+              <input type="tel" id="glbBookPhone" placeholder="Phone Number" required>
             </div>
             <div class="glb-form-group">
-              <textarea placeholder="Tell us about your business..." rows="4"></textarea>
+              <textarea id="glbBookDetails" placeholder="Tell us about your business..." rows="4"></textarea>
             </div>
             <button type="submit" class="glb-modal-book-btn">Schedule Call</button>
           </form>
@@ -294,12 +294,17 @@
     submitBtn.disabled = true;
 
     try {
+      const nameEl = form.querySelector('#glbBookName') || form.querySelector('input[placeholder="Your Name"]');
+      const emailEl = form.querySelector('#glbBookEmail') || form.querySelector('input[type="email"]');
+      const phoneEl = form.querySelector('#glbBookPhone') || form.querySelector('input[type="tel"]');
+      const detailsEl = form.querySelector('#glbBookDetails') || form.querySelector('textarea');
+
       const formData = {
-        name: form.querySelector('input[type="text"]').value,
-        email: form.querySelector('input[type="email"]').value,
-        phone: form.querySelector('input[type="tel"]').value,
-        businessDetails: form.querySelector('textarea').value,
-        createdAt: firebase.database.ServerValue.TIMESTAMP
+        name: (nameEl ? nameEl.value : '').trim(),
+        email: (emailEl ? emailEl.value : '').trim(),
+        phone: (phoneEl ? phoneEl.value : '').trim(),
+        businessDetails: (detailsEl ? detailsEl.value : '').trim(),
+        createdAt: (typeof firebase !== 'undefined' && firebase.database) ? firebase.database.ServerValue.TIMESTAMP : Date.now()
       };
 
       if (window.firebaseDB) {
