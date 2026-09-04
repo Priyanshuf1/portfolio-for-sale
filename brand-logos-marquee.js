@@ -103,7 +103,7 @@
 
   // ── 2. BRAND DATA ──────────────────────────────────────────────────────────
   const brands = [
-    { src: './images/clients/swarnim_lite.png', alt: 'Swarnim Lite' },
+    { src: './brand_swarnim_lite.png', alt: 'Swarnim Lite' },
     { src: './brand_b_luxury.jpeg',       alt: 'B Luxury Salon'        },
     { src: './brand_book_digital.jpeg',   alt: 'Book Your Digital Story' },
     { src: './brand_cs_ec.jpeg',          alt: 'CS EC'                 },

@@ -132,8 +132,9 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: grayscale(1) opacity(0.45);
-    transition: filter 0.4s ease, opacity 0.4s ease;
+    border-radius: 10px;
+    filter: grayscale(1) opacity(0.55);
+    transition: filter 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
     pointer-events: none;
   }
   .glm-marquee-item:hover img {
@@ -467,6 +468,7 @@
       `;
 
       var row2Images = [
+        './brand_swarnim_lite.png',
         './brand_home_archs.png',
         './brand_forever_treasures.png',
         './brand_om_group.png',

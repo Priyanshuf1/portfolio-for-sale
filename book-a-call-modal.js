@@ -243,30 +243,31 @@
 
   window.openBookACallModal = openModal;
 
-  // Auto-trigger contact modal once on first tap / click on the website
-  let autoContactTriggered = false;
-  function triggerContactOnceOnTap(e) {
-    if (autoContactTriggered) return;
-    if (sessionStorage.getItem('glb_auto_contact_shown')) return;
-
-    // Do not pop up if the user clicked inside modal or on close button
-    if (e.target && e.target.closest && e.target.closest('#glbOverlayBook, #glbCloseBook, .glb-floating-btn-book')) {
-      return;
-    }
-
-    autoContactTriggered = true;
-    sessionStorage.setItem('glb_auto_contact_shown', 'true');
-
+  // Auto-trigger contact modal automatically as someone enters the website
+  function autoOpenOnEnter() {
     setTimeout(() => {
       if (overlay && !overlay.classList.contains('active')) {
         openModal();
       }
-    }, 400);
-
-    window.removeEventListener('pointerdown', triggerContactOnceOnTap, { capture: true });
+    }, 1200);
   }
 
-  window.addEventListener('pointerdown', triggerContactOnceOnTap, { capture: true, passive: true });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', autoOpenOnEnter);
+  } else {
+    autoOpenOnEnter();
+  }
+
+  // Also trigger on first user tap/click if user interacts before the 1.2s timeout
+  function triggerOnFirstTap(e) {
+    if (overlay && !overlay.classList.contains('active')) {
+      // Don't intercept if clicking close button
+      if (e.target && e.target.closest && e.target.closest('#glbCloseBook, .glb-floating-btn-book')) return;
+      openModal();
+    }
+    window.removeEventListener('pointerdown', triggerOnFirstTap, { capture: true });
+  }
+  window.addEventListener('pointerdown', triggerOnFirstTap, { capture: true, passive: true });
 
   trigger.addEventListener('click', openModal);
   closeBtn.addEventListener('click', closeModal);
