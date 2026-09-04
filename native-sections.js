@@ -133,12 +133,43 @@
   styleEl.innerHTML = customCSS;
   document.head.appendChild(styleEl);
 
-  const defaultReviews = [
-    { author: "Sarah Jenkins", text: "Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generation|Global Logic Media | Digital Marketing Agency in Lucknow | SEO, Web Design & Lead Generationcompletely transformed our online presence. Our lead generation has 3x'd in just two months!", rating: 5 },
-    { author: "Michael Chen", text: "The web design team is top-tier. They captured our brand perfectly and built a blazing fast site.", rating: 5 },
-    { author: "Jessica Robles", text: "Highly recommend for SEO. We are finally ranking on page 1 of Google for our main keywords.", rating: 4 },
-    { author: "David Wallace", text: "Amazing ROI on Meta Ads. Their strategy is data-driven and the results speak for themselves.", rating: 5 },
-    { author: "Amanda Smith", text: "Professional, responsive, and incredibly talented. Best marketing agency we've ever hired.", rating: 5 }
+    const defaultReviews = [
+    { 
+      author: "Priya Sharma", 
+      text: "Global Logic Media completely transformed our online presence in Lucknow. Our lead generation tripled in just two months with their targeted Google & Meta campaigns!", 
+      rating: 5,
+      date: "2 weeks ago"
+    },
+    { 
+      author: "Rajesh Agarwal", 
+      text: "The web development and design team is truly top-tier. They captured our brand identity perfectly and delivered a blazing fast, modern platform.", 
+      rating: 5,
+      date: "1 month ago"
+    },
+    { 
+      author: "Vikas Malhotra", 
+      text: "Highly recommend Global Logic Media for local SEO services in Lucknow. Our business is finally ranking on page 1 of Google for all competitive keywords.", 
+      rating: 5,
+      date: "3 weeks ago"
+    },
+    { 
+      author: "Ananya Gupta", 
+      text: "Outstanding ROI on our social media ad campaigns. Their marketing strategy is completely data-backed and the results exceeded our expectations.", 
+      rating: 5,
+      date: "1 month ago"
+    },
+    { 
+      author: "Rohan Verma", 
+      text: "Professional, responsive, and innovative team. Best digital marketing partner we've collaborated with. Customer service is unmatched!", 
+      rating: 5,
+      date: "2 months ago"
+    },
+    {
+      author: "Deepak Mishra",
+      text: "From branding to complete SEO dominance, Global Logic Media has been instrumental in scaling our retail business across UP.",
+      rating: 5,
+      date: "3 weeks ago"
+    }
   ];
 
   async function loadDataAndRender() {
