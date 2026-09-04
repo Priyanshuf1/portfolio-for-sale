@@ -231,10 +231,10 @@
                 <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">★</label>
               </div>
               <div class="glb-form-group">
-                <input type="text" placeholder="Your Name" required>
+                <input type="text" id="glbReviewAuthor" placeholder="Your Name" required>
               </div>
               <div class="glb-form-group">
-                <textarea placeholder="Write your review here..." rows="4" required></textarea>
+                <textarea id="glbReviewText" placeholder="Write your review here..." rows="4" required></textarea>
               </div>
               <button type="submit" class="glb-modal-review-btn">Submit Review</button>
             </form>
@@ -306,8 +306,8 @@
       submitBtn.disabled = true;
 
       try {
-        const name = form.querySelector('input[type="text"]').value;
-        const text = form.querySelector('textarea').value;
+        const name = (document.getElementById('glbReviewAuthor') || form.querySelector('input[type="text"]')).value.trim();
+        const text = (document.getElementById('glbReviewText') || form.querySelector('textarea')).value.trim();
         const ratingInput = form.querySelector('input[name="rating"]:checked');
         const rating = ratingInput ? parseInt(ratingInput.value) : 5;
         
