@@ -562,6 +562,11 @@ if (!html.includes('ycm4i77tiz')) {
 }
 
 
+// Inject Elfsight platform script if missing
+if (!html.includes('elfsightcdn.com/platform.js')) {
+    html = html.replace('</head>', '  <script src="https://elfsightcdn.com/platform.js" async></script>\n</head>');
+}
+
 // Inject Google Tag Manager if missing
 if (!html.includes('GTM-MT99KWV4')) {
     html = html.replace('<head>', '<head>\n' + `

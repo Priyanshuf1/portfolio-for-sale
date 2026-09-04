@@ -220,23 +220,25 @@
       }).join('');
 
       const html = `
-        <div class="glb-reviews-title-wrap">
+        <div class="glb-reviews-title-wrap" style="text-align:center;">
+          <div style="display:inline-flex; align-items:center; gap:8px; background:#ffffff; border:1px solid rgba(0,0,0,0.08); padding:6px 18px; border-radius:30px; box-shadow:0 2px 10px rgba(0,0,0,0.04); margin-bottom:14px;">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+            <span style="font-size:13px; font-weight:700; color:#1f2937;">Google Reviews <span style="color:#f59e0b; margin-left:4px;">5.0 ★★★★★</span></span>
+          </div>
           <h2>Client Success Stories</h2>
           <p>What businesses say about working with Global Logic Media</p>
         </div>
-        <div class="glb-premium-reviews-container">
-          <div class="glb-marquee-track">
-            ${trackContent}
-            ${trackContent}
-          </div>
+        <div class="glb-elfsight-reviews-container" style="max-width: 1240px; margin: 0 auto; min-height: 220px; padding: 0 16px;">
+          <!-- Elfsight Google Reviews | Untitled Google Reviews -->
+          <div class="elfsight-app-1114eac3-3c77-4bd5-945e-3667c3537f46" data-elfsight-app-lazy></div>
         </div>
-        <div class="glb-reviews-cta-wrap" style="text-align: center; margin-top: 30px;">
-          <button id="glbTriggerReview" class="btn-primary" style="padding: 12px 28px; font-size: 15px; font-weight: 700; border-radius: 25px; cursor: pointer; transition: all 0.3s ease;">
-            Leave a Review
-          </button>
+        <div class="glb-reviews-cta-wrap" style="text-align: center; margin-top: 36px;">
+          <a href="https://g.page/r/CX4AGQkNUj-zECE/review" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-flex; align-items:center; gap:10px; padding: 14px 30px; font-size: 15px; font-weight: 700; border-radius: 30px; cursor: pointer; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(226, 0, 1, 0.25);">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#ffffff" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/><path fill="#ffffff" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/><path fill="#ffffff" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/><path fill="#ffffff" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+            Write a Google Review
+          </a>
         </div>
       `;
-
       let container = document.getElementById('glb-reviews-section');
       if (!container) {
           container = document.createElement('section');
@@ -244,6 +246,12 @@
           container.className = 'glb-reviews-native-wrapper';
       }
       container.innerHTML = html;
+      if (!document.querySelector('script[src*="elfsightcdn.com/platform.js"]')) {
+        const script = document.createElement('script');
+        script.src = 'https://elfsightcdn.com/platform.js';
+        script.async = true;
+        document.head.appendChild(script);
+      }
 
       function placeReviews() {
           const blogSection = document.querySelector('.glb-home-blogs');
