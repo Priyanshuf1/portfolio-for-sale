@@ -242,6 +242,32 @@
   }
 
   window.openBookACallModal = openModal;
+
+  // Auto-trigger contact modal once on first tap / click on the website
+  let autoContactTriggered = false;
+  function triggerContactOnceOnTap(e) {
+    if (autoContactTriggered) return;
+    if (sessionStorage.getItem('glb_auto_contact_shown')) return;
+
+    // Do not pop up if the user clicked inside modal or on close button
+    if (e.target && e.target.closest && e.target.closest('#glbOverlayBook, #glbCloseBook, .glb-floating-btn-book')) {
+      return;
+    }
+
+    autoContactTriggered = true;
+    sessionStorage.setItem('glb_auto_contact_shown', 'true');
+
+    setTimeout(() => {
+      if (overlay && !overlay.classList.contains('active')) {
+        openModal();
+      }
+    }, 400);
+
+    window.removeEventListener('pointerdown', triggerContactOnceOnTap, { capture: true });
+  }
+
+  window.addEventListener('pointerdown', triggerContactOnceOnTap, { capture: true, passive: true });
+
   trigger.addEventListener('click', openModal);
   closeBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', (e) => {

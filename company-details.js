@@ -308,36 +308,30 @@
     ]
   };
 
-  const teamData = [
+    const teamData = [
     {
       name: "Ankur Verma",
       role: "Founder",
-      image: "https://globallogicmedia.com/wp-content/uploads/2026/06/Ankur-Verma.png", // real profile image or fallback
-      desc: "Visionary founder of Global Logic Media, driving digital marketing excellence, growth strategies, and high-impact campaigns globally."
+      image: "./images/team/ankur.png",
+      desc: "A results-driven Digital Marketing Professional with 3+ years of experience, specializing in organic growth, performance marketing, website development, and brand strategy. Having helped 70+ businesses grow online, I focus on building sustainable digital presence, driving meaningful engagement, and turning brands into scalable businesses."
     },
     {
       name: "Durgesh Choudary",
-      role: "Co-Founder & SEO Lead",
-      image: "https://globallogicmedia.com/wp-content/uploads/2025/08/cropped-Untitled-design-2.png", // Fallback placeholder
-      desc: "Enhances online visibility through advanced SEO and Local SEO strategies, driving consistent traffic and high-intent leads."
+      role: "Co-Founder",
+      image: "./images/team/durgesh.png",
+      desc: "A creative professional with 6+ years of expertise in Video Editing & Cinematography and 2+ years in UI/UX Design, specializing in visual storytelling, creative direction, and user-centric digital experiences. Focused on combining creativity, design, and technology to build impactful brand experiences."
     },
     {
       name: "Vishal Kumar",
       role: "Graphic Designer",
       image: "https://globallogicmedia.com/wp-content/uploads/2026/06/84f31190-fe7b-43c7-84e2-d9184d941b06.png",
-      desc: "Crafts engaging visual assets, social media creative content, and premium branding layouts that capture target audiences."
+      desc: "A creative Graphic Designer with 5+ years of experience, skilled in Adobe Photoshop, Adobe Illustrator, and Canva. Specializing in brand identity, social media creatives, visual communication, and compelling designs that strengthen brand presence."
     },
     {
       name: "Agrima Gupta",
       role: "Social Media Manager",
-      image: "https://globallogicmedia.com/wp-content/uploads/2026/06/8709b1f3-6719-438c-8fe5-00e17ebaa399.png",
-      desc: "Leads multi-channel social media profiles, curation, scheduling, and strategic engagement plans to skyrocket brand presence."
-    },
-    {
-      name: "Aman",
-      role: "Social Media Manager",
-      image: "https://globallogicmedia.com/wp-content/uploads/2025/08/Teacher-1.jpg",
-      desc: "Specializes in video layouts and brand awareness content generation to build high-reach, loyal online communities."
+      image: "./images/team/agrima.png",
+      desc: "Social Media Manager with 2+ years of experience in social media management, content strategy, content planning, audience engagement, and organic growth. Skilled in developing social media campaigns, managing brand pages, analyzing performance metrics, and implementing strategies to improve reach, engagement, and brand visibility across digital platforms."
     }
   ];
 
