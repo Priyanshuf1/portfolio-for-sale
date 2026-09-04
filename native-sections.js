@@ -273,39 +273,65 @@
       placeReviews();
       if (window.initHeadingWordReveals) setTimeout(window.initHeadingWordReveals, 60);
 
-      // Aggressive Elfsight "Free Google Reviews Widget" Badge Remover
+            // Aggressive Elfsight Badge & Owner Panel Remover
       function obliterateElfsightBadge() {
-        // Standard DOM elements
-        const targets = document.querySelectorAll('a[href*="elfsight"], [class*="Badge"], [class*="badge"], [class*="branding"], [class*="Branding"], [class*="Watermark"], [class*="watermark"]');
+        // 1. Query all elements across the entire document
+        const targets = document.querySelectorAll('a[href*="elfsight"], [class*="Badge"], [class*="badge"], [class*="branding"], [class*="Branding"], [class*="Watermark"], [class*="watermark"], [class*="Owner"], [class*="owner"], [class*="Toolbar"], [class*="toolbar"], [class*="Admin"], [class*="admin"]');
         targets.forEach(el => {
           const text = (el.innerText || el.textContent || '').trim();
           const href = el.getAttribute('href') || '';
-          if (text.includes('Free Google') || text.includes('Elfsight') || text.includes('Widget') || href.includes('elfsight')) {
+          if (
+            text.includes('Free Google') || 
+            text.includes('Elfsight') || 
+            text.includes('Widget') || 
+            text.includes('widget owner') ||
+            text.includes('Panel only seen') ||
+            text.includes('only seen by') ||
+            href.includes('elfsight')
+          ) {
             el.style.setProperty('display', 'none', 'important');
+            el.style.setProperty('visibility', 'hidden', 'important');
+            el.style.setProperty('opacity', '0', 'important');
             el.remove();
           }
         });
 
-        // Search within all container children and shadow DOMs
-        const container = document.getElementById('glb-reviews-section');
-        if (container) {
-          const walker = (root) => {
-            if (!root) return;
-            const nodes = root.querySelectorAll ? root.querySelectorAll('*') : [];
-            nodes.forEach(node => {
-              if (node.shadowRoot) walker(node.shadowRoot);
-              const txt = (node.innerText || node.textContent || '').trim();
-              if (node.tagName === 'A' && (node.href && node.href.includes('elfsight.com') || txt.includes('Free Google'))) {
-                node.style.setProperty('display', 'none', 'important');
-                node.remove();
-              }
-            });
-          };
-          walker(container);
-        }
+        // 2. Deep recursive DOM & ShadowDOM search
+        const deepPurge = (root) => {
+          if (!root) return;
+          const nodes = root.querySelectorAll ? root.querySelectorAll('*') : [];
+          nodes.forEach(node => {
+            if (node.shadowRoot) deepPurge(node.shadowRoot);
+            const txt = (node.innerText || node.textContent || '').trim();
+            const cls = (node.className && typeof node.className === 'string') ? node.className : '';
+            
+            // Check for owner panel text or classes
+            if (
+              txt.includes('Panel only seen') ||
+              txt.includes('widget owner') ||
+              txt.includes('only seen by widget owner') ||
+              cls.includes('WidgetOwner') ||
+              cls.includes('OwnerPanel') ||
+              cls.includes('widget-toolbar') ||
+              cls.includes('eapps-widget-toolbar')
+            ) {
+              node.style.setProperty('display', 'none', 'important');
+              node.style.setProperty('visibility', 'hidden', 'important');
+              node.style.setProperty('opacity', '0', 'important');
+              node.remove();
+            }
+
+            if (node.tagName === 'A' && (node.href && node.href.includes('elfsight.com') || txt.includes('Free Google'))) {
+              node.style.setProperty('display', 'none', 'important');
+              node.remove();
+            }
+          });
+        };
+
+        deepPurge(document.body);
       }
 
-      setInterval(obliterateElfsightBadge, 250);
+      setInterval(obliterateElfsightBadge, 150);
 
   }
 
