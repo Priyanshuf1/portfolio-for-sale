@@ -324,7 +324,7 @@
     {
       name: "Vishal Kumar",
       role: "Graphic Designer",
-      image: "https://globallogicmedia.com/wp-content/uploads/2026/06/84f31190-fe7b-43c7-84e2-d9184d941b06.png",
+      image: "./images/team/vishal.png",
       desc: "A creative Graphic Designer with 5+ years of experience, skilled in Adobe Photoshop, Adobe Illustrator, and Canva. Specializing in brand identity, social media creatives, visual communication, and compelling designs that strengthen brand presence."
     },
     {
@@ -358,32 +358,26 @@
       </li>
     `).join('');
 
-    // Build team cards HTML (Using real image rendering with premium Unsplash fallback headshots)
+    // Build team cards HTML (Real image rendering with branded gradient initials fallback, never stock strangers)
     const teamCardsHtml = teamData.map(member => {
       const initials = member.name.split(' ').map(n => n.charAt(0)).join('').toUpperCase().substring(0, 2);
       const gradients = {
         "Ankur Verma": "linear-gradient(135deg, #FF9900, #FF5E62)",
         "Durgesh Choudary": "linear-gradient(135deg, #FF416C, #FF4B2B)",
         "Vishal Kumar": "linear-gradient(135deg, #4776E6, #8E54E9)",
-        "Agrima Gupta": "linear-gradient(135deg, #f12711, #f5af19)",
-        "Aman": "linear-gradient(135deg, #11998e, #38ef7d)"
+        "Agrima Gupta": "linear-gradient(135deg, #f12711, #f5af19)"
       };
       const grad = gradients[member.name] || "linear-gradient(135deg, #e20001, #e20001)";
-      
-      const unsplashFallbacks = {
-        "Ankur Verma": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=256&h=256",
-        "Durgesh Choudary": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=256&h=256",
-        "Vishal Kumar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=256&h=256",
-        "Agrima Gupta": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=256&h=256",
-        "Aman": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=256&h=256"
-      };
-      const fallbackImg = unsplashFallbacks[member.name] || "";
 
-      const imgContent = `
+      const hasRealImg = member.image && !member.image.includes('vishal.png');
+      const imgContent = hasRealImg ? `
         <img src="${member.image}" 
              alt="${member.name}" 
              style="width:100%; height:100%; object-fit:cover; border-radius:50%; display:block;"
-             onerror="this.onerror=null; this.src='${fallbackImg}';" />
+             onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';" />
+        <div class="glb-team-initials-fallback" style="display:none; width:100%; height:100%; border-radius:50%; background:${grad}; justify-content:center; align-items:center; font-size:32px; font-weight:800; color:#ffffff; text-shadow:0 2px 8px rgba(0,0,0,0.3); box-shadow:inset 0 0 12px rgba(255,255,255,0.25);">${initials}</div>
+      ` : `
+        <div class="glb-team-initials-fallback" style="display:flex; width:100%; height:100%; border-radius:50%; background:${grad}; justify-content:center; align-items:center; font-size:32px; font-weight:800; color:#ffffff; text-shadow:0 2px 8px rgba(0,0,0,0.3); box-shadow:inset 0 0 12px rgba(255,255,255,0.25);">${initials}</div>
       `;
 
       return `

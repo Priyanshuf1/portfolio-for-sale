@@ -1,4 +1,4 @@
-(function() {
+﻿(function() {
   const customCSS = `
     .glb-reviews-native-wrapper {
       width: 100%;
@@ -7,67 +7,101 @@
       box-sizing: border-box;
       position: relative;
       z-index: 10;
-      border-top: 1px solid rgba(0,0,0,0.05);
     }
     .glb-reviews-title-wrap {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 36px;
       padding: 0 20px;
+    }
+    .glb-google-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.08);
+      padding: 7px 18px;
+      border-radius: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin-bottom: 14px;
     }
     .glb-reviews-title-wrap h2 {
       font-size: clamp(2.2rem, 5vw, 3.2rem);
       margin: 0 0 10px;
       color: #111827;
       letter-spacing: -1px;
-      font-weight: 900;
+      font-weight: 800;
     }
     .glb-reviews-title-wrap p {
-      color: #666;
+      color: #64748b;
       font-size: 1.1rem;
       margin: 0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .glb-premium-reviews-container {
       width: 100%;
       overflow: hidden;
-      padding: 10px 0;
+      padding: 14px 0 24px;
       background: transparent;
-      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
     }
     .glb-marquee-track {
       display: flex;
-      gap: 24px;
+      gap: 22px;
       width: max-content;
-      animation: marquee 30s linear infinite;
+      animation: glb-marquee 45s linear infinite;
     }
     .glb-marquee-track:hover {
       animation-play-state: paused;
     }
-    @keyframes marquee {
+    @keyframes glb-marquee {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
     .glb-review-card-premium {
-      flex: 0 0 350px;
-      background: #FFFDF0;
-      border-radius: 16px;
-      padding: 28px;
+      flex: 0 0 360px;
+      width: 360px;
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px 26px;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      border: 1px solid rgba(226, 160, 0, 0.15);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+      gap: 14px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
       white-space: normal;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .glb-review-card-premium:hover {
+      transform: translateY(-4px);
+      border-color: rgba(226, 0, 1, 0.25);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09), 0 0 15px rgba(226, 0, 1, 0.05);
     }
     .glb-review-header {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
     }
-    .glb-review-avatar {
-      width: 44px;
-      height: 44px;
+    .glb-review-avatar-wrap {
+      width: 46px;
+      height: 46px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .glb-review-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      border: 1.5px solid rgba(0,0,0,0.06);
+    }
+    .glb-review-avatar-fallback {
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       background: linear-gradient(135deg, #e20001, #ffc72c);
       display: flex;
@@ -76,52 +110,89 @@
       color: #fff;
       font-weight: 700;
       font-size: 18px;
-      flex-shrink: 0;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
     }
     .glb-review-meta {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
+      flex-grow: 1;
+      min-width: 0;
+    }
+    .glb-review-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
     }
     .glb-review-name {
       margin: 0;
-      color: #111;
-      font-size: 18px;
-      font-weight: 600;
+      color: #111827;
+      font-size: 15.5px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .glb-review-role {
-      margin: 0;
-      color: #666;
-      font-size: 13px;
+    .glb-review-sub-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #64748b;
     }
     .glb-review-divider {
       height: 1px;
-      background: rgba(0, 0, 0, 0.08);
+      background: rgba(0, 0, 0, 0.06);
       width: 100%;
     }
     .glb-review-text {
-      color: #333;
-      font-size: 15px;
+      color: #334155;
+      font-size: 14px;
       line-height: 1.6;
       margin: 0;
       flex-grow: 1;
-      font-style: italic;
     }
     .glb-review-footer {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-top: 6px;
-    }
-    .glb-review-score {
-      color: #111;
-      font-size: 16px;
-      font-weight: 600;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: 4px;
     }
     .glb-review-stars {
-      color: #e20001;
-      font-size: 16px;
+      color: #f59e0b;
+      font-size: 15px;
       letter-spacing: 2px;
+    }
+    .glb-review-rating-num {
+      color: #374151;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .glb-reviews-cta-wrap {
+      text-align: center;
+      margin-top: 36px;
+    }
+    .glb-google-review-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #e20001;
+      color: #ffffff !important;
+      padding: 13px 28px;
+      font-size: 14.5px;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 16px rgba(226, 0, 1, 0.28);
+    }
+    .glb-google-review-btn:hover {
+      background: #b80001;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(226, 0, 1, 0.38);
     }
     /* Hide framer original broken element */
     .framer-1pmfitp {
@@ -133,42 +204,69 @@
   styleEl.innerHTML = customCSS;
   document.head.appendChild(styleEl);
 
-    const defaultReviews = [
-    { 
-      author: "Priya Sharma", 
-      text: "Global Logic Media completely transformed our online presence in Lucknow. Our lead generation tripled in just two months with their targeted Google & Meta campaigns!", 
+  const defaultReviews = [
+    {
+      author: "Shiv Nirmal",
+      avatar: "./images/reviews/shiv.png",
       rating: 5,
-      date: "2 weeks ago"
-    },
-    { 
-      author: "Rajesh Agarwal", 
-      text: "The web development and design team is truly top-tier. They captured our brand identity perfectly and delivered a blazing fast, modern platform.", 
-      rating: 5,
-      date: "1 month ago"
-    },
-    { 
-      author: "Vikas Malhotra", 
-      text: "Highly recommend Global Logic Media for local SEO services in Lucknow. Our business is finally ranking on page 1 of Google for all competitive keywords.", 
-      rating: 5,
-      date: "3 weeks ago"
-    },
-    { 
-      author: "Ananya Gupta", 
-      text: "Outstanding ROI on our social media ad campaigns. Their marketing strategy is completely data-backed and the results exceeded our expectations.", 
-      rating: 5,
-      date: "1 month ago"
-    },
-    { 
-      author: "Rohan Verma", 
-      text: "Professional, responsive, and innovative team. Best digital marketing partner we've collaborated with. Customer service is unmatched!", 
-      rating: 5,
-      date: "2 months ago"
+      date: "2 days ago",
+      text: "Outstanding video editing and promotion service! The editing quality, transitions, effects, music, and overall presentation were excellent. The promotional content was creative, engaging, and professionally designed. The work was completed on time and perfectly matched our requirements."
     },
     {
-      author: "Deepak Mishra",
-      text: "From branding to complete SEO dominance, Global Logic Media has been instrumental in scaling our retail business across UP.",
+      author: "Ayushi Vaishnav",
+      avatar: "./images/reviews/ayushi.png",
       rating: 5,
-      date: "3 weeks ago"
+      date: "2 days ago",
+      text: "Really happy with the digital marketing services. The team understood our business requirements properly and created a practical strategy instead of just focusing on posting content. Communication and reporting have also been very smooth"
+    },
+    {
+      author: "Zoya Hashmi",
+      avatar: "./images/reviews/zoya.png",
+      rating: 5,
+      date: "2 days ago",
+      text: "Working with them gave us a much better understanding of how digital marketing should actually be planned. They explain things patiently and the suggestions are practical rather than just being sales-focused."
+    },
+    {
+      author: "Ankur Verma",
+      avatar: "./images/reviews/ankur_v.png",
+      rating: 5,
+      date: "2 days ago",
+      text: "Their content marketing approach is different from what we had experienced before. They focus on creating content around the audience and business goals instead of simply making promotional posts. The content quality and consistency have been excellent."
+    },
+    {
+      author: "Viskhakha",
+      avatar: "./images/reviews/vishakha.png",
+      rating: 5,
+      date: "2 days ago",
+      text: "The social media marketing has been handled really well. The content looks professional, the posting is consistent, and the team actually focuses on audience engagement and brand growth. Overall, a good experience."
+    },
+    {
+      author: "Pragati Jaiswal",
+      avatar: "./images/reviews/pragati.png",
+      rating: 5,
+      date: "2 days ago",
+      text: "We hired them for SEO services and have seen a noticeable improvement in our website visibility. Their keyword research, on-page SEO and content strategy are well planned. Good option if you're looking for a professional SEO agency."
+    },
+    {
+      author: "Priyanshu Pro",
+      avatar: "./images/reviews/priyanshu_pro.png",
+      rating: 5,
+      date: "2 days ago",
+      text: "Global Logic Media completely transformed our online presence in Lucknow. Our lead generation tripled in just two months with their targeted Google & Meta campaigns!"
+    },
+    {
+      author: "Janesh Narayan",
+      avatar: "./images/reviews/janesh.png",
+      rating: 5,
+      date: "3 days ago",
+      text: "If you're looking for a reliable digital services partner in Lucknow who actually delivers results and treats your business like their own, this team is highly recommended!"
+    },
+    {
+      author: "Rajlaxmi Maharana",
+      avatar: "./images/reviews/rajlaxmi.png",
+      rating: 5,
+      date: "2 days ago",
+      text: "Exceptional branding, design aesthetics, and strategy from start to finish. Highly professional team!"
     }
   ];
 
@@ -177,12 +275,12 @@
       
       try {
           if (window.firebaseDB) {
-              const snapshot = await window.firebaseDB.ref("reviews").orderByChild("createdAt").once('value');
+              const snapshot = await window.firebaseDB.ref("reviews").orderByChild("createdAt").once("value");
               if (snapshot.exists()) {
                   let dbReviews = [];
                   snapshot.forEach(childSnapshot => {
                       const rev = childSnapshot.val();
-                      if (rev.status === 'approved' || !rev.status) {
+                      if (rev.status === "approved" || !rev.status) {
                           dbReviews.push(rev);
                       }
                   });
@@ -190,55 +288,77 @@
                   allReviews = [...dbReviews, ...defaultReviews];
               }
           } else {
-              let storedReviews = JSON.parse(localStorage.getItem('glb_reviews')) || [];
+              let storedReviews = JSON.parse(localStorage.getItem("glb_reviews")) || [];
               allReviews = [...storedReviews, ...defaultReviews];
           }
       } catch (error) {
           console.error("Error fetching reviews from Firebase:", error);
       }
 
-      const trackContent = allReviews.map(r => {
-        const initial = (r.author || 'C').charAt(0).toUpperCase();
-        const stars = '★'.repeat(r.rating || 5) + '☆'.repeat(5 - (r.rating || 5));
+      const renderCard = (r) => {
+        const initial = (r.author || "C").charAt(0).toUpperCase();
+        const stars = "★".repeat(r.rating || 5);
+        const avatarHtml = r.avatar ? `
+          <img src="${r.avatar}" alt="${r.author}" class="glb-review-avatar-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <div class="glb-review-avatar-fallback" style="display:none;">${initial}</div>
+        ` : `
+          <div class="glb-review-avatar-fallback">${initial}</div>
+        `;
+
         return `
           <div class="glb-review-card-premium">
             <div class="glb-review-header">
-              <div class="glb-review-avatar">${initial}</div>
+              <div class="glb-review-avatar-wrap">
+                ${avatarHtml}
+              </div>
               <div class="glb-review-meta">
-                <h3 class="glb-review-name">${r.author || 'Client'}</h3>
-                <p class="glb-review-role">Verified Client</p>
+                <div class="glb-review-name-row">
+                  <h3 class="glb-review-name">${r.author || 'Client'}</h3>
+                  <svg width="15" height="15" viewBox="0 0 24 24" style="flex-shrink:0;"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
+                </div>
+                <div class="glb-review-sub-row">
+                  <span>Verified Google Review</span>
+                  <span>•</span>
+                  <span>${r.date || 'Recent'}</span>
+                </div>
               </div>
             </div>
             <div class="glb-review-divider"></div>
             <p class="glb-review-text">"${r.text}"</p>
             <div class="glb-review-footer">
-              <span class="glb-review-score">${(r.rating || 5).toFixed(1)}</span>
               <div class="glb-review-stars">${stars}</div>
+              <span class="glb-review-rating-num">5.0 ★</span>
             </div>
           </div>
         `;
-      }).join('');
+      };
+
+      const baseCards = allReviews.map(renderCard).join('');
+      // Duplicate cards to ensure seamless infinite looping marquee
+      const trackCards = baseCards + baseCards;
 
       const html = `
-        <div class="glb-reviews-title-wrap" style="text-align:center;">
-          <div style="display:inline-flex; align-items:center; gap:8px; background:#ffffff; border:1px solid rgba(0,0,0,0.08); padding:6px 18px; border-radius:30px; box-shadow:0 2px 10px rgba(0,0,0,0.04); margin-bottom:14px;">
+        <div class="glb-reviews-title-wrap">
+          <div class="glb-google-badge-pill">
             <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
-            <span style="font-size:13px; font-weight:700; color:#1f2937;">Google Reviews <span style="color:#f59e0b; margin-left:4px;">5.0 ★★★★★</span></span>
+            <span style="font-size:13.5px; font-weight:700; color:#1f2937;">Google Reviews <span style="color:#f59e0b; margin-left:4px;">5.0 ★★★★★</span></span>
           </div>
           <h2>Client Success Stories</h2>
           <p>What businesses say about working with Global Logic Media</p>
         </div>
-        <div class="glb-elfsight-reviews-container" style="max-width: 1240px; margin: 0 auto; min-height: 220px; padding: 0 16px;">
-          <!-- Elfsight Google Reviews | Untitled Google Reviews -->
-          <div class="elfsight-app-1114eac3-3c77-4bd5-945e-3667c3537f46" data-elfsight-app-lazy></div>
+        <div class="glb-premium-reviews-container">
+          <div class="glb-marquee-track">
+            ${trackCards}
+          </div>
         </div>
-        <div class="glb-reviews-cta-wrap" style="text-align: center; margin-top: 36px;">
-          <a href="https://g.page/r/CX4AGQkNUj-zECE/review" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display:inline-flex; align-items:center; gap:10px; padding: 14px 30px; font-size: 15px; font-weight: 700; border-radius: 30px; cursor: pointer; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(226, 0, 1, 0.25);">
+        <div class="glb-reviews-cta-wrap">
+          <a href="https://maps.app.goo.gl/tF9Fe3ttDe85xfBFA" target="_blank" rel="noopener noreferrer" class="glb-google-review-btn">
             <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#ffffff" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/><path fill="#ffffff" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/><path fill="#ffffff" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/><path fill="#ffffff" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
             Write a Google Review
           </a>
         </div>
       `;
+
       let container = document.getElementById('glb-reviews-section');
       if (!container) {
           container = document.createElement('section');
@@ -246,12 +366,6 @@
           container.className = 'glb-reviews-native-wrapper';
       }
       container.innerHTML = html;
-      if (!document.querySelector('script[src*="elfsightcdn.com/platform.js"]')) {
-        const script = document.createElement('script');
-        script.src = 'https://elfsightcdn.com/platform.js';
-        script.async = true;
-        document.head.appendChild(script);
-      }
 
       function placeReviews() {
           const blogSection = document.querySelector('.glb-home-blogs');
@@ -272,67 +386,6 @@
 
       placeReviews();
       if (window.initHeadingWordReveals) setTimeout(window.initHeadingWordReveals, 60);
-
-            // Aggressive Elfsight Badge & Owner Panel Remover
-      function obliterateElfsightBadge() {
-        // 1. Query all elements across the entire document
-        const targets = document.querySelectorAll('a[href*="elfsight"], [class*="Badge"], [class*="badge"], [class*="branding"], [class*="Branding"], [class*="Watermark"], [class*="watermark"], [class*="Owner"], [class*="owner"], [class*="Toolbar"], [class*="toolbar"], [class*="Admin"], [class*="admin"]');
-        targets.forEach(el => {
-          const text = (el.innerText || el.textContent || '').trim();
-          const href = el.getAttribute('href') || '';
-          if (
-            text.includes('Free Google') || 
-            text.includes('Elfsight') || 
-            text.includes('Widget') || 
-            text.includes('widget owner') ||
-            text.includes('Panel only seen') ||
-            text.includes('only seen by') ||
-            href.includes('elfsight')
-          ) {
-            el.style.setProperty('display', 'none', 'important');
-            el.style.setProperty('visibility', 'hidden', 'important');
-            el.style.setProperty('opacity', '0', 'important');
-            el.remove();
-          }
-        });
-
-        // 2. Deep recursive DOM & ShadowDOM search
-        const deepPurge = (root) => {
-          if (!root) return;
-          const nodes = root.querySelectorAll ? root.querySelectorAll('*') : [];
-          nodes.forEach(node => {
-            if (node.shadowRoot) deepPurge(node.shadowRoot);
-            const txt = (node.innerText || node.textContent || '').trim();
-            const cls = (node.className && typeof node.className === 'string') ? node.className : '';
-            
-            // Check for owner panel text or classes
-            if (
-              txt.includes('Panel only seen') ||
-              txt.includes('widget owner') ||
-              txt.includes('only seen by widget owner') ||
-              cls.includes('WidgetOwner') ||
-              cls.includes('OwnerPanel') ||
-              cls.includes('widget-toolbar') ||
-              cls.includes('eapps-widget-toolbar')
-            ) {
-              node.style.setProperty('display', 'none', 'important');
-              node.style.setProperty('visibility', 'hidden', 'important');
-              node.style.setProperty('opacity', '0', 'important');
-              node.remove();
-            }
-
-            if (node.tagName === 'A' && (node.href && node.href.includes('elfsight.com') || txt.includes('Free Google'))) {
-              node.style.setProperty('display', 'none', 'important');
-              node.remove();
-            }
-          });
-        };
-
-        deepPurge(document.body);
-      }
-
-      setInterval(obliterateElfsightBadge, 150);
-
   }
 
   function init() {
@@ -340,7 +393,7 @@
           loadDataAndRender();
       } else {
           window.addEventListener('firebaseLoaded', loadDataAndRender);
-          setTimeout(loadDataAndRender, 1500);
+          setTimeout(loadDataAndRender, 1000);
       }
   }
 

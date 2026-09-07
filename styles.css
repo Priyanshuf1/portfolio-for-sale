@@ -2080,7 +2080,7 @@ body {
 }
 
 /* ── Universal Section Heading Typography Standard (Exact Same Font & Boldness) ── */
-h2,
+.glb-section-heading,
 .h2-fluid,
 #about-me h2,
 #services h2,
@@ -2103,7 +2103,7 @@ h2,
 }
 
 @media (max-width: 768px) {
-  h2,
+  .glb-section-heading,
   .h2-fluid,
   #about-me h2,
   #services h2,
