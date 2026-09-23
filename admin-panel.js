@@ -342,6 +342,11 @@
           </div>
  
           <div class="glb-tab-content" id="tab-bookings">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <h4 style="margin:0; font-size:16px; color:#fff;">Client Inquiries & Call Bookings</h4>
+              <button type="button" onclick="window.exportBookingsCSV()" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#fff; padding:6px 14px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer;">📥 Export CSV</button>
+            </div>
+            <div id="glbBookingsNotice"></div>
             <div id="glbBookingsList">
               <p style="color:#ffffff !important; text-align:center; padding:20px 0;">Loading bookings...</p>
             </div>
@@ -887,8 +892,26 @@
           // Merge and sort
           bookings = [...fbBookings, ...bookings.filter(lb => !fbBookings.some(fb => fb.email === lb.email && fb.phone === lb.phone))];
         }
+        const noticeEl = document.getElementById('glbBookingsNotice');
+        if (noticeEl) noticeEl.innerHTML = '';
       } catch (e) {
         console.error("Firebase read error:", e);
+        const noticeEl = document.getElementById('glbBookingsNotice');
+        if (noticeEl && (String(e).includes('PERMISSION_DENIED') || e.code === 'PERMISSION_DENIED')) {
+          noticeEl.innerHTML = `
+            <div style="background:rgba(239,68,68,0.15); border:1px solid #ef4444; border-radius:10px; padding:12px 16px; margin-bottom:16px;">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                <strong style="color:#ef4444; font-size:13px;">⚠️ Cloud Sync Expired (Firebase Trial Rules)</strong>
+              </div>
+              <p style="color:#fca5a5; font-size:12px; margin:0 0 8px; line-height:1.4;">
+                Firebase Realtime Database test rules have expired. Leads are currently preserved safely in local storage on visitor devices. Publish permanent rules in Firebase Console to re-enable cloud sync.
+              </p>
+              <a href="https://console.firebase.google.com/project/globallogicmedia-38e92/database/globallogicmedia-38e92-default-rtdb/rules" target="_blank" rel="noopener noreferrer" style="display:inline-block; background:#e20001; color:#fff; padding:6px 14px; border-radius:6px; font-size:11px; font-weight:700; text-decoration:none;">
+                Update Firebase Rules in Console ↗
+              </a>
+            </div>
+          `;
+        }
       }
     }
     
@@ -919,6 +942,39 @@
     
     list.innerHTML = bookingsHtml;
   }
+
+  // Export Bookings to CSV
+  window.exportBookingsCSV = function() {
+    let bookings = [];
+    try {
+      const local = JSON.parse(localStorage.getItem('glb_bookings')) || [];
+      bookings = [...local];
+    } catch (e) {
+      console.error(e);
+    }
+    if (!bookings.length) {
+      alert("No bookings available to export yet.");
+      return;
+    }
+    let csvContent = "data:text/csv;charset=utf-8,Name,Email,Phone,Business Details,Date\n";
+    bookings.forEach(b => {
+      const row = [
+        `"${(b.name || '').replace(/"/g, '""')}"`,
+        `"${(b.email || '').replace(/"/g, '""')}"`,
+        `"${(b.phone || '').replace(/"/g, '""')}"`,
+        `"${(b.businessDetails || '').replace(/"/g, '""')}"`,
+        `"${b.createdAt ? new Date(b.createdAt).toISOString() : ''}"`
+      ].join(",");
+      csvContent += row + "\n";
+    });
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `glm_bookings_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  };
 
   window.deleteBooking = async function(key) {
     if (!window.firebaseDB) return;

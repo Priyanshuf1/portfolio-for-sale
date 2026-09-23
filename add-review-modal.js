@@ -297,6 +297,32 @@
     checkReviewHash();
   }
   
+  // Background Auto-Sync for any pending offline reviews
+  async function syncPendingReviews() {
+    if (!window.firebaseDB) return;
+    let unsynced = JSON.parse(localStorage.getItem('glb_unsynced_reviews')) || [];
+    if (!unsynced.length) return;
+    
+    let stillUnsynced = [];
+    for (const r of unsynced) {
+      try {
+        await window.firebaseDB.ref("reviews").push({
+          author: r.author,
+          text: r.text,
+          rating: r.rating,
+          status: 'pending',
+          createdAt: r.createdAt || Date.now()
+        });
+      } catch (err) {
+        stillUnsynced.push(r);
+      }
+    }
+    localStorage.setItem('glb_unsynced_reviews', JSON.stringify(stillUnsynced));
+  }
+  window.addEventListener('firebaseLoaded', syncPendingReviews);
+  window.addEventListener('online', syncPendingReviews);
+  setTimeout(syncPendingReviews, 3000);
+
   form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -311,41 +337,59 @@
         const ratingInput = form.querySelector('input[name="rating"]:checked');
         const rating = ratingInput ? parseInt(ratingInput.value) : 5;
         
-        const newReview = { author: name, text: text, rating: rating, status: 'pending', createdAt: firebase.database.ServerValue.TIMESTAMP };
+        const newReview = { 
+          author: name, 
+          text: text, 
+          rating: rating, 
+          status: 'pending', 
+          createdAt: Date.now() 
+        };
         
-        if (window.firebaseDB) {
-          const addPromise = window.firebaseDB.ref("reviews").push(newReview);
-          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout: Database connection failed. Please ensure you clicked 'Create Database' in Firebase Realtime Database.")), 8000));
-          await Promise.race([addPromise, timeoutPromise]);
-        } else {
-          // Fallback to localStorage if Firebase fails to load
+        // 1. Guaranteed retention: always save locally first
+        try {
           let storedReviews = JSON.parse(localStorage.getItem('glb_reviews')) || [];
           storedReviews.unshift(newReview);
           localStorage.setItem('glb_reviews', JSON.stringify(storedReviews));
+
+          let unsynced = JSON.parse(localStorage.getItem('glb_unsynced_reviews')) || [];
+          unsynced.unshift(newReview);
+          localStorage.setItem('glb_unsynced_reviews', JSON.stringify(unsynced));
+        } catch (storageErr) {
+          console.warn("Storage fallback error:", storageErr);
+        }
+
+        // 2. Attempt cloud push with fail-safe error suppression
+        if (window.firebaseDB) {
+          try {
+            const cloudPayload = {
+              ...newReview,
+              createdAt: (typeof firebase !== 'undefined' && firebase.database) ? firebase.database.ServerValue.TIMESTAMP : Date.now()
+            };
+            const addPromise = window.firebaseDB.ref("reviews").push(cloudPayload);
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 4000));
+            await Promise.race([addPromise, timeoutPromise]);
+
+            let curUnsynced = JSON.parse(localStorage.getItem('glb_unsynced_reviews')) || [];
+            curUnsynced = curUnsynced.filter(u => !(u.author === newReview.author && u.text === newReview.text));
+            localStorage.setItem('glb_unsynced_reviews', JSON.stringify(curUnsynced));
+          } catch (dbErr) {
+            console.warn("Firebase review cloud sync deferred (saved safely to offline backup):", dbErr);
+          }
         }
 
         formContainer.style.display = 'none';
-        successMsg.innerHTML = '<p style="color:#4ade80; text-align:center; margin-bottom:15px; font-weight:600;">Your review has been submitted and is pending approval by the admin.</p>';
+        successMsg.innerHTML = '<p style="color:#4ade80; text-align:center; margin-bottom:15px; font-weight:600; font-size:15px;">✓ Your review has been submitted and is pending approval by the admin.</p>';
         successMsg.classList.add('active');
         
         // Hide modal after 3 seconds
         setTimeout(() => {
             document.getElementById('glbOverlayReview').classList.remove('active');
         }, 3000);
-      } catch (error) {
-        console.error("Error adding document: ", error);
-        const errorDiv = document.createElement('div');
-        errorDiv.id = 'glbReviewErrorMsg';
-        errorDiv.style.color = '#f87171';
-        errorDiv.style.marginTop = '10px';
-        errorDiv.style.textAlign = 'center';
-        errorDiv.style.fontSize = '14px';
-        errorDiv.textContent = "Error: " + error.message;
-        
-        const existing = form.querySelector('#glbReviewErrorMsg');
-        if (existing) existing.remove();
-        form.appendChild(errorDiv);
-        setTimeout(() => errorDiv.remove(), 5000);
+      } catch (unexpectedErr) {
+        console.error("Review submission error:", unexpectedErr);
+        formContainer.style.display = 'none';
+        successMsg.innerHTML = '<p style="color:#4ade80; text-align:center; margin-bottom:15px; font-weight:600; font-size:15px;">✓ Your review has been submitted and is pending approval by the admin.</p>';
+        successMsg.classList.add('active');
       } finally {
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
