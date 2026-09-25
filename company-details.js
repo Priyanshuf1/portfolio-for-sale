@@ -310,9 +310,9 @@
 
     const teamData = [
     {
-      name: "Priyanshu Awasthi",
+      name: "Ankur Verma",
       role: "Founder",
-      image: "./images/team/priyanshu.png",
+      image: "./images/team/ankur.png",
       desc: "A results-driven Digital Marketing Professional with 3+ years of experience, specializing in organic growth, performance marketing, website development, and brand strategy. Having helped 70+ businesses grow online, I focus on building sustainable digital presence, driving meaningful engagement, and turning brands into scalable businesses."
     },
     {
@@ -362,7 +362,7 @@
     const teamCardsHtml = teamData.map(member => {
       const initials = member.name.split(' ').map(n => n.charAt(0)).join('').toUpperCase().substring(0, 2);
       const gradients = {
-        "Priyanshu Awasthi": "linear-gradient(135deg, #FF9900, #FF5E62)",
+        "Ankur Verma": "linear-gradient(135deg, #FF9900, #FF5E62)",
         "Durgesh Choudary": "linear-gradient(135deg, #FF416C, #FF4B2B)",
         "Vishal Kumar": "linear-gradient(135deg, #4776E6, #8E54E9)",
         "Agrima Gupta": "linear-gradient(135deg, #f12711, #f5af19)"
