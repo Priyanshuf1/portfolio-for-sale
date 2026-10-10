@@ -223,6 +223,7 @@
             <div style="color: #ffffff !important; margin-bottom: 24px; font-size: 15px;">Tell us about your experience working with Global Logic Media.</div>
             
             <form id="glbReviewForm">
+              <input type="text" id="glbReviewTrap" name="website_trap" style="display:none !important; position:absolute; left:-9999px;" tabindex="-1" autocomplete="off">
               <div class="glb-star-rating" style="display:flex; flex-direction:row-reverse; justify-content:flex-end;">
                 <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars">★</label>
                 <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">★</label>
@@ -326,6 +327,16 @@
   form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
+      // Bot prevention: check honeypot trap
+      const trap = document.getElementById('glbReviewTrap');
+      if (trap && trap.value) {
+        console.warn("Spam bot review submission blocked via honeypot trap.");
+        formContainer.style.display = 'none';
+        successMsg.innerHTML = '<p style="color:#4ade80; text-align:center; margin-bottom:15px; font-weight:600; font-size:15px;">✓ Your review has been submitted and is pending approval by the admin.</p>';
+        successMsg.classList.add('active');
+        return;
+      }
+
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalText = submitBtn.textContent;
       submitBtn.textContent = 'Submitting...';
