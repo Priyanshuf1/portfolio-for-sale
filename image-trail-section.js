@@ -543,7 +543,7 @@
               <a href="https://www.instagram.com/globallogicmedia/" target="_blank" rel="noopener noreferrer" class="glm-insta-follow-btn">Follow</a>
             </div>
             <div class="glm-insta-stats-row">
-              <span class="glm-insta-stat-item"><b>18</b> posts</span>
+              <span class="glm-insta-stat-item"><b>19</b> posts</span>
               <span class="glm-insta-stat-item"><b>411</b> followers</span>
               <span class="glm-insta-stat-item"><b>49</b> following</span>
             </div>
@@ -581,17 +581,18 @@
       instaSection.dataset.elfsightBuilt = '1';
 
       var reels = [
-        { shortcode: 'DcK1rodslR7', link: 'https://www.instagram.com/reel/DcK1rodslR7/' },
-        { shortcode: 'DcETc2yJ8dx', link: 'https://www.instagram.com/reel/DcETc2yJ8dx/' },
-        { shortcode: 'Db8h5OqJeZB', link: 'https://www.instagram.com/reel/Db8h5OqJeZB/' },
-        { shortcode: 'Db3CctrMNxA', link: 'https://www.instagram.com/reel/Db3CctrMNxA/' },
-        { shortcode: 'DbfIbFdsb4b', link: 'https://www.instagram.com/reel/DbfIbFdsb4b/' },
-        { shortcode: 'DaaovABJmtz', link: 'https://www.instagram.com/reel/DaaovABJmtz/' },
-        { shortcode: 'DZK-QPopOEP', link: 'https://www.instagram.com/reel/DZK-QPopOEP/' },
-        { shortcode: 'DYCeYHmhCh_', link: 'https://www.instagram.com/reel/DYCeYHmhCh_/' },
-        { shortcode: 'DX_58uVMu9b', link: 'https://www.instagram.com/reel/DX_58uVMu9b/' },
-        { shortcode: 'DRJb4qukxA5', link: 'https://www.instagram.com/reel/DRJb4qukxA5/' },
-        { shortcode: 'DNAng99T_jL', link: 'https://www.instagram.com/reel/DNAng99T_jL/' }
+        { shortcode: 'DeJR2OBA8Rt', link: 'https://www.instagram.com/reel/DeJR2OBA8Rt/', image: './reel_DeJR2OBA8Rt.webp' },
+        { shortcode: 'DcK1rodslR7', link: 'https://www.instagram.com/reel/DcK1rodslR7/', image: './reel_1.webp' },
+        { shortcode: 'DcETc2yJ8dx', link: 'https://www.instagram.com/reel/DcETc2yJ8dx/', image: './reel_2.webp' },
+        { shortcode: 'Db8h5OqJeZB', link: 'https://www.instagram.com/reel/Db8h5OqJeZB/', image: './reel_3.webp' },
+        { shortcode: 'Db3CctrMNxA', link: 'https://www.instagram.com/reel/Db3CctrMNxA/', image: './reel_4.webp' },
+        { shortcode: 'DbfIbFdsb4b', link: 'https://www.instagram.com/reel/DbfIbFdsb4b/', image: './reel_5.webp' },
+        { shortcode: 'DaaovABJmtz', link: 'https://www.instagram.com/reel/DaaovABJmtz/', image: './reel_6.webp' },
+        { shortcode: 'DZK-QPopOEP', link: 'https://www.instagram.com/reel/DZK-QPopOEP/', image: './reel_7.webp' },
+        { shortcode: 'DYCeYHmhCh_', link: 'https://www.instagram.com/reel/DYCeYHmhCh_/', image: './reel_8.webp' },
+        { shortcode: 'DX_58uVMu9b', link: 'https://www.instagram.com/reel/DX_58uVMu9b/', image: './reel_9.webp' },
+        { shortcode: 'DRJb4qukxA5', link: 'https://www.instagram.com/reel/DRJb4qukxA5/', image: './reel_10.webp' },
+        { shortcode: 'DNAng99T_jL', link: 'https://www.instagram.com/reel/DNAng99T_jL/', image: './reel_11.webp' }
       ];
 
       var carousel = document.getElementById('reel-carousel');
@@ -603,10 +604,11 @@
           var card = document.createElement('div');
           card.className = 'reel-card';
           card.style.cssText = 'user-select:none; touch-action:pan-y;';
+          var imgSrc = reel.image || ('./reel_' + (i+1) + '.webp');
           card.innerHTML = `
               <a href="${reel.link}" target="_blank" rel="noopener noreferrer">
                   <img alt="Instagram Reel ${i+1}" loading="lazy" class="pointer-events-none"
-                       src="./reel_${i+1}.webp"
+                       src="${imgSrc}"
                        onerror="this.src='./logo_icon.png'">
                   <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 50%); pointer-events:none; z-index:2;"></div>
                   <div style="position:absolute; bottom:16px; left:16px; right:16px; color:#fff; font-size:12px; font-weight:600; display:flex; align-items:center; gap:6px; z-index:3; pointer-events:none;">
