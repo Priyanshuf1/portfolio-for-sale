@@ -379,6 +379,25 @@
       formContainer.style.display = 'none';
       successMsg.style.display = 'block';
 
+      // 4. META (FACEBOOK) PIXEL LEAD CONVERSION TRACKING
+      try {
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'Lead');
+          console.log("[Meta Pixel] Standard event fbq('track', 'Lead') triggered successfully.");
+        } else if (window._fbq) {
+          window._fbq.push(['track', 'Lead']);
+        }
+        // Google Tag Manager dataLayer mirror
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'Lead',
+          event_category: 'Lead Generation',
+          form_name: 'Book a Call / Consultation'
+        });
+      } catch (trackErr) {
+        console.warn("[Meta Pixel] Lead tracking warning:", trackErr);
+      }
+
       // Provide immediate WhatsApp connect option with pre-filled message
       const waMsg = encodeURIComponent("Hi Global Logic Media, I just submitted a booking request on your website!\n\nName: " + localBooking.name + "\nPhone: " + localBooking.phone + "\nEmail: " + localBooking.email + "\nDetails: " + (localBooking.businessDetails || "Free Consultation"));
       const waBtn = document.getElementById('glbBookSuccessWa');
