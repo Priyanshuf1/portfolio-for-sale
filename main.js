@@ -322,10 +322,43 @@
       if (!anchor) return;
       
       let href = anchor.getAttribute('href');
-      const text = anchor.innerText.trim().toLowerCase();
+      if (!href) return;
+      const text = (anchor.innerText || '').trim().toLowerCase();
+
+      // If clicking home/root while on main page, smooth scroll to top
+      if (href === './' || href === '/') {
+        const heroEl = document.getElementById('hero');
+        if (heroEl) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          const drawer = document.getElementById('glbMobileDrawer');
+          if (drawer && drawer.classList.contains('active')) {
+            drawer.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+          return;
+        }
+      }
+
+      // If href is like ./#section or /#section and section exists on current page, smooth scroll
+      if (href.startsWith('./#') || href.startsWith('/#')) {
+        const hashPart = href.substring(href.indexOf('#'));
+        const targetEl = document.querySelector(hashPart);
+        if (targetEl) {
+          e.preventDefault();
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          const drawer = document.getElementById('glbMobileDrawer');
+          if (drawer && drawer.classList.contains('active')) {
+            drawer.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+          history.pushState(null, null, hashPart);
+          return;
+        }
+      }
       
       // Map blank/empty/root href desktop header buttons based on their text content
-      if (href === '#' || href === '/' || !href) {
+      if (href === '#' || !href) {
         if (text.includes('home')) {
           href = '#hero';
         } else if (text.includes('about')) {
@@ -344,7 +377,7 @@
         href = '#glb-location';
       }
       
-      // If we have a valid hash target, scroll to it smoothly
+      // If we have a valid hash target on this page, scroll to it smoothly
       if (href && href.startsWith('#')) {
         const targetEl = document.querySelector(href);
         if (targetEl) {
@@ -363,11 +396,12 @@
       }
     });
 
-    // Hash redirect listener for window load & hashchange
+    // Hash redirect listener for window load & hashchange across all pages
     function handleHashRedirect() {
       const hash = window.location.hash;
-      if (hash === '#contact' || hash === '#glb-location') {
-        const targetEl = document.getElementById('glb-location');
+      if (hash && hash.length > 1) {
+        const id = hash.replace(/^#/, '');
+        const targetEl = document.getElementById(id) || (id === 'contact' ? document.getElementById('glb-location') : null);
         if (targetEl) {
           setTimeout(() => {
             targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });

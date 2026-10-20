@@ -139,6 +139,28 @@
       color: #6b7280;
       font-size: 13px;
     }
+
+    .glb-footer-legal-bar {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .glb-footer-legal-link {
+      color: #6b7280 !important;
+      text-decoration: none !important;
+      font-size: 13px !important;
+      font-weight: 500 !important;
+      transition: color 0.2s ease !important;
+    }
+
+    .glb-footer-legal-link:hover {
+      color: #e20001 !important;
+      text-decoration: underline !important;
+    }
     
     @media (max-width: 768px) {
       .glb-footer-container {
@@ -168,23 +190,24 @@
       <div class="glb-footer-col">
         <div class="glb-footer-heading">QUICK LINKS</div>
         <ul class="glb-footer-links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#glb-skills-section">Service</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="./">Home</a></li>
+          <li><a href="./#about-me">About Us</a></li>
+          <li><a href="./#services">Service</a></li>
+          <li><a href="./#glb-location">Contact Us</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms & Conditions</a></li>
         </ul>
       </div>
 
       <div class="glb-footer-col">
         <div class="glb-footer-heading">SOLUTIONS</div>
         <ul class="glb-footer-links">
-          <li><a href="#">SEO</a></li>
-          <li><a href="#">PAY PER CLICK</a></li>
-          <li><a href="#">META ADS</a></li>
-          <li><a href="#">WEB DESIGN</a></li>
-          <li><a href="#">SOCIAL MEDIA MARKETING</a></li>
-          <li><a href="#">GRAPHIC DESIGNING</a></li>
+          <li><a href="./#services">SEO</a></li>
+          <li><a href="./#services">PAY PER CLICK</a></li>
+          <li><a href="./#services">META ADS</a></li>
+          <li><a href="./#services">WEB DESIGN</a></li>
+          <li><a href="./#services">SOCIAL MEDIA MARKETING</a></li>
+          <li><a href="./#services">GRAPHIC DESIGNING</a></li>
         </ul>
       </div>
 
@@ -206,7 +229,12 @@
     </div>
     
     <div class="glb-footer-bottom">
-      &copy; 2025 Global Logic Media. All rights reserved.
+      <div>&copy; 2025 Global Logic Media. All rights reserved.</div>
+      <div class="glb-footer-legal-bar">
+        <a href="privacy-policy.html" class="glb-footer-legal-link">Privacy Policy</a>
+        <span style="color: #d1d5db; font-size: 10px;">•</span>
+        <a href="terms.html" class="glb-footer-legal-link">Terms & Conditions</a>
+      </div>
     </div>
   `;
 

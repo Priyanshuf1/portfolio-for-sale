@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MT99KWV4');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Cache Control Meta Tags to Prevent Stale Caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  
+  <script id="kill-service-workers">
+    let brandTitle = "Privacy Policy — Global Logic Media";
+    const titleObserver = new MutationObserver(function() {
+      if (document.title !== brandTitle) {
+        document.title = brandTitle;
+      }
+    });
+
+    function initTitleLock() {
+      const titleEl = document.querySelector('title');
+      if (titleEl) {
+        brandTitle = titleEl.textContent;
+        document.title = brandTitle;
+        titleObserver.observe(titleEl, { characterData: true, childList: true });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTitleLock);
+    } else {
+      initTitleLock();
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let registration of registrations) {
+          registration.unregister().then(function() {
+            console.log('Stale service worker unregistered!');
+          });
+        }
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (let name of names) {
+          caches.delete(name);
+        }
+      });
+    }
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <meta name="description" content="Official Privacy Policy of Global Logic Media. Learn how we collect, use, store, disclose, and protect personal and business information under Indian and international privacy laws.">
+  <link rel="canonical" href="https://www.globallogicmedia.com/privacy-policy.html">
+  <title>Privacy Policy — Global Logic Media</title>
+
+  <!-- Microsoft Clarity Heatmaps & Analytics -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ycm4i77tiz");
+  </script>
+
+  <!-- Google Fonts & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1788759000000">
+
+  <style>
+    :root {
+      --bg: #FFFDF0;
+      --surface: #ffffff;
+      --border: rgba(226, 0, 1, 0.12);
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --text: #111827;
+      --text-muted: #4b5563;
+      --text-light: #6b7280;
+      --primary: #e20001;
+      --primary-hover: #b80001;
+      --primary-subtle: rgba(226, 0, 1, 0.05);
+      --primary-glow: rgba(226, 0, 1, 0.15);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+
+    /* ── Hero Section ── */
+    .glb-legal-hero {
+      padding: 100px 5% 40px;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, rgba(226, 0, 1, 0.05) 0%, rgba(255, 253, 240, 0) 70%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .glb-badge-legal {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: #e20001;
+      border: 1px solid #e20001;
+      color: #ffffff !important;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 9999px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 14px rgba(226, 0, 1, 0.25);
+    }
+
+    .glb-legal-hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      margin: 0 0 14px;
+      color: #111827;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      font-weight: 900;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    }
+
+    .glb-legal-hero p {
+      font-size: 1.12rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+
+    .glb-legal-meta-bar {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px 24px;
+      padding: 12px 24px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      box-shadow: var(--shadow-sm);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .glb-legal-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+
+    .glb-legal-meta-item strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    /* ── Main Layout: Sidebar & Content ── */
+    .glb-legal-container {
+      max-width: 1280px;
+      margin: 40px auto 80px;
+      padding: 0 5%;
+      width: 100%;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 40px;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    @media (max-width: 1024px) {
+      .glb-legal-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    /* ── Sticky Sidebar TOC ── */
+    .glb-legal-sidebar {
+      position: sticky;
+      top: 90px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-md);
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .glb-sidebar-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #111827;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .glb-toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .glb-toc-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      line-height: 1.35;
+    }
+
+    .glb-toc-link:hover {
+      color: var(--primary);
+      background: var(--primary-subtle);
+      transform: translateX(4px);
+    }
+
+    .glb-toc-link.active {
+      color: var(--primary);
+      background: var(--primary-subtle);
+      font-weight: 700;
+      border-left: 3px solid var(--primary);
+    }
+
+    .glb-toc-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: #9ca3af;
+      width: 18px;
+      flex-shrink: 0;
+    }
+
+    .glb-toc-link.active .glb-toc-num {
+      color: var(--primary);
+    }
+
+    .glb-sidebar-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .glb-sidebar-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    .glb-sidebar-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-subtle);
+    }
+
+    .glb-sidebar-btn-primary {
+      background: var(--primary);
+      color: #ffffff !important;
+      border-color: var(--primary);
+    }
+
+    .glb-sidebar-btn-primary:hover {
+      background: var(--primary-hover);
+      color: #ffffff !important;
+    }
+
+    /* ── Content Area & Section Cards ── */
+    .glb-legal-content {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .glb-policy-card {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      scroll-margin-top: 100px;
+      position: relative;
+    }
+
+    .glb-policy-card:hover {
+      border-color: rgba(226, 0, 1, 0.25);
+      box-shadow: 0 8px 30px rgba(226, 0, 1, 0.04);
+    }
+
+    .glb-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .glb-card-num-badge {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--primary-subtle);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 15px;
+      flex-shrink: 0;
+      border: 1px solid rgba(226, 0, 1, 0.15);
+    }
+
+    .glb-card-header h2 {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #111827;
+      letter-spacing: -0.5px;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      line-height: 1.3;
+    }
+
+    .glb-card-body {
+      color: #374151;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .glb-card-body p {
+      margin: 0 0 16px;
+    }
+
+    .glb-card-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .glb-card-body h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #111827;
+      margin: 22px 0 10px;
+      letter-spacing: -0.3px;
+    }
+
+    .glb-policy-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .glb-policy-list li {
+      position: relative;
+      padding-left: 26px;
+      font-size: 15px;
+      color: #374151;
+    }
+
+    .glb-policy-list li::before {
+      content: '✔';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    /* Highlight Callout Box */
+    .glb-highlight-box {
+      background: rgba(226, 0, 1, 0.03);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-size: 14.5px;
+      color: #1f2937;
+    }
+
+    .glb-highlight-box strong {
+      color: var(--primary);
+    }
+
+    /* Contact Cards in Section 18 */
+    .glb-contact-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .glb-contact-mini-card {
+      background: #fafafa;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .glb-contact-mini-card:hover {
+      border-color: var(--primary);
+      background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .glb-contact-mini-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--primary);
+    }
+
+    .glb-contact-mini-val {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #111827;
+      text-decoration: none;
+    }
+
+    .glb-contact-mini-val a {
+      color: #111827;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .glb-contact-mini-val a:hover {
+      color: var(--primary);
+    }
+
+    /* Back to Top Floating Button */
+    .glb-back-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 999;
+    }
+
+    .glb-back-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .glb-back-top:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 768px) {
+      .glb-legal-hero {
+        padding: 90px 4% 30px;
+      }
+      .glb-legal-hero h1 {
+        font-size: 2.1rem;
+      }
+      .glb-policy-card {
+        padding: 22px 18px;
+      }
+      .glb-legal-meta-bar {
+        border-radius: var(--radius-md);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 14px 18px;
+      }
+      .glb-sidebar-actions {
+        flex-direction: row;
+      }
+    }
+
+    @media print {
+      .glb-site-header,
+      .glb-legal-sidebar,
+      .glb-footer,
+      .glb-back-top,
+      .glb-cookie-banner-wrap {
+        display: none !important;
+      }
+      .glb-legal-container {
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .glb-policy-card {
+        box-shadow: none !important;
+        border: none !important;
+        border-bottom: 1px solid #ccc !important;
+        border-radius: 0 !important;
+        padding: 20px 0 !important;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT99KWV4"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- ── Standard Navigation Header ── -->
+  <header class="glb-site-header" style="padding: 8px 20px; box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 20px;">
+    <div class="glb-header-container">
+      <div class="glb-logo-container">
+        <a href="./" class="glb-logo-link" title="Global Logic Media Homepage">
+          <img src="./logo_icon.png" alt="Global Logic Media Logo" class="glb-logo-img">
+        </a>
+      </div>
+      
+      <!-- Desktop Navigation Menu -->
+      <nav class="glb-nav-menu">
+        <a href="./" class="glb-nav-link">Home</a>
+        <a href="./#about-me" class="glb-nav-link">About</a>
+        <a href="./#services" class="glb-nav-link">Service</a>
+        <a href="blog.html" class="glb-nav-link">Blog</a>
+        <a href="privacy-policy.html" class="glb-nav-link glb-nav-active">Privacy</a>
+        <a href="./#glb-location" class="glb-nav-link">Contact Us</a>
+      </nav>
+      
+      <!-- Header Action Buttons -->
+      <div class="glb-header-actions">
+        <!-- Call Button -->
+        <a href="tel:+919208111603" class="glb-call-btn" title="Call Us Directly">
+          <span class="glb-call-icon-wrap">
+            <svg class="glb-call-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </span>
+          <span class="glb-call-number">+91 92081 11603</span>
+        </a>
+        
+        <!-- Mobile Menu Toggle Button -->
+        <button class="glb-menu-toggle" id="glbMenuToggle" aria-label="Toggle Navigation Menu">
+          <span class="glb-menu-bar"></span>
+          <span class="glb-menu-bar"></span>
+          <span class="glb-menu-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu (Slide-out Overlay) -->
+  <div class="glb-mobile-drawer" id="glbMobileDrawer">
+    <div class="glb-drawer-overlay" id="glbDrawerOverlay"></div>
+    <div class="glb-drawer-content">
+      <div class="glb-drawer-header">
+        <img src="./logo_icon.png" alt="Global Logic Media Logo" class="glb-drawer-logo">
+        <button class="glb-drawer-close" id="glbDrawerClose" aria-label="Close Menu">×</button>
+      </div>
+      <nav class="glb-drawer-nav">
+        <a href="./" class="glb-drawer-link">Home</a>
+        <a href="./#about-me" class="glb-drawer-link">About</a>
+        <a href="./#services" class="glb-drawer-link">Services</a>
+        <a href="./blog.html" class="glb-drawer-link">Blog</a>
+        <a href="./privacy-policy.html" class="glb-drawer-link" style="color:#e20001; font-weight:700;">Privacy Policy</a>
+        <a href="./terms.html" class="glb-drawer-link">Terms & Conditions</a>
+        <a href="./#glb-location" class="glb-drawer-link">Contact us</a>
+      </nav>
+      <div class="glb-drawer-footer">
+        <a href="tel:+919208111603" class="glb-drawer-call-btn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          Call Us Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Hero Banner ── -->
+  <section class="glb-legal-hero">
+    <div class="glb-badge-legal">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      Official Policy
+    </div>
+    <h1>Privacy Policy</h1>
+    <p>Global Logic Media respects your privacy and is committed to protecting your personal information under applicable Indian and international data protection laws.</p>
+    
+    <div class="glb-legal-meta-bar">
+      <div class="glb-legal-meta-item">
+        <span>🏢</span> <strong>Global Logic Media</strong>
+      </div>
+      <div class="glb-legal-meta-item">
+        <span>🌐</span> <a href="https://www.globallogicmedia.com/" style="color:inherit; text-decoration:none;">globallogicmedia.com</a>
+      </div>
+      <div class="glb-legal-meta-item">
+        <span>📍</span> Lucknow, Uttar Pradesh, India
+      </div>
+      <div class="glb-legal-meta-item">
+        <span>⚖️</span> Digital Personal Data Protection Act, 2023
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Legal Content Grid with Sticky Sidebar TOC ── -->
+  <div class="glb-legal-container">
+    
+    <!-- Sticky Table of Contents -->
+    <aside class="glb-legal-sidebar" id="glbLegalSidebar">
+      <div class="glb-sidebar-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        Table of Contents
+      </div>
+      <ul class="glb-toc-list">
+        <li><a href="#sec-1" class="glb-toc-link"><span class="glb-toc-num">01</span> Introduction</a></li>
+        <li><a href="#sec-2" class="glb-toc-link"><span class="glb-toc-num">02</span> Information We Collect</a></li>
+        <li><a href="#sec-3" class="glb-toc-link"><span class="glb-toc-num">03</span> How We Use Information</a></li>
+        <li><a href="#sec-4" class="glb-toc-link"><span class="glb-toc-num">04</span> Cookies & Technologies</a></li>
+        <li><a href="#sec-5" class="glb-toc-link"><span class="glb-toc-num">05</span> Google & Ad Platforms</a></li>
+        <li><a href="#sec-6" class="glb-toc-link"><span class="glb-toc-num">06</span> Sharing of Information</a></li>
+        <li><a href="#sec-7" class="glb-toc-link"><span class="glb-toc-num">07</span> Client Marketing Services</a></li>
+        <li><a href="#sec-8" class="glb-toc-link"><span class="glb-toc-num">08</span> Data Retention</a></li>
+        <li><a href="#sec-9" class="glb-toc-link"><span class="glb-toc-num">09</span> Data Security</a></li>
+        <li><a href="#sec-10" class="glb-toc-link"><span class="glb-toc-num">10</span> International Transfers</a></li>
+        <li><a href="#sec-11" class="glb-toc-link"><span class="glb-toc-num">11</span> Your Privacy Rights</a></li>
+        <li><a href="#sec-12" class="glb-toc-link"><span class="glb-toc-num">12</span> Communications</a></li>
+        <li><a href="#sec-13" class="glb-toc-link"><span class="glb-toc-num">13</span> Third-Party Websites</a></li>
+        <li><a href="#sec-14" class="glb-toc-link"><span class="glb-toc-num">14</span> Children's Privacy</a></li>
+        <li><a href="#sec-15" class="glb-toc-link"><span class="glb-toc-num">15</span> Your Responsibilities</a></li>
+        <li><a href="#sec-16" class="glb-toc-link"><span class="glb-toc-num">16</span> Indian DPDP Act 2023</a></li>
+        <li><a href="#sec-17" class="glb-toc-link"><span class="glb-toc-num">17</span> Changes to Policy</a></li>
+        <li><a href="#sec-18" class="glb-toc-link"><span class="glb-toc-num">18</span> Contact & Grievances</a></li>
+      </ul>
+      <div class="glb-sidebar-actions">
+        <a href="terms.html" class="glb-sidebar-btn">
+          <span>📜</span> View Terms & Conditions
+        </a>
+        <button onclick="window.print()" class="glb-sidebar-btn">
+          <span>🖨️</span> Print / Save PDF
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Policy Sections -->
+    <main class="glb-legal-content">
+
+      <!-- Section 1 -->
+      <article class="glb-policy-card" id="sec-1">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">01</span>
+          <h2>Introduction</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Global Logic Media (“we,” “our,” “us,” or “the Agency”) respects your privacy and is committed to protecting your personal information.</p>
+          <p>This Privacy Policy explains how we collect, use, store, disclose, and protect information when you visit our website (<a href="https://www.globallogicmedia.com/" target="_blank" rel="noopener noreferrer" style="color:var(--primary); font-weight:600;">https://www.globallogicmedia.com/</a>), contact us, request our services, or interact with our digital marketing campaigns.</p>
+          <p>Our services may include digital marketing, search engine optimisation (SEO), social media marketing, website design and development, Google Ads, Meta Ads, paid advertising, content creation, graphic design, branding, and lead generation.</p>
+          <div class="glb-highlight-box">
+            By using our website, you acknowledge this Privacy Policy. Where consent is required by applicable law, we will obtain it before processing your personal information.
+          </div>
+        </div>
+      </article>
+
+      <!-- Section 2 -->
+      <article class="glb-policy-card" id="sec-2">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">02</span>
+          <h2>Information We Collect</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>We may collect the following information depending on how you interact with our website and services.</p>
+          
+          <h3>2.1 Personal Information</h3>
+          <ul class="glb-policy-list">
+            <li>Full name</li>
+            <li>Email address</li>
+            <li>Phone number</li>
+            <li>Business name</li>
+            <li>Job title or professional information</li>
+            <li>Information submitted through contact forms, consultation requests, or enquiries</li>
+          </ul>
+
+          <h3>2.2 Business and Project Information</h3>
+          <ul class="glb-policy-list">
+            <li>Website URLs and social media profile links</li>
+            <li>Business requirements and marketing objectives</li>
+            <li>Project briefs, brand guidelines, and creative assets</li>
+            <li>Information required for quotations, proposals, contracts, and invoices</li>
+            <li>Information voluntarily shared during business communications</li>
+          </ul>
+
+          <h3>2.3 Technical Information</h3>
+          <p>Depending on our website configuration, we may collect technical information such as IP address, browser type, device type, operating system, referring website, pages visited, time spent on pages, and approximate location derived from technical information.</p>
+
+          <h3>2.4 Communication Information</h3>
+          <p>We may retain relevant communications exchanged through email, telephone, website forms, and business messaging services for customer support, project management, recordkeeping, and dispute resolution.</p>
+
+          <div class="glb-highlight-box">
+            <strong>Important:</strong> Please do not submit sensitive personal information through our website unless it is specifically necessary and an appropriate lawful process is in place.
+          </div>
+        </div>
+      </article>
+
+      <!-- Section 3 -->
+      <article class="glb-policy-card" id="sec-3">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">03</span>
+          <h2>How We Use Your Information</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>We may use collected information to:</p>
+          <ul class="glb-policy-list">
+            <li>Respond to enquiries and consultation requests.</li>
+            <li>Provide information about our services.</li>
+            <li>Prepare proposals, quotations, and service agreements.</li>
+            <li>Deliver and manage digital marketing and creative projects.</li>
+            <li>Communicate project updates, deadlines, payments, and support information.</li>
+            <li>Improve website functionality and user experience.</li>
+            <li>Analyse website traffic and marketing performance where applicable.</li>
+            <li>Measure advertising effectiveness and campaign results.</li>
+            <li>Protect our website, systems, clients, and business operations.</li>
+            <li>Prevent fraud and address security issues.</li>
+            <li>Maintain business records and meet legal obligations.</li>
+            <li>Send promotional communications where permitted by law.</li>
+          </ul>
+          <p>We process personal information on an appropriate lawful basis, including consent where required, steps taken at your request, contractual necessity, and other grounds permitted by applicable law.</p>
+        </div>
+      </article>
+
+      <!-- Section 4 -->
+      <article class="glb-policy-card" id="sec-4">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">04</span>
+          <h2>Cookies and Similar Technologies</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Our website may use cookies, pixels, tags, and similar technologies, depending on the tools and integrations configured on the website.</p>
+          <p>These technologies may be used to:</p>
+          <ul class="glb-policy-list">
+            <li>Support essential website functionality.</li>
+            <li>Remember preferences.</li>
+            <li>Understand website traffic and visitor behaviour.</li>
+            <li>Measure marketing and advertising performance.</li>
+            <li>Improve website content and functionality.</li>
+            <li>Support remarketing or personalised advertising where enabled.</li>
+          </ul>
+          <p>Where required by law, we will request consent before activating non-essential cookies or tracking technologies.</p>
+          <p>You may manage cookies through your browser settings or any cookie preference mechanism available on our website. Disabling certain cookies may affect website functionality.</p>
+        </div>
+      </article>
+
+      <!-- Section 5 -->
+      <article class="glb-policy-card" id="sec-5">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">05</span>
+          <h2>Google Analytics and Advertising Platforms</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Where configured, we may use third-party services such as Google Analytics, Google Ads, Meta advertising tools, or similar analytics and advertising platforms.</p>
+          <p>These services may process information such as online identifiers, device information, website interactions, and advertising events to provide analytics, conversion measurement, campaign optimisation, or remarketing services.</p>
+          <p>The specific information processed depends on the tools activated and their configuration. We do not represent that every named service is currently installed or active on our website.</p>
+          <p>Third-party providers may process information according to their own privacy policies and applicable terms. Where required, we will obtain appropriate consent before enabling relevant tracking technologies.</p>
+        </div>
+      </article>
+
+      <!-- Section 6 -->
+      <article class="glb-policy-card" id="sec-6">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">06</span>
+          <h2>How We Share Personal Information</h2>
+        </div>
+        <div class="glb-card-body">
+          <div class="glb-highlight-box" style="font-size:16px; font-weight:700;">
+            🛡️ We do not sell personal information for money.
+          </div>
+          <p>We may disclose information to the following categories of recipients where reasonably necessary and legally permitted:</p>
+          
+          <h3>6.1 Service Providers</h3>
+          <p>Website hosting providers, email services, CRM platforms, analytics providers, payment processors, and technical support providers.</p>
+
+          <h3>6.2 Advertising and Marketing Platforms</h3>
+          <p>Advertising and analytics providers that assist with campaign delivery, conversion measurement, reporting, and optimisation.</p>
+
+          <h3>6.3 Professional Advisers</h3>
+          <p>Legal, accounting, compliance, or other professional advisers where reasonably necessary.</p>
+
+          <h3>6.4 Legal and Regulatory Authorities</h3>
+          <p>Authorities or other parties where disclosure is required by applicable law, valid legal process, or to protect legal rights and security.</p>
+
+          <h3>6.5 Business Transfers</h3>
+          <p>Information may be transferred as part of a merger, restructuring, acquisition, or transfer of business assets, subject to applicable legal requirements.</p>
+
+          <p>We take reasonable steps to ensure that service providers handle information appropriately and in accordance with applicable agreements and law.</p>
+        </div>
+      </article>
+
+      <!-- Section 7 -->
+      <article class="glb-policy-card" id="sec-7">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">07</span>
+          <h2>Client Information and Marketing Services</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>When clients engage Global Logic Media for digital marketing, advertising, website development, SEO, or related services, we may process business information and other data necessary to perform the agreed work.</p>
+          <p>Clients are responsible for ensuring that information they provide to us may lawfully be shared and used for the agreed purposes.</p>
+          <p>Where we process personal data on behalf of a client, the respective responsibilities of the client and Global Logic Media may be governed by the relevant service agreement and applicable data protection laws.</p>
+          <p>We will not intentionally use client information for unrelated purposes outside the agreed engagement unless permitted or required by law.</p>
+        </div>
+      </article>
+
+      <!-- Section 8 -->
+      <article class="glb-policy-card" id="sec-8">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">08</span>
+          <h2>Data Retention</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>We retain personal information only for as long as reasonably necessary for the purposes described in this Privacy Policy, including providing services, maintaining business records, resolving disputes, and complying with legal obligations.</p>
+          <p>Retention periods depend on the type of information, contractual requirements, applicable laws, and legitimate business needs.</p>
+          <p>When information is no longer required, we will take reasonable steps to delete it or anonymise it, subject to legal obligations, backup retention, and technical limitations.</p>
+        </div>
+      </article>
+
+      <!-- Section 9 -->
+      <article class="glb-policy-card" id="sec-9">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">09</span>
+          <h2>Data Security</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>We take reasonable technical and organisational measures designed to protect personal information against unauthorised access, loss, misuse, alteration, or disclosure.</p>
+          <p>However, no website, internet transmission, or electronic storage system can be guaranteed to be completely secure.</p>
+          <p>If a personal data breach occurs, we will take appropriate steps in accordance with applicable legal requirements.</p>
+        </div>
+      </article>
+
+      <!-- Section 10 -->
+      <article class="glb-policy-card" id="sec-10">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">10</span>
+          <h2>International Data Transfers</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Our website or service providers may use infrastructure located outside your state or country. Accordingly, personal information may be processed or stored in other jurisdictions.</p>
+          <p>Any such transfer will be handled in accordance with applicable laws and any required safeguards or restrictions.</p>
+        </div>
+      </article>
+
+      <!-- Section 11 -->
+      <article class="glb-policy-card" id="sec-11">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">11</span>
+          <h2>Your Privacy Rights</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Depending on the applicable law and the circumstances of processing, you may have rights to:</p>
+          <ul class="glb-policy-list">
+            <li>Request access to your personal information.</li>
+            <li>Request correction or updating of inaccurate information.</li>
+            <li>Request erasure of personal information, subject to legal exceptions.</li>
+            <li>Withdraw consent where processing is based on consent.</li>
+            <li>Request information about the processing of your personal data.</li>
+            <li>Opt out of promotional communications.</li>
+            <li>Raise a privacy-related grievance or complaint.</li>
+          </ul>
+          <p>To exercise an applicable right, please contact us using the contact information provided in this policy. We may request reasonable information to verify your identity and prevent unauthorised disclosure.</p>
+          <p>We will handle requests within the time limits and in the manner required by applicable law.</p>
+        </div>
+      </article>
+
+      <!-- Section 12 -->
+      <article class="glb-policy-card" id="sec-12">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">12</span>
+          <h2>Promotional Communications</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>We may send service-related communications concerning enquiries, consultations, proposals, ongoing projects, invoices, or support.</p>
+          <p>We may also send promotional communications where permitted by law and, where required, with your consent.</p>
+          <p>You can opt out of promotional emails through an available unsubscribe mechanism or by contacting us directly.</p>
+          <p>Opting out of promotional communications will not prevent essential communications relating to an ongoing project, transaction, or legal obligation.</p>
+        </div>
+      </article>
+
+      <!-- Section 13 -->
+      <article class="glb-policy-card" id="sec-13">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">13</span>
+          <h2>Third-Party Websites</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Our website may contain links to third-party websites, social media platforms, or external services.</p>
+          <p>We do not control the privacy practices, content, or security of third-party websites. Your interactions with those websites are governed by their respective terms and privacy policies.</p>
+          <p>We recommend reviewing the relevant policies before sharing personal information with third parties.</p>
+        </div>
+      </article>
+
+      <!-- Section 14 -->
+      <article class="glb-policy-card" id="sec-14">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">14</span>
+          <h2>Children's Privacy</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Our website and services are primarily intended for businesses and general audiences, not specifically for children.</p>
+          <p>We do not knowingly collect children's personal information in circumstances where such collection is prohibited by applicable law.</p>
+          <p>If we become aware of unlawful collection of children's personal information, we will take appropriate steps in accordance with applicable legal requirements.</p>
+          <p>Where additional safeguards or verifiable parental consent are required by law, we will follow the applicable requirements.</p>
+        </div>
+      </article>
+
+      <!-- Section 15 -->
+      <article class="glb-policy-card" id="sec-15">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">15</span>
+          <h2>Your Responsibilities</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>If you submit information about another person, including a customer, employee, team member, or business contact, you must ensure that you are authorised to share that information and that any required notices or permissions have been provided.</p>
+          <p>You should also avoid sharing confidential credentials, passwords, payment card details, or unnecessary sensitive information through ordinary website forms or unsecured communication channels.</p>
+        </div>
+      </article>
+
+      <!-- Section 16 -->
+      <article class="glb-policy-card" id="sec-16">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">16</span>
+          <h2>Data Protection Under Indian Law</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Global Logic Media aims to handle personal information in accordance with applicable Indian data protection and privacy laws, including the <strong>Digital Personal Data Protection Act, 2023 (DPDP Act)</strong>, and applicable rules and notifications to the extent they are in force and apply to the relevant processing.</p>
+          <p>Where applicable, we will provide required notices, obtain valid consent where necessary, facilitate relevant data principal rights, and address grievances in accordance with the applicable legal framework.</p>
+          <p>The precise obligations and commencement dates may depend on the relevant provisions and notifications in force.</p>
+        </div>
+      </article>
+
+      <!-- Section 17 -->
+      <article class="glb-policy-card" id="sec-17">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">17</span>
+          <h2>Changes to This Privacy Policy</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>We may update this Privacy Policy to reflect changes in our services, business practices, website technologies, or applicable legal requirements.</p>
+          <p>Any revised policy will be published on this page with an updated “Last Updated” date.</p>
+          <p>Where required by law, we will provide additional notice or obtain renewed consent. We encourage visitors and clients to review this page periodically.</p>
+        </div>
+      </article>
+
+      <!-- Section 18 -->
+      <article class="glb-policy-card" id="sec-18">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">18</span>
+          <h2>Contact Us and Privacy Grievances</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>If you have questions, requests, or complaints regarding this Privacy Policy or our handling of personal information, please contact Global Logic Media using the details below.</p>
+          
+          <div class="glb-contact-cards-grid">
+            <div class="glb-contact-mini-card">
+              <span class="glb-contact-mini-label">Business Name</span>
+              <span class="glb-contact-mini-val">Global Logic Media</span>
+            </div>
+            
+            <div class="glb-contact-mini-card">
+              <span class="glb-contact-mini-label">Official Website</span>
+              <span class="glb-contact-mini-val">
+                <a href="https://www.globallogicmedia.com/" target="_blank" rel="noopener noreferrer">globallogicmedia.com</a>
+              </span>
+            </div>
+
+            <div class="glb-contact-mini-card">
+              <span class="glb-contact-mini-label">Phone Hotline</span>
+              <span class="glb-contact-mini-val">
+                <a href="tel:+919208111603">+91 92081 11603</a>
+              </span>
+            </div>
+
+            <div class="glb-contact-mini-card">
+              <span class="glb-contact-mini-label">Email Inquiries</span>
+              <span class="glb-contact-mini-val">
+                <a href="mailto:globallogicmedia06@gmail.com">globallogicmedia06@gmail.com</a>
+              </span>
+            </div>
+
+            <div class="glb-contact-mini-card">
+              <span class="glb-contact-mini-label">Business Location</span>
+              <span class="glb-contact-mini-val">Gomti Nagar, Lucknow, UP 226010, India</span>
+            </div>
+
+            <div class="glb-contact-mini-card">
+              <span class="glb-contact-mini-label">Enquiry Subject</span>
+              <span class="glb-contact-mini-val">Privacy Request – Global Logic Media</span>
+            </div>
+          </div>
+
+          <p style="margin-top:20px; font-size:14px; color:var(--text-light);">
+            For privacy-related enquiries, please use the contact options available on our website or contact us by phone. We will review and respond to requests in accordance with applicable law.<br>
+            <em>The contact information above does not replace any additional grievance contact details or disclosures that may be legally required for the business.</em>
+          </p>
+        </div>
+      </article>
+
+    </main>
+  </div>
+
+  <!-- Back to Top Floating Button -->
+  <button class="glb-back-top" id="glbBackTop" title="Back to top" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- Interactive Scripts (TOC ScrollSpy, Mobile Drawer, Back to Top) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. Mobile Menu Drawer Toggle
+      const toggle = document.getElementById('glbMenuToggle');
+      const drawer = document.getElementById('glbMobileDrawer');
+      const closeBtn = document.getElementById('glbDrawerClose');
+      const overlay = document.getElementById('glbDrawerOverlay');
+
+      function openMenu() {
+        if (drawer) drawer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeMenu() {
+        if (drawer) drawer.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      if (toggle) toggle.addEventListener('click', openMenu);
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+      if (overlay) overlay.addEventListener('click', closeMenu);
+
+      const drawerLinks = document.querySelectorAll('.glb-drawer-link');
+      drawerLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+      // 2. Table of Contents ScrollSpy
+      const sections = document.querySelectorAll('.glb-policy-card');
+      const navLinks = document.querySelectorAll('.glb-toc-link');
+
+      function updateActiveToc() {
+        let currentSectionId = '';
+        const scrollPosition = window.scrollY + 140;
+
+        sections.forEach(sec => {
+          const top = sec.offsetTop;
+          const height = sec.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            currentSectionId = sec.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + currentSectionId) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveToc, { passive: true });
+      updateActiveToc();
+
+      // 3. Back to Top Button
+      const backTopBtn = document.getElementById('glbBackTop');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 400) {
+          backTopBtn.classList.add('visible');
+        } else {
+          backTopBtn.classList.remove('visible');
+        }
+      }, { passive: true });
+
+      if (backTopBtn) {
+        backTopBtn.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Smooth scroll for TOC links
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId.startsWith('#')) {
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              e.preventDefault();
+              targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Load Cookie Consent and Custom Footer Scripts -->
+  <script src="cookie-consent.js?v=1.1"></script>
+  <script src="custom-footer.js?v=1792400000000"></script>
+</body>
+</html>

@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MT99KWV4');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Cache Control Meta Tags to Prevent Stale Caching -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  
+  <script id="kill-service-workers">
+    let brandTitle = "Terms & Conditions — Global Logic Media";
+    const titleObserver = new MutationObserver(function() {
+      if (document.title !== brandTitle) {
+        document.title = brandTitle;
+      }
+    });
+
+    function initTitleLock() {
+      const titleEl = document.querySelector('title');
+      if (titleEl) {
+        brandTitle = titleEl.textContent;
+        document.title = brandTitle;
+        titleObserver.observe(titleEl, { characterData: true, childList: true });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initTitleLock);
+    } else {
+      initTitleLock();
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let registration of registrations) {
+          registration.unregister().then(function() {
+            console.log('Stale service worker unregistered!');
+          });
+        }
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (let name of names) {
+          caches.delete(name);
+        }
+      });
+    }
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <meta name="description" content="Official Terms & Conditions of Global Logic Media. Understand our service agreements, payment schedules, intellectual property rights, and client responsibilities.">
+  <link rel="canonical" href="https://www.globallogicmedia.com/terms.html">
+  <title>Terms & Conditions — Global Logic Media</title>
+
+  <!-- Microsoft Clarity Heatmaps & Analytics -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "ycm4i77tiz");
+  </script>
+
+  <!-- Google Fonts & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=1788759000000">
+
+  <style>
+    :root {
+      --bg: #FFFDF0;
+      --surface: #ffffff;
+      --border: rgba(226, 0, 1, 0.12);
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --text: #111827;
+      --text-muted: #4b5563;
+      --text-light: #6b7280;
+      --primary: #e20001;
+      --primary-hover: #b80001;
+      --primary-subtle: rgba(226, 0, 1, 0.05);
+      --primary-glow: rgba(226, 0, 1, 0.15);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      line-height: 1.65;
+    }
+
+    /* ── Hero Section ── */
+    .glb-legal-hero {
+      padding: 100px 5% 40px;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, rgba(226, 0, 1, 0.05) 0%, rgba(255, 253, 240, 0) 70%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .glb-badge-legal {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: #e20001;
+      border: 1px solid #e20001;
+      color: #ffffff !important;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 9999px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 14px rgba(226, 0, 1, 0.25);
+    }
+
+    .glb-legal-hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      margin: 0 0 14px;
+      color: #111827;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      font-weight: 900;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    }
+
+    .glb-legal-hero p {
+      font-size: 1.12rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+
+    .glb-legal-meta-bar {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px 24px;
+      padding: 12px 24px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      box-shadow: var(--shadow-sm);
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .glb-legal-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+
+    .glb-legal-meta-item strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    /* ── Main Layout: Sidebar & Content ── */
+    .glb-legal-container {
+      max-width: 1280px;
+      margin: 40px auto 80px;
+      padding: 0 5%;
+      width: 100%;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 40px;
+      align-items: flex-start;
+      position: relative;
+    }
+
+    @media (max-width: 1024px) {
+      .glb-legal-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    /* ── Sticky Sidebar TOC ── */
+    .glb-legal-sidebar {
+      position: sticky;
+      top: 90px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-md);
+      max-height: calc(100vh - 120px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .glb-sidebar-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #111827;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .glb-toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .glb-toc-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      line-height: 1.35;
+    }
+
+    .glb-toc-link:hover {
+      color: var(--primary);
+      background: var(--primary-subtle);
+      transform: translateX(4px);
+    }
+
+    .glb-toc-link.active {
+      color: var(--primary);
+      background: var(--primary-subtle);
+      font-weight: 700;
+      border-left: 3px solid var(--primary);
+    }
+
+    .glb-toc-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: #9ca3af;
+      width: 18px;
+      flex-shrink: 0;
+    }
+
+    .glb-toc-link.active .glb-toc-num {
+      color: var(--primary);
+    }
+
+    .glb-sidebar-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .glb-sidebar-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    .glb-sidebar-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--primary-subtle);
+    }
+
+    /* ── Content Area & Section Cards ── */
+    .glb-legal-content {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .glb-policy-card {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      scroll-margin-top: 100px;
+      position: relative;
+    }
+
+    .glb-policy-card:hover {
+      border-color: rgba(226, 0, 1, 0.25);
+      box-shadow: 0 8px 30px rgba(226, 0, 1, 0.04);
+    }
+
+    .glb-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .glb-card-num-badge {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--primary-subtle);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 15px;
+      flex-shrink: 0;
+      border: 1px solid rgba(226, 0, 1, 0.15);
+    }
+
+    .glb-card-header h2 {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #111827;
+      letter-spacing: -0.5px;
+      font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      line-height: 1.3;
+    }
+
+    .glb-card-body {
+      color: #374151;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .glb-card-body p {
+      margin: 0 0 16px;
+    }
+
+    .glb-card-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .glb-policy-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .glb-policy-list li {
+      position: relative;
+      padding-left: 26px;
+      font-size: 15px;
+      color: #374151;
+    }
+
+    .glb-policy-list li::before {
+      content: '✔';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .glb-highlight-box {
+      background: rgba(226, 0, 1, 0.03);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-size: 14.5px;
+      color: #1f2937;
+    }
+
+    .glb-contact-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .glb-contact-mini-card {
+      background: #fafafa;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .glb-contact-mini-card:hover {
+      border-color: var(--primary);
+      background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .glb-contact-mini-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--primary);
+    }
+
+    .glb-contact-mini-val {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #111827;
+      text-decoration: none;
+    }
+
+    .glb-contact-mini-val a {
+      color: #111827;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .glb-contact-mini-val a:hover {
+      color: var(--primary);
+    }
+
+    .glb-back-top {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 999;
+    }
+
+    .glb-back-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .glb-back-top:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 768px) {
+      .glb-legal-hero {
+        padding: 90px 4% 30px;
+      }
+      .glb-legal-hero h1 {
+        font-size: 2.1rem;
+      }
+      .glb-policy-card {
+        padding: 22px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MT99KWV4"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- Standard Navigation Header -->
+  <header class="glb-site-header" style="padding: 8px 20px; box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 20px;">
+    <div class="glb-header-container">
+      <div class="glb-logo-container">
+        <a href="./" class="glb-logo-link" title="Global Logic Media Homepage">
+          <img src="./logo_icon.png" alt="Global Logic Media Logo" class="glb-logo-img">
+        </a>
+      </div>
+      
+      <nav class="glb-nav-menu">
+        <a href="./" class="glb-nav-link">Home</a>
+        <a href="./#about-me" class="glb-nav-link">About</a>
+        <a href="./#services" class="glb-nav-link">Service</a>
+        <a href="blog.html" class="glb-nav-link">Blog</a>
+        <a href="terms.html" class="glb-nav-link glb-nav-active">Terms</a>
+        <a href="./#glb-location" class="glb-nav-link">Contact Us</a>
+      </nav>
+      
+      <div class="glb-header-actions">
+        <a href="tel:+919208111603" class="glb-call-btn" title="Call Us Directly">
+          <span class="glb-call-icon-wrap">
+            <svg class="glb-call-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </span>
+          <span class="glb-call-number">+91 92081 11603</span>
+        </a>
+        
+        <button class="glb-menu-toggle" id="glbMenuToggle" aria-label="Toggle Navigation Menu">
+          <span class="glb-menu-bar"></span>
+          <span class="glb-menu-bar"></span>
+          <span class="glb-menu-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="glb-mobile-drawer" id="glbMobileDrawer">
+    <div class="glb-drawer-overlay" id="glbDrawerOverlay"></div>
+    <div class="glb-drawer-content">
+      <div class="glb-drawer-header">
+        <img src="./logo_icon.png" alt="Global Logic Media Logo" class="glb-drawer-logo">
+        <button class="glb-drawer-close" id="glbDrawerClose" aria-label="Close Menu">×</button>
+      </div>
+      <nav class="glb-drawer-nav">
+        <a href="./" class="glb-drawer-link">Home</a>
+        <a href="./#about-me" class="glb-drawer-link">About</a>
+        <a href="./#services" class="glb-drawer-link">Services</a>
+        <a href="./blog.html" class="glb-drawer-link">Blog</a>
+        <a href="./privacy-policy.html" class="glb-drawer-link">Privacy Policy</a>
+        <a href="./terms.html" class="glb-drawer-link" style="color:#e20001; font-weight:700;">Terms & Conditions</a>
+        <a href="./#glb-location" class="glb-drawer-link">Contact us</a>
+      </nav>
+      <div class="glb-drawer-footer">
+        <a href="tel:+919208111603" class="glb-drawer-call-btn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          Call Us Now
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Banner -->
+  <section class="glb-legal-hero">
+    <div class="glb-badge-legal">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      Terms of Service
+    </div>
+    <h1>Terms & Conditions</h1>
+    <p>Please read these Terms and Conditions carefully before retaining our digital marketing, SEO, advertising, or web development services.</p>
+    
+    <div class="glb-legal-meta-bar">
+      <div class="glb-legal-meta-item">
+        <span>🏢</span> <strong>Global Logic Media</strong>
+      </div>
+      <div class="glb-legal-meta-item">
+        <span>🌐</span> <a href="https://www.globallogicmedia.com/" style="color:inherit; text-decoration:none;">globallogicmedia.com</a>
+      </div>
+      <div class="glb-legal-meta-item">
+        <span>⚖️</span> Governing Law: Jurisdiction of Lucknow, India
+      </div>
+    </div>
+  </section>
+
+  <!-- Legal Container -->
+  <div class="glb-legal-container">
+    
+    <!-- Sticky Sidebar TOC -->
+    <aside class="glb-legal-sidebar" id="glbLegalSidebar">
+      <div class="glb-sidebar-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        Table of Contents
+      </div>
+      <ul class="glb-toc-list">
+        <li><a href="#t-sec-1" class="glb-toc-link"><span class="glb-toc-num">01</span> Acceptance of Terms</a></li>
+        <li><a href="#t-sec-2" class="glb-toc-link"><span class="glb-toc-num">02</span> Scope of Services</a></li>
+        <li><a href="#t-sec-3" class="glb-toc-link"><span class="glb-toc-num">03</span> Proposals & Work Orders</a></li>
+        <li><a href="#t-sec-4" class="glb-toc-link"><span class="glb-toc-num">04</span> Client Obligations</a></li>
+        <li><a href="#t-sec-5" class="glb-toc-link"><span class="glb-toc-num">05</span> Fees & Invoicing</a></li>
+        <li><a href="#t-sec-6" class="glb-toc-link"><span class="glb-toc-num">06</span> Advertising Budgets</a></li>
+        <li><a href="#t-sec-7" class="glb-toc-link"><span class="glb-toc-num">07</span> Intellectual Property</a></li>
+        <li><a href="#t-sec-8" class="glb-toc-link"><span class="glb-toc-num">08</span> Disclaimers</a></li>
+        <li><a href="#t-sec-9" class="glb-toc-link"><span class="glb-toc-num">09</span> Liability Limits</a></li>
+        <li><a href="#t-sec-10" class="glb-toc-link"><span class="glb-toc-num">10</span> Termination & Pauses</a></li>
+        <li><a href="#t-sec-11" class="glb-toc-link"><span class="glb-toc-num">11</span> Governing Law</a></li>
+        <li><a href="#t-sec-12" class="glb-toc-link"><span class="glb-toc-num">12</span> Contact Information</a></li>
+      </ul>
+      <div class="glb-sidebar-actions">
+        <a href="privacy-policy.html" class="glb-sidebar-btn">
+          <span>🛡️</span> View Privacy Policy
+        </a>
+        <button onclick="window.print()" class="glb-sidebar-btn">
+          <span>🖨️</span> Print / Save PDF
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="glb-legal-content">
+
+      <article class="glb-policy-card" id="t-sec-1">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">01</span>
+          <h2>Acceptance of Terms</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>By engaging Global Logic Media (“Agency,” “we,” “us,” or “our”) for digital marketing, web development, SEO, advertising, or related agency services, or by browsing this website (<a href="https://www.globallogicmedia.com/" target="_blank" rel="noopener noreferrer" style="color:var(--primary); font-weight:600;">https://www.globallogicmedia.com/</a>), you (“Client” or “User”) agree to be bound by these Terms and Conditions.</p>
+          <p>If you represent a business or commercial entity, you confirm that you have the requisite authority to bind that entity to these Terms.</p>
+        </div>
+      </article>
+
+      <article class="glb-policy-card" id="t-sec-2">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">02</span>
+          <h2>Scope of Services</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Global Logic Media provides professional creative and digital marketing solutions, including but not limited to:</p>
+          <ul class="glb-policy-list">
+            <li>Search Engine Optimisation (SEO) & Technical Audits</li>
+            <li>Paid Advertising Management (Google Ads, Meta Ads, YouTube Ads)</li>
+            <li>Website Design, Custom Web Development & Maintenance</li>
+            <li>Social Media Marketing (SMM) & Growth Management</li>
+            <li>Creative Content Creation, Video Production & Graphic Design</li>
+            <li>Lead Generation Strategies & Digital Brand Architecture</li>
+          </ul>
+          <p>All specific deliverables, timelines, milestones, and project fees will be set out in the applicable quotation, proposal, or statement of work (SOW) agreed between the Client and the Agency.</p>
+        </div>
+      </article>
+
+      <article class="glb-policy-card" id="t-sec-3">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">03</span>
+          <h2>Proposals, Quotations & Work Orders</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Quotations and commercial proposals issued by Global Logic Media remain valid for the period specified in the proposal (or thirty (30) calendar days if unspecified). Work commences upon formal approval of the proposal and receipt of any agreed initial advance deposit.</p>
+          <p>Any expansion, alterations, or additional deliverables outside the agreed scope will be considered a scope change and may be subject to separate quotation and timeline adjustments.</p>
+        </div>
+      </article>
+
+      <article class="glb-policy-card" id="t-sec-4">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">04</span>
+          <h2>Client Obligations & Approvals</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Timely completion of projects depends on prompt client collaboration. Clients agree to:</p>
+          <ul class="glb-policy-list">
+            <li>Provide required brand assets, high-resolution logos, text copy, images, and credentials promptly.</li>
+            <li>Designate a primary decision-maker authorised to review deliverables and issue approvals.</li>
+            <li>Review and provide timely feedback or approvals on mockups, design drafts, or ad creatives.</li>
+            <li>Ensure that all materials provided do not infringe third-party trademarks, copyrights, or privacy rights.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="glb-policy-card" id="t-sec-5">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">05</span>
+          <h2>Fees, Invoicing & Payment Terms</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Agency fees are payable in Indian Rupees (INR) or agreed foreign currency as specified in the quotation or invoice.</p>
+          <ul class="glb-policy-list">
+            <li>Invoices are due upon presentation or within the net terms stated on the invoice.</li>
+            <li>Retainer fees for ongoing services (SEO, Social Media, Ads Management) are billed on a monthly cycle in advance.</li>
+            <li>Development and creative design projects generally follow a phased milestone payment structure (e.g., upfront advance, milestone, final deployment).</li>
+            <li>Delayed payments beyond agreed grace periods may result in temporary suspension of campaign services until balances are resolved.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="glb-policy-card" id="t-sec-6">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">06</span>
+          <h2>Advertising Budgets & Third-Party Platforms</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Media spend and ad budgets (e.g., payments made directly to Google, Meta, or third-party networks) are separate from Global Logic Media's professional management fees.</p>
+          <p>Clients are typically required to link their corporate payment card directly to their respective ad accounts (Google Ads, Meta Business Suite). Global Logic Media is not liable for ad account suspensions, policy rejections, or algorithmic changes instituted by third-party advertising platforms.</p>
+        </div>
+      </article>
+
+      <article class="glb-policy-card" id="t-sec-7">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">07</span>
+          <h2>Intellectual Property & Deliverables</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Upon full settlement of all outstanding project invoices, the Client owns the final bespoke deliverables (website code, designed graphics, logos, published creatives) prepared specifically for them.</p>
+          <p>Global Logic Media retains ownership of proprietary agency frameworks, pre-existing code libraries, and general methodologies. The Agency reserves the non-exclusive right to display the completed work in its marketing portfolio, case studies, and client presentations, unless explicitly governed by a separate Non-Disclosure Agreement (NDA).</p>
+        </div>
+      </article>
+
+      <article class="glb-policy-card" id="t-sec-8">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">08</span>
+          <h2>Performance Disclaimers</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Digital marketing involves dynamic search algorithms, social media feed changes, competitive bidding, and macroeconomic variables. While Global Logic Media applies proven industry best practices, data-driven methodologies, and performance-optimised workflows, the Agency cannot and does not guarantee specific revenue, sales volume, or guaranteed #1 rankings on third-party search engines.</p>
+        </div>
+      </article>
+
+      <article class="glb-policy-card" id="t-sec-9">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">09</span>
+          <h2>Limitation of Liability</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>To the maximum extent permitted by applicable law, Global Logic Media shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or loss of profits, data, or business opportunities arising out of or related to our services.</p>
+          <p>In all circumstances, the Agency’s aggregate liability shall be limited to the total service fees actually paid by the Client to the Agency during the three (3) months preceding the event giving rise to the claim.</p>
+        </div>
+      </article>
+
+      <article class="glb-policy-card" id="t-sec-10">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">10</span>
+          <h2>Term, Pauses & Termination</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>Either party may terminate an ongoing monthly retainer agreement by providing thirty (30) days written notice to the other party.</p>
+          <p>Upon termination, the Client remains responsible for payment of all work performed and costs incurred up to the effective termination date. Inactive projects paused by the Client for more than sixty (60) consecutive days may require re-scoping prior to resumption.</p>
+        </div>
+      </article>
+
+      <article class="glb-policy-card" id="t-sec-11">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">11</span>
+          <h2>Governing Law & Jurisdiction</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>These Terms and Conditions and any dispute or claim arising out of or in connection with them shall be governed by and construed in accordance with the laws of <strong>India</strong>.</p>
+          <p>The courts located in <strong>Lucknow, Uttar Pradesh, India</strong> shall have exclusive jurisdiction to settle any disputes arising under or in connection with these Terms.</p>
+        </div>
+      </article>
+
+      <article class="glb-policy-card" id="t-sec-12">
+        <div class="glb-card-header">
+          <span class="glb-card-num-badge">12</span>
+          <h2>Contact Us & Inquiries</h2>
+        </div>
+        <div class="glb-card-body">
+          <p>For inquiries, notices, or clarifications regarding these Terms and Conditions, please contact us:</p>
+          
+          <div class="glb-contact-cards-grid">
+            <div class="glb-contact-mini-card">
+              <span class="glb-contact-mini-label">Agency</span>
+              <span class="glb-contact-mini-val">Global Logic Media</span>
+            </div>
+            
+            <div class="glb-contact-mini-card">
+              <span class="glb-contact-mini-label">Direct Phone</span>
+              <span class="glb-contact-mini-val">
+                <a href="tel:+919208111603">+91 92081 11603</a>
+              </span>
+            </div>
+
+            <div class="glb-contact-mini-card">
+              <span class="glb-contact-mini-label">Email</span>
+              <span class="glb-contact-mini-val">
+                <a href="mailto:globallogicmedia06@gmail.com">globallogicmedia06@gmail.com</a>
+              </span>
+            </div>
+
+            <div class="glb-contact-mini-card">
+              <span class="glb-contact-mini-label">Address</span>
+              <span class="glb-contact-mini-val">Gomti Nagar, Lucknow, UP 226010, India</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </main>
+  </div>
+
+  <!-- Back to Top Floating Button -->
+  <button class="glb-back-top" id="glbBackTop" title="Back to top" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <!-- Interactive Scripts -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggle = document.getElementById('glbMenuToggle');
+      const drawer = document.getElementById('glbMobileDrawer');
+      const closeBtn = document.getElementById('glbDrawerClose');
+      const overlay = document.getElementById('glbDrawerOverlay');
+
+      function openMenu() {
+        if (drawer) drawer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeMenu() {
+        if (drawer) drawer.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      if (toggle) toggle.addEventListener('click', openMenu);
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+      if (overlay) overlay.addEventListener('click', closeMenu);
+
+      const drawerLinks = document.querySelectorAll('.glb-drawer-link');
+      drawerLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+      const sections = document.querySelectorAll('.glb-policy-card');
+      const navLinks = document.querySelectorAll('.glb-toc-link');
+
+      function updateActiveToc() {
+        let currentSectionId = '';
+        const scrollPosition = window.scrollY + 140;
+
+        sections.forEach(sec => {
+          const top = sec.offsetTop;
+          const height = sec.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            currentSectionId = sec.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + currentSectionId) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveToc, { passive: true });
+      updateActiveToc();
+
+      const backTopBtn = document.getElementById('glbBackTop');
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 400) {
+          backTopBtn.classList.add('visible');
+        } else {
+          backTopBtn.classList.remove('visible');
+        }
+      }, { passive: true });
+
+      if (backTopBtn) {
+        backTopBtn.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId && targetId.startsWith('#')) {
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              e.preventDefault();
+              targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Load Cookie Consent and Custom Footer Scripts -->
+  <script src="cookie-consent.js?v=1.1"></script>
+  <script src="custom-footer.js?v=1792400000000"></script>
+</body>
+</html>

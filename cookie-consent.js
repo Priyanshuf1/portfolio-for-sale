@@ -161,7 +161,7 @@
         <div class="glb-cookie-title">Cookies & Privacy Preferences</div>
       </div>
       <div class="glb-cookie-desc">
-        We use cookies to elevate your browsing experience, analyze traffic flow, and deliver tailored digital marketing experiences. By clicking "Accept All", you agree to our cookie policy.
+        We use cookies to elevate your browsing experience, analyze traffic flow, and deliver tailored digital marketing experiences. By clicking "Accept All", you agree to our <a href="privacy-policy.html" target="_blank" style="color:#e20001; text-decoration:underline; font-weight:600;">Privacy Policy</a>.
       </div>
       <div class="glb-cookie-actions">
         <button class="glb-cookie-btn-accept" id="glbCookieAccept">Accept All</button>
