@@ -191,7 +191,7 @@
       width: 100%;
       box-sizing: border-box;
       display: grid;
-      grid-template-columns: 310px 1fr;
+      grid-template-columns: 310px minmax(0, 1fr);
       gap: 40px;
       align-items: flex-start;
       position: relative;
@@ -199,7 +199,7 @@
 
     @media (max-width: 1024px) {
       .glb-legal-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 30px;
       }
     }
@@ -328,6 +328,9 @@
       display: flex;
       flex-direction: column;
       gap: 28px;
+      min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .glb-policy-card {
@@ -339,6 +342,9 @@
       transition: border-color 0.25s ease, box-shadow 0.25s ease;
       scroll-margin-top: 100px;
       position: relative;
+      min-width: 0;
+      overflow: hidden;
+      box-sizing: border-box;
     }
 
     .glb-policy-card:hover {
@@ -446,7 +452,7 @@
     /* Contact Cards in Section 18 */
     .glb-contact-cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 16px;
       margin-top: 20px;
     }
@@ -455,10 +461,13 @@
       background: #fafafa;
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 18px;
+      padding: 18px 20px;
       display: flex;
       flex-direction: column;
       gap: 6px;
+      min-width: 0;
+      overflow: hidden;
+      box-sizing: border-box;
       transition: all 0.2s ease;
     }
 
@@ -478,16 +487,29 @@
     }
 
     .glb-contact-mini-val {
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 700;
       color: #111827;
       text-decoration: none;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      line-height: 1.45;
     }
 
     .glb-contact-mini-val a {
       color: #111827;
       text-decoration: none;
       transition: color 0.2s;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      display: inline-block;
+      max-width: 100%;
+    }
+
+    .glb-contact-mini-card a[href^="mailto:"] {
+      font-size: 13.5px;
+      word-break: break-all;
+      overflow-wrap: anywhere;
     }
 
     .glb-contact-mini-val a:hover {
@@ -1132,7 +1154,7 @@
         });
       }
 
-      // Smooth scroll for TOC links
+      // Smooth scroll for TOC links (strictly vertical, no horizontal shifting)
       navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
           const targetId = this.getAttribute('href');
@@ -1140,7 +1162,14 @@
             const targetEl = document.querySelector(targetId);
             if (targetEl) {
               e.preventDefault();
-              targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              const headerOffset = 90;
+              const elementPosition = targetEl.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+              window.scrollTo({
+                top: offsetPosition,
+                left: 0,
+                behavior: 'smooth'
+              });
             }
           }
         });
