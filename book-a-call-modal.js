@@ -422,13 +422,19 @@
         } else if (window._fbq) {
           window._fbq.push(['track', 'Lead']);
         }
-        // Google Tag Manager dataLayer mirror
+        // Google Tag (gtag.js) GA4 conversion & dataLayer event
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
           event: 'Lead',
           event_category: 'Lead Generation',
           form_name: 'Book a Call / Consultation'
         });
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'generate_lead', {
+            event_category: 'Lead Generation',
+            event_label: 'Book a Call / Consultation'
+          });
+        }
       } catch (trackErr) {
         console.warn("[Meta Pixel] Lead tracking warning:", trackErr);
       }
