@@ -326,17 +326,52 @@
     submitBtn.textContent = 'Submitting...';
     submitBtn.disabled = true;
 
+    // Security: Anti-Spam Rate Limiter (30-second cooldown per device)
+    const lastSubTs = parseInt(sessionStorage.getItem('glb_last_book_ts') || '0', 10);
+    if (Date.now() - lastSubTs < 30000) {
+      alert("Please wait 30 seconds before submitting another booking request.");
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+      return;
+    }
+
     try {
       const nameEl = form.querySelector('#glbBookName') || form.querySelector('input[placeholder="Your Name"]');
       const emailEl = form.querySelector('#glbBookEmail') || form.querySelector('input[type="email"]');
       const phoneEl = form.querySelector('#glbBookPhone') || form.querySelector('input[type="tel"]');
       const detailsEl = form.querySelector('#glbBookDetails') || form.querySelector('textarea');
 
+      // Sanitize & clamp input lengths to guard against buffer overflow / payload flooding
+      const rawName = (nameEl ? nameEl.value : '').trim().slice(0, 100);
+      const rawEmail = (emailEl ? emailEl.value : '').trim().slice(0, 150);
+      const rawPhone = (phoneEl ? phoneEl.value : '').trim().slice(0, 25);
+      const rawDetails = (detailsEl ? detailsEl.value : '').trim().slice(0, 1500);
+
+      // Validate Email Format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(rawEmail)) {
+        alert("Please enter a valid email address.");
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        return;
+      }
+
+      // Validate Phone Format (digits, spaces, plus, dashes, parentheses)
+      const phoneRegex = /^[\d\+\s\-\(\)]{7,25}$/;
+      if (!phoneRegex.test(rawPhone)) {
+        alert("Please enter a valid phone number.");
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        return;
+      }
+
+      sessionStorage.setItem('glb_last_book_ts', Date.now());
+
       const localBooking = {
-        name: (nameEl ? nameEl.value : '').trim(),
-        email: (emailEl ? emailEl.value : '').trim(),
-        phone: (phoneEl ? phoneEl.value : '').trim(),
-        businessDetails: (detailsEl ? detailsEl.value : '').trim(),
+        name: rawName,
+        email: rawEmail,
+        phone: rawPhone,
+        businessDetails: rawDetails,
         createdAt: Date.now(),
         synced: false
       };

@@ -342,15 +342,33 @@
       submitBtn.textContent = 'Submitting...';
       submitBtn.disabled = true;
 
+      // Security: Rate-limit review submissions (60-second cooldown per device)
+      const lastReviewTs = parseInt(localStorage.getItem('glb_last_rev_ts') || '0', 10);
+      if (Date.now() - lastReviewTs < 60000) {
+        alert("Please wait a moment before submitting another review.");
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        return;
+      }
+
       try {
-        const name = (document.getElementById('glbReviewAuthor') || form.querySelector('input[type="text"]')).value.trim();
-        const text = (document.getElementById('glbReviewText') || form.querySelector('textarea')).value.trim();
+        const rawName = (document.getElementById('glbReviewAuthor') || form.querySelector('input[type="text"]')).value.trim().slice(0, 80);
+        const rawText = (document.getElementById('glbReviewText') || form.querySelector('textarea')).value.trim().slice(0, 800);
         const ratingInput = form.querySelector('input[name="rating"]:checked');
-        const rating = ratingInput ? parseInt(ratingInput.value) : 5;
+        const rating = Math.min(Math.max(ratingInput ? parseInt(ratingInput.value) || 5 : 5, 1), 5);
+
+        if (!rawName || !rawText) {
+          alert("Please fill in both your name and review message.");
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          return;
+        }
+
+        localStorage.setItem('glb_last_rev_ts', Date.now());
         
         const newReview = { 
-          author: name, 
-          text: text, 
+          author: rawName, 
+          text: rawText, 
           rating: rating, 
           status: 'pending', 
           createdAt: Date.now() 

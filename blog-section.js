@@ -199,21 +199,40 @@
           console.error("Error fetching blogs for home:", e);
       }
 
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function safeImageSrc(url) {
+        if (!url || typeof url !== 'string') return './images/blogs/meta-ads-optimization.webp';
+        const clean = url.trim();
+        if (/^(https?:\/\/|\.\/|\/|data:image\/)/i.test(clean)) {
+          return escapeHtml(clean);
+        }
+        return './images/blogs/meta-ads-optimization.webp';
+      }
+
       // Take top 3 unique blogs
       const top3 = allBlogs.slice(0, 3);
 
       let cardsHtml = top3.map(blog => `
           <a href="./blog.html" class="glb-home-blog-card">
               <div class="glb-home-blog-img-wrap">
-                  <img src="${blog.image}" class="glb-home-blog-img" alt="${blog.title}">
+                  <img src="${safeImageSrc(blog.image)}" class="glb-home-blog-img" alt="${escapeHtml(blog.title)}">
               </div>
               <div class="glb-home-blog-content">
                   <div class="glb-home-blog-meta">
-                      <span class="glb-home-blog-category">${blog.category}</span>
-                      <span>${blog.date}</span>
+                      <span class="glb-home-blog-category">${escapeHtml(blog.category)}</span>
+                      <span>${escapeHtml(blog.date)}</span>
                   </div>
-                  <h3 class="glb-home-blog-title">${blog.title}</h3>
-                  <p class="glb-home-blog-excerpt">${blog.excerpt}</p>
+                  <h3 class="glb-home-blog-title">${escapeHtml(blog.title)}</h3>
+                  <p class="glb-home-blog-excerpt">${escapeHtml(blog.excerpt)}</p>
                   <span class="glb-home-blog-read">Read Article →</span>
               </div>
           </a>

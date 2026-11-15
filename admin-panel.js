@@ -12,9 +12,25 @@
       .replace(/'/g, '&#039;');
   }
 
-  async function sha256(str) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  function timingSafeEqual(a, b) {
+    if (typeof a !== 'string' || typeof b !== 'string') return false;
+    let mismatch = a.length === b.length ? 0 : 1;
+    for (let i = 0; i < a.length; ++i) {
+      mismatch |= (a.charCodeAt(i) ^ b.charCodeAt(i % b.length));
+    }
+    return mismatch === 0;
+  }
+
+  function isValidDbKey(key) {
+    return typeof key === 'string' && /^[a-zA-Z0-9_\-\.]+$/.test(key);
+  }
+
+  function sanitizeCsvCell(val) {
+    let str = String(val || '');
+    if (/^[=\+\-@\t\r]/.test(str)) {
+      str = "'" + str;
+    }
+    return `"${str.replace(/"/g, '""')}"`;
   }
 
   const styles = `
@@ -535,7 +551,7 @@
     const userHash = await sha256(userVal);
     const passHash = await sha256(passVal);
     
-    if (userHash === ADMIN_USER_HASH && passHash === activePassHash) {
+    if (timingSafeEqual(userHash, ADMIN_USER_HASH) && timingSafeEqual(passHash, activePassHash)) {
       sessionStorage.setItem('glm_admin_auth', '1');
       localStorage.removeItem('glb_admin_failed_attempts');
       localStorage.removeItem('glb_admin_lockout_until');
@@ -695,26 +711,31 @@
         snapshot.forEach(childSnapshot => {
           const rev = childSnapshot.val();
           const key = childSnapshot.key;
-          const stars = '★'.repeat(rev.rating || 5);
+          
+          if (!isValidDbKey(key)) return;
+          const stars = '★'.repeat(Math.min(Math.max(parseInt(rev.rating) || 5, 1), 5));
+          const safeKey = escapeHtml(key);
+          const safeAuthor = escapeHtml(rev.author || 'Anonymous');
+          const safeText = escapeHtml(rev.text || '');
           
           if (rev.status === 'pending') {
             pendingHtml += `
-              <div class="glb-pending-review" id="review-${key}">
-                <p><strong>${escapeHtml(rev.author || 'Anonymous')}</strong> &nbsp;•&nbsp; <span style="color:#e20001">${stars}</span> (${rev.rating || 5}/5)</p>
-                <p>"${escapeHtml(rev.text)}"</p>
+              <div class="glb-pending-review" id="review-${safeKey}">
+                <p><strong>${safeAuthor}</strong> &nbsp;•&nbsp; <span style="color:#e20001">${stars}</span> (${Math.min(Math.max(parseInt(rev.rating) || 5, 1), 5)}/5)</p>
+                <p>"${safeText}"</p>
                 <div class="glb-review-action-btns">
-                  <button class="glb-approve-btn" onclick="window.approveReview('${key}')">✓ Approve & Make Live</button>
-                  <button class="glb-delete-btn" onclick="window.deleteReview('${key}')">🗑 Delete</button>
+                  <button class="glb-approve-btn" onclick="window.approveReview('${safeKey}')">✓ Approve & Make Live</button>
+                  <button class="glb-delete-btn" onclick="window.deleteReview('${safeKey}')">🗑 Delete</button>
                 </div>
               </div>
             `;
           } else {
             approvedHtml += `
-              <div class="glb-pending-review" id="review-${key}">
-                <p><strong>${rev.author || 'Anonymous'}</strong> &nbsp;•&nbsp; <span style="color:#e20001">${stars}</span> (Live)</p>
-                <p>"${rev.text}"</p>
+              <div class="glb-pending-review" id="review-${safeKey}">
+                <p><strong>${safeAuthor}</strong> &nbsp;•&nbsp; <span style="color:#e20001">${stars}</span> (Live)</p>
+                <p>"${safeText}"</p>
                 <div class="glb-review-action-btns">
-                  <button class="glb-delete-btn" onclick="window.deleteReview('${key}')">🗑 Delete Review</button>
+                  <button class="glb-delete-btn" onclick="window.deleteReview('${safeKey}')">🗑 Delete Review</button>
                 </div>
               </div>
             `;
@@ -738,6 +759,7 @@
 
   // --- Approve Review ---
   window.approveReview = async function(key) {
+    if (!isValidDbKey(key)) return;
     if (!window.firebaseDB) return;
     const btn = document.querySelector(`#review-${key} .glb-approve-btn`);
     if (btn) { btn.innerText = 'Approving...'; btn.disabled = true; }
@@ -753,6 +775,7 @@
 
   // --- Delete Review ---
   window.deleteReview = async function(key) {
+    if (!isValidDbKey(key)) return;
     if (!window.firebaseDB) return;
     if (!confirm("Are you sure you want to delete this review permanently from the database?")) {
       return;
@@ -959,11 +982,11 @@
     let csvContent = "data:text/csv;charset=utf-8,Name,Email,Phone,Business Details,Date\n";
     bookings.forEach(b => {
       const row = [
-        `"${(b.name || '').replace(/"/g, '""')}"`,
-        `"${(b.email || '').replace(/"/g, '""')}"`,
-        `"${(b.phone || '').replace(/"/g, '""')}"`,
-        `"${(b.businessDetails || '').replace(/"/g, '""')}"`,
-        `"${b.createdAt ? new Date(b.createdAt).toISOString() : ''}"`
+        sanitizeCsvCell(b.name),
+        sanitizeCsvCell(b.email),
+        sanitizeCsvCell(b.phone),
+        sanitizeCsvCell(b.businessDetails),
+        sanitizeCsvCell(b.createdAt ? new Date(b.createdAt).toISOString() : '')
       ].join(",");
       csvContent += row + "\n";
     });
@@ -977,6 +1000,7 @@
   };
 
   window.deleteBooking = async function(key) {
+    if (!isValidDbKey(key)) return;
     if (!window.firebaseDB) return;
     if (!confirm("Are you sure you want to delete this booking record?")) return;
     try {

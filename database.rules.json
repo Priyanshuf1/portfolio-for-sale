@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "bookings": {
+      ".read": false,
+      "$booking_id": {
+        ".write": "!data.exists() && newData.exists()",
+        ".validate": "newData.hasChildren(['name', 'email', 'phone', 'createdAt']) && newData.child('name').isString() && newData.child('name').val().length <= 100 && newData.child('email').isString() && newData.child('email').val().length <= 150 && newData.child('phone').isString() && newData.child('phone').val().length <= 30 && (!newData.child('businessDetails').exists() || (newData.child('businessDetails').isString() && newData.child('businessDetails').val().length <= 2000))"
+      }
+    },
+    "reviews": {
+      ".read": true,
+      "$review_id": {
+        ".write": "!data.exists() && newData.child('status').val() === 'pending'",
+        ".validate": "newData.hasChildren(['author', 'text', 'rating', 'status']) && newData.child('author').isString() && newData.child('author').val().length <= 80 && newData.child('text').isString() && newData.child('text').val().length <= 1000 && newData.child('rating').isNumber() && newData.child('rating').val() >= 1 && newData.child('rating').val() <= 5 && newData.child('status').val() === 'pending'"
+      }
+    },
+    "blogs": {
+      ".read": true,
+      ".write": false
+    },
+    "config": {
+      ".read": false,
+      ".write": false
+    }
+  }
+}

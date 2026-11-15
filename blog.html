@@ -572,14 +572,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const modalTitle = document.getElementById('glbModalTitle');
       const modalText = document.getElementById('glbModalText');
 
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function safeImageSrc(url) {
+        if (!url || typeof url !== 'string') return './images/blogs/meta-ads-optimization.webp';
+        const clean = url.trim();
+        if (/^(https?:\/\/|\.\/|\/|data:image\/)/i.test(clean)) {
+          return escapeHtml(clean);
+        }
+        return './images/blogs/meta-ads-optimization.webp';
+      }
+
+      function sanitizeArticleHtml(htmlStr) {
+        if (!htmlStr) return '';
+        const temp = document.createElement('div');
+        temp.innerHTML = htmlStr;
+        temp.querySelectorAll('script, iframe, object, embed, applet, meta, link, base').forEach(el => el.remove());
+        temp.querySelectorAll('*').forEach(el => {
+          Array.from(el.attributes).forEach(attr => {
+            if (attr.name.toLowerCase().startsWith('on') || attr.value.trim().toLowerCase().startsWith('javascript:')) {
+              el.removeAttribute(attr.name);
+            }
+          });
+        });
+        return temp.innerHTML;
+      }
+
       function openArticle(blog) {
         if (!blogModal) return;
-        modalImg.src = blog.image;
-        modalImg.alt = blog.title;
+        modalImg.src = safeImageSrc(blog.image);
+        modalImg.alt = escapeHtml(blog.title);
         modalCategory.textContent = blog.category;
         modalDate.textContent = blog.date;
         modalTitle.textContent = blog.title;
-        modalText.innerHTML = blog.body || `<p>${blog.excerpt}</p><p>Full content is currently loading or has not been configured yet.</p>`;
+        modalText.innerHTML = sanitizeArticleHtml(blog.body || `<p>${escapeHtml(blog.excerpt)}</p><p>Full content is currently loading or has not been configured yet.</p>`);
         
         blogModal.classList.add('active');
       }
@@ -623,15 +657,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               html += `
                   <article class="blog-card" data-index="${idx}">
                       <div class="blog-image">
-                          <img src="${blog.image}" alt="${blog.title}">
+                          <img src="${safeImageSrc(blog.image)}" alt="${escapeHtml(blog.title)}">
                       </div>
                       <div class="blog-content">
                           <div class="blog-meta">
-                              <span class="blog-category">${blog.category}</span>
-                              <span>${blog.date}</span>
+                              <span class="blog-category">${escapeHtml(blog.category)}</span>
+                              <span>${escapeHtml(blog.date)}</span>
                           </div>
-                          <h2 class="blog-title">${blog.title}</h2>
-                          <p class="blog-excerpt">${blog.excerpt}</p>
+                          <h2 class="blog-title">${escapeHtml(blog.title)}</h2>
+                          <p class="blog-excerpt">${escapeHtml(blog.excerpt)}</p>
                           <a href="#" class="read-more" onclick="event.preventDefault();">Read Article</a>
                       </div>
                   </article>
