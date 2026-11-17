@@ -99,21 +99,22 @@
     animation-play-state: paused;
   }
   .glm-marquee-item {
-    width: 260px;
+    width: 250px;
     height: 110px;
     flex-shrink: 0;
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.07);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     background: #ffffff;
-    cursor: default;
+    cursor: pointer;
     position: relative;
     transform-style: preserve-3d;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 18px 24px;
+    padding: 12px 20px;
     box-sizing: border-box;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     
     /* Staggered entrance initial state */
     opacity: 0;
@@ -126,19 +127,24 @@
   }
   .glm-marquee-item:hover {
     border-color: #FF1744;
-    box-shadow: 0 8px 20px rgba(255, 23, 68, 0.12);
+    box-shadow: 0 10px 25px rgba(255, 23, 68, 0.15);
   }
   .glm-marquee-item img {
     width: 100%;
     height: 100%;
+    max-height: 84px;
     object-fit: contain;
-    border-radius: 10px;
-    filter: grayscale(1) opacity(0.55);
-    transition: filter 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 8px;
+    filter: none;
+    opacity: 0.96;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     pointer-events: none;
   }
   .glm-marquee-item:hover img {
-    filter: grayscale(0) opacity(1);
+    opacity: 1;
+    transform: scale(1.06);
   }
 
   @keyframes glmMarqueeLeft {
@@ -468,12 +474,12 @@
       `;
 
       var row2Images = [
-        './brand_swarnim_lite.png',
+        './brand_krishna_associates.png',
         './brand_home_archs.png',
         './brand_forever_treasures.png',
         './brand_om_group.png',
         './brand_krazy4cakes.png',
-        './brand_krishna_associates.png'
+        './brand_cs_ec.jpeg'
       ];
 
       function fillRow(rowElId, images) {
@@ -482,7 +488,7 @@
         var doubled = images.concat(images);
         row.innerHTML = doubled.map(src => `
           <div class="glm-marquee-item">
-            <img src="${src}" alt="Client Logo" loading="lazy">
+            <img src="${src}" alt="Client Logo" loading="lazy" onerror="this.parentElement.style.display='none'">
           </div>
         `).join('');
 
@@ -544,7 +550,7 @@
               <a href="https://www.instagram.com/globallogicmedia/" target="_blank" rel="noopener noreferrer" class="glm-insta-follow-btn">Follow</a>
             </div>
             <div class="glm-insta-stats-row">
-              <span class="glm-insta-stat-item"><b>19</b> posts</span>
+              <span class="glm-insta-stat-item"><b>20</b> posts</span>
               <span class="glm-insta-stat-item"><b>411</b> followers</span>
               <span class="glm-insta-stat-item"><b>49</b> following</span>
             </div>
@@ -582,6 +588,7 @@
       instaSection.dataset.elfsightBuilt = '1';
 
       var reels = [
+        { shortcode: 'Dft-9hiBtuJ', link: 'https://www.instagram.com/reel/Dft-9hiBtuJ/', image: './reel_Dft-9hiBtuJ.webp' },
         { shortcode: 'DeJR2OBA8Rt', link: 'https://www.instagram.com/reel/DeJR2OBA8Rt/', image: './reel_DeJR2OBA8Rt.webp' },
         { shortcode: 'DcK1rodslR7', link: 'https://www.instagram.com/reel/DcK1rodslR7/', image: './reel_1.webp' },
         { shortcode: 'DcETc2yJ8dx', link: 'https://www.instagram.com/reel/DcETc2yJ8dx/', image: './reel_2.webp' },

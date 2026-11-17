@@ -103,7 +103,6 @@
 
   // ── 2. BRAND DATA ──────────────────────────────────────────────────────────
   const brands = [
-    { src: './brand_swarnim_lite.png', alt: 'Swarnim Lite' },
     { src: './brand_krishna_associates.png', alt: 'Krishna Associates Real Estate' },
     { src: './brand_b_luxury.jpeg',       alt: 'B Luxury Salon'        },
     { src: './brand_book_digital.jpeg',   alt: 'Book Your Digital Story' },
@@ -117,7 +116,7 @@
 
   // ── 3. BUILD MARQUEE ──────────────────────────────────────────────────────
   function buildItems(list) {
-    return list.map(b => '<div class="glm-brand-logo-item"><img src="' + b.src + '" alt="' + b.alt + '" loading="lazy"></div>').join('');
+    return list.map(b => '<div class="glm-brand-logo-item"><img src="' + b.src + '" alt="' + b.alt + '" loading="lazy" onerror="this.parentElement.style.display=\'none\'"></div>').join('');
   }
 
   function injectMarquee() {
