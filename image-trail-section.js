@@ -472,7 +472,8 @@
         './brand_home_archs.png',
         './brand_forever_treasures.png',
         './brand_om_group.png',
-        './brand_krazy4cakes.png'
+        './brand_krazy4cakes.png',
+        './brand_krishna_associates.png'
       ];
 
       function fillRow(rowElId, images) {
