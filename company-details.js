@@ -191,8 +191,9 @@
     
     .glb-team-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 24px;
+      justify-content: center;
     }
     
     .glb-team-card {
@@ -332,6 +333,12 @@
       role: "Social Media Manager",
       image: "./images/team/agrima.png",
       desc: "Social Media Manager with 2+ years of experience in social media management, content strategy, content planning, audience engagement, and organic growth. Skilled in developing social media campaigns, managing brand pages, analyzing performance metrics, and implementing strategies to improve reach, engagement, and brand visibility across digital platforms."
+    },
+    {
+      name: "Yati Chaurasia",
+      role: "Social Media Intern",
+      image: "./images/team/yati.png",
+      desc: "A creative and motivated Social Media Marketing professional with 6 months of hands-on experience in social media management, content creation, and digital marketing. Experienced in working with 10+ brands, developing engaging content, managing social media platforms, and supporting brand growth through creative strategies. Passionate about building strong digital presence, increasing audience engagement, and learning new marketing trends."
     }
   ];
 
@@ -365,7 +372,8 @@
         "Ankur Verma": "linear-gradient(135deg, #FF9900, #FF5E62)",
         "Durgesh Choudary": "linear-gradient(135deg, #FF416C, #FF4B2B)",
         "Vishal Kumar": "linear-gradient(135deg, #4776E6, #8E54E9)",
-        "Agrima Gupta": "linear-gradient(135deg, #f12711, #f5af19)"
+        "Agrima Gupta": "linear-gradient(135deg, #f12711, #f5af19)",
+        "Yati Chaurasia": "linear-gradient(135deg, #ec4899, #8b5cf6)"
       };
       const grad = gradients[member.name] || "linear-gradient(135deg, #e20001, #e20001)";
 
