@@ -255,18 +255,24 @@
     }
     
     .glb-team-role {
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 11px;
+      font-weight: 800;
       color: #e20001;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.3;
     }
     
     .glb-team-desc {
       font-size: 13.5px;
-      color: #888888;
-      line-height: 1.5;
+      color: #4b5563;
+      line-height: 1.6;
       margin: 0;
+      text-align: center;
     }
 
     @media (max-width: 768px) {
@@ -314,31 +320,31 @@
       name: "Ankur Verma",
       role: "Founder",
       image: "./images/team/ankur.png",
-      desc: "A results-driven Digital Marketing Professional with 3+ years of experience, specializing in organic growth, performance marketing, website development, and brand strategy. Having helped 70+ businesses grow online, I focus on building sustainable digital presence, driving meaningful engagement, and turning brands into scalable businesses."
+      desc: "Results-driven Digital Marketing Strategist with 3+ years of experience in organic growth, performance marketing, and brand strategy. Helped 70+ businesses scale their digital presence and drive measurable engagement."
     },
     {
       name: "Durgesh Choudary",
       role: "Co-Founder",
       image: "./images/team/durgesh.png",
-      desc: "A creative professional with 6+ years of expertise in Video Editing & Cinematography and 2+ years in UI/UX Design, specializing in visual storytelling, creative direction, and user-centric digital experiences. Focused on combining creativity, design, and technology to build impactful brand experiences."
+      desc: "Creative Director with 6+ years of expertise in Cinematography, Video Editing, and UI/UX design. Passionate about merging visual storytelling, technology, and branding to create impactful digital experiences."
     },
     {
       name: "Vishal Kumar",
       role: "Graphic Designer",
       image: "./images/team/vishal.png",
-      desc: "A creative Graphic Designer with 5+ years of experience, skilled in Adobe Photoshop, Adobe Illustrator, and Canva. Specializing in brand identity, social media creatives, visual communication, and compelling designs that strengthen brand presence."
+      desc: "Creative Graphic Designer with 5+ years of experience in Adobe Creative Suite and Canva. Specializing in brand identity, visual communication, and high-impact social media creatives that elevate brand presence."
     },
     {
       name: "Agrima Gupta",
       role: "Social Media Manager",
       image: "./images/team/agrima.png",
-      desc: "Social Media Manager with 2+ years of experience in social media management, content strategy, content planning, audience engagement, and organic growth. Skilled in developing social media campaigns, managing brand pages, analyzing performance metrics, and implementing strategies to improve reach, engagement, and brand visibility across digital platforms."
+      desc: "Social Media Manager with 2+ years of experience in content strategy, campaign management, and organic growth. Focused on building engaged digital communities and maximizing brand visibility across social platforms."
     },
     {
       name: "Yati Chaurasia",
       role: "Social Media Intern",
       image: "./images/team/yati.png",
-      desc: "A creative and motivated Social Media Marketing professional with 6 months of hands-on experience in social media management, content creation, and digital marketing. Experienced in working with 10+ brands, developing engaging content, managing social media platforms, and supporting brand growth through creative strategies. Passionate about building strong digital presence, increasing audience engagement, and learning new marketing trends."
+      desc: "Creative Social Media Specialist experienced in content creation, digital marketing, and managing campaigns for 10+ brands. Dedicated to boosting audience engagement and driving dynamic brand growth."
     }
   ];
 
