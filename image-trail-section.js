@@ -478,8 +478,7 @@
         './brand_home_archs.png',
         './brand_forever_treasures.png',
         './brand_om_group.png',
-        './brand_krazy4cakes.png',
-        './brand_cs_ec.jpeg'
+        './brand_krazy4cakes.png'
       ];
 
       function fillRow(rowElId, images) {

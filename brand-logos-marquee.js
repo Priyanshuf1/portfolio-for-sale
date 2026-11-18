@@ -106,7 +106,6 @@
     { src: './brand_krishna_associates.png', alt: 'Krishna Associates Real Estate' },
     { src: './brand_b_luxury.jpeg',       alt: 'B Luxury Salon'        },
     { src: './brand_book_digital.jpeg',   alt: 'Book Your Digital Story' },
-    { src: './brand_cs_ec.jpeg',          alt: 'CS EC'                 },
     { src: './brand_krazy_cakes.jpeg',    alt: 'Krazy 4 Cakes'         },
     { src: './brand_kurti_kahaanii.jpeg', alt: 'Kurti Kahaanii'        },
     { src: './brand_om_group.jpeg',       alt: 'OM Group Builders'     },
